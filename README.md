@@ -1,108 +1,19 @@
 # BookTrading
 
 1. Kullanıcı Servisi (User Service)
-Bu servis, kullanıcı kaydı, giriş, kullanıcı profili yönetimi ve kişisel kitaplıkların oluşturulmasını yönetir.
+Kullanıcı Servisi, sistemin kullanıcı yönetimi ile ilgili tüm işlemlerini kapsar. Bu servis, kullanıcıların kayıt olması, giriş yapması ve profil bilgilerini yönetmesi gibi temel fonksiyonları sağlar. Kullanıcılar, kayıt olduktan sonra ilgi alanlarına göre kitap kategorileri seçerler ve bu seçimler, kişisel öneriler oluşturulurken kullanılır. Ayrıca, her kullanıcının kişisel kitaplığını yönetmesine izin verir; kullanıcılar bu kitaplığa kitap ekleyebilir, düzenleyebilir veya silebilir. Diğer servisler, kullanıcının bilgilerini ve kitaplık verilerini almak için bu servisi kullanır.
 
-Özellikler:
-
-Kullanıcı kaydı ve giriş işlemleri
-Kullanıcının ilgi kategorilerini seçmesi
-Kişisel kitaplık yönetimi (kitap ekleme, düzenleme, silme)
-API Örnekleri:
-
-POST /users/register: Kullanıcı kaydı
-GET /users/{userId}/library: Kullanıcının kitaplığını getir
-POST /users/{userId}/library: Kitap ekle
-Veritabanı:
-
-Kullanıcı bilgileri (PostgreSQL)
-Kitaplık verileri (MongoDB)
 2. Kitap Servisi (Book Service)
-Kitap bilgilerini ve kullanıcıların kitaplıklarını yönetir.
+Kitap Servisi, sistemdeki tüm kitap verilerinin merkezi yönetimini sağlar. Kullanıcıların eklediği kitaplar hakkında detaylı bilgiler (örneğin, kitap adı, yazar, tür, basım yılı, ISBN, durum) bu serviste saklanır. Kullanıcılar, kişisel kitaplıklarına yeni kitaplar ekleyebilir veya var olanları güncelleyebilir. Kitap Servisi, aynı zamanda Trade Servisi ile entegre çalışarak, kullanıcıların satış ve takas ilanları oluştururken kullanabilecekleri kitap bilgilerini sağlar. Öneri sistemi için de kitap verilerini sağlar, böylece kullanıcıya kişiselleştirilmiş ilan önerileri sunulabilir.
 
-Özellikler:
-
-Kitap ekleme, güncelleme, silme
-Kitapların durum bilgisi ve görselleri
-API Örnekleri:
-
-POST /books: Yeni bir kitap ekle
-GET /books/{bookId}: Kitap detaylarını getir
-Veritabanı:
-
-Kitap bilgileri (MongoDB)
 3. İlan Servisi (Listing Service)
-Kullanıcıların satış ve takas ilanları oluşturmasını ve bu ilanları yönetmesini sağlar.
+İlan Servisi, kullanıcıların kitaplarını satmak veya takas etmek için ilanlar oluşturmasını ve yönetmesini sağlar. Kullanıcılar, kişisel kitaplıklarından seçtikleri kitaplarla satış veya takas ilanları oluşturabilirler. İlan oluştururken, kullanıcılar takas seçeneği veya satış fiyatı belirleyebilir. İlan Servisi, kullanıcıların sistemdeki diğer kullanıcıların ilanlarına göz atmasına ve bu ilanlara teklif göndermesine imkan tanır. Ayrıca, ilan detaylarını yönetir ve ilanlar üzerinde arama, filtreleme gibi işlemleri destekler.
 
-Özellikler:
+4. Takas ve Satış Servisi (Trade Service)
+Trade Servisi, kitapların hem takas hem de satış süreçlerini yönetir. Kullanıcılar, diğer kullanıcıların ilanlarına takas veya satın alma teklifinde bulunabilirler. Teklifler kabul edilirse, takas veya satış işlemleri başlatılır. Takas işlemlerinde her iki taraf da güvence bedeli yatırır. Güvence bedeli yatırıldıktan sonra kitapların kargoya verilmesi ve kargo takip numaralarının girilmesi gereklidir. Satış işlemlerinde ise alıcı, ödemeyi gerçekleştirdikten sonra kargo süreci başlar. Kitaplar alıcıya ulaştığında, taraflar işlemi onaylar ve güvence bedeli ya da satış tutarı ilgili kişilere aktarılır. Trade Servisi, kitap satın alma durumunu da yönetir ve kullanıcıların başarılı bir şekilde kitap satın almasını sağlar.
 
-İlan oluşturma (satış veya takas)
-İlan düzenleme ve silme
-İlan detaylarını görüntüleme
-API Örnekleri:
+5. Öneri Servisi (Recommendation Service)
+Öneri Servisi, kullanıcılara kişisel kitaplıkları, geçmiş gezintileri ve ilgi alanlarına göre dinamik öneriler sunar. Kullanıcıların kitap okuma alışkanlıkları, gezdiği ilan türleri ve kayıt sırasında seçtikleri ilgi kategorileri analiz edilerek, kişiselleştirilmiş takas veya satış ilanları önerilir. Öneri algoritması, kullanıcıların kişisel kitaplıklarında bulunan kitaplara veya ilgilendiği türlere yakın kitapları içeren ilanları ön plana çıkarır. Öneriler düzenli aralıklarla güncellenir ve kullanıcının ana sayfasına sunulur. Bu servis, kullanıcıların ilgisini çekebilecek yeni ilanlar keşfetmelerini teşvik eder.
 
-POST /listings: Yeni bir ilan oluştur
-GET /listings/{listingId}: İlan detaylarını getir
-PUT /listings/{listingId}: İlanı güncelle
-Veritabanı:
-
-İlan bilgileri (PostgreSQL)
-4. Takas Servisi (Exchange Service)
-Kitap takas tekliflerini yönetir ve takas işlemlerini gerçekleştirir.
-
-Özellikler:
-
-Teklif gönderme ve alma
-Güvence bedeli işlemleri
-Kargo bilgilerini yönetme ve takas sürecini takip etme
-API Örnekleri:
-
-POST /exchanges/{listingId}/offer: Takas teklifi gönder
-POST /exchanges/{exchangeId}/deposit: Güvence bedeli yatır
-POST /exchanges/{exchangeId}/shipping: Kargo bilgilerini gir
-Veritabanı:
-
-Teklif ve takas bilgileri (PostgreSQL)
-Kargo takip bilgileri (MongoDB)
-5. Mesajlaşma Servisi (Messaging Service)
-Kullanıcılar arasındaki mesajlaşma işlemlerini yönetir.
-
-Özellikler:
-
-Mesaj gönderme ve alma
-Mesajların geçmişini görüntüleme
-API Örnekleri:
-
-POST /messages: Yeni bir mesaj gönder
-GET /messages/conversation/{userId1}/{userId2}: İki kullanıcı arasındaki mesajları getir
-Veritabanı:
-
-Mesajlar (MongoDB)
-6. Öneri Servisi (Recommendation Service)
-Kullanıcıya kişisel kitaplık ve ilgi kategorilerine göre satış ve takas ilan önerileri sunar.
-
-Özellikler:
-
-Öneri algoritmasının çalıştırılması
-Kullanıcının geçmiş gezintilerine ve kitaplık bilgilerine göre öneri oluşturma
-API Örnekleri:
-
-GET /recommendations/{userId}: Kullanıcıya özel ilan önerilerini getir
-Veritabanı:
-
-Kullanıcı davranış verileri ve öneriler (Redis ve MongoDB)
-7. Bildirim Servisi (Notification Service)
-Kullanıcıya teklif, mesaj veya sistemle ilgili bildirimleri iletir.
-
-Özellikler:
-
-Teklif bildirimleri
-Mesajlaşma bildirimleri
-Kargo ve güvence bedeli işlemleri için bildirimler
-API Örnekleri:
-
-POST /notifications: Yeni bir bildirim gönder
-GET /notifications/{userId}: Kullanıcının bildirimlerini getir
-Veritabanı:
-
-Bildirimler (Redis veya PostgreSQL)
+6. Bildirim Servisi (Notification Service)
+Bildirim Servisi, kullanıcıları sistemdeki önemli olaylar hakkında bilgilendirir. Kullanıcılar, takas veya satış teklifleri, kabul/red durumları, güvence bedeli yatırma hatırlatmaları, kargo sürecindeki gelişmeler gibi bildirimler alırlar. Ayrıca, satılan veya takas edilen kitaplar hakkında anlık bildirimler gönderilir. Bu servis, kullanıcıların sistemdeki etkileşimlerini aktif bir şekilde takip etmelerine ve süreçlerde zamanında aksiyon almalarına yardımcı olur.
