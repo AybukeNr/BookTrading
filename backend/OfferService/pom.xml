@@ -11,8 +11,8 @@
 	<groupId>org.example</groupId>
 	<artifactId>NotificationService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>NotificationService</name>
-	<description>NotificationService</description>
+	<name>OfferService</name>
+	<description>OfferService</description>
 	<url/>
 	<licenses>
 		<license/>

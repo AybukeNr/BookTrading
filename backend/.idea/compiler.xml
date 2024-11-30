@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="BookService" />
         <module name="ExchangeService" />
         <module name="ListingService" />
         <module name="UserService" />
+        <module name="BookService" />
+        <module name="ShippingService" />
+        <module name="NotificationService" />
         <module name="RecommendationService" />
         <module name="MessagingService" />
       </profile>
@@ -21,7 +23,9 @@
       <module name="ExchangeService" options="-parameters" />
       <module name="ListingService" options="-parameters" />
       <module name="MessagingService" options="-parameters" />
+      <module name="NotificationService" options="-parameters" />
       <module name="RecommendationService" options="-parameters" />
+      <module name="ShippingService" options="-parameters" />
       <module name="UserService" options="-parameters" />
     </option>
   </component>
