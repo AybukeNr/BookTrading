@@ -10,14 +10,14 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
+
 
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "Users")
 @Builder
 public class User {
 
@@ -37,7 +37,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String phoneNumber;
 
     @Column(nullable = false)
@@ -51,14 +51,13 @@ public class User {
     @CreatedDate
     private LocalDateTime updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private List<Address> addressList;
+    @Column(nullable = false)
+    @Lob
+    private String address;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<UserInterest> userInterest;
-
 
 
 
