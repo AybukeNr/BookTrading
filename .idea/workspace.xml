@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="624087e0-7375-48d1-8623-0eaca12ba791" name="Changes" comment="cancel offer added">
+      <change beforePath="$PROJECT_DIR$/backend/.idea/backend.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/LibraryService/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/LibraryService/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/LibraryService/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/LibraryService/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/LibraryService/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/LibraryService/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/LibraryService/src/main/java/org/example/bookservice/BookServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/LibraryService/src/main/java/org/example/bookservice/entity/Book.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/LibraryService/src/main/java/org/example/bookservice/entity/enums/BookGenre.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/LibraryService/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/LibraryService/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/LibraryService/src/test/java/org/example/bookservice/BookServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ListingService/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ListingService/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ListingService/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ListingService/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ListingService/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ListingService/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ListingService/src/main/java/org/example/listingservice/ListingServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ListingService/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ListingService/src/test/java/org/example/listingservice/ListingServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/OfferService/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/OfferService/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/OfferService/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/OfferService/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/OfferService/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/OfferService/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/OfferService/src/main/java/org/example/notificationservice/NotificationServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/OfferService/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/OfferService/src/test/java/org/example/notificationservice/NotificationServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/RecommendationService/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/RecommendationService/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/RecommendationService/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/RecommendationService/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/RecommendationService/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/RecommendationService/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/RecommendationService/src/main/java/org/example/recommendationservice/RecommendationServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/RecommendationService/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/RecommendationService/src/test/java/org/example/recommendationservice/RecommendationServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ShippingService/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ShippingService/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ShippingService/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ShippingService/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ShippingService/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ShippingService/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ShippingService/src/main/java/org/example/shippingservice/ShippingServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ShippingService/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ShippingService/src/test/java/org/example/shippingservice/ShippingServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/TransactionService/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/TransactionService/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/TransactionService/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/TransactionService/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/TransactionService/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/TransactionService/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/TransactionService/src/main/java/org/example/exchangeservice/ExchangeServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/TransactionService/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/TransactionService/src/test/java/org/example/exchangeservice/ExchangeServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/UserServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/config/KafkaProducerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/constant/RestApiList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/controller/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/dto/request/LoginRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/dto/request/RegisterRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/dto/request/UserRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/dto/response/LoginResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/dto/response/UserResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/entity/BaseEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/entity/UserInterest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/exception/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/mapper/UserMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/service/IUserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/util/IService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/util/JwtTokenManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/java/org/example/userservice/util/ServiceManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/UserService/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/UserService/src/test/java/org/example/userservice/UserServiceApplicationTests.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "AybukeNr"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/AybukeNr/BookTrading.git",
+    "accountId": "34275f11-c364-4d55-a927-a848f6120733"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2qLpBAoe5EVRJhQ63Gwy2pcPcvf" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19416.15" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19416.15" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="624087e0-7375-48d1-8623-0eaca12ba791" name="Changes" comment="" />
+      <created>1734451575100</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734451575100</updated>
+      <workItem from="1734451577221" duration="115000" />
+    </task>
+    <task id="LOCAL-00001" summary="cancel offer added">
+      <option name="closed" value="true" />
+      <created>1734451646152</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1734451646152</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="cancel offer added" />
+    <option name="LAST_COMMIT_MESSAGE" value="cancel offer added" />
+  </component>
+</project>

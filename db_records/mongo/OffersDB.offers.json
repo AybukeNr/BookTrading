@@ -1,0 +1,459 @@
+[{
+  "_id": {
+    "$oid": "675616241df7720cedbbb422"
+  },
+  "ownerId": "67519bffd76b9b5874307ce0",
+  "offerList": {
+    "book": {
+      "title": "Savaş ve Barış",
+      "author": "Lev Tolstoy",
+      "isbn": "9786053324643",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "1869-01-01",
+      "category": "KURGU"
+    }
+  },
+  "offeredBook": {
+    "title": "Tarihin İzleri",
+    "author": "Ahmet Yılmaz",
+    "isbn": "9781234567890",
+    "publisher": "Tarih Yayınları",
+    "publishedDate": "2023-05-01",
+    "category": "TARİH"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-08T21:56:52.767Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "675616b41001a83b73afcaf7"
+  },
+  "ownerId": "67519bffd76b9b5874307ce0",
+  "offerList": {
+    "book": {
+      "title": "Savaş ve Barış",
+      "author": "Lev Tolstoy",
+      "isbn": "9786053324643",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "1869-01-01",
+      "category": "KURGU"
+    }
+  },
+  "offeredBook": {
+    "title": "Felsefenin Temelleri",
+    "author": "Mehmet Can",
+    "isbn": "9781234567891",
+    "publisher": "Bilgi Yayıncılık",
+    "publishedDate": "2022-11-12",
+    "category": "FELSEFE"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-08T21:59:16.346Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "6756f794978f7c5e40ddb5bc"
+  },
+  "ownerId": "67519bffd76b9b5874307ce0",
+  "offerList": {
+    "book": {
+      "title": "Bilimsel Düşünce",
+      "author": "Ayşe Nur",
+      "isbn": "9789876543210",
+      "publisher": "Bilimsel Düşünce",
+      "publishedDate": "2020-01-15",
+      "category": "BİLİM"
+    }
+  },
+  "offeredBook": {
+    "title": "Felsefenin Temelleri",
+    "author": "Mehmet Can",
+    "isbn": "9781234567891",
+    "publisher": "Bilgi Yayıncılık",
+    "publishedDate": "2022-11-12",
+    "category": "FELSEFE"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-09T13:58:44.870Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "6756fc824d5e771668e15530"
+  },
+  "ownerId": "67519c59d76b9b5874307ce2",
+  "offerList": {
+    "book": {
+      "title": "Bilimsel Düşünce",
+      "author": "Ayşe Nur",
+      "isbn": "9789876543210",
+      "publisher": "Bilimsel Düşünce",
+      "publishedDate": "2020-01-15",
+      "category": "BİLİM"
+    }
+  },
+  "offeredBook": {
+    "title": "Fantastik Dünyalar",
+    "author": "Selim Arda",
+    "isbn": "9785647382910",
+    "publisher": "Macera Yayıncılık",
+    "publishedDate": "2023-03-03",
+    "category": "FANTEZİ"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-09T14:19:46.367Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "6757168fb5e6d20b8565a9f1"
+  },
+  "ownerId": "string",
+  "offerList": {
+    "book": {
+      "title": "Bilimsel Düşünce",
+      "author": "Ayşe Nur",
+      "isbn": "9789876543210",
+      "publisher": "Bilimsel Düşünce",
+      "publishedDate": "2020-01-15",
+      "category": "BİLİM"
+    }
+  },
+  "offeredBook": {
+    "title": "Romantik Anlar",
+    "author": "Elif Demir",
+    "isbn": "9784125638945",
+    "publisher": "Aşk ve Roman",
+    "publishedDate": "2023-09-15",
+    "category": "ROMANTİK"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-09T16:10:55.461Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "675716c16fe4c13ec2c8d9c6"
+  },
+  "ownerId": "string",
+  "offerList": {
+    "book": {
+      "title": "Bilimsel Düşünce",
+      "author": "Ayşe Nur",
+      "isbn": "9789876543210",
+      "publisher": "Bilimsel Düşünce",
+      "publishedDate": "2020-01-15",
+      "category": "BİLİM"
+    }
+  },
+  "offeredBook": {
+    "title": "Romantik Anlar",
+    "author": "Elif Demir",
+    "isbn": "9784125638945",
+    "publisher": "Aşk ve Roman",
+    "publishedDate": "2023-09-15",
+    "category": "ROMANTİK"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-09T16:11:45.774Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "675717e0924d3171abca795c"
+  },
+  "ownerId": "string",
+  "offerList": {
+    "book": {
+      "title": "Bilimsel Düşünce",
+      "author": "Ayşe Nur",
+      "isbn": "9789876543210",
+      "publisher": "Bilimsel Düşünce",
+      "publishedDate": "2020-01-15",
+      "category": "BİLİM"
+    }
+  },
+  "offeredBook": {
+    "title": "Romantik Anlar",
+    "author": "Elif Demir",
+    "isbn": "9784125638945",
+    "publisher": "Aşk ve Roman",
+    "publishedDate": "2023-09-15",
+    "category": "ROMANTİK"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-09T16:16:32.081Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "67571805924d3171abca795d"
+  },
+  "ownerId": "67519bffd76b9b5874307ce0",
+  "offerList": {
+    "book": {
+      "title": "Bilimsel Düşünce",
+      "author": "Ayşe Nur",
+      "isbn": "9789876543210",
+      "publisher": "Bilimsel Düşünce",
+      "publishedDate": "2020-01-15",
+      "category": "BİLİM"
+    }
+  },
+  "offeredBook": {
+    "title": "Romantik Anlar",
+    "author": "Elif Demir",
+    "isbn": "9784125638945",
+    "publisher": "Aşk ve Roman",
+    "publishedDate": "2023-09-15",
+    "category": "ROMANTİK"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-09T16:17:09.323Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "67571821924d3171abca795e"
+  },
+  "ownerId": "67519bffd76b9b5874307ce0",
+  "offerList": {
+    "book": {
+      "title": "Bilimsel Düşünce",
+      "author": "Ayşe Nur",
+      "isbn": "9789876543210",
+      "publisher": "Bilimsel Düşünce",
+      "publishedDate": "2020-01-15",
+      "category": "BİLİM"
+    }
+  },
+  "offeredBook": {
+    "title": "Romantik Anlar",
+    "author": "Elif Demir",
+    "isbn": "9784125638945",
+    "publisher": "Aşk ve Roman",
+    "publishedDate": "2023-09-15",
+    "category": "ROMANTİK"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-09T16:17:37.428Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "675719d74ebbbc2304ffc7b5"
+  },
+  "offererId": "67519bffd76b9b5874307ce0",
+  "offerList": {
+    "book": {
+      "title": "Bilimsel Düşünce",
+      "author": "Ayşe Nur",
+      "isbn": "9789876543210",
+      "publisher": "Bilimsel Düşünce",
+      "publishedDate": "2020-01-15",
+      "category": "BİLİM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "24"
+  },
+  "offeredBook": {
+    "title": "Romantik Anlar",
+    "author": "Elif Demir",
+    "isbn": "9784125638945",
+    "publisher": "Aşk ve Roman",
+    "publishedDate": "2023-09-15",
+    "category": "ROMANTİK"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-09T16:24:55.162Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "67571cf5bb597656c267115e"
+  },
+  "offererId": "67519bffd76b9b5874307ce0",
+  "offerList": {
+    "book": {
+      "title": "Bilimsel Düşünce",
+      "author": "Ayşe Nur",
+      "isbn": "9789876543210",
+      "publisher": "Bilimsel Düşünce",
+      "publishedDate": "2020-01-15",
+      "category": "BİLİM"
+    }
+  },
+  "offeredBook": {
+    "title": "Romantik Anlar",
+    "author": "Elif Demir",
+    "isbn": "9784125638945",
+    "publisher": "Aşk ve Roman",
+    "publishedDate": "2023-09-15",
+    "category": "ROMANTİK"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-09T16:38:13.435Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "6757230d9d12a821d08ec03b"
+  },
+  "offererId": "67519c37d76b9b5874307ce1",
+  "offerList": {
+    "book": {
+      "title": "Bilimsel Düşünce",
+      "author": "Ayşe Nur",
+      "isbn": "9789876543210",
+      "publisher": "Bilimsel Düşünce",
+      "publishedDate": "2020-01-15",
+      "category": "BİLİM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "25"
+  },
+  "offeredBook": {
+    "title": "Gerilim ve Kaos",
+    "author": "Berkay Sönmez",
+    "isbn": "9784582937640",
+    "publisher": "Gerilim Yayınları",
+    "publishedDate": "2021-04-19",
+    "category": "GERİLİM"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2024-12-09T17:04:13.255Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "6757579ed8a4fc338343948c"
+  },
+  "offererId": "67519c59d76b9b5874307ce2",
+  "offerList": {
+    "book": {
+      "title": "Savaş ve Barış",
+      "author": "Lev Tolstoy",
+      "isbn": "9786053324643",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "1869-01-01",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "22"
+  },
+  "offeredBook": {
+    "title": "Fantastik Dünyalar",
+    "author": "Selim Arda",
+    "isbn": "9785647382910",
+    "publisher": "Macera Yayıncılık",
+    "publishedDate": "2023-03-03",
+    "category": "FANTEZİ"
+  },
+  "offerStatus": "İPTAL_EDİLDİ",
+  "createdDate": {
+    "$date": "2024-12-09T20:48:29.972Z"
+  },
+  "updatedDate": {
+    "$date": "2024-12-09T21:15:50.634Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "675f1dfa24c07268b15c4470"
+  },
+  "offererId": "675184b24d5a731aa679a7aa",
+  "offerList": {
+    "book": {
+      "title": "Gerilim ve Kaos",
+      "author": "Berkay Sönmez",
+      "isbn": "9784582937640",
+      "publisher": "Gerilim Yayınları",
+      "publishedDate": "2021-04-19",
+      "category": "GERİLİM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "1"
+  },
+  "offeredBook": {
+    "title": "Savaş ve Barış",
+    "author": "Lev Tolstoy",
+    "isbn": "9786053324643",
+    "publisher": "İş Bankası Kültür Yayınları",
+    "publishedDate": "1869-01-01",
+    "category": "KURGU"
+  },
+  "offerStatus": "İPTAL_EDİLDİ",
+  "createdDate": {
+    "$date": "2024-12-15T18:20:42.893Z"
+  },
+  "updatedDate": {
+    "$date": "2024-12-15T18:23:29.547Z"
+  },
+  "_class": "org.example.document.Offer"
+},
+{
+  "_id": {
+    "$oid": "67600a46aebfc9325b348877"
+  },
+  "offererId": "675184b24d5a731aa679a7aa",
+  "offerList": {
+    "book": {
+      "title": "Kişisel Gelişim Rehberi",
+      "author": "Fatma Kaya",
+      "isbn": "9789876543211",
+      "publisher": "Kariyer Kitapları",
+      "publishedDate": "2021-08-22",
+      "category": "KISISEL_GELISIM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "2"
+  },
+  "offeredBook": {
+    "title": "Zamanın Kısa Tarihi",
+    "author": "Stephen Hawking",
+    "isbn": "9786050201138",
+    "publisher": "Alfa Yayınları",
+    "publishedDate": "1988-04-01",
+    "category": "BİLİM"
+  },
+  "offerStatus": "İPTAL_EDİLDİ",
+  "createdDate": {
+    "$date": "2024-12-16T11:08:54.798Z"
+  },
+  "updatedDate": {
+    "$date": "2024-12-16T11:10:06.241Z"
+  },
+  "_class": "org.example.document.Offer"
+}]

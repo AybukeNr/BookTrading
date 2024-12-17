@@ -1,0 +1,60 @@
+[{
+  "_id": {
+    "$oid": "675184b24d5a731aa679a7aa"
+  },
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "johndoe@gmail.com",
+  "password": "selam21",
+  "address": "Kılıçali Paşa Mh. Beyoğlu/İstanbul PK:34433",
+  "iban": "TR33 0006 1005 1978 6457 8413 26",
+  "_class": "org.example.document.User"
+},
+{
+  "_id": {
+    "$oid": "67519bffd76b9b5874307ce0"
+  },
+  "firstName": "Jane",
+  "lastName": "Smith",
+  "email": "janesmith@example.com",
+  "password": "password123",
+  "address": "Cumhuriyet Cad. Şişli/İstanbul PK:34381",
+  "iban": "TR12 3456 7890 1234 5678 9012 34",
+  "_class": "org.example.document.User"
+},
+{
+  "_id": {
+    "$oid": "67519c37d76b9b5874307ce1"
+  },
+  "firstName": "Ali",
+  "lastName": "Vural",
+  "email": "alivural@gmail.com",
+  "password": "qwerty2023",
+  "address": "Atatürk Blv. Çankaya/Ankara PK:06680",
+  "iban": "TR98 1234 5678 9012 3456 7890 12",
+  "_class": "org.example.document.User"
+},
+{
+  "_id": {
+    "$oid": "67519c59d76b9b5874307ce2"
+  },
+  "firstName": "Mehmet",
+  "lastName": "Yılmaz",
+  "email": "mehmetyilmaz@hotmail.com",
+  "password": "securepass99",
+  "address": "Kordon Boyu Cd. Konak/İzmir PK:35250",
+  "iban": "TR56 7890 1234 5678 9012 3456 78",
+  "_class": "org.example.document.User"
+},
+{
+  "_id": {
+    "$oid": "675ff84fa04bff0a4938429e"
+  },
+  "firstName": "Kürşat Kaan",
+  "lastName": "Akbulak",
+  "email": "k.kaanakbulak@gmail.com",
+  "password": "ananbaban",
+  "address": "Abdurrahmangazi mah. Külliye cad. No:20 Sugözü Sitesi B1 blok Daire 8 Sancaktepe / İstanbul",
+  "iban": "TR33 0006 1005 1978 6457 8413 23",
+  "_class": "org.example.document.User"
+}]

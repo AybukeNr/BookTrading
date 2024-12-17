@@ -1,0 +1,255 @@
+[{
+  "_id": {
+    "$oid": "675753420d82d172c6a6fda9"
+  },
+  "ownerId": "675184b24d5a731aa679a7aa",
+  "bookInfo": {
+    "title": "Savaş ve Barış",
+    "author": "Lev Tolstoy",
+    "isbn": "9786053324643",
+    "publisher": "İş Bankası Kültür Yayınları",
+    "publishedDate": "1869-01-01",
+    "category": "KURGU"
+  },
+  "status": "OPEN",
+  "type": "EXCHANGE",
+  "price": "0",
+  "offers": [
+    {
+      "offerId": "6757579ed8a4fc338343948c",
+      "offererId": "67519c59d76b9b5874307ce2",
+      "offerListId": "675753420d82d172c6a6fda9",
+      "offeredBookId": {
+        "$numberLong": "22"
+      },
+      "offeredBook": {
+        "title": "Fantastik Dünyalar",
+        "author": "Selim Arda",
+        "isbn": "9785647382910",
+        "publisher": "Macera Yayıncılık",
+        "publishedDate": "2023-03-03",
+        "category": "FANTEZİ"
+      },
+      "offerStatus": "İPTAL_EDİLDİ",
+      "createdDate": {
+        "$date": "2024-12-09T20:48:30.150Z"
+      },
+      "updatedDate": {
+        "$date": "2024-12-09T21:15:50.674Z"
+      }
+    }
+  ],
+  "_class": "org.example.document.Lists"
+},
+{
+  "_id": {
+    "$oid": "675753550d82d172c6a6fdaa"
+  },
+  "ownerId": "675184b24d5a731aa679a7aa",
+  "bookInfo": {
+    "title": "Zamanın Kısa Tarihi",
+    "author": "Stephen Hawking",
+    "isbn": "9786050201138",
+    "publisher": "Alfa Yayınları",
+    "publishedDate": "1988-04-01",
+    "category": "BİLİM"
+  },
+  "status": "OPEN",
+  "type": "EXCHANGE",
+  "price": "0",
+  "_class": "org.example.document.Lists"
+},
+{
+  "_id": {
+    "$oid": "6757535a0d82d172c6a6fdab"
+  },
+  "ownerId": "675184b24d5a731aa679a7aa",
+  "bookInfo": {
+    "title": "Nutuk",
+    "author": "Mustafa Kemal Atatürk",
+    "isbn": "9789751029639",
+    "publisher": "İnkılap Kitabevi",
+    "publishedDate": "1927-10-15",
+    "category": "TARİH"
+  },
+  "status": "OPEN",
+  "type": "EXCHANGE",
+  "price": "0",
+  "_class": "org.example.document.Lists"
+},
+{
+  "_id": {
+    "$oid": "6757535f0d82d172c6a6fdac"
+  },
+  "ownerId": "675184b24d5a731aa679a7aa",
+  "bookInfo": {
+    "title": "Steve Jobs",
+    "author": "Walter Isaacson",
+    "isbn": "9786050910450",
+    "publisher": "Domingo Yayınevi",
+    "publishedDate": "2011-10-24",
+    "category": "BİYOGRAFİ"
+  },
+  "status": "OPEN",
+  "type": "EXCHANGE",
+  "price": "0",
+  "_class": "org.example.document.Lists"
+},
+{
+  "_id": {
+    "$oid": "675753620d82d172c6a6fdad"
+  },
+  "ownerId": "675184b24d5a731aa679a7aa",
+  "bookInfo": {
+    "title": "Yüzüklerin Efendisi",
+    "author": "J.R.R. Tolkien",
+    "isbn": "9789753425994",
+    "publisher": "Metis Yayınları",
+    "publishedDate": "1954-07-29",
+    "category": "FANTEZİ"
+  },
+  "status": "OPEN",
+  "type": "EXCHANGE",
+  "price": "0",
+  "_class": "org.example.document.Lists"
+},
+{
+  "_id": {
+    "$oid": "6757538c0d82d172c6a6fdae"
+  },
+  "ownerId": "67519bffd76b9b5874307ce0",
+  "bookInfo": {
+    "title": "Tarihin İzleri",
+    "author": "Ahmet Yılmaz",
+    "isbn": "9781234567890",
+    "publisher": "Tarih Yayınları",
+    "publishedDate": "2023-05-01",
+    "category": "TARİH"
+  },
+  "status": "OPEN",
+  "type": "EXCHANGE",
+  "price": "0",
+  "_class": "org.example.document.Lists"
+},
+{
+  "_id": {
+    "$oid": "675753910d82d172c6a6fdaf"
+  },
+  "ownerId": "67519bffd76b9b5874307ce0",
+  "bookInfo": {
+    "title": "Felsefenin Temelleri",
+    "author": "Mehmet Can",
+    "isbn": "9781234567891",
+    "publisher": "Bilgi Yayıncılık",
+    "publishedDate": "2022-11-12",
+    "category": "FELSEFE"
+  },
+  "status": "OPEN",
+  "type": "EXCHANGE",
+  "price": "0",
+  "_class": "org.example.document.Lists"
+},
+{
+  "_id": {
+    "$oid": "675753cd0d82d172c6a6fdb0"
+  },
+  "ownerId": "67519c37d76b9b5874307ce1",
+  "bookInfo": {
+    "title": "Bilim ve İnsan",
+    "author": "Ayşe Nur",
+    "isbn": "9789876543210",
+    "publisher": "Bilimsel Düşünce",
+    "publishedDate": "2020-01-15",
+    "category": "BİLİM"
+  },
+  "status": "OPEN",
+  "type": "EXCHANGE",
+  "price": "0",
+  "_class": "org.example.document.Lists"
+},
+{
+  "_id": {
+    "$oid": "675753d20d82d172c6a6fdb1"
+  },
+  "ownerId": "67519c37d76b9b5874307ce1",
+  "bookInfo": {
+    "title": "Kişisel Gelişim Rehberi",
+    "author": "Fatma Kaya",
+    "isbn": "9789876543211",
+    "publisher": "Kariyer Kitapları",
+    "publishedDate": "2021-08-22",
+    "category": "KISISEL_GELISIM"
+  },
+  "status": "OPEN",
+  "type": "EXCHANGE",
+  "price": "0",
+  "offers": [
+    {
+      "offerId": "67600a46aebfc9325b348877",
+      "offererId": "675184b24d5a731aa679a7aa",
+      "offerListId": "675753d20d82d172c6a6fdb1",
+      "offeredBookId": {
+        "$numberLong": "2"
+      },
+      "offeredBook": {
+        "title": "Zamanın Kısa Tarihi",
+        "author": "Stephen Hawking",
+        "isbn": "9786050201138",
+        "publisher": "Alfa Yayınları",
+        "publishedDate": "1988-04-01",
+        "category": "BİLİM"
+      },
+      "offerStatus": "İPTAL_EDİLDİ",
+      "createdDate": {
+        "$date": "2024-12-16T11:08:55.197Z"
+      },
+      "updatedDate": {
+        "$date": "2024-12-16T11:10:06.267Z"
+      }
+    }
+  ],
+  "_class": "org.example.document.Lists"
+},
+{
+  "_id": {
+    "$oid": "675f1cdfc1eb5d374663ab2b"
+  },
+  "ownerId": "67519c37d76b9b5874307ce1",
+  "bookInfo": {
+    "title": "Gerilim ve Kaos",
+    "author": "Berkay Sönmez",
+    "isbn": "9784582937640",
+    "publisher": "Gerilim Yayınları",
+    "publishedDate": "2021-04-19",
+    "category": "GERİLİM"
+  },
+  "status": "OPEN",
+  "type": "EXCHANGE",
+  "price": "0",
+  "offers": [
+    {
+      "offerId": "675f1dfa24c07268b15c4470",
+      "offererId": "675184b24d5a731aa679a7aa",
+      "offerListId": "675f1cdfc1eb5d374663ab2b",
+      "offeredBookId": {
+        "$numberLong": "1"
+      },
+      "offeredBook": {
+        "title": "Savaş ve Barış",
+        "author": "Lev Tolstoy",
+        "isbn": "9786053324643",
+        "publisher": "İş Bankası Kültür Yayınları",
+        "publishedDate": "1869-01-01",
+        "category": "KURGU"
+      },
+      "offerStatus": "İPTAL_EDİLDİ",
+      "createdDate": {
+        "$date": "2024-12-15T18:20:43.054Z"
+      },
+      "updatedDate": {
+        "$date": "2024-12-15T18:23:29.561Z"
+      }
+    }
+  ],
+  "_class": "org.example.document.Lists"
+}]
