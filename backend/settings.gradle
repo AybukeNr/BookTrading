@@ -1,0 +1,9 @@
+rootProject.name = 'backend'
+include 'LibraryService'
+include 'ListingService'
+include 'OfferService'
+include 'RecommendationService'
+include 'ShippingService'
+include 'TransactionService'
+include 'UserService'
+

@@ -1,0 +1,10 @@
+server:
+  port: 8081
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: aybuke
+      password: root
+      database: ListDB
