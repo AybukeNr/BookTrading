@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: aybuke
+      password: root
+      database: UserDB
+
+jwt:
+  secretkey: 91e916ff658fade69312c1c2177850ca2d1f1e5aa50a117c94ca50619ef4d003
+  audience: bookswap
+  issuer: bookswapteam
