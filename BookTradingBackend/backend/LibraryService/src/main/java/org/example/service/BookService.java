@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.example.dto.request.BookListRequest;
 import org.example.dto.request.BookRequest;
 import org.example.dto.request.ListRequest;
+import org.example.dto.request.UpdateBookStat;
 import org.example.dto.response.BookResponse;
 import org.example.entity.Books;
+import org.example.entity.enums.BookStatus;
 import org.example.exception.BookException;
 import org.example.exception.ErrorType;
 import org.example.external.ListManager;
@@ -16,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,6 +77,12 @@ public class BookService {
 
         log.info("Create list: {}", listRequest);
         listManager.createList(listRequest);
+    }
+    public Boolean updateBookStatus(UpdateBookStat updateBookStat){
+        Books book = bookRepository.findById(updateBookStat.getBookId()).orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
+        book.setStatus(BookStatus.valueOf(updateBookStat.getStatus()));
+        bookRepository.save(book);
+        return true;
     }
 
 

@@ -12,9 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateShippingRequest {
 
-    private String listID;
-    private String senderId;
-    private String receiverId;
-    private Long sendingBookId;
-    private Long offeredBookId;
+    private String listId;
+    private ListType listType;
+    private String ownerId;
+    private String offererId;
+    private String ownerAddress;
+    private String offererAddress;
+    private String transactionId;
+
 }

@@ -1,9 +1,12 @@
 package org.example.service;
 
+import org.example.dto.request.CreateExchangeRequest;
 import org.example.dto.request.CreateShippingRequest;
+import org.example.dto.request.UpdateShippingRequest;
+import org.example.dto.response.ExchangeResponse;
 import org.example.dto.response.ShippingResponse;
-import org.example.entity.ExchangeManager;
 import org.example.entity.Shippings;
+import org.example.entity.enums.ExchangeStatus;
 import org.example.entity.enums.ShippingStatus;
 
 import java.util.List;
@@ -11,37 +14,28 @@ import java.util.List;
 public interface IShippingService {
 
     /**
-     * Yeni bir kargo oluşturur.
+     *
+     * Yeni bir takas kargosu oluşturur.
      *
      * @param createShippingRequest Yeni kargo bilgileri
      * @return Oluşturulan kargo nesnesi
-     */
-     ShippingResponse createShippingforExchange(CreateShippingRequest createShippingRequest);
-
-    /**
-     * Belirtilen kargo ID'sine göre kargo bilgisini döner.
      *
-     * @param shippingSerialNumber Kargo ID
-     * @return Kargo nesnesi
      */
-    Shippings getShippingByShippingSerialNumber(String shippingSerialNumber);
+    Boolean createShipping(CreateShippingRequest createShippingRequest);
 
-    /**
-     * Kullanıcının kargo takip numarasını günceller.
-     *
-     * @param transactionId takas numararsı
-     * @return Takas nesnesi
-     */
-    ExchangeManager findByTransactionId(String transactionId);
+
+    public Boolean createExchange(CreateExchangeRequest createExchangeRequest);
+
+
+
 
     /**
      * Kargo durumunu günceller.
      *
-     * @param shippingId Güncellenecek kargonun ID'si
-     * @param status Yeni kargo durumu
+     * @param updateShippingRequest Güncellenecek kargonun seri nosu
      * @return Güncellenen kargo nesnesi
      */
-    Shippings updateShippingStatus(String shippingId, ShippingStatus status);
+    public ShippingResponse updateShippingStatus(UpdateShippingRequest updateShippingRequest);
 
     /**
      * Gönderici veya alıcı kullanıcı ID'sine göre kargo listesini döner.
@@ -49,37 +43,74 @@ public interface IShippingService {
      * @param userId Kullanıcı ID
      * @return Kullanıcıya ait kargoların listesi
      */
-    List<Shippings> getShippingsByUser(String userId);
+    List<ShippingResponse> getUsersShippings(String userId);
 
     /**
      * Takas işlemi için iki tarafın kargo süreçlerini kontrol eder.
      *
-     * @param exchange Takas işlemi
      * @return Eğer iki taraf da kargo süreçlerini tamamlamışsa true, aksi halde false
      */
-    boolean isExchangeComplete(ExchangeManager exchange);
+    public Boolean checkExchangeStatus();
+
 
     /**
-     * Kargo takip numarasını doğrular.
      *
-     * @param trackingNumber Doğrulanacak kargo takip numarası
-     * @return Geçerli bir takip numarası ise true, aksi halde false
+     *
+     * @param transactionId takas numararsı
+     * @return Takas nesnesi
      */
-    boolean validateTrackingNumber(String trackingNumber);
+    ExchangeResponse findByTransactionId(String transactionId);
+
+
+
+    public ExchangeResponse cancelExchangeStatus(String transactionId) ;
+
+    ShippingResponse delivered(String shippingSerialNumber);
+    /**
+     * Tüm kargoları listeleyen bir metot.
+     *
+     * @return List<ShippingResponse> - Tüm kargo işlemlerinin yanıt nesnesi.
+     */
+    List<ShippingResponse> getAllShippings();
 
     /**
-     * Kargonun sürecinin belirtilen kullanıcı tarafından iptal edilip edilemeyeceğini kontrol eder.
+     * Seri numarasına göre bir kargo işlemini getirir.
      *
-     * @param shippingId Kargo ID
-     * @param userId Kullanıcı ID
-     * @return Eğer iptal edilebilir ise true, aksi halde false
+     * @param serialNumber - Aranan kargonun seri numarası.
+     * @return ShippingResponse - İlgili kargo işleminin yanıt nesnesi.
      */
-    boolean canCancelShipping(String shippingId, String userId);
+    ShippingResponse getShippingBySn(String serialNumber);
 
     /**
-     * Belirtilen kargo ID'sini siler.
+     * Tüm takas işlemlerini listeleyen bir metot.
      *
-     * @param shippingId Silinecek kargonun ID'si
+     * @return List<ExchangeResponse> - Tüm takas işlemlerinin yanıt nesnesi.
      */
-    void deleteShipping(String shippingId);
+    List<ExchangeResponse> getAllExchanges();
+
+    /**
+     * Belirli bir duruma göre takas işlemlerini listeleyen bir metot.
+     *
+     * @param exchangeStatus - Aranan takas durumunun adı (örn: BEKLEMEDE, TAMAMLANDI).
+     * @return List<ExchangeResponse> - Belirtilen durumdaki takas işlemlerinin yanıt nesnesi.
+     */
+    List<ExchangeResponse> getAllExchangesByStatus(String exchangeStatus);
+
+    /**
+     * İşlem ID'sine göre bir takas işlemini getirir.
+     *
+     * @param transactionId - Aranan takasın işlem ID'si.
+     * @return ExchangeResponse - İlgili takas işleminin yanıt nesnesi.
+     */
+    ExchangeResponse getExchangeByTID(String transactionId);
+
+    /**
+     * Kullanıcı ID'sine göre takas işlemlerini listeleyen bir metot.
+     *
+     * @param userId - Kullanıcının ID'si.
+     * @return List<ExchangeResponse> - Kullanıcıya ait tüm takas işlemlerinin yanıt nesnesi.
+     */
+    List<ExchangeResponse> getExchangeByUserID(String userId);
+
+
 }

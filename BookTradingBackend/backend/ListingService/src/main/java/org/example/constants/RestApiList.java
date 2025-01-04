@@ -16,7 +16,13 @@ public class RestApiList {
     public static final String TAKE_OFFER = "/takeOffer";
     public static final String GET_RECIEVED_OFFERS = "/getRecievedOffers";
     public static final String UPDATE_OFFER = "/updateOffer";
+    public static final String UPDATE_LIST_STATUS = "/updateListStat";
+    public static final String TAKE_PAYMENT = "/takePayment";
+    public static final String CREATE_SHIPPING = "/createShipping";
+    public static final String CREATE_TRANSACTION = "/createTransaction";
+    public static final String GET_ADDRESSES = "/getAddresses";
+    public static final String UPDATE_BOOK_STATUS   = "/updateBook";
 
 
-
+    public static final String PROCESS_SALES = "/processSale" ;
 }

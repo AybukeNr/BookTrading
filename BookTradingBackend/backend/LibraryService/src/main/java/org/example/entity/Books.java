@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entity.enums.BookCategory;
+import org.example.entity.enums.BookStatus;
 
 @Data
 @AllArgsConstructor
@@ -28,6 +29,7 @@ public class Books {
     private byte[] image;
     @Enumerated(EnumType.STRING)
     private BookCategory category;
+    private BookStatus status;
 
 
 }

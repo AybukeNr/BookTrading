@@ -7,10 +7,7 @@ import org.example.dto.response.ListResponse;
 import org.example.dto.response.SentOffer;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import static org.example.constant.RestApiList.*;
 
@@ -23,7 +20,7 @@ public interface ListManager {
     @PostMapping(TAKE_OFFER)
     public ResponseEntity<Boolean> takeOffer(@RequestBody SentOffer offer);
 
-    @PostMapping(UPDATE_OFFER)
+    @PutMapping(UPDATE_OFFER)
     public ResponseEntity<Boolean> updateOffer(@RequestBody UpdateOfferRequest offer);
 
 }

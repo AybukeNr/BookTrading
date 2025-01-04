@@ -33,7 +33,7 @@ public class AuthService {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(token);
         return loginResponse ;
-    };
+    }
     //todo : change password
     //todo : forgot password
 

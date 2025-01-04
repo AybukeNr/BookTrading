@@ -1,7 +1,6 @@
 package org.example.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +19,7 @@ public class UserRequest {
     @Schema(example = "Doe")
     private String lastName;
 
+    @NotNull(message = "phone cannot be empty")
     @Schema(example = "0543 788 91 36")
     private String phoneNumber;
 

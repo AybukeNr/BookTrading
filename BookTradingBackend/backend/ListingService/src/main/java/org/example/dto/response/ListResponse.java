@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.entity.enums.ListType;
 import org.example.entity.enums.ListsStatus;
 
 
@@ -16,4 +17,5 @@ public class ListResponse {
     private String listId;
     private ListBookResponse book;
     private ListsStatus status;
+
 }

@@ -21,12 +21,14 @@ import java.time.LocalDateTime;
 public class Shippings {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @UuidGenerator
     private String shippingSerialNumber;
-    private String senderId; // Gönderen kullanıcı ID
-    private String receiverId; // Alıcı kullanıcı ID
-    private Long bookId; // Gönderilen kitap ID
+    private String listId;
+    private String senderId;// Gönderen kullanıcı ID
+    private String recieverId;
+    private String recieverAddress;
     private String trackingNumber; // Kargo takip numarası
     @Enumerated(EnumType.STRING)
     private ShippingStatus status; // Kargo durumu

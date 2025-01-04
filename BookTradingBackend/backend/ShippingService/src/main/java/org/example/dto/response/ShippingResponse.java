@@ -16,8 +16,9 @@ import java.time.LocalDateTime;
 public class ShippingResponse {
 
     private String senderId;
-    private Long senderBookId;
     private String trackingNumber;
+    private String senderAddress;
+    private String recieverAddress;
     private ShippingStatus shippingStatus;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;

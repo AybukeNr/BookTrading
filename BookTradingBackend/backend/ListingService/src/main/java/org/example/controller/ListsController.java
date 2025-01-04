@@ -1,12 +1,18 @@
 package org.example.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
 
 import org.example.dto.request.ListRequest;
+import org.example.dto.request.SalesRequest;
+import org.example.dto.request.UpdateListReq;
 import org.example.dto.request.UpdateOfferRequest;
 import org.example.dto.response.ListResponse;
 
@@ -25,29 +31,50 @@ import static org.example.constants.RestApiList.*;
 @RequiredArgsConstructor
 @RequestMapping(LISTS)
 @Slf4j
+@Tag(name = "Lists Controller", description = "Operations related to book lists")
 public class ListsController {
+
     private final ListsService listsService;
 
-
-
+    @Operation(summary = "Create a new list", description = "Creates a new book list with the provided details.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input provided")
+    })
     @PostMapping(CREATE_LISTS)
     public ResponseEntity<Boolean> createList(@RequestBody ListRequest lists) {
         log.info("Received ListRequest: {}", lists);
         log.info("Received Book: {}", lists.getBookInfo());
-        ListResponse response = listsService.createLists(lists);
+        listsService.createLists(lists);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    @Operation(summary = "Get all lists", description = "Retrieves all available book lists.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lists retrieved successfully")
+    })
     @GetMapping(GET_ALL_LISTS)
     public ResponseEntity<List<ListResponse>> getLists() {
         List<ListResponse> lists = listsService.getAllLists();
         return new ResponseEntity<>(lists, HttpStatus.OK);
     }
+
+    @Operation(summary = "Get lists by owner ID", description = "Retrieves all lists associated with a specific owner.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lists retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Owner not found")
+    })
     @GetMapping(GET_LISTS_BY_OWNER_ID)
     public ResponseEntity<List<ListResponse>> getListsByOwnerId(@RequestParam String ownerId) {
         List<ListResponse> lists = listsService.getListsByOwnerId(ownerId);
         return new ResponseEntity<>(lists, HttpStatus.OK);
     }
+
+    @Operation(summary = "Get list by ID", description = "Retrieves a specific list by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "List not found")
+    })
     @GetMapping(GET_LIST_BY_ID)
     public ResponseEntity<ListResponse> getListById(@RequestParam String listId) {
         ListResponse lists = listsService.getListById(listId);
@@ -55,23 +82,57 @@ public class ListsController {
         log.info("Received Book: {}", lists.getBook());
         return new ResponseEntity<>(lists, HttpStatus.OK);
     }
+
+    @Operation(summary = "Take an offer", description = "Accepts an offer for a specific list.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Offer accepted successfully"),
+            @ApiResponse(responseCode = "404", description = "Offer not found")
+    })
     @PostMapping(TAKE_OFFER)
     public ResponseEntity<Boolean> takeOffer(@RequestBody SentOffer offer) {
         log.info("Received OfferRequest: {}", offer);
         listsService.takeOffers(offer);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
+
+    @Operation(summary = "Get received offers", description = "Retrieves all offers received by a user.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Offers retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
     @GetMapping(GET_RECIEVED_OFFERS)
     public ResponseEntity<List<SentOffer>> getRecievedOffers(@RequestParam String userId) {
         List<SentOffer> lists = listsService.getRecievedOffers(userId);
         return new ResponseEntity<>(lists, HttpStatus.OK);
     }
-    @PatchMapping(UPDATE_OFFER)
+
+    @Operation(summary = "Update an offer", description = "Updates the status of a specific offer.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Offer updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Offer not found")
+    })
+    @PutMapping(UPDATE_OFFER)
     public ResponseEntity<Boolean> updateOffer(@RequestBody UpdateOfferRequest offer) {
         log.info("Received OfferRequest: {}", offer);
         listsService.updateOffer(offer);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    @Operation(summary = "Update list status", description = "Updates the status of a specific list.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List status updated successfully"),
+            @ApiResponse(responseCode = "404", description = "List not found")
+    })
+    @PutMapping (UPDATE_LIST_STATUS)
+    public ResponseEntity<Boolean> updateListStatus(@RequestBody UpdateListReq listReq) {
+        log.info("Received List Request: {}", listReq);
+        return new ResponseEntity<>(listsService.updateListStatus(listReq), HttpStatus.OK);
+    }
+    @PutMapping (PROCESS_SALES)
+    public ResponseEntity<Boolean> processSales(@RequestBody SalesRequest sale) {
+        log.info("Received Sale Request: {}", sale);
+        listsService.processSales(sale);
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
 
 }

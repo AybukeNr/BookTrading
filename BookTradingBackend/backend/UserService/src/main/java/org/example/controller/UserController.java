@@ -6,12 +6,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.example.entity.User;
 import org.example.dto.response.UserResponse;
 import org.example.service.UserService;
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Map;
 
 import static org.example.constant.RestApiList.*;
 
@@ -52,4 +54,10 @@ public class UserController {
         UserResponse userResponse = userService.findUserById(id);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
+    @GetMapping(GET_ADDRESSES)
+    public ResponseEntity<Map<String, String>> getAddresses(@RequestParam String ownerId, @RequestParam String offererId) {
+        Map<String, String> addresses = userService.getUsersAddressesAsMap(ownerId, offererId); // Bu metod bir Map döndürmeli.
+        return ResponseEntity.ok(addresses); // ResponseEntity ile sarmalanmış Map döndürülüyor.
+    }
+
 }

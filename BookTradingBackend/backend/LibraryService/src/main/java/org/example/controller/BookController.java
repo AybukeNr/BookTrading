@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.dto.request.BookListRequest;
 import org.example.dto.request.BookRequest;
 import org.example.dto.request.ListRequest;
+import org.example.dto.request.UpdateBookStat;
 import org.example.dto.response.BookResponse;
 import org.example.external.ListManager;
 import org.example.service.BookService;
@@ -123,6 +124,12 @@ public class BookController {
     public ResponseEntity<BookResponse> findById(@RequestParam Long id){
         BookResponse bookResponse = bookService.getBookById(id);
         return new ResponseEntity<>(bookResponse,HttpStatus.OK);
+    }
+    @PutMapping(UPDATE_BOOK_STATUS)
+    public ResponseEntity<Boolean> updateBookStat(@RequestBody UpdateBookStat updateBookStat){
+        bookService.updateBookStatus(updateBookStat);
+        return new ResponseEntity<>(true,HttpStatus.OK);
+
     }
 
 
