@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.CreatePaymentRequest;
+import org.example.dto.request.SalesRequest;
 import org.example.dto.request.TakePaymentRequest;
 import org.example.dto.request.TransactionRequest;
 import org.example.dto.response.CardResponse;
@@ -14,6 +15,7 @@ import org.example.entity.Payment;
 import org.example.entity.enums.PaymentStatus;
 import org.example.exception.ErrorType;
 import org.example.exception.TransactionException;
+import org.example.external.ListManager;
 import org.example.mapper.PaymentMapper;
 import org.example.repository.CardsRepository;
 import org.example.repository.PaymentRepository;
@@ -21,6 +23,7 @@ import org.example.service.IPaymentService;
 import org.example.service.ITransactionService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class PaymentServiceImpl implements IPaymentService {
     private final CardsRepository cardsRepository;
     private final PaymentMapper paymentMapper;
     private final ITransactionService transactionService;
+    private final ListManager listManager;
 
     @Override
     public Boolean checkCardInfos(CreatePaymentRequest createPaymentRequest, Cards cards) {
@@ -40,35 +44,14 @@ public class PaymentServiceImpl implements IPaymentService {
         boolean isCardNumberValid = createPaymentRequest.getCardNumber().equals(cards.getCardNumber());
         boolean isCvvValid = createPaymentRequest.getCvv().equals(cards.getCvv());
         boolean isFullnameValid = createPaymentRequest.getFullName().equals(cards.getFullName());
-
-        // Kartın son kullanma tarihini kontrol et
-        String[] expiryParts = cards.getExpiryDate().split("/");
-        String expiryMonth = expiryParts[0];
-        String expiryYear = expiryParts[1];
-        boolean isExpiryValid = checkExpiryDate(expiryMonth, expiryYear);
+        boolean isExpiryValid = createPaymentRequest.getExpiryDate().equals(cards.getExpiryDate());
 
 
         // Tüm koşullar sağlanıyorsa true döndür
-        return isCardNumberValid && isCvvValid && isExpiryValid;
+        return isCardNumberValid && isCvvValid && isExpiryValid && isFullnameValid;
     }
 
-      public boolean checkExpiryDate(String expiryMonth, String expiryYear) {
-        try {
-            int month = Integer.parseInt(expiryMonth);
-            int year = Integer.parseInt(expiryYear);
 
-            if (month < 1 || month > 12) {
-                return false;
-            }
-
-            YearMonth expiryDate = YearMonth.of(year, month);
-            YearMonth currentDate = YearMonth.now();
-            return !expiryDate.isBefore(currentDate); // Geçmişte değilse geçerli
-        } catch (NumberFormatException e) {
-            log.error("Invalid expiry date format: {}/{}", expiryMonth, expiryYear);
-            return false;
-        }
-    }
 
     /**
      * Ödeme başarılı ise transactiona aktarılır
@@ -92,7 +75,7 @@ public class PaymentServiceImpl implements IPaymentService {
                 .orElseThrow(() -> new TransactionException(ErrorType.CARD_NOT_FOUND));
 
         // Kart bilgilerini doğrula
-        if ((checkCardInfos(createPaymentRequest, cards))) {
+        if (!(checkCardInfos(createPaymentRequest, cards))) {
             log.error("Card information is invalid for card: {}", cards.getCardNumber());
             throw new TransactionException(ErrorType.INVALID_CARD_INFO);
         }
@@ -116,11 +99,15 @@ public class PaymentServiceImpl implements IPaymentService {
         // Başarılı ödeme kaydı
         Payment successfulPayment = paymentMapper.requestToPayment(createPaymentRequest);
         successfulPayment.setStatus(PaymentStatus.SUCCESS);
+        successfulPayment.setPaymentDate(LocalDateTime.now());
         if(createPaymentRequest.getListType().equals(ListType.SALE)){
-
+            SalesRequest salesRequest = SalesRequest.builder()
+                            .offererId(createPaymentRequest.getUserId())
+                                    .listId(createPaymentRequest.getListId()).build();
+            listManager.processSales(salesRequest);
+            log.info("sale processing requested {}", salesRequest);
 
         }
-
         // Ödemeyi transaction servisine aktar
         TakePaymentRequest takePaymentRequest = TakePaymentRequest.builder()
                 .amount(createPaymentRequest.getAmount())

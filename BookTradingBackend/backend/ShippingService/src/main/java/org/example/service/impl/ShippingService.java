@@ -121,19 +121,26 @@ public class ShippingService implements IShippingService {
     public ShippingResponse updateShippingStatus(UpdateShippingRequest updateShippingRequest) {
         Shippings shippings = shippingRepository.findByShippingSerialNumber(updateShippingRequest.getShippingSerialNumber()).orElseThrow(() -> new ShippingException(ErrorType.SHIPPING_NOT_FOUND));
         Exchange exchange = exchangeRepository.findByListId(shippings.getListId()).orElseThrow(() -> new ShippingException(ErrorType.EXCHANGE_NOT_FOUND));
-        shippings.setStatus(ShippingStatus.valueOf(updateShippingRequest.getStatus()));
         shippings.setUpdatedDate(LocalDateTime.now());
         if(updateShippingRequest.getTrackingNumber() != null || !updateShippingRequest.getTrackingNumber().isEmpty()) {
             shippings.setTrackingNumber(updateShippingRequest.getTrackingNumber());
             shippings.setStatus(ShippingStatus.KARGOLANDI);
             shippingRepository.save(shippings);
+            log.info("Shipping Updated : {}" ,shippings);
             if (updateShippingRequest.getShippingSerialNumber().equals(exchange.getOffererShippingSerialNumber())) {
                 exchange.setOffererShippingSerialNumber(exchange.getOffererShippingSerialNumber());
             } else {
                 exchange.setOwnerShippingSerialNumber(exchange.getOwnerShippingSerialNumber());
             }
+            if(exchange.getOffererId().equals(updateShippingRequest.getUserId())){
+                exchange.setOffererTrackingNumber(updateShippingRequest.getTrackingNumber());
+            }
+            else {
+                exchange.setOwnerTrackingNumber(updateShippingRequest.getTrackingNumber());
+            }
             exchange.setStatus(ExchangeStatus.KARGO_BEKLENIYOR);
             exchangeRepository.save(exchange);
+            log.info("Exchange : {}", exchange);
         }
         return shippingMapper.ShippingToResponse(shippings);
     }

@@ -38,6 +38,7 @@ public class RestApiList {
     public static final String UPDATE_LIST_STATUS = "/updateListStat";
 
     public static final String CREATE_ACCOUNT = "/createAccount";
+    public static final String PROCESS_SALES = "/processSale" ;
 
 
 

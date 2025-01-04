@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 public class UpdateShippingRequest {
     private String shippingSerialNumber;
     private String trackingNumber;
-    private String status;
     private String userId;
 }
