@@ -1,0 +1,57 @@
+.profile {
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+}
+.profile > h2{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.profile_details {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid darkgray;
+    background-color: aliceblue;
+    padding: 20px;
+}
+
+.profile_details > h5 {
+    margin-bottom: 2px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.profile_details > input {
+    height: 25px;
+    margin-bottom: 12px;
+    background-color: white;
+    width: 30%;
+    border-radius: 8px;
+    font-family: monospace;
+}
+
+.profile_details > textarea {
+    height: 100px;
+    margin-bottom: 12px;
+    background-color: white;
+    width: 30%;
+    border-radius: 8px;
+    font-family: monospace;
+}
+
+.profile > button {
+    position: absolute;
+    top: 585px;
+    right: 20px;
+    background: orange;
+    color: aliceblue;
+    padding: 10px 20px;
+    border-color: rgb(57, 139, 217);
+    border-radius: 2px solid;
+    cursor: pointer;
+}
+.profile > button:hover {
+    background-color: rgb(57, 139, 217);
+    transform: scale(1.05);
+}

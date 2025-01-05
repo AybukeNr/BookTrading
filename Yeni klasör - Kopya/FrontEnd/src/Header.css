@@ -25,6 +25,7 @@
 .header_searchInput {
     height: 12px;
     padding: 10px;
+    border-radius: 24px;
     border: none;
     width: 100%;
 }
@@ -47,6 +48,7 @@
     padding: 5px;
     height: 22px !important;
     background-color: orange;
+    border-radius: 24px;
 }
 
 .header_option {
@@ -57,12 +59,251 @@
     color: aliceblue;
 }
 
-.header_optionBasket {
+.header_optionBasket, .header_optionAccount, .header_optionNotification {
     color: aliceblue;
     display: flex;
     align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
 }
+
 .header_basketCount {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+
+.dropdown_menu {
+    position: absolute;
+    top: 50px;
+    left: calc(100% - 220px);
+    color: #213547;
+    background-color: aliceblue;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 10;
+}
+
+.dropdown_menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.dropdown_menu li {
+    padding: 5px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dropdown_menu li:hover {
+    background-color: orange;
+}
+
+.notifications {
+    position: absolute;
+    background-color: aliceblue;
+    color: #213547;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 15px;
+    right: 0;
+    top: 40px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.notifications ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notifications ul ul {
+    margin: 5px 0;
+    font-size: 14px;
+    border-bottom: 1px solid darkgray;
+}
+
+/* @media (max-width: 768px) {
+    .header {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        height: auto;
+        padding: 10px 20px;
+    }
+
+    .header_logo {
+        width: 80px;
+        margin: 10px 0;
+    }
+
+    .header_search {
+        flex: 1;
+        margin: 10px 0;
+    }
+
+    .header_nav {
+        flex: 1;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+    .header_option, .header_optionAccount, .header_optionBasket, .header_optionNotification {
+        margin: 10px;
+        flex: 1 1 calc(50% - 20px);
+        text-align: center;
+    }
+
+    .dropdown_menu {
+        top: 40px;
+        left: auto;
+        right: 10px;
+        width: 200px;
+    }
+
+    .notifications {
+        top: 50px;
+        right: 10px;
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 15px;
+    }
+
+    .header_logo {
+        width: 60px;
+        margin: 10px 0;
+    }
+
+    .header_search {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .header_nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .header_option, .header_optionAccount, .header_optionBasket, .header_optionNotification {
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        padding: 5px 0;
+    }
+
+    .dropdown_menu, .notifications {
+        width: 90%;
+        top: 50px;
+        right: auto;
+        left: 5%;
+    }
+
+    .dropdown_menu ul li, .notifications ul ul {
+        text-align: center;
+    }
+} */
+
+
+@media (max-width: 768px) {
+    .header {
+        padding: 0 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        height: auto;
+    }
+
+    .header_logo {
+        width: 70px;
+    }
+
+    .header_search {
+        width: 60%; 
+        margin-top: 10px;
+    }
+
+    .header_nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .header_option, .header_optionAccount, .header_optionBasket, .header_optionNotification {
+        margin: 10px 5px;
+    }
+
+    .header_optionLineOne {
+        font-size: 10px;
+    }
+
+    .header_optionLineTwo {
+        font-size: 12px;
+    }
+
+    .dropdown_menu {
+        left: auto;
+        right: 10px;
+    }
+
+    .notifications {
+        top: 45px;
+        right: 10px;
+        width: 80%;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 15px;
+        height: auto;
+    }
+
+    .header_logo {
+        width: 60px;
+        margin-bottom: 10px;
+    }
+
+    .header_search {
+        width: 80%;
+        margin: 10px 0;
+    }
+
+    .header_nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .header_option, .header_optionAccount, .header_optionBasket, .header_optionNotification {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .dropdown_menu, .notifications {
+        width: 90%;
+        top: 50px;
+        right: auto;
+        left: 5%;
+    }
+
+    .dropdown_menu ul li, .notifications ul li {
+        text-align: center;
+        padding: 8px 0;
+    }
 }

@@ -1,0 +1,174 @@
+.AddBookToBookshelf {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: aliceblue;
+}
+
+.AddBookToBookshelf h2 {
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    color: #213547;
+    border-bottom: 1px solid darkgray;
+}
+
+.book {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.book h5 {
+    margin: 0;
+    font-size: 16px;
+    color: #213547;
+}
+
+.book input, .book select {
+    width: auto;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid darkgray;
+    border-radius: 8px;
+    outline: darkgray;
+}
+
+.book input:focus, .book select:focus {
+    border-color: aliceblue;
+    box-shadow: 0 0 5px darkgray;
+}
+
+.book_category {
+    display: flex;
+    flex-direction: column;
+}
+
+.trade_sale {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 17px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+  
+.container input:checked ~ .checkmark {
+    background-color:rgb(57, 139, 217);
+}
+  
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+  
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+  
+.container .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.button_addBook {
+    width: 40%;
+    padding: 10px;
+    background-color: orange;
+    color: aliceblue;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.button_cancel {
+    width: 40%;
+    padding: 10px;
+    background-color: darkgray;
+    color: aliceblue;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.button_addBook:hover, .button_cancel:hover {
+    background-color: rgb(57, 139, 217);
+    transform: scale(1.05);
+}
+
+
+@media (max-width: 768px) {
+    .AddBookToBookshelf {
+        padding: 15px;
+    }
+
+    .book input, .book select {
+        font-size: 13px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .AddBookToBookshelf {
+        padding: 10px;
+    }
+
+    .book h5 {
+        font-size: 14px;
+    }
+
+    .book input, .book select {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    button {
+        font-size: 13px;
+        padding: 8px;
+    }
+}

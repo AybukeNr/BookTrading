@@ -1,12 +1,66 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Header.css'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import { Link } from 'react-router-dom';
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import { Link, useNavigate } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
+import Badge from '@mui/material/Badge';
 
 function Header() {
-    const [{ basket }, dispatch] = useStateValue();
+    const [{ basket, user }, dispatch] = useStateValue();
+    const navigate = useNavigate();
+    const [dropdownVisible, setdropdownVisible] = useState(false);
+    const [notificationsVisible, setNotificationsVisible] = useState(false);
+    const [hasNotifications, setHasNotifications] = useState(true);
+    const notificationRef = useRef(null);
+    const dropdownRef = useRef(null);
+
+    const handleAuthentication = () => {
+        if (user) {
+            localStorage.removeItem('authToken');
+            dispatch({
+                type: 'SET_USER',
+                user: null
+            });
+            navigate('/login');
+        } else {
+
+        }
+    }
+
+    const dropdown = () => {
+        setdropdownVisible(!dropdownVisible);
+    }
+
+    const toggleNotifications = () => {
+        setNotificationsVisible(!notificationsVisible);
+        if (hasNotifications) {
+            setHasNotifications(false);
+        }
+    };
+
+    const notifications = [
+        'Yeni bir mesajınız var.',
+        'Kitap takası teklifi alındı.',
+        'Profiliniz güncellendi.',
+    ];
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setdropdownVisible(false);
+            }
+            if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+                setNotificationsVisible(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
 
     return (
@@ -22,23 +76,52 @@ function Header() {
             </div>
 
             <div className='header_nav'>
-                <div className='header_option'>
-                    <span className='header_optionLineOne'>Merhaba!</span>
-                    <span className='header_optionLineTwo'>Giriş Yap</span>
+                <Link to={!user && '/login'}>
+                    <div onClick={handleAuthentication} className='header_option'>
+                        <span className='header_optionLineOne'>Merhaba!</span>
+                        <span className='header_optionLineTwo'>{user ? 'Çıkış Yap' : 'Giriş Yap'}</span>
+                    </div>
+                </Link>
+                <Link to='/bookshelf'>
+                    <div className='header_option'>
+                        <span className='header_optionLineOne'>Benim</span>
+                        <span className='header_optionLineTwo'>Kitaplığım</span>
+                    </div>
+                </Link>
+
+                <div className='header_optionAccount' onClick={dropdown} ref={dropdownRef}>
+                    <AccountBoxOutlinedIcon />
+                    {dropdownVisible && (
+                        <div className="dropdown_menu">
+                            <ul>
+                                <Link to='/myAccount'><li>Hesap Bilgilerim</li></Link>
+                                <Link to='/myOffers'><li>Tekliflerim</li></Link>
+                                <li>Takaslarım</li>
+                                <li>Satışlarım</li>
+                            </ul>
+                        </div>
+                    )}
                 </div>
-                <div className='header_option'>
-                    <span className='header_optionLineOne'>Benim</span>
-                    <span className='header_optionLineTwo'>Kitaplığım</span>
-                </div>
-                <div className='header_option'>
-                    <span className='header_optionLineOne'>Bir Şey</span>
-                    <span className='header_optionLineTwo'>Buluruz</span>
+
+                <div className='header_optionNotification' onClick={toggleNotifications} ref={notificationRef}>
+                    <Badge color='warning' variant={hasNotifications ? "dot" : undefined}>
+                        <NotificationsNoneIcon />
+                    </Badge>
+                    {notificationsVisible && (
+                        <div className="notifications">
+                            <ul>
+                                {notifications.map((notification, index) => (
+                                    <ul key={index}>{notification}</ul>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                 </div>
 
                 <Link to='/checkout'>
                     <div className='header_optionBasket'>
                         <ShoppingBasketIcon />
-                        <span className='header_optionLineTwo header_basketCount'>{ basket?.length }</span>
+                        <span className='header_optionLineTwo header_basketCount'>{basket?.length}</span>
                     </div>
                 </Link>
             </div>
@@ -46,4 +129,4 @@ function Header() {
     )
 }
 
-export default Header
+export default Header 
