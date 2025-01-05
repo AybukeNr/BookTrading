@@ -1,0 +1,113 @@
+.offerPopUp {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    z-index: 1001;
+  }
+
+  .offerPopUp_book {
+    display: flex;
+    align-items: center;
+    border: 1px solid orange;
+    padding: 10px;
+    border-radius: 8px;
+    gap: 15px;
+    background-color: aliceblue;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  .offerPopUp_book img {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 4px;
+  }
+  
+  .offerPopUp_bookInfo p {
+    margin: 5px 0;
+    text-align: left;
+  }
+
+  .offerPopUp_card {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .offerPopUp_card img {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 4px;
+  }
+
+  .offerPopUp_book.selected {
+    border: 2px solid aliceblue;
+    background-color:  orange;
+    cursor: pointer;
+  }
+
+  .offerPopUp_button {
+    background: orange;
+    border-radius: 1px solid;
+    margin-top: 10px;
+    border-color: rgb(57, 139, 217);
+    color: aliceblue;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+
+  .offerPopUp_button:hover {
+  background-color: rgb(57, 139, 217);
+    transform: scale(1.05);
+  }
+
+  @media screen and (max-width: 768px) {
+    .offerPopUp {
+        padding: 0.5rem;
+    }
+
+    .offerPopUp_book {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .offerPopUp_book img {
+        width: 80px;
+        height: auto;
+    }
+
+    .offerPopUp_bookInfo p {
+        font-size: 0.9rem;
+    }
+
+    .offerPopUp_button {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .offerPopUp {
+        gap: 0.5rem;
+    }
+
+    .offerPopUp_book img {
+        width: 60px;
+    }
+
+    .offerPopUp_bookInfo p {
+        font-size: 0.8rem;
+    }
+
+    .offerPopUp_button {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+} 
+
+
+
+

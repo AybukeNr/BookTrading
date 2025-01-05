@@ -21,11 +21,15 @@
 
 .subtotal > button {
     background: orange;
-    border-radius: 2px;
+    border-radius: 10px;
     width: 100%;
     height: 40px;
     border: 1px solid;
     margin-top: 10px;
     border-color: aliceblue;
     color: aliceblue;
+}
+.subtotal > button:hover {
+    background-color: rgb(57, 139, 217);
+    transform: scale(1.05);
 }

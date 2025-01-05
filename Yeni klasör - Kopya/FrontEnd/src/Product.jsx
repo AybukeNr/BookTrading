@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Product.css'
 import { useStateValue } from './StateProvider'
+import { useNavigate } from 'react-router-dom';
+import OfferPopUp from './OfferPopUp';
 
-function Product({ id, title, image, price }) {
+function Product({ id, title, author, isbn, publisher, publishedDate, category, image, price }) {
 
-  const [{ basket }, dispatch] = useStateValue(); 
+  const navigate = useNavigate();
+  const [{ basket }, dispatch] = useStateValue();
+  const [showOfferPopUp, setShowOfferPopUp] = useState(false);
   console.log('sepet deneme', basket);
-  
 
   const addToBasket = () => {
     dispatch({
@@ -14,27 +17,78 @@ function Product({ id, title, image, price }) {
       item: {
         id: id,
         title: title,
+        author: author,
+        isbn: isbn,
+        publisher: publisher,
+        publishedDate: publishedDate,
+        category: category,
         image: image,
         price: price
       }
     });
   }
 
+  const handleNavigate = () => {
+    navigate('/bookDetails', {
+      state: {
+        id,
+        title,
+        author,
+        isbn,
+        publisher,
+        publishedDate,
+        category,
+        image,
+        price
+      }
+    });
+  }
+
+
+  const offerPopUp = () => {
+    setShowOfferPopUp(!showOfferPopUp);
+  }
+
+
   return (
-    <div className='product'>
-        <div className="product_info">
-            <p>{ title }</p>
+    <>
+      <div className={`product ${showOfferPopUp ? 'inactive' : ''}`}>
+        <div className="product_info" onClick={handleNavigate}>
+          <p>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}</p>
+
+          {price ? (
             <p className='product_price'>
-                <small>₺</small>
-                <strong>{ price }</strong>
+              <strong>{price}</strong>
+              <small>₺</small>
             </p>
+          ) : (
+            <p className='product_trade'>Takasa açık</p>
+          )}
+
         </div>
 
-        <img src={ image } alt=''/>
+        <img src={image} alt='' onClick={handleNavigate} />
 
-        <button onClick={addToBasket}>Satın almak için sepete ekle</button>
-        <button>Takas için sepete ekle</button>
-    </div>
+        {price ? (
+          <button onClick={addToBasket}>Satın almak için sepete ekle</button>
+        ) : (
+          <button onClick={offerPopUp}>Takas için teklif ver</button>
+        )}
+      </div>
+      <>
+        {showOfferPopUp && (
+          <div className="popUp">
+            <div className="popUp_inner">
+              <h2>Takas için kitap seç</h2>
+              <OfferPopUp />
+              <div>
+                <button onClick={offerPopUp}>İptal</button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    </>
   )
 }
 

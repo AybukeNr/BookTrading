@@ -1,0 +1,140 @@
+.bookshelf {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1500px;
+    position: relative;
+}
+.bookshelf_title {
+    text-align: center;
+    padding: 10px;
+    font-weight: 450;
+    background-color: aliceblue;
+    border-bottom: 1px solid azure;
+}
+.bookshelf_row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 10px 0;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.bookshelf_card {
+    padding: 20px;
+    margin: 10px;
+    background-color: aliceblue;
+    flex-direction: column;
+    border-radius: 20px;
+    display: flex;
+    max-width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+.bookshelf_card > img {
+    max-height: 200px;
+    width: 100%;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.bookshelf_card > button {
+    background: orange;
+    border-radius: 1px solid;
+    margin-top: 10px;
+    border-color: rgb(57, 139, 217);
+    color: aliceblue;
+    cursor: pointer;
+}
+.bookshelf_card > button:hover {
+    background-color: rgb(57, 139, 217);
+    transform: scale(1.05);
+}
+.book_info {
+    text-align: left;
+    height: 100px;
+    margin-bottom: 15px;
+}
+.book_info > p{
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.book_price, .book_trade {
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.bookshelf_container > button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: orange;
+    color: aliceblue;
+    padding: 10px 20px;
+    border-color: rgb(57, 139, 217);
+    border-radius: 2px solid;
+    cursor: pointer;
+}
+.bookshelf_container > button:hover {
+    background-color: rgb(57, 139, 217);
+    transform: scale(1.05);
+}
+
+@media (max-width: 1200px) {
+    .bookshelf {
+        max-width: 1000px;
+    }
+    .bookshelf_title {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .bookshelf_row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bookshelf_card {
+        max-width: 90%;
+    }
+
+    .bookshelf_title {
+        font-size: 1.2rem;
+    }
+
+    .bookshelf_container > button {
+        bottom: 10px;
+        right: 10px;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bookshelf_card {
+        padding: 15px;
+    }
+
+    .bookshelf_title {
+        font-size: 1rem;
+        padding: 8px;
+    }
+
+    .bookshelf_card > button {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .bookshelf_container > button {
+        bottom: 8px;
+        right: 8px;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+}
+
+ 
