@@ -22,23 +22,23 @@ import { useStateValue } from './StateProvider'
 function App() {
   const [{ }, dispatch] = useStateValue();
 
-  useEffect(() => {
-    const token = localStorage.getItem('authToken');
+  // useEffect(() => {
+  //   const token = localStorage.getItem('authToken');
 
-    if (token) {
-      dispatch({
-        type: 'SET_USER',
-        user: { token }
-      })
+  //   if (token) {
+  //     dispatch({
+  //       type: 'SET_USER',
+  //       user: { token }
+  //     })
 
-    } else {
-      dispatch({
-        type: 'SET_USER',
-        user: null
-      })
-    }
+  //   } else {
+  //     dispatch({
+  //       type: 'SET_USER',
+  //       user: null
+  //     })
+  //   }
 
-  }, [])
+  // }, [])
 
 
   return (
