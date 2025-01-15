@@ -21,6 +21,9 @@ function Account() {
 
                 <h5>ADRES: </h5>
                 <textarea type="text" />
+                
+                <h5>Şifre: </h5> 
+                <input type="password" />
 
             </form>
             <button>Güncelle</button>

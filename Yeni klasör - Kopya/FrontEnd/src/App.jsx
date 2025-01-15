@@ -9,6 +9,8 @@ import Bookshelf from './Bookshelf'
 import AddToBookshelf from './AddToBookshelf'
 import Account from './Account'
 import Offers from './Offers'
+import TradedBooks from './TradedBooks'
+import SoldBooks from './SoldBooks'
 import BookDetails from './BookDetails'
 import Trade from './Trade'
 import { Routes, Route } from 'react-router-dom'
@@ -22,23 +24,23 @@ import { useStateValue } from './StateProvider'
 function App() {
   const [{ }, dispatch] = useStateValue();
 
-  useEffect(() => {
-    const token = localStorage.getItem('authToken');
+  // useEffect(() => {
+  //   const token = localStorage.getItem('authToken');
 
-    if (token) {
-      dispatch({
-        type: 'SET_USER',
-        user: { token }
-      })
+  //   if (token) {
+  //     dispatch({
+  //       type: 'SET_USER',
+  //       user: { token }
+  //     })
 
-    } else {
-      dispatch({
-        type: 'SET_USER',
-        user: null
-      })
-    }
+  //   } else {
+  //     dispatch({
+  //       type: 'SET_USER',
+  //       user: null
+  //     })
+  //   }
 
-  }, [])
+  // }, [])
 
 
   return (
@@ -78,6 +80,18 @@ function App() {
           <>
             <Header />
             <Offers />
+          </>
+        } />
+        <Route path='/myTrades' element={
+          <>
+            <Header />
+            <TradedBooks />
+          </>
+        } />
+        <Route path='/mySales' element={
+          <>
+            <Header />
+            <SoldBooks />
           </>
         } />
         <Route path='/trade' element={
