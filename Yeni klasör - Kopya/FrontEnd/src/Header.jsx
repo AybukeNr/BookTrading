@@ -11,6 +11,7 @@ import Badge from '@mui/material/Badge';
 function Header() {
     const [{ basket, user }, dispatch] = useStateValue();
     const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState("");
     const [dropdownVisible, setdropdownVisible] = useState(false);
     const [notificationsVisible, setNotificationsVisible] = useState(false);
     const [hasNotifications, setHasNotifications] = useState(true);
@@ -29,6 +30,16 @@ function Header() {
 
         }
     }
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        console.log("Arama Yapılıyor: ", searchQuery);
+        // API'ye istek yapılacak
+    };
 
     const dropdown = () => {
         setdropdownVisible(!dropdownVisible);
@@ -70,9 +81,9 @@ function Header() {
                 <img className='header_logo' src='https://i.hizliresim.com/obkwl66.png' />
             </Link>
 
-            <div className='header_search'>
-                <input className='header_searchInput' type='text' placeholder='Aradığınız metni girin.' />
-                <SearchIcon className='header_searchIcon' />
+            <div className='header_search' onSubmit={handleSearchSubmit}>
+                <input className='header_searchInput' type='text' placeholder='Aradığınız metni girin.' value={searchQuery} onChange={handleSearchChange} />
+                <SearchIcon className='header_searchIcon' onClick={handleSearchSubmit}/>
             </div>
 
             <div className='header_nav'>
@@ -96,8 +107,8 @@ function Header() {
                             <ul>
                                 <Link to='/myAccount'><li>Hesap Bilgilerim</li></Link>
                                 <Link to='/myOffers'><li>Tekliflerim</li></Link>
-                                <li>Takaslarım</li>
-                                <li>Satışlarım</li>
+                                <Link to='/myTrades'><li>Takaslarım</li></Link>
+                                <Link to='/mySales'><li>Satışlarım</li></Link>
                             </ul>
                         </div>
                     )}

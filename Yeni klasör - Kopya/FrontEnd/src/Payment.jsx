@@ -117,7 +117,7 @@ function Payment() {
                                 <CurrencyFormat
                                     renderText={(value) => (
                                         <h3>
-                                            Sipariş Toplamı: {value}
+                                            Sipariş Toplamı: {value} ₺
                                         </h3>
                                     )}
 
@@ -125,7 +125,6 @@ function Payment() {
                                     value={getBasketTotal(basket)}
                                     displayType={"text"}
                                     thousandSeparator={true}
-                                    prefix={"₺"}
                                 />
                                 <button disabled={processing || disabled || succeeded}>
                                     <span>{processing ? <p>Yükleniyor</p>: "Onayla ve Satın al"}</span>

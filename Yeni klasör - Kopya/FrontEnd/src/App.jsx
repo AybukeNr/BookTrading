@@ -9,6 +9,8 @@ import Bookshelf from './Bookshelf'
 import AddToBookshelf from './AddToBookshelf'
 import Account from './Account'
 import Offers from './Offers'
+import TradedBooks from './TradedBooks'
+import SoldBooks from './SoldBooks'
 import BookDetails from './BookDetails'
 import Trade from './Trade'
 import { Routes, Route } from 'react-router-dom'
@@ -78,6 +80,18 @@ function App() {
           <>
             <Header />
             <Offers />
+          </>
+        } />
+        <Route path='/myTrades' element={
+          <>
+            <Header />
+            <TradedBooks />
+          </>
+        } />
+        <Route path='/mySales' element={
+          <>
+            <Header />
+            <SoldBooks />
           </>
         } />
         <Route path='/trade' element={
