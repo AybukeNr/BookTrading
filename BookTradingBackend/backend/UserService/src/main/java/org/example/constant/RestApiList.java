@@ -12,7 +12,6 @@ public class RestApiList {
     public static final String GET_USER_BY_ID = "/getUserById";
     public static final String CREATE_USER = "/createUser";
     public static final String UPDATE_USER   = "/updateUser";
-    public static final String GET_ADDRESSES = "/getAddresses";
 
     //auth endpoints
     public static final String AUTH = API + VERSION + "/auth";
@@ -20,7 +19,5 @@ public class RestApiList {
     public static final String REGISTER= "/register";
     public static final String CHANGE_PASSWORD = "/changePass";
     public static final String FORGOT_PASSWORD = "/forgotPass";
-    public static final String CREATE_ACCOUNT = "/createAccount";
-
 
 }

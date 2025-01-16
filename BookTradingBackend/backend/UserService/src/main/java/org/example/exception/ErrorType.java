@@ -6,10 +6,14 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
+import java.awt.dnd.InvalidDnDOperationException;
+
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Getter
 public enum ErrorType {
+
     INTERNAL_SERVER_ERROR(1000,"Sunucuda Bilinmeyen bir hata oluştu", HttpStatus.INTERNAL_SERVER_ERROR),
     INVALID_TOKEN(1001,"Geçersiz token",HttpStatus.BAD_REQUEST),
     INVALID_USER(1002, "Geçersiz kullanıcı", HttpStatus.BAD_REQUEST),
@@ -21,7 +25,10 @@ public enum ErrorType {
     INVALID_USERNAME_OR_PASSWORD(1008, "Kullanıcı Adı veya Şifre Hatalı", HttpStatus.BAD_REQUEST),
     TOKEN_TYPE_AND_PROCESS_DOESNT_MATCH(1009, "Token tipi ve yapılan işlem uyuşmuyor.", HttpStatus.BAD_REQUEST),
     TOKEN_ALREADY_USED(1010, "Token daha önce kullanılmış.", HttpStatus.BAD_REQUEST),
-    MAIL_ADDRESS_ALREADY_EXISTS(1011,"Bu mail adresi kullanılamaz",HttpStatus.BAD_REQUEST);
+    MAIL_ADDRESS_ALREADY_EXISTS(1011,"Bu mail adresi kullanılamaz",HttpStatus.BAD_REQUEST),
+    INVALID_PASSWORD( 1012,"Geçersiz şifre" ,HttpStatus.BAD_REQUEST );
+    //INVALID_PASSWORD( 1012 , "Geçersiz şifre", HttpStatus.BAD_REQUEST);
+
     int code;
     String message;
     HttpStatus httpStatus;

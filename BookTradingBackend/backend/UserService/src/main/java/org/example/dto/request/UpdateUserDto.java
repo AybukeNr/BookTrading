@@ -1,17 +1,11 @@
 package org.example.dto.request;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class UserRequest {
+public class UpdateUserDto {
     @NotNull(message = "User name cannot be empty")
     @Schema(example = "John")
     private String firstName;
@@ -27,15 +21,6 @@ public class UserRequest {
     @Schema(example = "johndoe@gmail.com")
     private String email;
     @NotNull
-    @Schema(example = "selam21")
-    private String password;
-    @NotNull
-    @Schema(example = "TR33 0006 1005 1978 6457 8413 26")
-    private String iban;
-    @NotNull
     @Schema(example = "Kılıçali Paşa Mh. Beyoğlu/İstanbul PK:34433")
     private String address;
-
-
-
 }
