@@ -63,7 +63,7 @@
     color: aliceblue;
 }
 
-.header_optionBasket, .header_optionAccount, .header_optionNotification {
+.header_optionBasket, .header_optionAccount, .header_optionCategory, .header_optionNotification {
     color: aliceblue;
     display: flex;
     align-items: center;
@@ -75,7 +75,6 @@
     margin-left: 10px;
     margin-right: 10px;
 }
-
 
 .dropdown_menu {
     position: absolute;
@@ -102,6 +101,40 @@
 
 .dropdown_menu li:hover {
     background-color: orange;
+    border-radius: 5px;
+}
+
+.dropdown_category {
+    position: absolute;
+    background-color: aliceblue;
+    color: #213547;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    margin: 10px;
+    top: 45px;
+    left: calc(100% - 280px);
+    z-index: 10;
+}
+
+.dropdown_category ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown_category li {
+    color: #646cff;
+    padding: 5px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dropdown_category li:hover {
+    background-color: orange;
+    border-radius: 5px;
+    border-color: rgb(57, 139, 217);
 }
 
 .notifications {
@@ -130,93 +163,6 @@
     font-size: 14px;
     border-bottom: 1px solid darkgray;
 }
-
-/* @media (max-width: 768px) {
-    .header {
-        flex-wrap: wrap;
-        justify-content: space-between;
-        height: auto;
-        padding: 10px 20px;
-    }
-
-    .header_logo {
-        width: 80px;
-        margin: 10px 0;
-    }
-
-    .header_search {
-        flex: 1;
-        margin: 10px 0;
-    }
-
-    .header_nav {
-        flex: 1;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        margin-top: 10px;
-    }
-
-    .header_option, .header_optionAccount, .header_optionBasket, .header_optionNotification {
-        margin: 10px;
-        flex: 1 1 calc(50% - 20px);
-        text-align: center;
-    }
-
-    .dropdown_menu {
-        top: 40px;
-        left: auto;
-        right: 10px;
-        width: 200px;
-    }
-
-    .notifications {
-        top: 50px;
-        right: 10px;
-        width: 90%;
-    }
-}
-
-@media (max-width: 480px) {
-    .header {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 15px;
-    }
-
-    .header_logo {
-        width: 60px;
-        margin: 10px 0;
-    }
-
-    .header_search {
-        width: 100%;
-        margin: 10px 0;
-    }
-
-    .header_nav {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .header_option, .header_optionAccount, .header_optionBasket, .header_optionNotification {
-        flex-direction: row;
-        justify-content: center;
-        width: 100%;
-        padding: 5px 0;
-    }
-
-    .dropdown_menu, .notifications {
-        width: 90%;
-        top: 50px;
-        right: auto;
-        left: 5%;
-    }
-
-    .dropdown_menu ul li, .notifications ul ul {
-        text-align: center;
-    }
-} */
 
 
 @media (max-width: 768px) {

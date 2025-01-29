@@ -16,8 +16,16 @@ function AddToBookshelf() {
     const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
     const [tradeOption, setTradeOption] = useState('');
+    const [error, setError] = useState('');
+
 
     const handleAddBook = () => {
+
+        if (!title || !author || !isbn || !publisher || !publishedDate || !category || !tradeOption || (tradeOption === 'sale' && !price)) {
+            setError('Lütfen tüm alanları doldurun!');
+            return;
+        }
+        
         dispatch({
             type: 'ADD_TO_BOOKSHELF',
             book: {
@@ -29,7 +37,7 @@ function AddToBookshelf() {
                 publishedDate: publishedDate,
                 category: category,
                 price: tradeOption === 'sale' ? price : null,
-                image: image || 'default.jpg',
+                image: image,
             },
         });
         setTitle('');
@@ -41,6 +49,7 @@ function AddToBookshelf() {
         setPrice('');
         setImage('');
         setTradeOption('');
+        setError('');
         
         setTimeout(() => {
             navigate('/bookshelf')
@@ -51,6 +60,7 @@ function AddToBookshelf() {
     return (
         <div className='AddBookToBookshelf'>
             <h2>Kitap Ekle</h2>
+            {error && <p className="error-message">{error}</p>}
             <div className="book">
                 <h5>Kitap Başlığı:</h5>
                 <input type="text" placeholder="Kitabın başlığını giriniz" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -111,6 +121,7 @@ function AddToBookshelf() {
                         <span className="checkmark"></span>
                     </label>
                 </div>
+
                 {tradeOption === 'sale' && (
                     <>
                     <h5>Fiyat giriniz:</h5>
@@ -122,8 +133,10 @@ function AddToBookshelf() {
                 <input type="file" onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))} />
             </div>
 
+            {error && <p className="error-message">{error}</p>}
+
             <button className='button_addBook' onClick={handleAddBook}>Ekle</button>
-            <button className='button_cancel' onClick={e =>navigate('/bookshelf')}>İptal</button>
+            <button className='button_cancel' onClick={() => navigate('/bookshelf')}>İptal</button>
         </div>
 
     )

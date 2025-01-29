@@ -1,4 +1,4 @@
-.profile {
+/* .profile {
     background-color: lightgray;
     display: flex;
     flex-direction: column;
@@ -8,6 +8,7 @@
     margin: 20px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 .profile_details {
     display: flex;
@@ -38,6 +39,7 @@
     width: 30%;
     border-radius: 8px;
     font-family: monospace;
+    resize: none;
 }
 
 .profile > button {
@@ -51,7 +53,105 @@
     border-radius: 2px solid;
     cursor: pointer;
 }
+ */
+
+
+.profile {
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    padding: 20px;
+}
+
+.profile > h2 {
+    margin: 20px 0;
+    text-align: center;
+    color: #213547;
+}
+
+.profile_details {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid darkgray;
+    background-color: aliceblue;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    border-radius: 12px;
+}
+
+.profile_details > h5 {
+    margin-bottom: 8px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.profile_details > input,
+.profile_details > textarea {
+    height: 40px;
+    margin-bottom: 12px;
+    background-color: white;
+    width: 100%;
+    border-radius: 8px;
+    font-family: monospace;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.profile_details > textarea {
+    height: 100px;
+    resize: none;
+}
+
+.profile > button {
+    background: orange;
+    color: aliceblue;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
 .profile > button:hover {
     background-color: rgb(57, 139, 217);
     transform: scale(1.05);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .profile_details {
+        padding: 15px;
+        width: 90%;
+    }
+
+    .profile_details > input,
+    .profile_details > textarea {
+        font-size: 14px;
+    }
+
+    .profile > button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile_details {
+        padding: 10px;
+        width: 100%;
+    }
+
+    .profile_details > input,
+    .profile_details > textarea {
+        font-size: 12px;
+        height: 35px;
+    }
+
+    .profile > button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
 }

@@ -14,12 +14,19 @@ export const initialState = {
         { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '14', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', price: 500, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
         { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '1268', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
     ],
+    selectedCategory: null,
     bookDetail: [],
+    advertisedBook: [],
     offerSent: [],
     offerReceive: [
         { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '12', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
     ],
     basket: [],
+    notifications: [
+        'Yeni bir mesajınız var.',
+        'Kitap takası teklifi alındı.',
+        'Profiliniz güncellendi.',
+    ],
     user: null
 };
 
@@ -50,6 +57,23 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 basket: newBasket
+            }
+
+        case 'SET_SELECTED_CATEGORY':
+            return {
+                ...state,
+                selectedCategory: action.category,
+            };
+
+        case 'ADD_TO_AD':
+            return {
+                ...state,
+                advertisedBook: [...state.advertisedBook, action.item],
+            }
+        case 'REMOVE_FROM_AD':
+            return {
+                ...state,
+                advertisedBook: state.advertisedBook.filter((book) => book.id !== action.id),
             }
 
         // case 'REMOVE_FROM_BOOKSHELF':
@@ -89,7 +113,7 @@ const reducer = (state, action) => {
                 ...state,
                 offerReceive: [...state.offerReceive, action.item],
             }
-            
+
         case 'SET_USER':
             return {
                 ...state,

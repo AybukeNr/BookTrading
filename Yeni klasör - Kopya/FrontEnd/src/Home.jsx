@@ -5,8 +5,7 @@ import Slider from "react-slick";
 import { useStateValue } from './StateProvider';
 
 function Home() {
-    const [{ bookList }] = useStateValue();
-    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [{ bookList, selectedCategory }] = useStateValue();
 
     const settings = {
         dots: false,
@@ -34,10 +33,6 @@ function Home() {
         ],
     };
 
-    const handleCategory = (category) => {
-        setSelectedCategory(category);
-    }
-
     const filteredBooks = selectedCategory ? bookList.filter((book) => book.category === selectedCategory) : bookList;
 
     return (
@@ -46,26 +41,6 @@ function Home() {
                 <img className='home_image' src='https://img.freepik.com/premium-photo/library-background-bookshelf-background-ornate-bookshelf-book-background-vintage-library_605423-33197.jpg' alt='' />
 
                 <div className="home_beginning">
-                    <div className="home_category">
-                        <h4 className='home_categoryTitle'>Kategoriler</h4>
-                        <ul className='home_categoryList'>
-                            <li onClick={() => handleCategory('Kurgu')}>Kurgu</li>
-                            <li onClick={() => handleCategory('Bilim')}>Bilim</li>
-                            <li onClick={() => handleCategory('Tarih')}>Tarih</li>
-                            <li onClick={() => handleCategory('Biyografi')}>Biyografi</li>
-                            <li onClick={() => handleCategory('Fantazi')}>Fantazi</li>
-                            <li onClick={() => handleCategory('Gizem')}>Gizem</li>
-                            <li onClick={() => handleCategory('Romantik')}>Romantik</li>
-                            <li onClick={() => handleCategory('Macera')}>Macera</li>
-                            <li onClick={() => handleCategory('Gerilim')}>Gerilim</li>
-                            <li onClick={() => handleCategory('Şiir')}>Şiir</li>
-                            <li onClick={() => handleCategory('Dram')}>Dram</li>
-                            <li onClick={() => handleCategory('Bilim Kurgu')}>Bilim Kurgu</li>
-                            <li onClick={() => handleCategory('Felsefe')}>Felsefe</li>
-                            <li onClick={() => handleCategory('Kişisel Gelişim')}>Kişisel Gelişim</li>
-                        </ul>
-                    </div>
-
                     <div className="home_slider">
                         <Slider {...settings}>
                             <div>
@@ -80,6 +55,8 @@ function Home() {
                         </Slider>
                     </div>
                 </div>
+
+                    <h2 className='home_title'>Önerilenler</h2>
 
                 <div className="home_row">
                     {filteredBooks.map((book, index) => (

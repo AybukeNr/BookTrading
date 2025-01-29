@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './Product.css'
 import { useStateValue } from './StateProvider'
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,8 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
   const navigate = useNavigate();
   const [{ basket }, dispatch] = useStateValue();
   const [showOfferPopUp, setShowOfferPopUp] = useState(false);
+  const popUpRef = useRef(null);
+
   console.log('sepet deneme', basket);
 
   const addToBasket = () => {
@@ -49,6 +51,20 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
     setShowOfferPopUp(!showOfferPopUp);
   }
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+        if (popUpRef.current && !popUpRef.current.contains(event.target)) {
+            setShowOfferPopUp(false);
+        }
+    };
+
+    if (showOfferPopUp) {
+        document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+    };
+}, [showOfferPopUp]);
 
   return (
     <>
@@ -78,9 +94,9 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
       <>
         {showOfferPopUp && (
           <div className="popUp">
-            <div className="popUp_inner">
+            <div className="popUp_inner" ref={popUpRef}>
               <h2>Takas için kitap seç</h2>
-              <OfferPopUp />
+              <OfferPopUp onClose={offerPopUp} />
               <div>
                 <button onClick={offerPopUp}>İptal</button>
               </div>

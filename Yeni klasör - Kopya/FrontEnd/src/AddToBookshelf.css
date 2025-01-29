@@ -138,6 +138,13 @@
     transform: scale(1.05);
 }
 
+.error-message {
+    margin: 10px;
+    padding: 10px;
+    color: red;
+    background-color: lightgray;
+    border-radius: 5px;
+}
 
 @media (max-width: 768px) {
     .AddBookToBookshelf {

@@ -1,5 +1,22 @@
 import * as yup from 'yup'
 
+export const categories = [
+    "Kurgu",
+    "Bilim",
+    "Tarih",
+    "Biyografi",
+    "Fantazi",
+    "Gizem",
+    "Romantik",
+    "Macera",
+    "Gerilim",
+    "Şiir",
+    "Dram",
+    "Bilim Kurgu",
+    "Felsefe",
+    "Kişisel Gelişim"
+];
+
 export const registerSchemas = yup.object().shape({
     firstname: yup.string().required('Ad girmek zorunlu').max(15, 'Maksimum 15 karakterde olmalı'),
     lastname: yup.string().required('Soyad girmek zorunlu').max(20, 'Maksimum 20 karakterde olmalı'),
@@ -7,5 +24,6 @@ export const registerSchemas = yup.object().shape({
     telephone: yup.string().required('Telefon girilmesi zorunlu').max(11,'Telefon numarasını 11 haneli girin').min(11,'Telefon numarasını 11 haneli girin'),
     address: yup.string().required('Adres girmek zorunlu').max(150,'Maksimum 150 karakterde olmalı'),
     password: yup.string().required('Şifre alanı zorunlu').min(6,'Şifre minimum 6 karakter içermeli'),
-    confirmPassword: yup.string().required('Şifre tekrarı zorunlu').oneOf([yup.ref('password')], 'Şifreler eşleşmiyor')
+    confirmPassword: yup.string().required('Şifre tekrarı zorunlu').oneOf([yup.ref('password')], 'Şifreler eşleşmiyor'),
+    categories: yup.array().min(3, "Tam olarak 3 kategori seçmelisiniz.").max(3, "Tam olarak 3 kategori seçmelisiniz.").required("Kategori seçimi gereklidir.")
 })
