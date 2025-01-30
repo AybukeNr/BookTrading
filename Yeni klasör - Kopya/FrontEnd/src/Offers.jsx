@@ -3,7 +3,7 @@ import './Offers.css'
 import { useStateValue } from './StateProvider';
 import { useNavigate } from 'react-router-dom';
 
-function Offers() {
+function Offers({ id, title, author, isbn, publisher, publishedDate, category, image, price }) {
   const [{ offerSent, offerReceive }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
@@ -18,6 +18,23 @@ function Offers() {
 
   const acceptOffer = () => {
    navigate('/trade');
+  }
+
+  const handleDetails = (item) => {
+    navigate("/bookDetails", {
+      state: {
+        id: item.id,
+        title: item.title,
+        author: item.author,
+        isbn: item.isbn,
+        publisher: item.publisher,
+        publishedDate: item.publishedDate,
+        category: item.category,
+        image: item.image,
+        price: item.price,
+        fromOffers: true
+      }
+    });
   }
 
   return (
@@ -46,9 +63,9 @@ function Offers() {
         <h2>Aldığım Teklifler</h2>
         {offerReceive?.length > 0 ? (
           offerReceive.map((item, index) => (
-            <div className="offer_info" key={index}>
-              <img src={item.image} alt={item.title} />
-              <div>
+            <div className="offer_info" key={index} >
+              <img src={item.image} alt={item.title} onClick={() => handleDetails(item)}/>
+              <div onClick={() => handleDetails(item)}>
                 <h4>{item.title}</h4>
                 <p>Yazar: {item.author}</p>
                 <p>Yayınevi: {item.publisher}</p>

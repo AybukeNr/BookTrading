@@ -9,14 +9,16 @@ import { useStateValue } from './StateProvider';
 import Badge from '@mui/material/Badge';
 
 function Header() {
-    const [{ basket, user }, dispatch] = useStateValue();
+    const [{ basket, user, notifications }, dispatch] = useStateValue();
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
     const [dropdownVisible, setdropdownVisible] = useState(false);
+    const [dropdownCatVisible, setdropdownCatVisible] = useState(false);
     const [notificationsVisible, setNotificationsVisible] = useState(false);
     const [hasNotifications, setHasNotifications] = useState(true);
     const notificationRef = useRef(null);
     const dropdownRef = useRef(null);
+    const dropdownCatRef = useRef(null);
 
     const handleAuthentication = () => {
         if (user) {
@@ -41,8 +43,21 @@ function Header() {
         // API'ye istek yapılacak
     };
 
+    //Account dropdown
     const dropdown = () => {
         setdropdownVisible(!dropdownVisible);
+    }
+
+    //Category Dropdown
+    const dropdownCategory = () => {
+        setdropdownCatVisible(!dropdownCatVisible);
+    }
+
+    const handleCategory = (category) => {
+        dispatch({
+            type: 'SET_SELECTED_CATEGORY',
+            category: category,
+        });
     }
 
     const toggleNotifications = () => {
@@ -52,16 +67,14 @@ function Header() {
         }
     };
 
-    const notifications = [
-        'Yeni bir mesajınız var.',
-        'Kitap takası teklifi alındı.',
-        'Profiliniz güncellendi.',
-    ];
 
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setdropdownVisible(false);
+            }
+            if (dropdownCatRef.current && !dropdownCatRef.current.contains(event.target)) {
+                setdropdownCatVisible(false);
             }
             if (notificationRef.current && !notificationRef.current.contains(event.target)) {
                 setNotificationsVisible(false);
@@ -83,22 +96,39 @@ function Header() {
 
             <div className='header_search' onSubmit={handleSearchSubmit}>
                 <input className='header_searchInput' type='text' placeholder='Aradığınız metni girin.' value={searchQuery} onChange={handleSearchChange} />
-                <SearchIcon className='header_searchIcon' onClick={handleSearchSubmit}/>
+                <SearchIcon className='header_searchIcon' onClick={handleSearchSubmit} />
             </div>
 
             <div className='header_nav'>
                 <Link to={!user && '/login'}>
                     <div onClick={handleAuthentication} className='header_option'>
-                        <span className='header_optionLineOne'>Merhaba!</span>
                         <span className='header_optionLineTwo'>{user ? 'Çıkış Yap' : 'Giriş Yap'}</span>
                     </div>
                 </Link>
-                <Link to='/bookshelf'>
-                    <div className='header_option'>
-                        <span className='header_optionLineOne'>Benim</span>
-                        <span className='header_optionLineTwo'>Kitaplığım</span>
-                    </div>
-                </Link>
+
+                <div className='header_optionCategory' onClick={dropdownCategory} ref={dropdownCatRef}>
+                    <span className='header_optionLineTwo'>Kategoriler</span>
+                    {dropdownCatVisible && (
+                        <div className="dropdown_category">
+                            <ul>
+                                <li onClick={() => handleCategory('Kurgu')}>Kurgu</li>
+                                <li onClick={() => handleCategory('Bilim')}>Bilim</li>
+                                <li onClick={() => handleCategory('Tarih')}>Tarih</li>
+                                <li onClick={() => handleCategory('Biyografi')}>Biyografi</li>
+                                <li onClick={() => handleCategory('Fantazi')}>Fantazi</li>
+                                <li onClick={() => handleCategory('Gizem')}>Gizem</li>
+                                <li onClick={() => handleCategory('Romantik')}>Romantik</li>
+                                <li onClick={() => handleCategory('Macera')}>Macera</li>
+                                <li onClick={() => handleCategory('Gerilim')}>Gerilim</li>
+                                <li onClick={() => handleCategory('Şiir')}>Şiir</li>
+                                <li onClick={() => handleCategory('Dram')}>Dram</li>
+                                <li onClick={() => handleCategory('Bilim Kurgu')}>Bilim Kurgu</li>
+                                <li onClick={() => handleCategory('Felsefe')}>Felsefe</li>
+                                <li onClick={() => handleCategory('Kişisel Gelişim')}>Kişisel Gelişim</li>
+                            </ul>
+                        </div>
+                    )}
+                </div>
 
                 <div className='header_optionAccount' onClick={dropdown} ref={dropdownRef}>
                     <AccountBoxOutlinedIcon />
@@ -106,6 +136,8 @@ function Header() {
                         <div className="dropdown_menu">
                             <ul>
                                 <Link to='/myAccount'><li>Hesap Bilgilerim</li></Link>
+                                <Link to='/bookshelf'><li>Kitaplığım</li></Link>
+                                <Link to='/myAds'><li>İlanlarım</li></Link>
                                 <Link to='/myOffers'><li>Tekliflerim</li></Link>
                                 <Link to='/myTrades'><li>Takaslarım</li></Link>
                                 <Link to='/mySales'><li>Satışlarım</li></Link>

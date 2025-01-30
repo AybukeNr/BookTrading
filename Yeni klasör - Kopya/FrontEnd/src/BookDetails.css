@@ -2,50 +2,148 @@
     display: flex;
     flex-direction: column;
     background-color: aliceblue;
-    align-items: flex-end;
-    margin: 10px;
+    align-items: center;
+    margin: 10px auto;
     padding: 20px;
-    min-width: 100px;
+    max-width: 1200px;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    position: relative;
+    overflow: hidden; 
+    box-sizing: border-box; 
 }
 
 .bookDetails_product {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 20px;
-    margin-right: auto;
+    gap: 30px;
+    width: 100%;
+    max-width: 1000px;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: hidden; 
 }
+
 .bookDetails_product > div {
     display: flex;
     flex-direction: column;
     text-align: left;
+    flex: 1;
+    padding: 10px;
+    margin-left: 20px;
+    justify-content: flex-start;
+    min-width: 250px;
+}
+
+.bookDetails_product > div > h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
 .bookDetails_product > div > p {
-    margin-bottom: 5px;
+    font-size: 1.4rem; 
+    margin-bottom: 8px;
 }
 
 .bookDetails_product > img {
-    max-height: 200px;
-    width: auto;
+    width: 50%; 
+    height: auto;
     object-fit: contain;
-    margin-bottom: 15px;
+    border-radius: 10px;
 }
 
 .bookDetails > button {
     background: orange;
-    border-radius: 1px solid;
-    margin-top: 10px;
-    border-color: rgb(57, 139, 217);
+    border-radius: 15px;
+    border-color: rgb(57, 139, 217) ;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
     color: aliceblue;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: relative; 
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    width: auto;
 }
 
 .bookDetails > button:hover {
     background-color: rgb(57, 139, 217);
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
+
+
+@media (max-width: 1024px) {
+    .bookDetails_product {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .bookDetails_product > div {
+        text-align: center;
+        margin-left: 0;
+    }
+
+    .bookDetails_product > img {
+        width: 80%; 
+        margin-bottom: 20px;
+    }
+
+    .bookDetails_product > div > h2 {
+        font-size: 1.8rem;
+    }
+
+    .bookDetails_product > div > p {
+        font-size: 1.2rem; 
+    }
+
+    .bookDetails > button {
+        width: auto;
+        padding: 14px;
+        font-size: 1rem;
+        position: relative; 
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .bookDetails {
+        padding: 15px;
+    }
+
+    .bookDetails_product > img {
+        width: 100%; 
+        margin-bottom: 20px;
+    }
+
+    .bookDetails_product > div {
+        padding: 0 10px;
+    }
+
+    .bookDetails_product > div > h2 {
+        font-size: 1.5rem;
+    }
+
+    .bookDetails_product > div > p {
+        font-size: 1.1rem; 
+    }
+
+    .bookDetails > button {
+        width: 100%;
+        padding: 14px;
+        font-size: 1rem;
+        position: relative;
+        margin-top: 20px;
+    }
+}
+
+
 
 
 /* .popUp {

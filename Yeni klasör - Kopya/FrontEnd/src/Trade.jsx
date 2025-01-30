@@ -48,8 +48,8 @@ function Trade() {
             </div>
             <div className="receiveBook">
               <h4>Alınacak Kitap</h4>
-              {offerReceive.map(item => (
-                <div className="offer_info" key={item.index}>
+              {offerReceive.map((item, index) => (
+                <div className="offer_info" key={index}>
                   <img src={item.image} alt={item.title} />
                   <div>
                     <h4>{item.title}</h4>

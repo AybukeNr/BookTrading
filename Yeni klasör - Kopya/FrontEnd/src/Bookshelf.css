@@ -40,7 +40,7 @@
     margin-bottom: 15px;
 }
 
-.bookshelf_card > button {
+.adButton {
     background: orange;
     border-radius: 1px solid;
     margin-top: 10px;
@@ -48,10 +48,24 @@
     color: aliceblue;
     cursor: pointer;
 }
-.bookshelf_card > button:hover {
+.adButton:hover {
     background-color: rgb(57, 139, 217);
     transform: scale(1.05);
 }
+
+.removeButton {
+    background: darkgray;
+    border-radius: 1px solid;
+    margin-top: 10px;
+    border-color: rgb(57, 139, 217);
+    color: aliceblue;
+    cursor: pointer;
+}
+.removeButton:hover {
+    background-color: rgb(57, 139, 217);
+    transform: scale(1.05);
+}
+
 .book_info {
     text-align: left;
     height: 100px;

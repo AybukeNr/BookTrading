@@ -34,9 +34,11 @@
 .login_container > form > input {
     height: 30px;
     margin-bottom: 10px;
-    background-color: white;
+    background-color: aliceblue;
     width: 98%;
     border-radius: 8px;
+    border: none;
+    border-bottom: 1px solid darkgrey;
 }
 .login_container > p {
     margin-top: 15px;
