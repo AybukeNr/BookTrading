@@ -3,6 +3,8 @@ import './BookDetails.css'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
 import OfferPopUp from './OfferPopUp';
+import { Rating } from '@mui/material';
+
 function BookDetails() {
     const [, dispatch] = useStateValue();
     const navigate = useNavigate();
@@ -63,6 +65,7 @@ function BookDetails() {
                     <img src={bookDetail.image} alt={bookDetail.title}/>
                     <div>
                         <h2>{bookDetail.title}</h2>
+                        <Rating className='rating'  size='large'/>
                         <p><strong>ISBN: </strong>{bookDetail.isbn}</p>
                         <p><strong>Yazar: </strong>{bookDetail.author}</p>
                         <p><strong>Yayınevi: </strong>{bookDetail.publisher}</p>

@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
-import './AddToBookshelf.css'
+import React, { useEffect, useState } from 'react'
+import './UpdateInBookshelf.css'
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
-import { useNavigate } from 'react-router-dom';
 
-function AddToBookshelf() {
+function UpdateInBookshelf() {
     const [, dispatch] = useStateValue();
     const navigate = useNavigate();
+    const location = useLocation();
+    const bookToUpdate = location.state;
 
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
@@ -15,52 +17,57 @@ function AddToBookshelf() {
     const [category, setCategory] = useState('');
     const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
-    const [tradeOption, setTradeOption] = useState('');
+    const [tradeOption, setTradeOption] = useState(price ? 'sale' : 'trade');
     const [error, setError] = useState('');
 
+    useEffect(() => {   
+        if (bookToUpdate) {
+            setTitle(bookToUpdate.title || '');
+            setAuthor(bookToUpdate.author || '');
+            setIsbn(bookToUpdate.isbn || '');
+            setPublisher(bookToUpdate.publisher || '');
+            setPublishedDate(bookToUpdate.publishedDate || '');
+            setCategory(bookToUpdate.category || '');
+            setImage(bookToUpdate.image || '');
 
-    const handleAddBook = () => {
+            if (bookToUpdate.price) {
+                setTradeOption('sale');
+                setPrice(bookToUpdate.price || '');
+            } else {
+                setTradeOption('trade');
+            }
+        }
+    }, [bookToUpdate]);
+
+    const handleUpdateBook = () => {
         if (!title || !author || !isbn || !publisher || !publishedDate || !category || !tradeOption || (tradeOption === 'sale' && !price)) {
-            setError('Lütfen tüm alanları doldurun!');
+            setError('Lütfen tüm alanları düzgünce doldurun!');
             return;
         }
-        
+
         dispatch({
-            type: 'ADD_TO_BOOKSHELF',
+            type: 'UPDATE_IN_BOOKSHELF',
             book: {
-                id: Date.now(),
-                title: title,
-                author: author,
-                isbn: isbn,
-                publisher: publisher,
-                publishedDate: publishedDate,
-                category: category,
+                title,
+                author,
+                isbn,
+                publisher,
+                publishedDate,
+                category,
                 price: tradeOption === 'sale' ? price : null,
-                image: image,
+                image,
             },
         });
-        setTitle('');
-        setAuthor('');
-        setIsbn('');
-        setPublisher('');
-        setPublishedDate('');
-        setCategory('');
-        setPrice('');
-        setImage('');
-        setTradeOption('');
-        setError('');
-        
-        setTimeout(() => {
-            navigate('/bookshelf')
-        }, 200);
+        navigate('/bookshelf')
     };
 
 
-    return (
-        <div className='AddBookToBookshelf'>
-            <h2>Kitap Ekle</h2>
 
-            {error && <p className="error-message">{error}</p>}            
+    return (
+        <div className='updateBookInBookshelf'>
+            <h2>Kitap Güncelle</h2>
+
+            {error && <p className="errorMessage">{error}</p>}
 
             <div className="book">
                 <h5>Kitap Başlığı:</h5>
@@ -107,6 +114,7 @@ function AddToBookshelf() {
                             type="radio"
                             name="tradeOption"
                             value="trade"
+                            checked={tradeOption === 'trade'}
                             onChange={(e) => setTradeOption(e.target.value)}
                         />
                         <span className="checkmark"></span>
@@ -117,6 +125,7 @@ function AddToBookshelf() {
                             type="radio"
                             name="tradeOption"
                             value="sale"
+                            checked={tradeOption === 'sale'}
                             onChange={(e) => setTradeOption(e.target.value)}
                         />
                         <span className="checkmark"></span>
@@ -125,22 +134,22 @@ function AddToBookshelf() {
 
                 {tradeOption === 'sale' && (
                     <>
-                    <h5>Fiyat giriniz:</h5>
-                    <input type="text" placeholder="Fiyat (₺) giriniz." value={price} onChange={(e) => setPrice(e.target.value)} />
+                        <h5>Fiyat giriniz:</h5>
+                        <input type="text" placeholder="Fiyat (₺) giriniz." value={price} onChange={(e) => setPrice(e.target.value)} />
                     </>
                 )}
 
                 <h5>Kitap Fotoğrafı:</h5>
-                <input type="file" value={image} onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))} />
+                <input type="file" onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))} />
+                {image && <img src={image} style={{ width: '100px', height: '150px' }} />}
             </div>
 
-            {error && <p className="error-message">{error}</p>}
+            {error && <p className="errorMessage">{error}</p>}
 
-            <button className='button_addBook' onClick={handleAddBook}>Ekle</button>
+            <button className='button_updateBook' onClick={handleUpdateBook}>Güncelle</button>
             <button className='button_cancel' onClick={() => navigate('/bookshelf')}>İptal</button>
         </div>
-
     )
 }
 
-export default AddToBookshelf
+export default UpdateInBookshelf

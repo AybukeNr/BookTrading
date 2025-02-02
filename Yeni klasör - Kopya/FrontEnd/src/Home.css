@@ -5,14 +5,14 @@
     margin-left: auto;
     max-width: 1500px;
     flex-direction: column;
+    background: linear-gradient(to right, lightgray, darkgray);
 }
 
 .home_title {
     display: flex;
-    justify-content: center;
-    background-color: aliceblue;
-    mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-    color: #213547;
+    justify-content: flex-start;
+    background: linear-gradient(to right, lightgray, aliceblue);
+    color: rgb(57, 139, 217);
     font-weight: 900;
     margin-right: 10px;
     padding: 10px;
@@ -33,14 +33,14 @@
     margin: 5px;
 }
 
-.home_image {
+/* .home_image {
     width: 100%;
     z-index: -1;
     margin-bottom: -200px;
     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-}
+} */
 
-.home_beginning {
+/* .home_beginning {
     display: flex; 
     padding: 20px; 
     flex-direction: column; 
@@ -50,7 +50,7 @@
     top: 100px;
     right: 0;
     left: 0;
-}
+} */
 
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";

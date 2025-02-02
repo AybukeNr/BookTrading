@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './Product.css'
+import { Rating } from '@mui/material';
 import { useStateValue } from './StateProvider'
 import { useNavigate } from 'react-router-dom';
 import OfferPopUp from './OfferPopUp';
@@ -71,6 +72,7 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
       <div className={`product ${showOfferPopUp ? 'inactive' : ''}`}>
         <div className="product_info" onClick={handleNavigate}>
           <p>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}</p>
+          <Rating className='rating'/>
 
           {price ? (
             <p className='product_price'>

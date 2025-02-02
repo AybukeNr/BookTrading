@@ -27,7 +27,7 @@ export const initialState = {
         'Kitap takası teklifi alındı.',
         'Profiliniz güncellendi.',
     ],
-    user: null
+    user: [],
 };
 
 export const getBasketTotal = (basket) => {
@@ -76,20 +76,6 @@ const reducer = (state, action) => {
                 advertisedBook: state.advertisedBook.filter((book) => book.id !== action.id),
             }
 
-        // case 'REMOVE_FROM_BOOKSHELF':
-        //     const bookIndex = state.bookshelf.findIndex((book) => book.id === action.id);
-        //     let newBookshelf = [...state.bookshelf]
-
-        //     if (bookIndex >= 0) {
-        //         newBookshelf.splice(bookIndex, 1);
-        //     } else {
-        //         console.warn(`Kitap (id: ${action.id}) kitaplıkta bulunamadı!`);
-        //     }
-        //     return {
-        //         ...state,
-        //         bookshelf: newBookshelf
-        //     }
-
         case 'REMOVE_FROM_BOOKSHELF':
             return {
                 ...state,
@@ -100,6 +86,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 bookshelf: [...state.bookshelf, action.book],
+            };
+        case 'UPDATE_IN_BOOKSHELF':
+            return {
+                ...state,
+                bookshelf: state.bookshelf.map((book) => book.id === action.book.id ?
+                    { ...book, ...action.book } : book),
             };
 
         case 'ADD_TO_OFFER_SENT':
@@ -119,6 +111,14 @@ const reducer = (state, action) => {
                 ...state,
                 user: action.user,
             }
+
+        case 'UPDATE_USER_ACCOUNT':
+            return {
+                ...state,
+                user: state.user.map((account) => account.id === action.account.id ?
+                    { ...account, ...action.account } : account),
+            };
+
         default:
             return state;
     }

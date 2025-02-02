@@ -6,6 +6,7 @@ import instance from './axios';
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     // const ProtectedRoute = ({ children }) => {
@@ -34,9 +35,10 @@ function Login() {
 
     const signIn = async (e) => {
         e.preventDefault();
-        
+
         if (!email || !password) {
-            alert('Lütfen e-mail ve şifre giriniz.');
+            // alert('Lütfen e-mail ve şifre giriniz.');
+            setError('Lütfen tüm alanları düzgünce doldurun!');
             return;
         }
 
@@ -71,6 +73,8 @@ function Login() {
 
                     {/* <h5>Şifre giriniz:</h5> */}
                     <input type="password" placeholder='Şifre giriniz' value={password} onChange={e => setPassword(e.target.value)} />
+
+                    {error && <p className="error_message">{error}</p>}
 
                     <button className='login_signInButton' type='submit' onClick={signIn}>Giriş yap</button>
                 </form>

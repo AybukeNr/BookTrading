@@ -12,6 +12,7 @@ function Header() {
     const [{ basket, user, notifications }, dispatch] = useStateValue();
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
+    // const [searchResults, setSearchResults] = useState([]); // API sonuçları için state
     const [dropdownVisible, setdropdownVisible] = useState(false);
     const [dropdownCatVisible, setdropdownCatVisible] = useState(false);
     const [notificationsVisible, setNotificationsVisible] = useState(false);
@@ -33,15 +34,34 @@ function Header() {
         }
     }
 
+    //search
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        console.log("Arama Yapılıyor: ", searchQuery);
-        // API'ye istek yapılacak
+        // setLoading(true);
+        // setError(null);
+
+        // try {
+        //     const response = await axios.get(`https://api.example.com/search`, {
+        //         params: { query: searchQuery }
+        //     });
+
+        //     setSearchResults(response.data.results); 
+        // } catch (error) {
+        //     console.error("Arama sırasında hata oluştu:", error);
+        //     setError("Arama sırasında bir hata meydana geldi.");
+        // } finally {
+        //     setLoading(false);
+        // }
+
+        console.log("Filtrelenmiş Sonuçlar:", filteredResults); //bu önceki kısım silinecek.
+        // API'ye istek yapılacak 
+        // Örnek: axios.get(`/search?query=${searchQuery}`)
     };
+
 
     //Account dropdown
     const dropdown = () => {
@@ -60,13 +80,14 @@ function Header() {
         });
     }
 
+    //notification
     const toggleNotifications = () => {
         setNotificationsVisible(!notificationsVisible);
         if (hasNotifications) {
             setHasNotifications(false);
         }
     };
-
+    
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -98,6 +119,20 @@ function Header() {
                 <input className='header_searchInput' type='text' placeholder='Aradığınız metni girin.' value={searchQuery} onChange={handleSearchChange} />
                 <SearchIcon className='header_searchIcon' onClick={handleSearchSubmit} />
             </div>
+
+
+            {/* {loading && <p>Aranıyor...</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
+
+            {searchResults.length > 0 && (
+                <div className="search-results">
+                    {searchResults.map((item) => (
+                        <div key={item.id} className="search-item">
+                            {item.name}
+                        </div>
+                    ))}
+                </div>
+            )} */}
 
             <div className='header_nav'>
                 <Link to={!user && '/login'}>

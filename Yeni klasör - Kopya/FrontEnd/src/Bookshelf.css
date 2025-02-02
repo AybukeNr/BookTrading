@@ -53,6 +53,19 @@
     transform: scale(1.05);
 }
 
+.updateButton {
+    background:  #646cff;;
+    border-radius: 1px solid;
+    margin-top: 10px;
+    border-color: orange;
+    color: aliceblue;
+    cursor: pointer;
+}
+.updateButton:hover {
+    background-color:rgb(57, 139, 217);
+    transform: scale(1.05);
+}
+
 .removeButton {
     background: darkgray;
     border-radius: 1px solid;

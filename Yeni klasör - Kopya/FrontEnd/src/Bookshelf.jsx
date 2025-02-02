@@ -51,18 +51,17 @@ function Bookshelf({ showButtons = true }) {
                                     <button className='adButton' onClick={() => addToAd(book)}>İlana Koy</button>
                                 )}
 
-                                {showButtons && (
-                                    <button onClick={() => removeFromBookshelf(book.id)} className='removeButton'>Kitaplıktan Çıkar</button>
-                                )}
+                                <button className='updateButton' onClick={() => navigate("/updateBook", { state: book })}>Güncelle</button>
+
+                                <button onClick={() => removeFromBookshelf(book.id)} className='removeButton'>Kitaplıktan Çıkar</button>
 
                             </div>
                         )
                     })}
                 </div>
 
-                {showButtons && (
-                    <button onClick={e => navigate("/addBook", { replace: true })}>Kitap Ekle</button>
-                )}
+                <button onClick={e => navigate("/addBook", { replace: true })}>Kitap Ekle</button>
+
             </div>
         </div>
     )

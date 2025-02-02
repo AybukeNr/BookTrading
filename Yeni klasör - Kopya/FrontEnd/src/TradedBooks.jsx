@@ -8,7 +8,7 @@ function TradedBooks() {
       <div className="bookInfos">
         <div className='bookSent'>
           <h4>Gönderilen Kitap:</h4>
-          <img src='#' alt='' />
+          <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' alt='' />
           <p>Başlık: </p>
           <p>Yazar: </p>
           <p>Yayınevi: </p>
@@ -18,7 +18,7 @@ function TradedBooks() {
         </div>
         <div className='bookReceive'>
           <h4>Alınan Kitap:</h4>
-          <img src='#' alt='' />
+          <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' alt='' />
           <p>Başlık: </p>
           <p>Yazar: </p>
           <p>Yayınevi: </p>
@@ -27,7 +27,7 @@ function TradedBooks() {
           <p>Kategori: </p>
         </div>
       </div>
-      <div className="userInfos">
+      <div className="tradersInfos">
         <div className='sender'>
         <h4>Gönderen:</h4>
         <p>Ad: </p>
