@@ -27,7 +27,7 @@ export const initialState = {
         'Kitap takası teklifi alındı.',
         'Profiliniz güncellendi.',
     ],
-    user: [],
+    user: null,
 };
 
 export const getBasketTotal = (basket) => {

@@ -53,7 +53,7 @@
 
 .bookDetails_product > img {
     width: 50%; 
-    height: auto;
+    max-height: 500px;
     object-fit: contain;
     border-radius: 10px;
 }
