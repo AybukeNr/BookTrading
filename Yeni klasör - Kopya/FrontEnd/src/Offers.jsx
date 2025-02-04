@@ -2,9 +2,11 @@ import React from 'react'
 import './Offers.css'
 import { useStateValue } from './StateProvider';
 import { useNavigate } from 'react-router-dom';
+import { Rating } from '@mui/material';
+import { red } from '@mui/material/colors';
 
 function Offers({ id, title, author, isbn, publisher, publishedDate, category, image, price }) {
-  const [{ offerSent, offerReceive }, dispatch] = useStateValue();
+  const [{ offerSent, offerReceive, acceptBook }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
   const handleReceiveOffer = (newBook) => {
@@ -17,7 +19,7 @@ function Offers({ id, title, author, isbn, publisher, publishedDate, category, i
   };
 
   const acceptOffer = () => {
-   navigate('/trade');
+    navigate('/trade');
   }
 
   const handleDetails = (item) => {
@@ -47,11 +49,19 @@ function Offers({ id, title, author, isbn, publisher, publishedDate, category, i
               <img src={item.image} alt={item.title} />
               <div>
                 <h4>{item.title}</h4>
-                <p>Yazar: {item.author}</p>
-                <p>Yayınevi: {item.publisher}</p>
-                <p>Yayın Tarihi: {item.publishedDate}</p>
-                <p>ISBN: {item.isbn}</p>
-                <p>Kategori: {item.category}</p>
+                <Rating className='rating' />
+                <p><strong>Yazar: </strong>{item.author}</p>
+                <p><strong>Yayınevi: </strong>{item.publisher}</p>
+                <p><strong>Yayın Tarihi: </strong>{item.publishedDate}</p>
+                <p><strong>ISBN: </strong> {item.isbn}</p>
+                <p><strong>Kategori: </strong>{item.category}</p>
+              </div>
+              <div className='accept_callback'>
+                {acceptBook ? (
+                  <p style={{ color: "green" }}>Teklif kabul edildi!</p>
+                ) : (
+                  <p style={{ color: "red" }}>Teklif reddedildi!</p>
+                )}
               </div>
             </div>
           ))
@@ -64,14 +74,15 @@ function Offers({ id, title, author, isbn, publisher, publishedDate, category, i
         {offerReceive?.length > 0 ? (
           offerReceive.map((item, index) => (
             <div className="offer_info" key={index} >
-              <img src={item.image} alt={item.title} onClick={() => handleDetails(item)}/>
+              <img src={item.image} alt={item.title} onClick={() => handleDetails(item)} />
               <div onClick={() => handleDetails(item)}>
                 <h4>{item.title}</h4>
-                <p>Yazar: {item.author}</p>
-                <p>Yayınevi: {item.publisher}</p>
-                <p>Yayın Tarihi: {item.publishedDate}</p>
-                <p>ISBN: {item.isbn}</p>
-                <p>Kategori: {item.category}</p>
+                <Rating className='rating' />
+                <p><strong>Yazar: </strong>{item.author}</p>
+                <p><strong>Yayınevi: </strong>{item.publisher}</p>
+                <p><strong>Yayın Tarihi: </strong>{item.publishedDate}</p>
+                <p><strong>ISBN: </strong>{item.isbn}</p>
+                <p><strong>Kategori: </strong>{item.category}</p>
               </div>
               <div className='receive_buttons'>
                 <button onClick={acceptOffer}>Teklifi kabul et</button>

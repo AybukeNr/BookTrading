@@ -37,6 +37,10 @@
     min-width: 250px;
 }
 
+.rating {
+    margin-bottom: 8px;
+}
+
 .bookDetails_product > div > h2 {
     font-size: 2rem;
     margin-bottom: 10px;
@@ -49,7 +53,7 @@
 
 .bookDetails_product > img {
     width: 50%; 
-    height: auto;
+    max-height: 500px;
     object-fit: contain;
     border-radius: 10px;
 }

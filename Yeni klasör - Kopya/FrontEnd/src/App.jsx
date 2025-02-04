@@ -7,6 +7,7 @@ import Register from './Register'
 import Payment from './Payment'
 import Bookshelf from './Bookshelf'
 import AddToBookshelf from './AddToBookshelf'
+import UpdateInBookshelf from './UpdateInBookshelf'
 import Account from './Account'
 import Offers from './Offers'
 import AdvertisedBooks from './AdvertisedBook'
@@ -70,6 +71,12 @@ function App() {
           <>
             <Header />
             <AddToBookshelf />
+          </>
+        } />
+        <Route path='/updateBook' element={
+          <>
+            <Header />
+            <UpdateInBookshelf />
           </>
         } />
         <Route path='/myAccount' element={

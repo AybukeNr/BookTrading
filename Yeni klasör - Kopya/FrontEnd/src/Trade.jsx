@@ -32,7 +32,7 @@ function Trade() {
           <div className="trade_items">
             <div className="sendBook">
               <h4>Gönderilecek Kitap</h4>
-              {/* {offerReceive.map(item => (
+              {/* {offerSent.map(item => (
                 <div className="offer_info" key={item.index}>
                   <img src={item.image} alt={item.title} />
                   <div>

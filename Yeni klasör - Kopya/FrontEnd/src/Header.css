@@ -1,4 +1,4 @@
-.header {
+ .header {
     height: 60px;
     display: flex;
     align-items: center;
@@ -10,7 +10,7 @@
 .header_logo {
     width: 100px;
     object-fit: contain;
-    margin: 0 20px;
+    padding: 0 20px;
     margin-top: 18px;
     margin-bottom: 18px;
 }
@@ -20,14 +20,24 @@
     flex: 1;
     align-items: center;
     border-radius: 24px;
+    background-color: #fff;
+    padding: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+.header_search:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .header_searchInput {
-    height: 12px;
-    padding: 10px;
+    height: 14px;
+    padding: 12px;
     border-radius: 24px;
     border: none;
     width: 100%;
+    outline: none;
+    font-size: 14px;
 }
 
 .header_optionLineOne {
@@ -45,14 +55,21 @@
 }
 
 .header_searchIcon {
-    padding: 5px;
-    height: 22px !important;
+    padding: 8px;
+    height: 24px !important;
     background-color: orange;
-    border-radius: 24px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 .header_searchIcon:hover {
-    cursor: pointer;
+    background-color: darkorange;
+    transform: scale(1.1);
 }
 
 .header_option {
@@ -165,95 +182,99 @@
 }
 
 
-@media (max-width: 768px) {
+ @media (max-width: 1024px) {
     .header {
-        padding: 0 10px;
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: column;
         height: auto;
-    }
-
-    .header_logo {
-        width: 70px;
+        padding: 15px;
     }
 
     .header_search {
-        width: 60%; 
+        width: 100%;
         margin-top: 10px;
     }
 
     .header_nav {
-        flex-wrap: wrap;
-        justify-content: center;
+        width: 100%;
+        justify-content: space-around;
         margin-top: 10px;
     }
 
-    .header_option, .header_optionAccount, .header_optionBasket, .header_optionNotification {
-        margin: 10px 5px;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 10px;
     }
 
-    .header_optionLineOne {
-        font-size: 10px;
+    .header_search {
+        max-width: 60%;
+        margin-left: 10px;
+        flex: 1;
     }
 
-    .header_optionLineTwo {
+    .header_logo {
+        width: 80px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .header_nav {
+        width: 100%;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+   
+    .header_option {
         font-size: 12px;
     }
 
-    .dropdown_menu {
+    .dropdown_category {
         left: auto;
-        right: 10px;
+        right: 200px;
+        top: 120px;
+        height: 125px;
+        overflow-y: scroll;
+    }
+
+    .dropdown_menu {
+        top: 125px;
+        right: 100px;
+        left: auto;
     }
 
     .notifications {
-        top: 45px;
-        right: 10px;
-        width: 80%;
+        top: 115px;
+        right: auto;
+        width: 40%;
+        left: 250px;
     }
 }
-
 
 @media (max-width: 480px) {
     .header {
         flex-direction: column;
         align-items: center;
-        padding: 10px 15px;
-        height: auto;
-    }
-
-    .header_logo {
-        width: 60px;
-        margin-bottom: 10px;
     }
 
     .header_search {
-        width: 80%;
-        margin: 10px 0;
+        width: 90%;
     }
 
     .header_nav {
         flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        width: 100%;
+        gap: 10px;
     }
 
-    .header_option, .header_optionAccount, .header_optionBasket, .header_optionNotification {
-        flex-direction: row;
-        width: 100%;
-        justify-content: center;
-        padding: 10px 0;
-    }
-
-    .dropdown_menu, .notifications {
+    .dropdown_menu, .dropdown_category {
         width: 90%;
         top: 50px;
         right: auto;
         left: 5%;
     }
-
-    .dropdown_menu ul li, .notifications ul li {
-        text-align: center;
-        padding: 8px 0;
-    }
 }
+
+ 

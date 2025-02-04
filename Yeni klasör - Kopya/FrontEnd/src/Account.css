@@ -1,103 +1,54 @@
-/* .profile {
-    background-color: lightgray;
-    display: flex;
-    flex-direction: column;
-    height: 90vh;
-}
-.profile > h2{
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.profile_details {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid darkgray;
-    background-color: aliceblue;
-    padding: 20px;
-}
-
-.profile_details > h5 {
-    margin-bottom: 2px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.profile_details > input {
-    height: 25px;
-    margin-bottom: 12px;
-    background-color: white;
-    width: 30%;
-    border-radius: 8px;
-    font-family: monospace;
-}
-
-.profile_details > textarea {
-    height: 100px;
-    margin-bottom: 12px;
-    background-color: white;
-    width: 30%;
-    border-radius: 8px;
-    font-family: monospace;
-    resize: none;
-}
-
-.profile > button {
-    position: absolute;
-    top: 585px;
-    right: 20px;
-    background: orange;
-    color: aliceblue;
-    padding: 10px 20px;
-    border-color: rgb(57, 139, 217);
-    border-radius: 2px solid;
-    cursor: pointer;
-}
- */
-
-
 .profile {
-    background-color: lightgray;
+    background: linear-gradient(to right, aliceblue, lightgray);
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: auto;
+    min-height: 100vh;
     padding: 20px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .profile > h2 {
     margin: 20px 0;
     text-align: center;
     color: #213547;
+    font-size: 28px;
+    font-weight: 600;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 .profile_details {
     display: flex;
     flex-direction: column;
-    border: 1px solid darkgray;
-    background-color: aliceblue;
-    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: aliceblue;
+    padding: 25px;
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
     box-sizing: border-box;
-    border-radius: 12px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .profile_details > h5 {
     margin-bottom: 8px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color:  #213547;
 }
 
 .profile_details > input,
 .profile_details > textarea {
-    height: 40px;
+    height: 45px;
     margin-bottom: 12px;
     background-color: white;
     width: 100%;
     border-radius: 8px;
-    font-family: monospace;
-    padding: 8px;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
     box-sizing: border-box;
+    border: 1px solid orange;
+    transition: all 0.3s ease;
 }
 
 .profile_details > textarea {
@@ -105,25 +56,38 @@
     resize: none;
 }
 
-.profile > button {
+.profile_details > input:focus,
+.profile_details > textarea:focus {
+    border-color: rgb(57, 139, 217);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.button_updateAccount, .button_cancelUpdate {
     background: orange;
-    color: aliceblue;
-    padding: 10px 20px;
+    color: white;
+    padding: 12px 20px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin-top: 20px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: 500;
 }
 
-.profile > button:hover {
+.button_cancelUpdate {
+    background: darkgray;
+}
+
+.button_updateAccount:hover, .button_cancelUpdate:hover {
     background-color: rgb(57, 139, 217);
     transform: scale(1.05);
 }
 
-/* Media Queries */
+
 @media (max-width: 768px) {
     .profile_details {
-        padding: 15px;
+        padding: 20px;
         width: 90%;
     }
 
@@ -132,26 +96,26 @@
         font-size: 14px;
     }
 
-    .profile > button {
-        padding: 8px 16px;
+    .button_updateAccount, .button_cancelUpdate {
+        padding: 10px 16px;
         font-size: 14px;
     }
 }
 
 @media (max-width: 480px) {
     .profile_details {
-        padding: 10px;
+        padding: 15px;
         width: 100%;
     }
 
     .profile_details > input,
     .profile_details > textarea {
         font-size: 12px;
-        height: 35px;
+        height: 40px;
     }
 
-    .profile > button {
-        padding: 6px 12px;
+    .button_updateAccount, .button_cancelUpdate {
+        padding: 8px 14px;
         font-size: 12px;
     }
 }
