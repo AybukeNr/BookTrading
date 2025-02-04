@@ -7,7 +7,9 @@ ext{
             swagger             : '2.6.0',
             mapstruct           : '1.6.3',
             jwt                 : '4.4.0',
-            swaggerDoc          :  '1.7.0'
+            swaggerDoc          : '1.7.0',
+            kafka               : '3.3.1',
+            freemaker           : '3.4.1'
     ]
 
     libs = [
@@ -20,7 +22,10 @@ ext{
             swaggerui                       : "org.springdoc:springdoc-openapi-starter-webmvc-ui:${versions.swagger}",
             mapstruct                       : "org.mapstruct:mapstruct-processor:${versions.mapstruct}",
             jwt                             : "com.auth0:java-jwt:${versions.jwt}",
-            swaggerDoc                      : "org.springdoc:springdoc-openapi-ui:${versions.swaggerDoc}"
+            swaggerDoc                      : "org.springdoc:springdoc-openapi-ui:${versions.swaggerDoc}",
+            kafka                           : "org.springframework.kafka:spring-kafka:${versions.kafka}",
+            freemaker                       : "org.springframework.boot:spring-boot-starter-freemarker:${versions.freemaker}",
+            mailSender                      : "org.springframework.boot:spring-boot-starter-mail:${versions.springBoot}"
 
     ]
 }

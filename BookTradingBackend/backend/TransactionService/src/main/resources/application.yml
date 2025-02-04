@@ -1,5 +1,5 @@
 server:
-  port: 9092
+  port: 9093
 
 spring:
   datasource:
@@ -10,3 +10,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+
+kafka:
+  bootstrap-servers: localhost:9092
+  topics:
+    user:
+      transaction-created: send-transaction-create-mail
+      transaction-complated: send-transaction-complated-mail
+

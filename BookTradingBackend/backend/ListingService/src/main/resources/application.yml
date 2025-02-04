@@ -8,3 +8,11 @@ spring:
       username: aybuke
       password: root
       database: ListDB
+
+kafka:
+  bootstrap-servers: localhost:9092
+  topics:
+    user:
+      exchange-list : send-exchange-list-mail
+      sale-list : send-sale-list-mail
+

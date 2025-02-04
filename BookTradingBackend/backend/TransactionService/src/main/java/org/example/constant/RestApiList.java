@@ -20,6 +20,7 @@ public class RestApiList {
     public static final String FINALIZE_PAYMENT = "/finalizePayment";
     public static final String TAKE_PAYMENT = "/takePayment";
     public static final String TRANSFER_ALL = "/transfer";
+    public static final String SET_STATUS = "/setStatus";
 
     // Payment endpoints
     public static final String CREATE_PAYMENT = "/createPayment";

@@ -17,4 +17,5 @@ public class ListBookResponse {
     private String publisher;
     private String publishedDate;
     private BookCategory category;
+    private String listBookImage;
 }

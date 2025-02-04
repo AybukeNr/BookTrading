@@ -8,6 +8,57 @@ spring:
       username: aybuke
       password: root
       database: UserDB
+  mail:
+    password: kifu aatc svou synr
+    host: smtp.gmail.com
+    username: noreply4bookswap@gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+kafka:
+  bootstrap-servers: localhost:9092
+  group-id: mail-group
+  topics:
+    user:
+      register: send-register-mail
+      forgot-password: send-forgot-mail
+
+
+front-end:
+  url: http://localhost:5173
+  password-rest-mail-template:
+    name: forgot_template.ftl
+    subject: "Password Reset"
+  register-mail-template:
+    name: register_template.ftl
+    subject: "Verify Email"
+  update-list-exc-template:
+    name: update_list_exc.ftl
+    subject : "Exchange List Updated"
+  update-list-sale-template:
+    name: update_list_sale.ftl
+    subject: "Sale List Updated"
+  shipping-template :
+    name : shipping.ftl
+    subject : "Shipping"
+  transaction-created-template:
+    name: transaction.ftl
+    subject: "Transaction"
+  transaction-complated-template :
+    name : transaction_complated.ftl
+    subject : "Transaction Complated"
+  offer-accepted-template:
+    name:  offer_accepted.ftl
+    subject: "Offer Accepted"
+
+
+
+
 
 jwt:
   secretkey: 91e916ff658fade69312c1c2177850ca2d1f1e5aa50a117c94ca50619ef4d003

@@ -46,12 +46,12 @@ public class OfferController {
 
 
 
-    //todo -> for authtentication,use userPrincipal
-    @PostMapping(UPDATE_OFFER)
-    public ResponseEntity<Offer> updateOffer(@RequestBody UpdateOfferRequest updateOfferRequest){
+
+    @PutMapping(UPDATE_OFFER)
+    public ResponseEntity<Boolean> updateOffer(@RequestBody UpdateOfferRequest updateOfferRequest){
         log.info("Updating offer [{}]", updateOfferRequest);
-        Offer offer = offerService.updateOffer(updateOfferRequest);
-        return new ResponseEntity<>(offer, HttpStatus.OK);
+        offerService.updateOffer(updateOfferRequest);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
 }

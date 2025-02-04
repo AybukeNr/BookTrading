@@ -5,6 +5,7 @@ import org.example.dto.response.CardResponse;
 import org.example.dto.response.PaymentResponse;
 import org.example.dto.response.TransactionResponse;
 import org.example.entity.Transactions;
+import org.example.entity.enums.TransactionStatus;
 
 import java.util.List;
 
@@ -22,6 +23,11 @@ public interface ITransactionService {
     public TransactionResponse takePayment(TakePaymentRequest takePaymentRequest);
 
     public void checkTransactionStatus();
+    public Boolean setTransactionStatus(String id, String status);
+
+    public Double calculateTrustFee();
+
+
 
     public TransactionResponse refundBothParties(ExchangeComplatedRequest exchangeComplatedRequest);
 

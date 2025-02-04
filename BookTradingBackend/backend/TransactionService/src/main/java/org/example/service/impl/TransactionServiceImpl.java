@@ -1,10 +1,11 @@
 package org.example.service.impl;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.*;
-import org.example.dto.response.ListResponsePayment;
+import org.example.dto.request.mail.TransactionMailReq;
 import org.example.dto.response.TransactionResponse;
 import org.example.dto.response.enums.ListType;
 import org.example.entity.Account;
@@ -22,6 +23,7 @@ import org.example.repository.CardsRepository;
 import org.example.repository.PaymentRepository;
 import org.example.repository.TransactionRepository;
 import org.example.service.ITransactionService;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -44,6 +46,7 @@ public class TransactionServiceImpl implements ITransactionService {
     private final ListManager listManager;
     private final TransactionMapper transactionMapper;
     private final AccountRepsoitory accountRepository;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
 
 
@@ -61,43 +64,56 @@ public class TransactionServiceImpl implements ITransactionService {
 
 
     /**
-     * her dakika güvence bedelleri yatırıldı mı diye kontrol eder
+     * her dakika depozitler yatırıldı mı diye kontrol eder
      */
 
     @Override
-    @Transactional
-    @Scheduled(cron = "* 5 * * * *")
+    //@Scheduled(cron = "*/30 * * * * *")
     public void checkTransactionStatus() {
         // Devam eden (ONGOING) işlemleri filtrele
-        List<Transactions> ongoingTransactions = transactionRepository.findAll()
-                .stream()
-                .filter(t -> t.getStatus().equals(TransactionStatus.ONGOING))
-                .toList();
+        List<Transactions> ongoingTransactions = transactionRepository.findAllByStatus(TransactionStatus.ONGOING);
 
         // Eğer devam eden işlem yoksa işlem yapılmaz
-        if (ongoingTransactions.isEmpty()) {
-            log.info("No ongoing transactions to check.");
-            return;
+        if (!ongoingTransactions.isEmpty()) {
+            log.info("ONGOING Transactions are checking.");
+
+
+            // Thread havuzu oluştur (örnek: 10 thread)
+            ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+            // Paralel işlem için her bir transaction'ı ayrı bir thread'de çalıştır
+            List<Transactions> transactionsToUpdate = ongoingTransactions.parallelStream().map(transaction -> {
+                executorService.submit(() -> processTransaction(transaction));
+                return transaction;
+            }).toList();
+
+            // Thread havuzunu kapat
+            executorService.shutdown();
+
+            // Güncellemeleri toplu olarak kaydet
+            transactionRepository.saveAll(transactionsToUpdate);
+            log.info("Batch update completed for {} transactions.", transactionsToUpdate.size());
         }
-
-        // Thread havuzu oluştur (örnek: 10 thread)
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
-
-        // Paralel işlem için her bir transaction'ı ayrı bir thread'de çalıştır
-        List<Transactions> transactionsToUpdate = ongoingTransactions.parallelStream().map(transaction -> {
-            executorService.submit(() -> processTransaction(transaction));
-            return transaction;
-        }).toList();
-
-        // Thread havuzunu kapat
-        executorService.shutdown();
-
-        // Güncellemeleri toplu olarak kaydet
-        transactionRepository.saveAll(transactionsToUpdate);
-        log.info("Batch update completed for {} transactions.", transactionsToUpdate.size());
+        else {
+            log.info("No ongoing transactions to check.");
+        }
     }
 
-    private void processTransaction(Transactions transaction) {
+    //todo -> bi ara düzeltirim
+    @Override
+    public Boolean setTransactionStatus(String transacId, String status) {
+        Transactions transactions = transactionRepository.findByTransactionId(transacId).orElseThrow(() -> new TransactionException(ErrorType.TRANSACTION_NOT_FOUND));
+        transactions.setStatus(TransactionStatus.valueOf(status));
+        return true;
+    }
+
+    @Override
+    public Double calculateTrustFee() {
+        return 0.0;
+    }
+
+    @Transactional
+    protected void processTransaction(Transactions transaction) {
         try {
             if (isDeadlineExceeded(transaction)) {
                 log.warn("Transaction deadline passed: {}", transaction.getTransactionId());
@@ -113,7 +129,6 @@ public class TransactionServiceImpl implements ITransactionService {
                     }
                 } else {
                     // EXCHANGE tipi işlem: Hem OwnerDeposit hem OffererDeposit kontrol edilir
-                    //todo -> sadece birinin yatırmamış olması durumunu
                     if ((transaction.getOwnerDeposit() == null || transaction.getOwnerDeposit() <= 0.0) ||
                             (transaction.getOffererDeposit() == null || transaction.getOffererDeposit() <= 0.0)) {
                         transaction.setStatus(TransactionStatus.FAILED);
@@ -127,6 +142,13 @@ public class TransactionServiceImpl implements ITransactionService {
 
                 // Güncelleme zamanı ayarla
                 transaction.setUpdatedDate(LocalDateTime.now());
+                transactionRepository.save(transaction);
+                TransactionMailReq transactionMailReq = new TransactionMailReq();
+                transactionMailReq.setStatus(String.valueOf(transaction.getStatus()));
+                transactionMailReq.setOffererId(transaction.getOffererId());
+                transactionMailReq.setOwnerId(transaction.getOwnerId());
+                transactionMailReq.setTrustFee(0.0);
+                sendComplatedMail(transactionMailReq);
             }
         } catch (Exception e) {
             log.error("Error processing transaction {}: {}", transaction.getTransactionId(), e.getMessage());
@@ -160,16 +182,12 @@ public class TransactionServiceImpl implements ITransactionService {
         Account ownerAccount = accountRepository.findByUserId(exchangeComplatedRequest.getOwnerId())
                 .orElseThrow(() -> new TransactionException(ErrorType.ACCOUNT_NOT_FOUND));
 
-        // Refund deposits
-        if (transactions.getOffererDeposit() > 0.0) {
+
             offererAccount.setBalance(offererAccount.getBalance() + transactions.getOffererDeposit());
             log.info("Refunded {} to offerer account: {}", transactions.getOffererDeposit(), offererAccount.getIban());
-        }
-
-        if (transactions.getOwnerDeposit() > 0.0) {
+            
             ownerAccount.setBalance(ownerAccount.getBalance() + transactions.getOwnerDeposit());
             log.info("Refunded {} to owner account: {}", transactions.getOwnerDeposit(), ownerAccount.getIban());
-        }
 
         // Update and save accounts
         accountRepository.save(offererAccount);
@@ -227,9 +245,10 @@ public class TransactionServiceImpl implements ITransactionService {
     }
 
     /**
+     * @author SCTRLL
      * başarısızlık durumunda güvence bedeli mağdur tarafa geçer
      * @param transferAllReq
-     * @return
+     * @return transactionResponse
      */
     @Override
     @Transactional
@@ -251,7 +270,7 @@ public class TransactionServiceImpl implements ITransactionService {
     @Override
     public boolean isDeadlineExceeded(Transactions transaction) {
         return transaction.getCreatedDate()
-                .plusDays(5)
+                .plusMinutes(1)
                 .isBefore(LocalDateTime.now());
     }
 
@@ -272,7 +291,7 @@ public class TransactionServiceImpl implements ITransactionService {
     @Override
     @Transactional
     public TransactionResponse takePayment(TakePaymentRequest takePaymentRequest) {
-        Transactions transactions = transactionRepository.findByListId(takePaymentRequest.getListId()).filter(t -> t.getStatus().equals(TransactionStatus.ONGOING))
+        Transactions transactions = transactionRepository.findByListId(takePaymentRequest.getListId())//.filter(t -> t.getStatus().equals(TransactionStatus.ONGOING))
                 .orElseThrow(()-> new TransactionException(ErrorType.LIST_NOT_FOUND));
         if(Objects.equals(transactions.getOwnerId(), takePaymentRequest.getUserId())) {
             transactions.setOwnerDeposit(takePaymentRequest.getAmount());
@@ -325,8 +344,8 @@ public class TransactionServiceImpl implements ITransactionService {
 
     }
 
-
-
-
+    private void sendComplatedMail(TransactionMailReq mailReq){
+        kafkaTemplate.send("send-transaction-complated-mail",mailReq);
+    }
 
 }

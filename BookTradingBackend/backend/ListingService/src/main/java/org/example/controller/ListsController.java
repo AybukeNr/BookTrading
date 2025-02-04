@@ -14,6 +14,7 @@ import org.example.dto.request.ListRequest;
 import org.example.dto.request.SalesRequest;
 import org.example.dto.request.UpdateListReq;
 import org.example.dto.request.UpdateOfferRequest;
+import org.example.dto.response.ListMailResponse;
 import org.example.dto.response.ListResponse;
 
 import org.example.dto.response.SentOffer;
@@ -106,16 +107,16 @@ public class ListsController {
         return new ResponseEntity<>(lists, HttpStatus.OK);
     }
 
-    @Operation(summary = "Update an offer", description = "Updates the status of a specific offer.")
+    @Operation(summary = "BURAYI KULLANMA", description = "DİKKAT , İLAN GÜNCELLEMEK İÇİN BU ENDPOİNT KULLANILAMAZ,SONSUZ DÖNGÜYE GİRER")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Offer updated successfully"),
             @ApiResponse(responseCode = "404", description = "Offer not found")
     })
     @PutMapping(UPDATE_OFFER)
-    public ResponseEntity<Boolean> updateOffer(@RequestBody UpdateOfferRequest offer) {
+    public ResponseEntity<Void> updateOffer(@RequestBody UpdateOfferRequest offer) {
         log.info("Received OfferRequest: {}", offer);
         listsService.updateOffer(offer);
-        return new ResponseEntity<>(true, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "Update list status", description = "Updates the status of a specific list.")
@@ -133,6 +134,11 @@ public class ListsController {
         log.info("Received Sale Request: {}", sale);
         listsService.processSales(sale);
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+    @GetMapping(LIST_MAIL_INFOS)
+    public ResponseEntity<ListMailResponse> mailInfo(@RequestParam String listId){
+        log.info("Getting infos for list {}",listId);
+        return new ResponseEntity<>(listsService.listMailSummary(listId), HttpStatus.OK);
     }
 
 }

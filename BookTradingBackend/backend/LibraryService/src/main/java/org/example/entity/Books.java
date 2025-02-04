@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entity.enums.BookCategory;
+import org.example.entity.enums.BookCondition;
 import org.example.entity.enums.BookStatus;
 
 @Data
@@ -16,7 +17,6 @@ import org.example.entity.enums.BookStatus;
 @Table(name = "book")
 public class Books {
 
-    //TODO:book status ekle enabled disabled
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,6 +29,7 @@ public class Books {
     private byte[] image;
     @Enumerated(EnumType.STRING)
     private BookCategory category;
+    private BookCondition condition;
     private BookStatus status;
 
 

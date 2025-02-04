@@ -28,4 +28,5 @@ public class TransactionResponse {
     private TransactionStatus status; // ONGOING, COMPLETED, CANCELLED
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private LocalDateTime deadline;
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import static org.example.constants.RestApiList.CREATE_TRANSACTION;
 import static org.example.constants.RestApiList.TAKE_PAYMENT;
 
-@FeignClient(url = "http://localhost:9092/api/v1/transactions",name = "transactionManager")
+@FeignClient(url = "http://localhost:9093/api/v1/transactions",name = "transactionManager")
 public interface TransactionManager {
 
     @Operation(summary = "Take payment", description = "Processes payment collection for a transaction.")

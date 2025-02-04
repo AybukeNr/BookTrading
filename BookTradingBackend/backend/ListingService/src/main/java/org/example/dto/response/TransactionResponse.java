@@ -25,4 +25,5 @@ public class TransactionResponse {
 
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private LocalDateTime deadline;
 }

@@ -48,9 +48,9 @@ public interface IShippingService {
     /**
      * Takas işlemi için iki tarafın kargo süreçlerini kontrol eder.
      *
-     * @return Eğer iki taraf da kargo süreçlerini tamamlamışsa true, aksi halde false
+     *
      */
-    public Boolean checkExchangeStatus();
+    public void checkExchangeStatus();
 
 
     /**

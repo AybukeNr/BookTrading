@@ -44,6 +44,7 @@ public class ShippingMapper {
                 .shippingStatus(shippings.getStatus())
                 .createdDate(shippings.getCreatedDate())
                 .updatedDate(shippings.getUpdatedDate())
+                .deadline(shippings.getDeadline())
                 .build();
     }
 

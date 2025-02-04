@@ -17,6 +17,7 @@ import org.example.repository.BooksRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.print.Book;
 import java.util.List;
@@ -61,23 +62,40 @@ public class BookService {
         List<Books> books = bookRequests.stream().map(bookMapper::BookResquestToBook).collect(Collectors.toList());
         return bookRepository.saveAll(books).stream().map(bookMapper::BookToBookResponse).collect(Collectors.toList());
     }
-    //ilanda olan kitaplar başka ilana
+
+    @Transactional
     public void createList(BookListRequest bookListRequest) {
-        // Kitap bilgilerini repository'den al
+        // Kullanıcının etkin kitaplarını getir ve kontrol et
+//        List<Books> enabledBooks = bookRepository.findEnabledBooksByUserId(bookListRequest.getOwnerId())
+//                .orElseThrow(() -> new BookException(ErrorType.BAD_REQUEST_ERROR, "Kullanıcının etkin kitabı bulunamadı."));
+//
+//        // İlgili kitabı enabledBooks listesinden filtreleyerek bul
+//        Books book = enabledBooks.stream()
+//                .filter(b -> b.getId().equals(bookListRequest.getBookId()))
+//                .findFirst()
+//                .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND, "Kitap bulunamadı. ID: " + bookListRequest.getBookId()));
         Books book = bookRepository.findOptionalById(bookListRequest.getBookId())
                 .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
-
+        // Kitap bilgilerini DTO'ya dönüştür
         BookResponse bookResponse = bookMapper.BookToBookResponse(book);
-        ListRequest listRequest = ListRequest.builder()
-                        .price(bookListRequest.getPrice())
-                                .bookInfo(bookResponse)
-                                        .type(bookListRequest.getType())
-                                                .ownerId(bookListRequest.getOwnerId())
-                                                        .build();
 
+        // ListRequest oluştur
+        ListRequest listRequest = ListRequest.builder()
+                .price(bookListRequest.getPrice())
+                .bookInfo(bookResponse)
+                .type(bookListRequest.getType())
+                .ownerId(bookListRequest.getOwnerId())
+                .build();
+
+        // Kitap durumunu devre dışı yap ve kaydet
+        book.setStatus(BookStatus.DISABLED);
+        bookRepository.save(book); // Güncellemeyi kaydet
+
+        // Liste oluşturma işlemini yönlendir
         log.info("Create list: {}", listRequest);
         listManager.createList(listRequest);
     }
+
     public Boolean updateBookStatus(UpdateBookStat updateBookStat){
         Books book = bookRepository.findById(updateBookStat.getBookId()).orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
         book.setStatus(BookStatus.valueOf(updateBookStat.getStatus()));

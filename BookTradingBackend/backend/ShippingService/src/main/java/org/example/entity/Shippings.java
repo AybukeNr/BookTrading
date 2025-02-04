@@ -34,4 +34,5 @@ public class Shippings {
     private ShippingStatus status; // Kargo durumu
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private LocalDateTime deadline;
 }

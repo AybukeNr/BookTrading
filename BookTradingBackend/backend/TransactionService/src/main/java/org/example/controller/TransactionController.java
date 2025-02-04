@@ -65,7 +65,7 @@ public class TransactionController {
     }
 
     @Operation(summary = "Refund deposits to both parties", description = "Processes refunds for both parties involved in an exchange.")
-    @PatchMapping(REFUND_DEPOSITS)
+    @PutMapping(REFUND_DEPOSITS)
     public ResponseEntity<TransactionResponse> refundBothParties(
             @Parameter(description = "Request body containing exchange completion details", required = true)
             @RequestBody ExchangeComplatedRequest exchangeComplatedRequest) {
@@ -73,7 +73,7 @@ public class TransactionController {
     }
 
     @Operation(summary = "Finalize payment", description = "Finalizes the payment for a transaction after an exchange is completed.")
-    @PatchMapping(FINALIZE_PAYMENT)
+    @PutMapping(FINALIZE_PAYMENT)
     public ResponseEntity<TransactionResponse> finalizePayment(
             @Parameter(description = "Request body containing exchange completion details", required = true)
             @RequestBody ExchangeComplatedRequest exchangeComplatedRequest) {
@@ -81,7 +81,7 @@ public class TransactionController {
     }
 
     @Operation(summary = "Take payment", description = "Processes payment collection for a transaction.")
-    @PatchMapping(TAKE_PAYMENT)
+    @PutMapping(TAKE_PAYMENT)
     public ResponseEntity<TransactionResponse> takePayment(
             @Parameter(description = "Request body containing payment collection details", required = true)
             @RequestBody TakePaymentRequest takePaymentRequest) {
@@ -89,7 +89,7 @@ public class TransactionController {
     }
 
     @Operation(summary = "Transfer all funds", description = "Transfers the entire amount to the specified party.")
-    @PatchMapping(TRANSFER_ALL)
+    @PutMapping(TRANSFER_ALL)
     public ResponseEntity<TransactionResponse> transferAll(
             @Parameter(description = "Request body containing transfer details", required = true)
             @RequestBody TransferAllReq transferAllReq) {
@@ -101,4 +101,11 @@ public class TransactionController {
         transactionService.createAccount(accountRequest);
         return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
+    @PutMapping(SET_STATUS)
+    public ResponseEntity<Boolean> setStatus(@RequestParam String transacId,@RequestParam String status){
+        log.info("Transaction {} will be set to : {}" ,transacId,status);
+        transactionService.setTransactionStatus(transacId,status);
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
 }

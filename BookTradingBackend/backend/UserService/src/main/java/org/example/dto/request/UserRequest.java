@@ -19,6 +19,10 @@ public class UserRequest {
     @Schema(example = "Doe")
     private String lastName;
 
+    @NotNull(message = "UserName cannot be empty")
+    @Schema(example = "JohnDOe")
+    private String userName;
+
     @NotNull(message = "phone cannot be empty")
     @Schema(example = "0543 788 91 36")
     private String phoneNumber;

@@ -25,8 +25,9 @@ public class RestApiList {
     public static final String SET_DELIVERED = "/setDelivered";
     public static final String TRANSFER_ALL = "/transfer";
     public static final String UPDATE_LIST_STATUS = "/updateListStat";
+    public static final String TEST_SHIPPING_MAIL ="/test-shipping-mail";
 
 
-
+    public static final String SET_STATUS = "/setStatus";
 }
 

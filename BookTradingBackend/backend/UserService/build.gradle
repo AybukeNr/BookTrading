@@ -4,4 +4,9 @@ dependencies {
     annotationProcessor libs.lombok
     implementation libs.springCloudStarterOpenFeign
     implementation libs.jwt
+    implementation libs.kafka
+    implementation libs.freemaker
+    implementation libs.mailSender
+
+
 }

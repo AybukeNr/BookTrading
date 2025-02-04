@@ -9,3 +9,4 @@ spring:
       username: aybuke
       password: root
       database: OffersDB
+

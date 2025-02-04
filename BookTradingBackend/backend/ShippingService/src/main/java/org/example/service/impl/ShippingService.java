@@ -4,6 +4,7 @@ package org.example.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.*;
+import org.example.dto.request.mail.ShippingMailReq;
 import org.example.dto.response.ExchangeResponse;
 import org.example.dto.response.ShippingResponse;
 import org.example.entity.Exchange;
@@ -13,14 +14,17 @@ import org.example.entity.enums.ExchangeType;
 import org.example.entity.enums.ShippingStatus;
 import org.example.exception.ErrorType;
 import org.example.exception.ShippingException;
+import org.example.external.MailManager;
 import org.example.external.TransactionsManager;
 import org.example.mapper.ShippingMapper;
 import org.example.repository.ExchangeRepository;
 import org.example.repository.ShippingRepository;
 
 import org.example.service.IShippingService;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.example.util.TrackingNumberUtil;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,10 +40,10 @@ public class ShippingService implements IShippingService {
     private final ShippingMapper shippingMapper;
     private final ExchangeRepository exchangeRepository;
     private final TransactionsManager transactionsManager;
-
-
+    private final MailManager mailManager;
 
     @Override
+    @Transactional
     public Boolean createShipping(CreateShippingRequest createShippingRequest) {
         log.info("Creating shipping for list ID: {}", createShippingRequest.getListId());
 
@@ -51,6 +55,8 @@ public class ShippingService implements IShippingService {
         ownerShipping.setListId(createShippingRequest.getListId());
         ownerShipping.setCreatedDate(LocalDateTime.now());
         ownerShipping.setUpdatedDate(LocalDateTime.now());
+        ownerShipping.setTrackingNumber(TrackingNumberUtil.generateTrackingNumber());
+        ownerShipping.setDeadline(LocalDateTime.now().plusMinutes(5));
         ownerShipping.setStatus(ShippingStatus.BEKLEMEDE);
 
         shippingRepository.save(ownerShipping);
@@ -66,6 +72,7 @@ public class ShippingService implements IShippingService {
             offererShipping.setListId(createShippingRequest.getListId());
             offererShipping.setCreatedDate(LocalDateTime.now());
             offererShipping.setUpdatedDate(LocalDateTime.now());
+            offererShipping.setTrackingNumber(TrackingNumberUtil.generateTrackingNumber());
             offererShipping.setStatus(ShippingStatus.BEKLEMEDE);
 
             shippingRepository.save(offererShipping);
@@ -79,6 +86,7 @@ public class ShippingService implements IShippingService {
         createExchangeRequest.setListId(createShippingRequest.getListId());
         createExchangeRequest.setOwnerId(createShippingRequest.getOwnerId());
         createExchangeRequest.setOffererId(createShippingRequest.getOffererId());
+        createExchangeRequest.setTransactionId(createShippingRequest.getTransactionId());
 
         boolean exchangeResult = createExchange(createExchangeRequest);
         if (!exchangeResult) {
@@ -91,6 +99,7 @@ public class ShippingService implements IShippingService {
     }
 
     @Override
+    @Transactional
     public Boolean createExchange(CreateExchangeRequest createExchangeRequest) {
         log.info("Processing exchange request: {}", createExchangeRequest);
         Exchange exchange = new Exchange();
@@ -103,6 +112,7 @@ public class ShippingService implements IShippingService {
         else{
             exchange.setExchangeType(ExchangeType.SALE);
         }
+        exchange.setTransactionId(createExchangeRequest.getTransactionId());
         exchange.setStatus(ExchangeStatus.KARGO_BEKLENIYOR);
         exchange.setOwnerId(createExchangeRequest.getOwnerId());
         exchange.setOffererId(createExchangeRequest.getOffererId());
@@ -118,15 +128,16 @@ public class ShippingService implements IShippingService {
 
     //kargo takip no girme
     @Override
+    @Transactional
     public ShippingResponse updateShippingStatus(UpdateShippingRequest updateShippingRequest) {
         Shippings shippings = shippingRepository.findByShippingSerialNumber(updateShippingRequest.getShippingSerialNumber()).orElseThrow(() -> new ShippingException(ErrorType.SHIPPING_NOT_FOUND));
         Exchange exchange = exchangeRepository.findByListId(shippings.getListId()).orElseThrow(() -> new ShippingException(ErrorType.EXCHANGE_NOT_FOUND));
         shippings.setUpdatedDate(LocalDateTime.now());
-        if(updateShippingRequest.getTrackingNumber() != null || !updateShippingRequest.getTrackingNumber().isEmpty()) {
-            shippings.setTrackingNumber(updateShippingRequest.getTrackingNumber());
+        if(updateShippingRequest.getTrackingNumber().equals(shippings.getTrackingNumber())) {
             shippings.setStatus(ShippingStatus.KARGOLANDI);
             shippingRepository.save(shippings);
             log.info("Shipping Updated : {}" ,shippings);
+
             if (updateShippingRequest.getShippingSerialNumber().equals(exchange.getOffererShippingSerialNumber())) {
                 exchange.setOffererShippingSerialNumber(exchange.getOffererShippingSerialNumber());
             } else {
@@ -141,6 +152,13 @@ public class ShippingService implements IShippingService {
             exchange.setStatus(ExchangeStatus.KARGO_BEKLENIYOR);
             exchangeRepository.save(exchange);
             log.info("Exchange : {}", exchange);
+            ShippingMailReq mailReq = new ShippingMailReq();
+            mailReq.setSenderId(shippings.getSenderId());
+            mailReq.setRecipientId(shippings.getRecieverId());
+            mailReq.setTrackingNumber(shippings.getTrackingNumber());
+            mailReq.setAddress(shippings.getRecieverAddress());
+            mailReq.setListId(exchange.getListId());
+            mailManager.testShippingMail(mailReq);
         }
         return shippingMapper.ShippingToResponse(shippings);
     }
@@ -164,37 +182,40 @@ public class ShippingService implements IShippingService {
      * Deadline geçmiş ve kargo durumları TESLIM_EDILDI değilse, karşılıklı iade için TransactionManager'a istek atar.
      * Deadline öncesinde teslim edilen tüm kargolar için her durumda karşılıklı iade işlemi için TransactionManager'a istek atar.
      *
-     * @return Boolean - İşlem başarılı ise true, aksi halde false
+     *
      */
     @Override
-    @Scheduled(cron = "* 5 * * * *") // Her 5 dakikada bir çalışır
-    public Boolean checkExchangeStatus() {
-        log.info("Scheduled check for exchange statuses started.");
-
+   // @Scheduled(cron = "*/30 * * * * *")
+    public void checkExchangeStatus() {
+        log.info("Checking exchange status started");
         // Aktif takasları getir
-        List<Exchange> activeExchanges = exchangeRepository.findAllByStatus(String.valueOf(ExchangeStatus.KARGO_BEKLENIYOR));
-        boolean allChecksPassed = true;
+        List<Exchange> activeExchanges = exchangeRepository.findAllByStatus(ExchangeStatus.KARGO_BEKLENIYOR);
 
-        for (Exchange exchange : activeExchanges) {
-            LocalDateTime deadline = exchange.getDeadline();
-            boolean isDeadlinePassed = LocalDateTime.now().isAfter(deadline);
+        if(!activeExchanges.isEmpty()) {
 
-            try {
-                if (exchange.getExchangeType() == ExchangeType.SALE) {
-                    // Sale türündeki işlemleri kontrol et
-                    processSaleExchange(exchange, isDeadlinePassed);
-                } else if (exchange.getExchangeType() == ExchangeType.EXCHANGE) {
-                    // Exchange türündeki işlemleri kontrol et
-                    processExchangeExchange(exchange, isDeadlinePassed);
+            for (Exchange exchange : activeExchanges) {
+                LocalDateTime deadline = exchange.getDeadline();
+                boolean isDeadlinePassed = LocalDateTime.now().isAfter(deadline);
+
+                try {
+                    if (exchange.getExchangeType() == ExchangeType.SALE) {
+                        // Sale türündeki işlemleri kontrol et
+                        processSaleExchange(exchange, isDeadlinePassed);
+                    } else if (exchange.getExchangeType() == ExchangeType.EXCHANGE) {
+                        // Exchange türündeki işlemleri kontrol et
+                        processExchangeExchange(exchange, isDeadlinePassed);
+                    }
+                } catch (Exception e) {
+                    log.error("Error while processing exchange with transaction ID: {}", exchange.getTransactionId(), e);
+
                 }
-            } catch (Exception e) {
-                log.error("Error while processing exchange with transaction ID: {}", exchange.getTransactionId(), e);
-                allChecksPassed = false;
             }
         }
+        else {
+            log.info("No exchange to check found.");
+        }
 
-        log.info("Scheduled check for exchange statuses completed.");
-        return allChecksPassed;
+
     }
 
     /**
@@ -204,16 +225,28 @@ public class ShippingService implements IShippingService {
      */
     private void processSaleExchange(Exchange exchange, boolean isDeadlinePassed) {
         String ownerTrackingNumber = exchange.getOwnerTrackingNumber();
+        Shippings shippings = shippingRepository.findByShippingSerialNumber(exchange.getOwnerShippingSerialNumber()).orElseThrow(() -> new ShippingException(ErrorType.SHIPPING_NOT_FOUND));
 
         if (isDeadlinePassed && (ownerTrackingNumber == null || ownerTrackingNumber.isEmpty())) {
             // Deadline geçmiş ve tracking number yoksa, ödeme iptali işlemi
-            TransferAllReq transferAllReq = TransferAllReq.builder().build();
+            shippings.setStatus(ShippingStatus.İPTAL_EDİLDİ);
+            shippingRepository.save(shippings);
+            exchange.setStatus(ExchangeStatus.İPTAL_EDİLDİ);
+            exchangeRepository.save(exchange);
+            TransferAllReq transferAllReq = TransferAllReq.builder()
+                            .transferUserId(exchange.getOffererId())
+                                    .transactionId(exchange.getTransactionId()).build();
             transactionsManager.transferAll(transferAllReq);
+
         } else if (isDeadlinePassed && !isShippingDelivered(exchange.getOwnerShippingSerialNumber())&& !(ownerTrackingNumber == null || ownerTrackingNumber.isEmpty())) {
             // Deadline geçmiş ama kargo takip no var ve teslim edilmemişse, karşılıklı iade işlemi
+            exchange.setStatus(ExchangeStatus.TAMAMLANDI);
+            shippings.setStatus(ShippingStatus.TESLIM_EDILDI);
+            shippingRepository.save(shippings);
+            exchangeRepository.save(exchange);
             ExchangeComplatedRequest req = new ExchangeComplatedRequest();
             req.setOffererId(exchange.getOffererId());
-            req.setOwnerId(exchange.getOffererId());
+            req.setOwnerId(exchange.getOwnerId());
             req.setTransactionId(exchange.getTransactionId());
             transactionsManager.finalizePayment(req);
         }
@@ -239,22 +272,37 @@ public class ShippingService implements IShippingService {
                         : exchange.getOffererId();
                 TransferAllReq transferAllReq = new TransferAllReq();
                 transferAllReq.setTransactionId(exchange.getTransactionId());
-                transferAllReq.setTransactionId(exchange.getTransactionId());
                 transferAllReq.setTransferUserId(recipient);
                transactionsManager.transferAll(transferAllReq);
+               exchange.setStatus(ExchangeStatus.İPTAL_EDİLDİ);
+               exchangeRepository.save(exchange);
                log.info("TransferAllReq: {}", transferAllReq);
+
             }
-        } else if (!isDeadlinePassed &&
+            else{
+                ExchangeComplatedRequest req = new ExchangeComplatedRequest();
+                req.setOffererId(exchange.getOffererId());
+                req.setOwnerId(exchange.getOwnerId());
+                req.setTransactionId(exchange.getTransactionId());
+                exchange.setStatus(ExchangeStatus.TAMAMLANDI);
+                exchangeRepository.save(exchange);
+                transactionsManager.refundBothParties(req);
+                log.info("Exchange successfully finalized for transaction ID: {}", exchange.getTransactionId());
+            }
+        } else if ((!isDeadlinePassed &&
                 isShippingDelivered(exchange.getOwnerShippingSerialNumber()) &&
-                isShippingDelivered(exchange.getOffererShippingSerialNumber())) {
+                isShippingDelivered(exchange.getOffererShippingSerialNumber())) ) {
             // Deadline öncesinde her iki kargo teslim edilmişse, karşılıklı iade işlemi başlat
             ExchangeComplatedRequest req = new ExchangeComplatedRequest();
             req.setOffererId(exchange.getOffererId());
             req.setOwnerId(exchange.getOwnerId());
             req.setTransactionId(exchange.getTransactionId());
-            transactionsManager.finalizePayment(req);
+            exchange.setStatus(ExchangeStatus.TAMAMLANDI);
+            exchangeRepository.save(exchange);
+            transactionsManager.refundBothParties(req);
             log.info("Exchange successfully finalized for transaction ID: {}", exchange.getTransactionId());
         }
+
     }
 
     /**
@@ -283,7 +331,9 @@ public class ShippingService implements IShippingService {
      * @param transactionId Takas işleminin ID'si
      * @return Güncellenmiş ExchangeResponse
      */
+    //todo -> transaction iptali eklendi,test edilmedi
     @Override
+    @Transactional
     public ExchangeResponse cancelExchangeStatus(String transactionId) {
         // Exchange'i bul veya hata fırlat
         Exchange exchange = exchangeRepository.findByTransactionId(transactionId)
@@ -298,6 +348,7 @@ public class ShippingService implements IShippingService {
             exchange.setStatus(ExchangeStatus.İPTAL_EDİLDİ);
             exchange.setUpdatedDate(LocalDateTime.now());
             exchangeRepository.save(exchange);
+            transactionsManager.setStatus(transactionId,"CANCELLED");
             log.info("Exchange cancelled successfully for transaction ID: {}", transactionId);
             return shippingMapper.exchangeToResponse(exchange);
         } else {
@@ -312,6 +363,7 @@ public class ShippingService implements IShippingService {
      * @return
      */
     @Override
+    @Transactional
     public ShippingResponse delivered(String shippingSerialNumber) {
         Shippings shippings = shippingRepository.findByShippingSerialNumber(shippingSerialNumber).orElseThrow(() -> new ShippingException(ErrorType.SHIPPING_NOT_FOUND));
         shippings.setStatus(ShippingStatus.TESLIM_EDILDI);
@@ -354,7 +406,7 @@ public class ShippingService implements IShippingService {
             throw new ShippingException(ErrorType.INVALID_STATUS);
         }
 
-        List<Exchange> exchanges = exchangeRepository.findAllByStatus(String.valueOf(status));
+        List<Exchange> exchanges = exchangeRepository.findAllByStatus(ExchangeStatus.valueOf(String.valueOf(status)));
         if (exchanges.isEmpty()) {
             log.warn("No exchanges found for status: {}", exchangeStatus);
             return new ArrayList<>();
@@ -381,6 +433,10 @@ public class ShippingService implements IShippingService {
         return userExchanges.stream()
                 .map(shippingMapper::exchangeToResponse)
                 .toList();
+    }
+
+    private void sendShippingMail(ShippingMailReq mailReq){
+        mailManager.testShippingMail(mailReq);
     }
 
 

@@ -22,4 +22,5 @@ public class ShippingResponse {
     private ShippingStatus shippingStatus;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private LocalDateTime deadline;
 }

@@ -22,6 +22,13 @@ public class RestApiList {
     public static final String CREATE_TRANSACTION = "/createTransaction";
     public static final String GET_ADDRESSES = "/getAddresses";
     public static final String UPDATE_BOOK_STATUS   = "/updateBook";
+    public static final String LIST_MAIL_INFOS = "/getInfos";
+    public static final String TEST_SALE_LIST_MAIL = "/test-sale-list-mail";
+    public static final String TEST_TRANSACTION_CREATED = "/test-transaction-created";
+    public static final String TEST_EXCHANGE_LIST_UPDATE = "/test-exchange-list-update";
+    public static final String TEST_ACCEPTED_OFFER = "/test-accepted-offer";
+
+
 
 
     public static final String PROCESS_SALES = "/processSale" ;
