@@ -8,12 +8,14 @@ import org.example.entity.User;
 import org.example.dto.response.UserResponse;
 import org.example.exception.AuthException;
 import org.example.service.UserService;
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Map;
 
 import static org.example.constant.RestApiList.*;
 
@@ -54,25 +56,10 @@ public class UserController {
         UserResponse userResponse = userService.findUserById(id);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
-
-    @PutMapping("/update/{userId}")
-    public User updateOneUser(@PathVariable String userId,@RequestBody User newUser){
-        return userService.updateOneUser(userId,newUser);
-    }
-    @PutMapping("updateUser/{userId}")
-    public ResponseEntity<UserResponse> updateUser(
-            @PathVariable String userId,@RequestBody UpdateUserDto updateUserDto
-    ) {
-        try {
-            UserResponse updatedUser = userService.updateUser(userId, updateUserDto);
-            return ResponseEntity.ok(updatedUser);
-        }
-        catch (AuthException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    @GetMapping(GET_ADDRESSES)
+    public ResponseEntity<Map<String, String>> getAddresses(@RequestParam String ownerId, @RequestParam String offererId) {
+        Map<String, String> addresses = userService.getUsersAddressesAsMap(ownerId, offererId); // Bu metod bir Map döndürmeli.
+        return ResponseEntity.ok(addresses); // ResponseEntity ile sarmalanmış Map döndürülüyor.
     }
     @PutMapping("/update/{userId}")
     public User updateOneUser(@PathVariable String userId,@RequestBody User newUser){
@@ -93,22 +80,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
-        try {
-            userService.deleteUserById(userId);
-            return ResponseEntity.noContent().build();  // 204 No Content yanıtı döner
-
-        }
-        catch (AuthException e) {
-            return ResponseEntity.status(404).body(null);
-        }
-        catch (Exception e) {
-            return ResponseEntity.status(500).body(null);
-        }
-    }
-
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable String userId) {

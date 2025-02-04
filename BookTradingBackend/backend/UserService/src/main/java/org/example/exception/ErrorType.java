@@ -22,11 +22,8 @@ public enum ErrorType {
     TOKEN_TYPE_AND_PROCESS_DOESNT_MATCH(1009, "Token tipi ve yapılan işlem uyuşmuyor.", HttpStatus.BAD_REQUEST),
     TOKEN_ALREADY_USED(1010, "Token daha önce kullanılmış.", HttpStatus.BAD_REQUEST),
     MAIL_ADDRESS_ALREADY_EXISTS(1011,"Bu mail adresi kullanılamaz",HttpStatus.BAD_REQUEST),
-    MAIL_COULD_NOT_SENT(1100, "Mail gönderilemedi.", HttpStatus.BAD_REQUEST);
-
-    MAIL_ADDRESS_ALREADY_EXISTS(1011,"Bu mail adresi kullanılamaz",HttpStatus.BAD_REQUEST),
+    MAIL_COULD_NOT_SENT(1100, "Mail gönderilemedi.", HttpStatus.BAD_REQUEST),
     INVALID_PASSWORD( 1012,"Geçersiz şifre" ,HttpStatus.BAD_REQUEST );
-    //INVALID_PASSWORD( 1012 , "Geçersiz şifre", HttpStatus.BAD_REQUEST);
 
     int code;
     String message;

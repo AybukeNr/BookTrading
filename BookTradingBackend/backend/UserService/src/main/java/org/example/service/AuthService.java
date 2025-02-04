@@ -11,6 +11,8 @@ import org.example.exception.ErrorType;
 import org.example.mapper.UserMapper;
 import org.example.repository.UserRepository;
 import org.example.util.JwtTokenManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
