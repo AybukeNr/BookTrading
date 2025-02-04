@@ -24,6 +24,10 @@ public enum ErrorType {
     MAIL_ADDRESS_ALREADY_EXISTS(1011,"Bu mail adresi kullanılamaz",HttpStatus.BAD_REQUEST),
     MAIL_COULD_NOT_SENT(1100, "Mail gönderilemedi.", HttpStatus.BAD_REQUEST);
 
+    MAIL_ADDRESS_ALREADY_EXISTS(1011,"Bu mail adresi kullanılamaz",HttpStatus.BAD_REQUEST),
+    INVALID_PASSWORD( 1012,"Geçersiz şifre" ,HttpStatus.BAD_REQUEST );
+    //INVALID_PASSWORD( 1012 , "Geçersiz şifre", HttpStatus.BAD_REQUEST);
+
     int code;
     String message;
     HttpStatus httpStatus;

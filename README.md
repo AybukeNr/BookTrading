@@ -1,4 +1,4 @@
-# BookTrading
+# BookSwap
 
 1. Kullanıcı Servisi (User Service)
 Kullanıcı Servisi, sistemin kullanıcı yönetimi ile ilgili tüm işlemlerini kapsar. Bu servis, kullanıcıların kayıt olması, giriş yapması ve profil bilgilerini yönetmesi gibi temel fonksiyonları sağlar. Kullanıcılar, kayıt olduktan sonra ilgi alanlarına göre kitap kategorileri seçerler ve bu seçimler, kişisel öneriler oluşturulurken kullanılır. Ayrıca, her kullanıcının kişisel kitaplığını yönetmesine izin verir; kullanıcılar bu kitaplığa kitap ekleyebilir, düzenleyebilir veya silebilir. Diğer servisler, kullanıcının bilgilerini ve kitaplık verilerini almak için bu servisi kullanır.

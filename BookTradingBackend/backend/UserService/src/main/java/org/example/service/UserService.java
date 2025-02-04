@@ -3,8 +3,6 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.AccountRequest;
-import org.example.dto.request.mail.RegisterMailRequest;
-import org.example.dto.request.UpdateUserDto;
 import org.example.entity.User;
 import org.example.dto.request.UserRequest;
 import org.example.dto.response.UserResponse;
@@ -15,7 +13,6 @@ import org.example.external.TransactionsManager;
 import org.example.mapper.UserMapper;
 import org.example.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -26,8 +23,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final TransactionsManager transactionsManager;
-    private final MailService mailService;
-
 
 
     @Transactional
@@ -58,6 +53,11 @@ public class UserService {
         return userMapper.UserMapToUserResponse(user);
     }
 
+    //todo:update user herhangi bir şeyi güncelleme
+    public User updateUser(User user) {
+        return user;
+    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -76,7 +76,7 @@ public class UserService {
         addressMap.put("ownerAddress", addresses.get(0));
         addressMap.put("offererAddress", addresses.get(1));
         return addressMap;
-    }
+
     @Transactional
     public void deleteUserById(String userId) {
         User user = userRepository.findById(userId)
@@ -84,7 +84,6 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    @Transactional
     public  User updateOneUser(String userId,User newUser){
         Optional<User> user = userRepository.findById(userId);
         if(user.isPresent()){
@@ -96,6 +95,7 @@ public class UserService {
             return foundUser;
         } else return null;
     }
+
 
 
 }

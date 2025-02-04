@@ -8,18 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends MongoRepository<User, String> {
-    Optional<User> findByEmail(String email);
-    Optional<User> findByUsername(String username);
-    Optional<User> findByPhoneNumber(String phone);
+    Optional<User> findByEmail(String email);         // Null güvenliği için Optional
+    Optional<User> findByUsername(String username);   // Null güvenliği için Optional
+    Optional<User> findByPhoneNumber(String phone);   // Null güvenliği için Optional
     @Query(value = "{ '_id': { $in: [?0, ?1] } }", fields = "{ 'address': 1 }")
-    List<String> findAddressesByIds(String ownerId,String offererId);
-    @Query(value = "{ '_id': ?0 }", fields = "{ 'address': 1 }")
-    Optional<String> findAddressById(String id);
-
-    @Query(value = "{ '_id': ?0 }", fields = "{ 'email': 1 }")
-    Optional<String> findEmailById(String id);
-
-    @Query(value = "{ '_id': ?0 }", fields = "{ 'firstName': 1, 'lastName': 1 }")
-    Optional<User> findNameById(String id);
+    List<String> findAddressesByIds(String ownerId, String offererId);
 
 }
