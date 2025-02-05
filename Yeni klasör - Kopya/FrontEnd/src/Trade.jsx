@@ -78,7 +78,7 @@ function Trade() {
               </div>
               <div>
                 <button className="trade_button">
-                  <span>"Onayla ve Takası gerçekleştir"</span>
+                  <span>Onayla ve Takası gerçekleştir</span>
                 </button>
               </div>
               {/* {error && <div>{error}</div>} */}

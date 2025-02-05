@@ -2,7 +2,6 @@ import React from 'react'
 import './AdvertisedBook.css'
 import { useLocation } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
-import { Rating } from '@mui/material';
 
 function AdvertisedBook() {
     const [{ advertisedBook }, dispatch] = useStateValue();
@@ -25,7 +24,6 @@ function AdvertisedBook() {
                     <img src={book.image} />
                     <div>
                         <h2>{book.title}</h2>
-                        <Rating className='rating'/>
                         <p>ISBN: {book.isbn}</p>
                         <p>Yazar: {book.author}</p>
                         <p>Yayınevi: {book.publisher}</p>
@@ -37,7 +35,7 @@ function AdvertisedBook() {
                 </div>
                 ))
             ) : (
-                <p>İlanda kitap bulunamadı.</p>
+                <p>İlanda kitap bulunamadı. İlana kitap koymak için kitaplığa gidin.</p>
             )}
         </div>
     )

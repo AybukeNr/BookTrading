@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Offers.css'
 import { useStateValue } from './StateProvider';
 import { useNavigate } from 'react-router-dom';
 import { Rating } from '@mui/material';
-import { red } from '@mui/material/colors';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 
 function Offers({ id, title, author, isbn, publisher, publishedDate, category, image, price }) {
   const [{ offerSent, offerReceive, acceptBook }, dispatch] = useStateValue();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const handleReceiveOffer = (newBook) => {
     {
@@ -21,6 +22,15 @@ function Offers({ id, title, author, isbn, publisher, publishedDate, category, i
   const acceptOffer = () => {
     navigate('/trade');
   }
+
+  const handleRejectOffer = () => {
+    setOpen(true);
+  };
+
+  const cancelRejectOffer = () => {
+    setOpen(false);
+  };
+
 
   const handleDetails = (item) => {
     navigate("/bookDetails", {
@@ -49,7 +59,7 @@ function Offers({ id, title, author, isbn, publisher, publishedDate, category, i
               <img src={item.image} alt={item.title} />
               <div>
                 <h4>{item.title}</h4>
-                <Rating className='rating' />
+                <p>Ad Soyad <Rating className='rating' /></p>
                 <p><strong>Yazar: </strong>{item.author}</p>
                 <p><strong>Yayınevi: </strong>{item.publisher}</p>
                 <p><strong>Yayın Tarihi: </strong>{item.publishedDate}</p>
@@ -77,7 +87,7 @@ function Offers({ id, title, author, isbn, publisher, publishedDate, category, i
               <img src={item.image} alt={item.title} onClick={() => handleDetails(item)} />
               <div onClick={() => handleDetails(item)}>
                 <h4>{item.title}</h4>
-                <Rating className='rating' />
+                <p>Ad Soyad <Rating className='rating' /></p>
                 <p><strong>Yazar: </strong>{item.author}</p>
                 <p><strong>Yayınevi: </strong>{item.publisher}</p>
                 <p><strong>Yayın Tarihi: </strong>{item.publishedDate}</p>
@@ -86,7 +96,7 @@ function Offers({ id, title, author, isbn, publisher, publishedDate, category, i
               </div>
               <div className='receive_buttons'>
                 <button onClick={acceptOffer}>Teklifi kabul et</button>
-                <button>Teklifi reddet</button>
+                <button onClick={() => handleRejectOffer(item)}>Teklifi reddet</button>
               </div>
             </div>
           ))
@@ -94,6 +104,20 @@ function Offers({ id, title, author, isbn, publisher, publishedDate, category, i
           <p>Alınan hiç kitap yok.</p>
         )}
       </div>
+
+      <Dialog open={open} onClose={cancelRejectOffer}>
+        <DialogTitle>Teklifi Reddet</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Kitap teklifini reddetmek istediğinize emin misiniz?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={cancelRejectOffer} color="primary">İptal</Button>
+          <Button color="error">Evet</Button>
+        </DialogActions>
+      </Dialog>
+
     </div>
   )
 }

@@ -53,6 +53,13 @@
     border-radius: 8px;
     resize: none;
 }
+
+.register_container > form > input:focus, 
+.register_container > form > textarea:focus {
+    border-color: rgb(57, 139, 217);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
 .register_container > p {
     margin-top: 15px;
     font-size: 14px;

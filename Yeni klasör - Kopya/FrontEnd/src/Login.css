@@ -40,6 +40,11 @@
     border: none;
     border-bottom: 1px solid darkgrey;
 }
+.login_container > form > input:focus {
+    border-color: rgb(57, 139, 217);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
 .login_container > p {
     margin-top: 15px;
     font-size: 14px;

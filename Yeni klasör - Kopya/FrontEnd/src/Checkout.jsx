@@ -16,10 +16,9 @@ function Checkout() {
                     <h1 className="checkout_title">Alışveriş Sepetim</h1>
 
                     {basket?.length > 0 ? (
-                        basket.map((item) => (
+                        basket.map((item, index) => (
                             <CheckoutProduct
-                                key={item.id} //burası sıkıntılı,düzeltilecek
-                                id={item.id}
+                                key={index} 
                                 isbn={item.isbn}
                                 title={item.title}
                                 author={item.author}

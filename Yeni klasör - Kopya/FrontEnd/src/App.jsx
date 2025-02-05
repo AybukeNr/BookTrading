@@ -14,6 +14,7 @@ import AdvertisedBooks from './AdvertisedBook'
 import TradedBooks from './TradedBooks'
 import SoldBooks from './SoldBooks'
 import BookDetails from './BookDetails'
+import UserDetails from './UserDetails'
 import Trade from './Trade'
 import { Routes, Route } from 'react-router-dom'
 // import { loadStripe } from '@stripe/stripe-js'
@@ -119,6 +120,12 @@ function App() {
           <>
             <Header />
             <BookDetails />
+          </>
+        } />
+        <Route path='/userDetails' element={
+          <>
+            <Header />
+            <UserDetails />
           </>
         } />
         <Route path='/checkout' element={

@@ -1,5 +1,6 @@
 import React from 'react'
 import './TradedBooks.css'
+import { Rating } from '@mui/material'
 
 function TradedBooks() {
   return (
@@ -30,15 +31,13 @@ function TradedBooks() {
       <div className="tradersInfos">
         <div className='sender'>
         <h4>Gönderen:</h4>
-        <p>Ad: </p>
-        <p>Soyad: </p>
+        <p>Ad Soyad: </p>
         <p>Telefon: </p>
         <p>Adres: </p>
         </div>
         <div className='receiver'>
         <h4>Alıcı:</h4>
-        <p>Ad: </p>
-        <p>Soyad: </p>
+        <p>Ad Soyad: </p>
         <p>Telefon: </p>
         <p>Adres: </p>
         </div>

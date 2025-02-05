@@ -83,9 +83,8 @@ function Payment() {
                         <h3>Sepetteki Ürünlerim</h3>
                     </div>
                     <div className="payment_items">
-                        {basket.map(item  => (
-                            <CheckoutProduct 
-                                id={item.id}
+                        {basket.map((item, index)  => (
+                            <CheckoutProduct key={index}
                                 isbn={item.isbn}
                                 title={item.title}
                                 author={item.author}
