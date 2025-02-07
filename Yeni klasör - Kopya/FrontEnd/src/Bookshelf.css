@@ -129,7 +129,7 @@
     transform: scale(1.2);
 }
 
-/* Responsive Tasarım */
+
 @media (max-width: 1024px) {
     .bookshelf_card {
         flex: 1 1 calc(33.33% - 20px);

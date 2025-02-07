@@ -14,7 +14,7 @@
     margin-right: auto;
 }
 .register_container {
-    width: 400px;
+    width: 80%;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -28,10 +28,6 @@
     margin-bottom: 20px;
     text-align: center;
 }
-/* .register_container > form > h5 {
-    margin-bottom: 5px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-} */
 .register_container > form > input {
     height: 30px;
     margin-bottom: 15px;

@@ -1,6 +1,5 @@
 .checkout {
     display: flex;
-    /* flex-direction: row; */
     padding: 20px;
     background-color: aliceblue;
     height: max-content;
@@ -15,8 +14,6 @@
     padding: 10px;
     border-bottom: 1px solid gray;
 }
-
-
 .checkout_left {
     flex: 1;
     max-width: calc(100% - 350px);

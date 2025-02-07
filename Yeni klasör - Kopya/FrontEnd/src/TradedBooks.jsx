@@ -1,6 +1,5 @@
 import React from 'react'
 import './TradedBooks.css'
-import { Rating } from '@mui/material'
 
 function TradedBooks() {
   return (

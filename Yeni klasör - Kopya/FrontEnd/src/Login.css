@@ -27,10 +27,6 @@
     margin-bottom: 20px;
     text-align: center;
 }
-.login_container > form > h5 {
-    margin-bottom: 5px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
 .login_container > form > input {
     height: 30px;
     margin-bottom: 10px;

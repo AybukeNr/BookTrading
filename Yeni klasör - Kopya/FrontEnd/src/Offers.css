@@ -62,10 +62,11 @@
     height: auto;
     margin-right: 10px;
 } 
-
+ 
 .receive_buttons {
     display: flex;
     flex-direction: column;
+    width: 60px;
 }
 
 .receive_buttons > button{

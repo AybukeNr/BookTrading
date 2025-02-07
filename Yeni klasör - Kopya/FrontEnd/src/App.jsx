@@ -17,13 +17,8 @@ import BookDetails from './BookDetails'
 import UserDetails from './UserDetails'
 import Trade from './Trade'
 import { Routes, Route } from 'react-router-dom'
-// import { loadStripe } from '@stripe/stripe-js'
-// import { Elements } from '@stripe/react-stripe-js'
 // import { useEffect } from 'react'
 import { useStateValue } from './StateProvider'
-
-
-// const promise = loadStripe('pk_test_51QUw6eLAhfGfbnFIYA77fCrdOxQgOWNK9RWgv2fpQ71owPXIsu9R6F1ARGZ8vKTTNrnDuRugWeH92bEPIYepbeD2009XVNwBWS');
 
 function App() {
   const [{ }, dispatch] = useStateValue();
@@ -46,7 +41,7 @@ function App() {
 
   // }, [])
 
-
+  
   return (
     <div>
       <Routes>
@@ -137,9 +132,7 @@ function App() {
         <Route path='/payment' element={
           <>
             <Header />
-            {/* <Elements stripe={promise}> */}
-              <Payment />
-            {/* </Elements> */}
+            <Payment />
           </>
         } />
       </Routes>

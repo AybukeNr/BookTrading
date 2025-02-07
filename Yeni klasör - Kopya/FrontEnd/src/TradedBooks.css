@@ -85,7 +85,7 @@
 
   @media (max-width: 768px) {
     .bookInfos {
-      flex-direction: column; /* Mobilde kitap bilgileri alt alta */
+      flex-direction: column; 
     }
   
     .tradersInfos {

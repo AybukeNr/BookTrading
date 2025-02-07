@@ -66,7 +66,7 @@ function Offers({ id, title, author, isbn, publisher, publishedDate, category, i
                 <p><strong>ISBN: </strong> {item.isbn}</p>
                 <p><strong>Kategori: </strong>{item.category}</p>
               </div>
-              <div className='accept_callback'>
+              <div className='accept_callback' style={{ fontSize: "14px" }}> 
                 {acceptBook ? (
                   <p style={{ color: "green" }}>Teklif kabul edildi!</p>
                 ) : (
