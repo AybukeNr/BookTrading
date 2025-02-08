@@ -68,10 +68,9 @@ function Login() {
             <div className="login_container">
                 <h1>Giriş Yap</h1>
                 <form>
-                    {/* <h5>E-mail giriniz:</h5> */}
+                    
                     <input type="email" placeholder='E-mail giriniz' value={email} onChange={e => setEmail(e.target.value)} />
 
-                    {/* <h5>Şifre giriniz:</h5> */}
                     <input type="password" placeholder='Şifre giriniz' value={password} onChange={e => setPassword(e.target.value)} />
 
                     {error && <p className="error_message">{error}</p>}

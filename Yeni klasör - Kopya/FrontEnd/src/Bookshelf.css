@@ -1,167 +1,167 @@
 .bookshelf {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 1500px;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
     position: relative;
 }
+
 .bookshelf_title {
     text-align: center;
-    padding: 10px;
-    font-weight: 450;
+    color: #213547;
+    padding: 15px;
+    font-size: 1.5rem;
+    font-weight: 600;
     background-color: aliceblue;
-    border-bottom: 1px solid azure;
+    border: 1px solid orange;
+    border-radius: 8px;
+    width: 95%;
 }
+
 .bookshelf_row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    margin: 10px 0;
-    margin-left: 5px;
-    margin-right: 5px;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
 }
-.bookshelf_card {
-    padding: 20px;
-    margin: 10px;
-    background-color: aliceblue;
-    flex-direction: column;
-    border-radius: 20px;
-    display: flex;
-    max-width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
+.bookshelf_card {
+    background-color: aliceblue;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 300px;
+    flex: 1 1 calc(25% - 20px);
+    margin: 10px;
 }
-.bookshelf_card > img {
+
+.bookshelf_card:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.bookshelf_card img {
     max-height: 200px;
     width: 100%;
     object-fit: contain;
+    border-radius: 8px;
     margin-bottom: 15px;
-}
-
-.adButton {
-    background: orange;
-    border-radius: 1px solid;
-    margin-top: 10px;
-    border-color: rgb(57, 139, 217);
-    color: aliceblue;
-    cursor: pointer;
-}
-.adButton:hover {
-    background-color: rgb(57, 139, 217);
-    transform: scale(1.05);
-}
-
-.updateButton {
-    background:  #646cff;;
-    border-radius: 1px solid;
-    margin-top: 10px;
-    border-color: orange;
-    color: aliceblue;
-    cursor: pointer;
-}
-.updateButton:hover {
-    background-color:rgb(57, 139, 217);
-    transform: scale(1.05);
-}
-
-.removeButton {
-    background: darkgray;
-    border-radius: 1px solid;
-    margin-top: 10px;
-    border-color: rgb(57, 139, 217);
-    color: aliceblue;
-    cursor: pointer;
-}
-.removeButton:hover {
-    background-color: rgb(57, 139, 217);
-    transform: scale(1.05);
 }
 
 .book_info {
     text-align: left;
-    height: 100px;
     margin-bottom: 15px;
 }
-.book_info > p{
-    text-align: left;
-    margin-bottom: 15px;
+
+.book_info p {
+    font-size: 1rem;
+    color: #213547;
+    margin: 5px 0;
 }
 
 .book_price, .book_trade {
-    margin-top: 5px;
     font-weight: 500;
+    font-size: 1.1rem;
+    color: rgb(57, 139, 217);
 }
 
-.bookshelf_container > button {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+.adButton {
     background: orange;
     color: aliceblue;
+    border: 1px solid rgb(57, 139, 217);
     padding: 10px 20px;
-    border-color: rgb(57, 139, 217);
-    border-radius: 2px solid;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+    width: 100%;
+    margin-top: 10px;
 }
-.bookshelf_container > button:hover {
-    background-color: rgb(57, 139, 217);
+
+.updateButton {
+    background: f9f9f9;
+    color: orange;
+    border: 1px solid rgb(57, 139, 217);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.adButton:hover, .updateButton:hover, .bookshelf_container > button:hover {
+    background: rgb(57, 139, 217);
     transform: scale(1.05);
 }
 
-@media (max-width: 1200px) {
-    .bookshelf {
-        max-width: 1000px;
-    }
-    .bookshelf_title {
-        font-size: 1.3rem;
+.removeButton {
+    color: red;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.removeButton:hover {
+    transform: scale(1.2);
+}
+
+.addBook_button {
+    color: aliceblue;
+    background-color: orange;
+    border: 1px solid orange;
+    border-radius: 15px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+}
+
+.addBook_button:hover {
+    transform: scale(1.2);
+}
+
+
+@media (max-width: 1024px) {
+    .bookshelf_card {
+        flex: 1 1 calc(33.33% - 20px);
     }
 }
 
 @media (max-width: 768px) {
+    .bookshelf_card {
+        flex: 1 1 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
     .bookshelf_row {
         flex-direction: column;
         align-items: center;
     }
 
     .bookshelf_card {
-        max-width: 90%;
+        flex: 1 1 100%;
+        max-width: 100%;
     }
 
-    .bookshelf_title {
-        font-size: 1.2rem;
+    .bookshelf_card img {
+        max-height: 150px;
     }
 
-    .bookshelf_container > button {
-        bottom: 10px;
-        right: 10px;
+    .bookshelf_card button {
         padding: 8px 16px;
-        font-size: 0.9rem;
+    }
+
+    .book_info {
+        font-size: 0.9em;
     }
 }
-
-@media (max-width: 480px) {
-    .bookshelf_card {
-        padding: 15px;
-    }
-
-    .bookshelf_title {
-        font-size: 1rem;
-        padding: 8px;
-    }
-
-    .bookshelf_card > button {
-        font-size: 0.9rem;
-        padding: 8px;
-    }
-
-    .bookshelf_container > button {
-        bottom: 8px;
-        right: 8px;
-        padding: 6px 12px;
-        font-size: 0.8rem;
-    }
-}
-
- 

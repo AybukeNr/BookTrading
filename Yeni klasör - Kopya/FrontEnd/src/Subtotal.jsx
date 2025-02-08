@@ -17,10 +17,6 @@ function Subtotal() {
                         <p>
                             Toplam ({ basket.length } adet kitap): <strong>{value} ₺</strong>
                         </p>
-
-                        {/* <small className='subtotal_gift'>
-                            <input type="checkbox" /> Burası hediye kısmı
-                        </small> */}
                     </>
                 )}
                 

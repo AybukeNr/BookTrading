@@ -120,7 +120,7 @@ function Header() {
                 <SearchIcon className='header_searchIcon' onClick={handleSearchSubmit} />
             </div>
 
-
+{/* arama kısmı */}
             {/* {loading && <p>Aranıyor...</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
 

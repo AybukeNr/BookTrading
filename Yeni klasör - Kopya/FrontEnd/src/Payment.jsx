@@ -13,15 +13,13 @@ function Payment() {
     const [{ basket, user }, dispatch] = useStateValue();
     const navigate = useNavigate();
 
-    // const stripe = useStripe();
-    // const elements = useElements();
 
     const [succeeded, setSucceeded] = useState(false);
     const [processing, setProcessing] = useState("");
     const [error, setError] = useState(null);
     const [disabled, setDisabled] = useState(true);
     const [clientSecret, setclientSecret] = useState(true);
-    
+
 
     // useEffect(() => {
     //     //müşteriden ödeme almaya yarayan özel stripe secret oluşturacak..
@@ -36,22 +34,22 @@ function Payment() {
     //     getClientSecret();
     // }, [basket])
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setProcessing(true);
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     setProcessing(true);
 
-        const payload = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: elements.getElement(CardElement)
-            }
-        }).then(({paymentIntent}) => {
-            setSucceeded(true);
-            setError(null);
-            setProcessing(false);
+    //     const payload = await stripe.confirmCardPayment(clientSecret, {
+    //         payment_method: {
+    //             card: elements.getElement(CardElement)
+    //         }
+    //     }).then(({paymentIntent}) => {
+    //         setSucceeded(true);
+    //         setError(null);
+    //         setProcessing(false);
 
-            navigate.replace('/orders');
-        })
-    }
+    //         navigate.replace('/orders');
+    //     })
+    // }
 
     // const handleChange = event => {
     //     setDisabled(event.empty);
@@ -63,7 +61,6 @@ function Payment() {
             <div className="payment_container">
                 <h1> Ürünlerim (<Link to='/checkout'>{basket?.length} adet ürün</Link>) </h1>
 
-                {/* delivery-address */}
                 <div className="payment_section">
                     <div className="payment_title">
                         <h3>Teslimat Adresi: </h3>
@@ -76,16 +73,13 @@ function Payment() {
                     </div>
                 </div>
 
-
-                {/* review-items */}
                 <div className="payment_section">
                     <div className="payment_title">
                         <h3>Sepetteki Ürünlerim</h3>
                     </div>
                     <div className="payment_items">
-                        {basket.map(item  => (
-                            <CheckoutProduct 
-                                id={item.id}
+                        {basket.map((item, index) => (
+                            <CheckoutProduct key={index}
                                 isbn={item.isbn}
                                 title={item.title}
                                 author={item.author}
@@ -99,16 +93,13 @@ function Payment() {
                     </div>
                 </div>
 
-
-                {/* payment-method */}
                 <div className="payment_section">
-
                     <div className="payment_title">
                         <h3>Ödeme Bilgileri</h3>
                     </div>
-
                     <div className="payment_details">
-                        <form onSubmit={handleSubmit}>
+                        <form>
+                            {/* form içine onSubmit={handleSubmit}  */}
                             <div className="payment_card">
                                 <PaymentCard />
                             </div>
@@ -127,12 +118,12 @@ function Payment() {
                                     thousandSeparator={true}
                                 />
                                 <button disabled={processing || disabled || succeeded}>
-                                    <span>{processing ? <p>Yükleniyor</p>: "Onayla ve Satın al"}</span>
+                                    <span>{processing ? <p>Yükleniyor</p> : "Onayla ve Satın al"}</span>
                                 </button>
                             </div>
                             {error && <div>{error}</div>}
                         </form>
-                        
+
                         <p>"Satın al diyerek, <a href="#" target="_blank">Mesafeli Satış Sözleşmesi</a> ve  <a href="#" target="_blank">Ön Bilgilendirme Formu</a>'nu okuduğunuzu, anladığınızı ve kabul ettiğinizi beyan etmiş olursunuz."</p>
                     </div>
                 </div>

@@ -256,24 +256,53 @@
 
 @media (max-width: 480px) {
     .header {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 10px;
     }
 
     .header_search {
-        width: 90%;
+        max-width: 60%;
+        margin-left: 10px;
+        flex: 1;
+    }
+
+    .header_logo {
+        width: 80px;
+        padding: 0;
+        margin: 0;
     }
 
     .header_nav {
-        flex-direction: column;
-        gap: 10px;
+        width: 100%;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+   
+    .header_option {
+        font-size: 12px;
     }
 
-    .dropdown_menu, .dropdown_category {
-        width: 90%;
-        top: 50px;
+    .dropdown_category {
+        left: auto;
+        right: 200px;
+        top: 120px;
+        height: 125px;
+        overflow-y: scroll;
+    }
+
+    .dropdown_menu {
+        top: 125px;
+        right: 100px;
+        left: auto;
+    }
+
+    .notifications {
+        top: 115px;
         right: auto;
-        left: 5%;
+        width: 40%;
+        left: 50%;
     }
 }
 

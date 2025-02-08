@@ -10,7 +10,6 @@ function Trade() {
       <div className="trade_container">
         <h1> Ürünler </h1>
 
-        {/* delivery-address */}
         <div className="trade_section">
           <div className="trade_title">
             <h3>Teslimat Adresleri: </h3>
@@ -23,8 +22,6 @@ function Trade() {
           </div>
         </div>
 
-
-        {/* review-items */}
         <div className="trade_section">
           <div className="trade_title">
             <h3>Takaslanacak Kitaplar</h3>
@@ -66,11 +63,9 @@ function Trade() {
         </div>
 
         <div className="trade_section">
-
           <div className="trade_title">
             <h3>Güvence Bedeli Bilgileri</h3>
           </div>
-
           <div className="trade_details">
             <form>
               <div className="trade_card">
@@ -78,7 +73,7 @@ function Trade() {
               </div>
               <div>
                 <button className="trade_button">
-                  <span>"Onayla ve Takası gerçekleştir"</span>
+                  <span>Onayla ve Takası gerçekleştir</span>
                 </button>
               </div>
               {/* {error && <div>{error}</div>} */}

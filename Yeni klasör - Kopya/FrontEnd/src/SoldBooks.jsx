@@ -21,15 +21,13 @@ function SoldBooks() {
       <div className="personInfo">
         <div className="sellerInfo">
           <h4>Satıcı:</h4>
-          <p>Ad: </p>
-          <p>Soyad: </p>
+          <p>Ad Soyad: </p>
           <p>Telefon: </p>
           <p>Adres: </p>
         </div>
         <div className="buyerInfo">
           <h4>Alıcı:</h4>
-          <p>Ad: </p>
-          <p>Soyad: </p>
+          <p>Ad Soyad: </p>
           <p>Telefon: </p>
           <p>Adres: </p>
         </div>

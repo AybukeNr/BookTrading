@@ -70,17 +70,17 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
   return (
     <>
       <div className={`product ${showOfferPopUp ? 'inactive' : ''}`}>
-        <div className="product_info" onClick={handleNavigate}>
-          <p>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}</p>
-          <Rating className='rating'/>
+        <div className="product_info">
+          <p onClick={handleNavigate}>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}</p>
+          <p onClick={() => navigate("/userDetails")}>Ad Soyad <Rating className='rating' /> </p>
 
           {price ? (
-            <p className='product_price'>
+            <p className='product_price' onClick={handleNavigate}>
               <strong>{price}</strong>
               <small>₺</small>
             </p>
           ) : (
-            <p className='product_trade'>Takasa açık</p>
+            <p className='product_trade'  onClick={handleNavigate}>Takasa açık</p>
           )}
 
         </div>

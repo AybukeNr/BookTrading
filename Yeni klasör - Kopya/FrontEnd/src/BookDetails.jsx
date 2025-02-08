@@ -65,7 +65,7 @@ function BookDetails() {
                     <img src={bookDetail.image} alt={bookDetail.title}/>
                     <div>
                         <h2>{bookDetail.title}</h2>
-                        <Rating className='rating'  size='large'/>
+                        <p onClick={() => navigate("/userDetails")}>Ad Soyad <Rating className='rating'  size='large'/></p>
                         <p><strong>ISBN: </strong>{bookDetail.isbn}</p>
                         <p><strong>Yazar: </strong>{bookDetail.author}</p>
                         <p><strong>Yayınevi: </strong>{bookDetail.publisher}</p>

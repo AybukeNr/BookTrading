@@ -38,24 +38,21 @@ function Home() {
     return (
         <div className='home'>
             <div className="home_container">
-                {/* <img className='home_image' src='https://img.freepik.com/premium-photo/library-background-bookshelf-background-ornate-bookshelf-book-background-vintage-library_605423-33197.jpg' alt='' /> */}
+                <div className="home_slider">
+                    <Slider {...settings}>
+                        <div>
+                            <img className="slider_image" src="https://i0.wp.com/www.yesilist.com/wp-content/uploads/2019/05/1-1.jpg?resize=800%2C445&ssl=1" />
+                        </div>
+                        <div>
+                            <img className="slider_image" src="https://www.arttablo.com/upload/U-eski-kitap-fotograf-kanvas-tablo1461329134-800.jpg" />
+                        </div>
+                        <div>
+                            <img className="slider_image" src="https://st2.depositphotos.com/3800275/8013/i/450/depositphotos_80130112-stock-photo-opened-hardback-book-diary-with.jpg" />
+                        </div>
+                    </Slider>
+                </div>
 
-
-                    <div className="home_slider">
-                        <Slider {...settings}>
-                            <div>
-                                <img className="slider_image" src="https://i0.wp.com/www.yesilist.com/wp-content/uploads/2019/05/1-1.jpg?resize=800%2C445&ssl=1" />
-                            </div>
-                            <div>
-                                <img className="slider_image" src="https://www.arttablo.com/upload/U-eski-kitap-fotograf-kanvas-tablo1461329134-800.jpg" />
-                            </div>
-                            <div>
-                                <img className="slider_image" src="https://st2.depositphotos.com/3800275/8013/i/450/depositphotos_80130112-stock-photo-opened-hardback-book-diary-with.jpg" />
-                            </div>
-                        </Slider>
-                    </div>
-
-                    <h2 className='home_title'>Önerilenler</h2>
+                <h2 className='home_title'>Önerilenler</h2>
 
                 <div className="home_row">
                     {filteredBooks.map((book, index) => (

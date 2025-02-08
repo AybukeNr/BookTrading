@@ -27,10 +27,6 @@
     margin-bottom: 20px;
     text-align: center;
 }
-.login_container > form > h5 {
-    margin-bottom: 5px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
 .login_container > form > input {
     height: 30px;
     margin-bottom: 10px;
@@ -39,6 +35,11 @@
     border-radius: 8px;
     border: none;
     border-bottom: 1px solid darkgrey;
+}
+.login_container > form > input:focus {
+    border-color: rgb(57, 139, 217);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
 }
 .login_container > p {
     margin-top: 15px;

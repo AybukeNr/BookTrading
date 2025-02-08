@@ -131,7 +131,7 @@ function AddToBookshelf() {
                 )}
 
                 <h5>Kitap Fotoğrafı:</h5>
-                <input type="file" value={image} onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))} />
+                <input type="file" onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))} />
             </div>
 
             {error && <p className="error-message">{error}</p>}

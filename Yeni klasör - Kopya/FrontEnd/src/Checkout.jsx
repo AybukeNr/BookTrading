@@ -12,14 +12,14 @@ function Checkout() {
             <div className="checkout_left">
                 <img className='checkout_ad' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI5W1AjZSgok7PuSE5WdeAZD8f_Das4XX1Ng&s" alt="" />
                 <div>
-                    {/* <h3>{user?.email}</h3> */}
                     <h1 className="checkout_title">Alışveriş Sepetim</h1>
+                    {/* <h3>{user?.ad}</h3> */}
+                    {/* <h3>{user?.soyad}</h3> */}
 
                     {basket?.length > 0 ? (
-                        basket.map((item) => (
+                        basket.map((item, index) => (
                             <CheckoutProduct
-                                key={item.id} //burası sıkıntılı,düzeltilecek
-                                id={item.id}
+                                key={index} 
                                 isbn={item.isbn}
                                 title={item.title}
                                 author={item.author}
