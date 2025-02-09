@@ -20,7 +20,7 @@ function UpdateInBookshelf() {
     const [tradeOption, setTradeOption] = useState(price ? 'sale' : 'trade');
     const [error, setError] = useState('');
 
-    useEffect(() => {   
+    useEffect(() => {
         if (bookToUpdate) {
             setTitle(bookToUpdate.title || '');
             setAuthor(bookToUpdate.author || '');
@@ -89,20 +89,27 @@ function UpdateInBookshelf() {
                 <div className='book_category'>
                     <select id="category" value={category} onChange={(e) => setCategory(e.target.value)}>
                         <option value="">Bir kategori seçin</option>
-                        <option value="kurgu">Kurgu</option>
+                        <option value="aile">Aile</option>
+                        <option value="bilgisayar">Bilgisayar</option>
                         <option value="bilim">Bilim</option>
-                        <option value="tarih">Tarih</option>
-                        <option value="biyografi">Biyografi</option>
-                        <option value="fantazi">Fantazi</option>
-                        <option value="gizem">Gizem</option>
-                        <option value="romantik">Romantik</option>
-                        <option value="macera">Macera</option>
-                        <option value="gerilim">Gerilim</option>
-                        <option value="şiir">Şiir</option>
-                        <option value="dram">Dram</option>
                         <option value="bilimKurgu">Bilim Kurgu</option>
+                        <option value="biyografi">Biyografi</option>
+                        <option value="cizgiRoman">Çizgi Roman</option>
+                        <option value="din">Din</option>
+                        <option value="drama">Drama</option>
+                        <option value="eğitim">Eğitim</option>
                         <option value="felsefe">Felsefe</option>
+                        <option value="gençlikKurgu">Gençlik Kurgu</option>
+                        <option value="is">İş</option>
                         <option value="kişiselGelişim">Kişisel Gelişim</option>
+                        <option value="kurgu">Kurgu</option>
+                        <option value="psikoloji">Psikoloji</option>
+                        <option value="şiir">Şiir</option>
+                        <option value="siyasetBilimi">Siyaset Bilimi</option>
+                        <option value="sosyalBilimler">Sosyal Bilimler</option>
+                        <option value="spor">Spor</option>
+                        <option value="tarih">Tarih</option>
+                        <option value="yemekPisirme">Yemek Pişirme</option>
                     </select>
                 </div>
 

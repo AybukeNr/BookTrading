@@ -87,7 +87,7 @@ function Header() {
             setHasNotifications(false);
         }
     };
-    
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -120,7 +120,7 @@ function Header() {
                 <SearchIcon className='header_searchIcon' onClick={handleSearchSubmit} />
             </div>
 
-{/* arama kısmı */}
+            {/* arama kısmı */}
             {/* {loading && <p>Aranıyor...</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -146,20 +146,27 @@ function Header() {
                     {dropdownCatVisible && (
                         <div className="dropdown_category">
                             <ul>
-                                <li onClick={() => handleCategory('Kurgu')}>Kurgu</li>
+                                <li onClick={() => handleCategory('Aile')}>Aile</li>
+                                <li onClick={() => handleCategory('Bilgisayar')}>Bilgisayar</li>
                                 <li onClick={() => handleCategory('Bilim')}>Bilim</li>
-                                <li onClick={() => handleCategory('Tarih')}>Tarih</li>
                                 <li onClick={() => handleCategory('Biyografi')}>Biyografi</li>
-                                <li onClick={() => handleCategory('Fantazi')}>Fantazi</li>
-                                <li onClick={() => handleCategory('Gizem')}>Gizem</li>
-                                <li onClick={() => handleCategory('Romantik')}>Romantik</li>
-                                <li onClick={() => handleCategory('Macera')}>Macera</li>
-                                <li onClick={() => handleCategory('Gerilim')}>Gerilim</li>
-                                <li onClick={() => handleCategory('Şiir')}>Şiir</li>
-                                <li onClick={() => handleCategory('Dram')}>Dram</li>
-                                <li onClick={() => handleCategory('Bilim Kurgu')}>Bilim Kurgu</li>
+                                <li onClick={() => handleCategory('Çizgi Roman')}>Çizgi Roman</li>
+                                <li onClick={() => handleCategory('Din')}>Din</li>
+                                <li onClick={() => handleCategory('Drama')}>Drama</li>
+                                <li onClick={() => handleCategory('Eğitim')}>Eğitim</li>
                                 <li onClick={() => handleCategory('Felsefe')}>Felsefe</li>
+                                <li onClick={() => handleCategory('Gençlik Kurgu')}>Gençlik Kurgu</li>
+                                <li onClick={() => handleCategory('İş')}>İş</li>
                                 <li onClick={() => handleCategory('Kişisel Gelişim')}>Kişisel Gelişim</li>
+                                <li onClick={() => handleCategory('Kurgu')}>Kurgu</li>
+                                <li onClick={() => handleCategory('Psikoloji')}>Psikoloji</li>
+                                <li onClick={() => handleCategory('Şiir')}>Şiir</li>
+                                <li onClick={() => handleCategory('Siyaset Bilimi')}>Siyaset Bilimi</li>
+                                <li onClick={() => handleCategory('Sosyal Bilimler')}>Sosyal Bilimler</li>
+                                <li onClick={() => handleCategory('Spor')}>Spor</li>
+                                <li onClick={() => handleCategory('Tarih')}>Tarih</li>
+                                <li onClick={() => handleCategory('Yemek Pişirme')}>Yemek Pişirme</li>
+
                             </ul>
                         </div>
                     )}
