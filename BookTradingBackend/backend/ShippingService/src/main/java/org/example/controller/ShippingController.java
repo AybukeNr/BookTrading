@@ -41,6 +41,7 @@ public class ShippingController {
             @ApiResponse(responseCode = "200", description = "Shipping created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid input provided")
     })
+    //servisler arası endpoint
     @PostMapping(CREATE_SHIPPING)
     public ResponseEntity<Boolean> createShipping(@RequestBody CreateShippingRequest createShippingRequest) {
         return ResponseEntity.ok(shippingService.createShipping(createShippingRequest));

@@ -125,6 +125,7 @@ public class BookController {
         BookResponse bookResponse = bookService.getBookById(id);
         return new ResponseEntity<>(bookResponse,HttpStatus.OK);
     }
+    //servisler arası endpoint
     @PutMapping(UPDATE_BOOK_STATUS)
     public ResponseEntity<Boolean> updateBookStat(@RequestBody UpdateBookStat updateBookStat){
         bookService.updateBookStatus(updateBookStat);

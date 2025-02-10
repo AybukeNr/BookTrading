@@ -56,11 +56,8 @@ public class UserController {
         UserResponse userResponse = userService.findUserById(id);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
-    @GetMapping(GET_ADDRESSES)
-    public ResponseEntity<Map<String, String>> getAddresses(@RequestParam String ownerId, @RequestParam String offererId) {
-        Map<String, String> addresses = userService.getUsersAddressesAsMap(ownerId, offererId); // Bu metod bir Map döndürmeli.
-        return ResponseEntity.ok(addresses); // ResponseEntity ile sarmalanmış Map döndürülüyor.
-    }
+
+
     @PutMapping("/update/{userId}")
     public User updateOneUser(@PathVariable String userId,@RequestBody User newUser){
         return userService.updateOneUser(userId,newUser);
@@ -94,6 +91,15 @@ public class UserController {
         catch (Exception e) {
             return ResponseEntity.status(500).body(null);
         }
+    }
+
+
+
+    //servisler arası endpointler
+    @GetMapping(GET_ADDRESSES)
+    public ResponseEntity<Map<String, String>> getAddresses(@RequestParam String ownerId, @RequestParam String offererId) {
+        Map<String, String> addresses = userService.getUsersAddressesAsMap(ownerId, offererId); // Bu metod bir Map döndürmeli.
+        return ResponseEntity.ok(addresses); // ResponseEntity ile sarmalanmış Map döndürülüyor.
     }
 
 

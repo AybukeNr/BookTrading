@@ -55,6 +55,7 @@ public class TransactionController {
         return ResponseEntity.ok(transactions);
     }
 
+    //servisler arası endpointler,buradan aşağısı
     @Operation(summary = "Create a new transaction", description = "Creates a new transaction and returns its details.")
     @PostMapping(CREATE_TRANSACTION)
     public ResponseEntity<TransactionResponse> createTransaction(
@@ -63,6 +64,7 @@ public class TransactionController {
         TransactionResponse response = transactionService.createTransaciton(transactionRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
 
     @Operation(summary = "Refund deposits to both parties", description = "Processes refunds for both parties involved in an exchange.")
     @PutMapping(REFUND_DEPOSITS)

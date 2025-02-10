@@ -94,6 +94,7 @@ public class MailService {
 
 
 
+    @KafkaListener(topics = "send-register-mail")
     public void sendRegisterMail(RegisterMailRequest mailRequest) {
         Map<String, Object> variables = new HashMap<>();
         variables.put("username", mailRequest.getUsername());
@@ -102,6 +103,7 @@ public class MailService {
     }
 
 
+    @KafkaListener(topics = "send-forgot-mail")
     public void sendForgotMail(ForgotMailRequest mailRequest) {
         Map<String, Object> variables = new HashMap<>();
         sendAuthMail(mailRequest, variables, resetPasswordMailTemplateName, resetPasswordMailSubject);

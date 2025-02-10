@@ -8,7 +8,6 @@ import org.example.dto.request.LoginRequest;
 import org.example.dto.request.UserRequest;
 import org.example.dto.response.LoginResponse;
 import org.example.dto.response.UserResponse;
-import org.example.exception.AuthException;
 import org.example.service.AuthService;
 import org.example.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -50,19 +49,4 @@ public class AuthController {
         UserResponse userResponse = userService.createUser(userRequest);
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
-
-    @PutMapping("/change-password")
-    public ResponseEntity<String> changePassword(@RequestParam String userId,
-                                                 @RequestParam String oldPassword,
-                                                 @RequestParam String newPassword) {
-        try {
-            // Şifreyi değiştirme işlemi
-            authService.changePassword(userId, oldPassword, newPassword);
-            return ResponseEntity.ok("Password successfully updated");
-        } catch (AuthException e) {
-            return ResponseEntity.status(400).body(e.getMessage());
-        }
-    }
-
-
 }

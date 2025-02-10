@@ -37,6 +37,8 @@ public class ListsController {
 
     private final ListsService listsService;
 
+
+    //servisler arası endpoint
     @Operation(summary = "Create a new list", description = "Creates a new book list with the provided details.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List created successfully"),
@@ -84,6 +86,7 @@ public class ListsController {
         return new ResponseEntity<>(lists, HttpStatus.OK);
     }
 
+    //servisler arası endpoint
     @Operation(summary = "Take an offer", description = "Accepts an offer for a specific list.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Offer accepted successfully"),
@@ -107,6 +110,7 @@ public class ListsController {
         return new ResponseEntity<>(lists, HttpStatus.OK);
     }
 
+    //servisler arası endpoint
     @Operation(summary = "BURAYI KULLANMA", description = "DİKKAT , İLAN GÜNCELLEMEK İÇİN BU ENDPOİNT KULLANILAMAZ,SONSUZ DÖNGÜYE GİRER")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Offer updated successfully"),
@@ -119,6 +123,7 @@ public class ListsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //servisler arası endpoint
     @Operation(summary = "Update list status", description = "Updates the status of a specific list.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List status updated successfully"),
@@ -129,12 +134,14 @@ public class ListsController {
         log.info("Received List Request: {}", listReq);
         return new ResponseEntity<>(listsService.updateListStatus(listReq), HttpStatus.OK);
     }
+    //servisler arası endpoint
     @PutMapping (PROCESS_SALES)
     public ResponseEntity<Boolean> processSales(@RequestBody SalesRequest sale) {
         log.info("Received Sale Request: {}", sale);
         listsService.processSales(sale);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
+    //servisler arası endpoint
     @GetMapping(LIST_MAIL_INFOS)
     public ResponseEntity<ListMailResponse> mailInfo(@RequestParam String listId){
         log.info("Getting infos for list {}",listId);

@@ -45,8 +45,6 @@ public class OfferController {
     }
 
 
-
-
     @PutMapping(UPDATE_OFFER)
     public ResponseEntity<Boolean> updateOffer(@RequestBody UpdateOfferRequest updateOfferRequest){
         log.info("Updating offer [{}]", updateOfferRequest);

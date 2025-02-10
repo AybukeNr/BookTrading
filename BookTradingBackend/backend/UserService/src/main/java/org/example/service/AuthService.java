@@ -11,8 +11,6 @@ import org.example.exception.ErrorType;
 import org.example.mapper.UserMapper;
 import org.example.repository.UserRepository;
 import org.example.util.JwtTokenManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final UserRepository userRepository;
     private final JwtTokenManager jwtTokenManager;
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder() ;
 //    private final UserMapper userMapper;
 //    private final UserService userService;
 
@@ -36,20 +33,6 @@ public class AuthService {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(token);
         return loginResponse ;
-    };
-    //todo : change password
-    public void changePassword(String userId, String oldPassword, String newPassword) {
-        // Kullanıcıyı ID'ye göre bul
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new AuthException(ErrorType.USER_NOT_FOUND, "User not found"));
-        // Eski şifreyi kontrol et
-        if (!user.getPassword().equals(oldPassword)) {
-            throw new AuthException(ErrorType.INVALID_PASSWORD, "Old password is incorrect");
-        }
-
-        // Yeni şifreyi güncelle
-        user.setPassword(newPassword);
-        userRepository.save(user);  // Şifreyi veritabanında güncelle
     }
     // şifreyi güvenli bir şekilde saklamak için Spring Security'nin BCrypt şifreleme algoritmasını kullana
 /*
@@ -110,6 +93,7 @@ public class AuthService {
         userRepository.save(user);
     }
      */
+    //todo : forgot password
     //todo : forgot password
 
 
