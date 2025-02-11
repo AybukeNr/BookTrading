@@ -1,0 +1,670 @@
+[{
+  "_id": {
+    "$oid": "6792b41ba0249920f117e8c4"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67938abfdb21db36e5e244c5"
+  },
+  "sentToMailAddress": "shaycormac991@mgail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67938b2fdb21db36e5e244c6"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "6793f6f3d3a7854c55a87123"
+  },
+  "sentToMailAddress": "aydinbeyzanur261@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "6793f742d3a7854c55a87125"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "6793f812d3a7854c55a87127"
+  },
+  "sentToMailAddress": "k.kaanakbulak@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "6793f95bd3a7854c55a87129"
+  },
+  "sentToMailAddress": "senemcayıiroglu@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "6793faf6bec22d58cd85a5e2"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "6793fe4bbec22d58cd85a5e4"
+  },
+  "sentToMailAddress": "legendaryqueenn@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "6794f2a1543ebb1204ec60c7"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "6794f449543ebb1204ec60c8"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "6794f467543ebb1204ec60c9"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "6794f5c3543ebb1204ec60ca"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "679509c6543ebb1204ec60cb"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "679509e2543ebb1204ec60cc"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67950a11543ebb1204ec60cd"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67950a30543ebb1204ec60ce"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67950ac6543ebb1204ec60cf"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67950aee543ebb1204ec60d0"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "679d54f28b887453b63341f4"
+  },
+  "sentToMailAddress": "legendaryqueenn@gmail.com",
+  "offereraddress": "Fatih cad. Çekmece / İstanbul",
+  "offererFullName": "Ahşap Lee",
+  "listId": "string",
+  "listBookName": "string",
+  "listBookImage": "string",
+  "deadline": {
+    "$date": "2025-01-31T18:47:51.730Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "679e627cb235ae360a55ef68"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offereraddress": "Sultançitliği mah. Kıvılcım sk İstanbul/Çekmeköy PK:34788",
+  "ownerFullName": "Ahşap Lee",
+  "offererFullName": "Aybüke Nur Çorapçı",
+  "trackingNumber": "4634629642",
+  "title": "Alışkanlıkların Gücü",
+  "author": "Charles Duhigg",
+  "publisher": "2012-02-28",
+  "publishedDate": "2012-02-28",
+  "category": "KISISEL_GELISIM",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "679e8acf4d95a84075a51c1c"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "offereraddress": "Fatih cad. Çekmece / İstanbul",
+  "offererFullName": "Shay Cormac",
+  "listId": "679e8357b4a0ef7e5dadc51c",
+  "listBookName": "string",
+  "listBookImage": "string",
+  "deadline": {
+    "$date": "2025-02-01T17:53:19.268Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "679e8d4a1ab273475faf066d"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "offereraddress": "Fatih cad. Çekmece / İstanbul",
+  "offererFullName": "Shay Cormac",
+  "listId": "679e8357b4a0ef7e5dadc51c",
+  "listBookName": "Düşün ve Zengin Ol",
+  "deadline": {
+    "$date": "2025-02-01T21:13:24.369Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "679e8d721ab273475faf066e"
+  },
+  "sentToMailAddress": "shaycormac991@gmail.com",
+  "offereraddress": "Fatih cad. Çekmece / İstanbul",
+  "offererFullName": "Shay Cormac",
+  "listId": "679e8357b4a0ef7e5dadc51c",
+  "listBookName": "Düşün ve Zengin Ol",
+  "deadline": {
+    "$date": "2025-02-01T21:14:04.661Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "679fe5afddb7bc31f74c8c2c"
+  },
+  "sentToMailAddress": "legendaryqueenn@gmail.com",
+  "offereraddress": "Fatih cad. Çekmece / İstanbul",
+  "offererFullName": "Ahşap Lee",
+  "listId": "679fdbdd6e25a463833ed26c",
+  "listBookName": "Ustalık Gerektiren Kafaya Takmama Sanatı",
+  "deadline": {
+    "$date": "2025-02-02T21:42:49.084Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "679fe6c5ddb7bc31f74c8c2d"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offereraddress": "Sultançitliği mah. Kıvılcım sk İstanbul/Çekmeköy PK:34788",
+  "ownerFullName": "Ahşap Lee",
+  "offererFullName": "Aybüke Nur Çorapçı",
+  "trackingNumber": "1204724622",
+  "title": "Ustalık Gerektiren Kafaya Takmama Sanatı",
+  "author": "Mark Manson",
+  "publisher": "2016-09-13",
+  "publishedDate": "2016-09-13",
+  "category": "KISISEL_GELISIM",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0b0b0770eb9167319379f"
+  },
+  "sentToMailAddress": "legendaryqueenn@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Marslı",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0efcab60bc75952d3f01f"
+  },
+  "sentToMailAddress": "legendaryqueenn@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Suç ve Ceza",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f020b60bc75952d3f020"
+  },
+  "sentToMailAddress": "legendaryqueenn@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f56283e3767cc8750786"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offererFullName": "Aybüke Nur Çorapçı",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:02:04.301Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f599cdb3140246168afb"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offererFullName": "Aybüke Nur Çorapçı",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:02:59.634Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f5c4c7049e257b967c42"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offererFullName": "Aybüke Nur Çorapçı",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:03:42.482Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f7f2f8fec062715ced69"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offererFullName": "Aybüke Nur Çorapçı",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:13:00.618Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f7f4f8fec062715ced6a"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:13:02.723Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f7f5f8fec062715ced6b"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:13:02.723Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f85ef8fec062715ced6c"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offererFullName": "Aybüke Nur Çorapçı",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:14:48.893Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f85ff8fec062715ced6d"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:14:50.352Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f861f8fec062715ced6e"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:14:50.352Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f91bd78edf2019e1ddf7"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offererFullName": "Aybüke Nur Çorapçı",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:17:57.063Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0f99d29c76275ec43f787"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offererFullName": "Ahşap Lee",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:20:07.061Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fa6308a6961cb0159b79"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offererFullName": "Ahşap Lee",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:23:25.063Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fa8b4b34ec529056310d"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offererFullName": "Ahşap Lee",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:24:06.041Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fad944c5f13d270d2875"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offererFullName": "Ahşap Lee",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:25:23.795Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fb4b2911d4446fab7075"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "offererFullName": "Ahşap Lee",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:27:17.384Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fb4c2911d4446fab7076"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "ownerFullName": "Ahşap Lee",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:27:17.384Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fb4e2911d4446fab7077"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:27:20.967Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fb4f2911d4446fab7078"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:27:20.967Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fbfc981a984d38450a43"
+  },
+  "sentToMailAddress": "legendaryqueenn@gmail.com",
+  "offererFullName": "Aybüke Nur Çorapçı",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:30:14.168Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fbfd981a984d38450a44"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "ownerFullName": "Ahşap Lee",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:30:14.168Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fbff981a984d38450a45"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:30:17.844Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fc00981a984d38450a46"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:30:17.844Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fcbae9b38b7fc6692bc5"
+  },
+  "sentToMailAddress": "legendaryqueenn@gmail.com",
+  "offererFullName": "Aybüke Nur Çorapçı",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "deadline": {
+    "$date": "2025-02-03T17:33:24.758Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fcbce9b38b7fc6692bc6"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "ownerFullName": "Ahşap Lee",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:33:24.758Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fcbde9b38b7fc6692bc7"
+  },
+  "sentToMailAddress": "legendaryqueenn@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:33:28.376Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a0fcbfe9b38b7fc6692bc8"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:33:28.376Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a1000c18204d147f55c2cf"
+  },
+  "sentToMailAddress": "legendaryqueenn@gmail.com",
+  "offererFullName": "Aybüke Nur Çorapçı",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:47:34.050Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a1000d18204d147f55c2d0"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "ownerFullName": "Ahşap Lee",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:47:34.050Z"
+  },
+  "status": "ONGOING",
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a1000f18204d147f55c2d1"
+  },
+  "sentToMailAddress": "legendaryqueenn@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:47:37.861Z"
+  },
+  "_class": "org.example.entity.Mail"
+},
+{
+  "_id": {
+    "$oid": "67a1001118204d147f55c2d2"
+  },
+  "sentToMailAddress": "aybukenurcorapci0@gmail.com",
+  "listId": "679fdc086e25a463833ed26d",
+  "listBookName": "Sokrates’in Savunması",
+  "offeredBookName": "Define Adası",
+  "deadline": {
+    "$date": "2025-02-03T17:47:37.861Z"
+  },
+  "_class": "org.example.entity.Mail"
+}]

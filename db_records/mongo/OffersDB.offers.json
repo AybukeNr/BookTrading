@@ -413,14 +413,14 @@
     "publishedDate": "1869-01-01",
     "category": "KURGU"
   },
-  "offerStatus": "İPTAL_EDİLDİ",
+  "offerStatus": "KABUL",
   "createdDate": {
     "$date": "2024-12-15T18:20:42.893Z"
   },
   "updatedDate": {
-    "$date": "2024-12-15T18:23:29.547Z"
+    "$date": "2025-01-04T10:52:56.767Z"
   },
-  "_class": "org.example.document.Offer"
+  "_class": "org.example.entity.Offer"
 },
 {
   "_id": {
@@ -448,12 +448,1198 @@
     "publishedDate": "1988-04-01",
     "category": "BİLİM"
   },
-  "offerStatus": "İPTAL_EDİLDİ",
+  "offerStatus": "KABUL",
   "createdDate": {
     "$date": "2024-12-16T11:08:54.798Z"
   },
   "updatedDate": {
-    "$date": "2024-12-16T11:10:06.241Z"
+    "$date": "2025-01-07T17:55:03.519Z"
   },
-  "_class": "org.example.document.Offer"
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "67804d07804ab8247a957fac"
+  },
+  "offererId": "67803e1c5db6a27e8ef7a0df",
+  "offerList": {
+    "book": {
+      "title": "Suç ve Ceza",
+      "author": "Fyodor Dostoyevski",
+      "isbn": "9786053608728",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "2017-09-01",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "32"
+  },
+  "offeredBook": {
+    "title": "Simyacı",
+    "author": "Paulo Coelho",
+    "isbn": "9789755100003",
+    "publisher": "Can Yayınları",
+    "publishedDate": "2001-11-01",
+    "category": "KURGU"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-01-09T22:26:15.419Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6781600cdcdf080cf1f482f4"
+  },
+  "offererId": "67813ebe58338a29fc8bb038",
+  "offerList": {
+    "book": {
+      "title": "Otomatik Portakal",
+      "author": "Anthony Burgess",
+      "isbn": "9789755108245",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "2019-05-01",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "68"
+  },
+  "offeredBook": {
+    "title": "Kiralık Konak",
+    "author": "Yakup Kadri Karaosmanoğlu",
+    "isbn": "9789753638055",
+    "publisher": "İletişim Yayınları",
+    "publishedDate": "1999-12-10",
+    "category": "KURGU"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-10T17:59:40.470Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-10T21:43:58.661Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "67816029dcdf080cf1f482f5"
+  },
+  "offererId": "67813ebe58338a29fc8bb038",
+  "offerList": {
+    "book": {
+      "title": "Otomatik Portakal",
+      "author": "Anthony Burgess",
+      "isbn": "9789755108245",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "2019-05-01",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "67"
+  },
+  "offeredBook": {
+    "title": "Babalar ve Oğullar",
+    "author": "Ivan Turgenyev",
+    "isbn": "9789750718163",
+    "publisher": "Can Yayınları",
+    "publishedDate": "2015-03-11",
+    "category": "KURGU"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-10T18:00:09.348Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-11T09:29:42.474Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "67816059dcdf080cf1f482f6"
+  },
+  "offererId": "67813ebe58338a29fc8bb038",
+  "offerList": {
+    "book": {
+      "title": "Otomatik Portakal",
+      "author": "Anthony Burgess",
+      "isbn": "9789755108245",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "2019-05-01",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "66"
+  },
+  "offeredBook": {
+    "title": "Madame Bovary",
+    "author": "Gustave Flaubert",
+    "isbn": "9786053603341",
+    "publisher": "İş Bankası Kültür Yayınları",
+    "publishedDate": "2013-08-30",
+    "category": "KURGU"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-10T18:00:57.604Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-10T18:50:10.563Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "678161aedcdf080cf1f482f7"
+  },
+  "offererId": "67813ebe58338a29fc8bb038",
+  "offerList": {
+    "book": {
+      "title": "Satranç",
+      "author": "Stefan Zweig",
+      "isbn": "9786053609237",
+      "publisher": "Can Yayınları",
+      "publishedDate": "2016-11-10",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "66"
+  },
+  "offeredBook": {
+    "title": "Madame Bovary",
+    "author": "Gustave Flaubert",
+    "isbn": "9786053603341",
+    "publisher": "İş Bankası Kültür Yayınları",
+    "publishedDate": "2013-08-30",
+    "category": "KURGU"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-01-10T18:06:38.781Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "67823abaf1db0c55d3075691"
+  },
+  "offererId": "67813ebe58338a29fc8bb038",
+  "offerList": {
+    "book": {
+      "title": "Monte Kristo Kontu",
+      "author": "Alexandre Dumas",
+      "isbn": "9786053609442",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "2015-10-12",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "59"
+  },
+  "offeredBook": {
+    "title": "Moby Dick",
+    "author": "Herman Melville",
+    "isbn": "9789753637487",
+    "publisher": "Türkiye İş Bankası Kültür Yayınları",
+    "publishedDate": "2002-05-10",
+    "category": "KURGU"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-11T09:32:42.974Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-11T10:05:30.642Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "678242f0c83acc015fd111c8"
+  },
+  "offererId": "67813e8958338a29fc8bb037",
+  "offerList": {
+    "book": {
+      "title": "Monte Kristo Kontu",
+      "author": "Alexandre Dumas",
+      "isbn": "9786053609442",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "2015-10-12",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "48"
+  },
+  "offeredBook": {
+    "title": "Harry Potter ve Felsefe Taşı",
+    "author": "J.K. Rowling",
+    "isbn": "9789750802949",
+    "publisher": "Yapı Kredi Yayınları",
+    "publishedDate": "2001-07-01",
+    "category": "KURGU"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-11T10:07:44.829Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-11T10:10:24.133Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "678986d0dfea6b790feddd64"
+  },
+  "offererId": "67813e5c58338a29fc8bb036",
+  "offerList": {
+    "book": {
+      "title": "Küçük Prens",
+      "author": "Antoine de Saint-Exupéry",
+      "isbn": "9789750735443",
+      "publisher": "Can Yayınları",
+      "publishedDate": "2018-05-15",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "76"
+  },
+  "offeredBook": {
+    "title": "Dava",
+    "author": "Franz Kafka",
+    "isbn": "9789750719375",
+    "publisher": "Can Yayınları",
+    "publishedDate": "2015-01-19",
+    "category": "KURGU"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-16T22:23:12.472Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-16T22:25:34.398Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "678987c9dfea6b790feddd65"
+  },
+  "offererId": "67813e8958338a29fc8bb037",
+  "offerList": {
+    "book": {
+      "title": "Küçük Prens",
+      "author": "Antoine de Saint-Exupéry",
+      "isbn": "9789750735443",
+      "publisher": "Can Yayınları",
+      "publishedDate": "2018-05-15",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "81"
+  },
+  "offeredBook": {
+    "title": "Savaş ve Barış",
+    "author": "Lev Tolstoy",
+    "isbn": "9786053321816",
+    "publisher": "İş Bankası Kültür Yayınları",
+    "publishedDate": "2015-11-10",
+    "category": "KURGU"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-16T22:27:21.048Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-16T22:28:24.350Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "678991cadfea6b790feddd66"
+  },
+  "offererId": "67813e5c58338a29fc8bb036",
+  "offerList": {
+    "book": {
+      "title": "Otomatik Portakal",
+      "author": "Anthony Burgess",
+      "isbn": "9789750512853",
+      "publisher": "Yapı Kredi Yayınları",
+      "publishedDate": "2016-05-14",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "75"
+  },
+  "offeredBook": {
+    "title": "Bülbülü Öldürmek",
+    "author": "Harper Lee",
+    "isbn": "9780061120084",
+    "publisher": "HarperCollins",
+    "publishedDate": "2006-07-11",
+    "category": "KURGU"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-16T23:10:02.489Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-17T06:28:46.740Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6793895abba3fc695cb91b95"
+  },
+  "offererId": "67813ebe58338a29fc8bb038",
+  "offerList": {
+    "book": {
+      "title": "Kafamda Bir Tuhaflık",
+      "author": "Orhan Pamuk",
+      "isbn": "9789750516721",
+      "publisher": "Yapı Kredi Yayınları",
+      "publishedDate": "2015-09-30",
+      "category": "KURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "64"
+  },
+  "offeredBook": {
+    "title": "Zorba",
+    "author": "Nikos Kazancakis",
+    "isbn": "9789750810170",
+    "publisher": "Can Yayınları",
+    "publishedDate": "2017-11-22",
+    "category": "KURGU"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-24T12:36:42.937Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-24T12:44:29.279Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794eea84cda353f8584f618"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Yüzüklerin Efendisi",
+      "author": "J.R.R. Tolkien",
+      "isbn": "9789753425983",
+      "publisher": "Metis Yayıncılık",
+      "publishedDate": "1954-07-29",
+      "category": "FANTEZİ"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "126"
+  },
+  "offeredBook": {
+    "title": "Zihinsel Dayanıklılık",
+    "author": "Dr. Jason Selk",
+    "isbn": "9786059728306",
+    "publisher": "Sola Yayınları",
+    "publishedDate": "2014-07-22",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:01:12.815Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T14:18:06.202Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f01a4cda353f8584f619"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Da Vinci Şifresi",
+      "author": "Dan Brown",
+      "isbn": "9789752104032",
+      "publisher": "Altın Kitaplar",
+      "publishedDate": "2003-04-01",
+      "category": "GİZEM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "125"
+  },
+  "offeredBook": {
+    "title": "İknanın Psikolojisi",
+    "author": "Robert B. Cialdini",
+    "isbn": "9786050606405",
+    "publisher": "MediaCat Kitapları",
+    "publishedDate": "1984-01-01",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:07:22.492Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T14:25:11.656Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f02a4cda353f8584f61a"
+  },
+  "offererId": "6794ed8d79226874de8d0a1f",
+  "offerList": {
+    "book": {
+      "title": "Da Vinci Şifresi",
+      "author": "Dan Brown",
+      "isbn": "9789752104032",
+      "publisher": "Altın Kitaplar",
+      "publishedDate": "2003-04-01",
+      "category": "GİZEM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "124"
+  },
+  "offeredBook": {
+    "title": "Daha Akıllı Daha Hızlı Daha Başarılı",
+    "author": "Charles Duhigg",
+    "isbn": "9786054729872",
+    "publisher": "Optimist Kitap",
+    "publishedDate": "2016-03-08",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-01-25T14:07:38.992Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f03f4cda353f8584f61b"
+  },
+  "offererId": "6794ed8d79226874de8d0a1f",
+  "offerList": {
+    "book": {
+      "title": "Define Adası",
+      "author": "Robert Louis Stevenson",
+      "isbn": "9786052954466",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "1883-11-14",
+      "category": "MACERA"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "123"
+  },
+  "offeredBook": {
+    "title": "Alışkanlıkların Gücü",
+    "author": "Charles Duhigg",
+    "isbn": "9786054729261",
+    "publisher": "Optimist Kitap",
+    "publishedDate": "2012-02-28",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:07:59.376Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T14:26:36.004Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f05e4cda353f8584f61c"
+  },
+  "offererId": "6794ed8d79226874de8d0a1f",
+  "offerList": {
+    "book": {
+      "title": "Kuzuların Sessizliği",
+      "author": "Thomas Harris",
+      "isbn": "9789752112426",
+      "publisher": "Altın Kitaplar",
+      "publishedDate": "1988-05-19",
+      "category": "GERİLİM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "122"
+  },
+  "offeredBook": {
+    "title": "Beden Dili",
+    "author": "Joe Navarro",
+    "isbn": "9786052994012",
+    "publisher": "Pegasus Yayınları",
+    "publishedDate": "2008-05-15",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:08:30.030Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T14:34:51.442Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f0874cda353f8584f61d"
+  },
+  "offererId": "6794ed8d79226874de8d0a1f",
+  "offerList": {
+    "book": {
+      "title": "Küçük Prens",
+      "author": "Antoine de Saint-Exupéry",
+      "isbn": "9789750735443",
+      "publisher": "Can Yayınları",
+      "publishedDate": "1943-04-06",
+      "category": "ŞİİR"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "121"
+  },
+  "offeredBook": {
+    "title": "Atomik Alışkanlıklar",
+    "author": "James Clear",
+    "isbn": "9786052998256",
+    "publisher": "Pegasus Yayınları",
+    "publishedDate": "2018-10-16",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-01-25T14:09:11.120Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f09e4cda353f8584f61e"
+  },
+  "offererId": "6794ed8d79226874de8d0a1f",
+  "offerList": {
+    "book": {
+      "title": "Yeraltından Notlar",
+      "author": "Fyodor Dostoyevski",
+      "isbn": "9789750730448",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "1864-01-01",
+      "category": "DRAM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "120"
+  },
+  "offeredBook": {
+    "title": "Zihinsel Dayanıklılık",
+    "author": "Dr. Jason Selk",
+    "isbn": "9786059728306",
+    "publisher": "Sola Yayınları",
+    "publishedDate": "2014-07-22",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-01-25T14:09:34.290Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f0af4cda353f8584f61f"
+  },
+  "offererId": "6794ed8d79226874de8d0a1f",
+  "offerList": {
+    "book": {
+      "title": "Vakıf",
+      "author": "Isaac Asimov",
+      "isbn": "9789752731849",
+      "publisher": "İthaki Yayınları",
+      "publishedDate": "1951-05-30",
+      "category": "BİLİMKURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "119"
+  },
+  "offeredBook": {
+    "title": "İknanın Psikolojisi",
+    "author": "Robert B. Cialdini",
+    "isbn": "9786050606405",
+    "publisher": "MediaCat Kitapları",
+    "publishedDate": "1984-01-01",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-01-25T14:09:51.147Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f0d14cda353f8584f620"
+  },
+  "offererId": "6794ed8d79226874de8d0a1f",
+  "offerList": {
+    "book": {
+      "title": "Devlet",
+      "author": "Platon",
+      "isbn": "9786052953124",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "380 BC",
+      "category": "FELSEFE"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "118"
+  },
+  "offeredBook": {
+    "title": "Daha Akıllı Daha Hızlı Daha Başarılı",
+    "author": "Charles Duhigg",
+    "isbn": "9786054729872",
+    "publisher": "Optimist Kitap",
+    "publishedDate": "2016-03-08",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-01-25T14:10:25.556Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f0e34cda353f8584f621"
+  },
+  "offererId": "6794ed8d79226874de8d0a1f",
+  "offerList": {
+    "book": {
+      "title": "Düşün ve Zengin Ol",
+      "author": "Napoleon Hill",
+      "isbn": "9786051069277",
+      "publisher": "Epsilon Yayıncılık",
+      "publishedDate": "1937-10-01",
+      "category": "KISISEL_GELISIM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "117"
+  },
+  "offeredBook": {
+    "title": "Alışkanlıkların Gücü",
+    "author": "Charles Duhigg",
+    "isbn": "9786054729261",
+    "publisher": "Optimist Kitap",
+    "publishedDate": "2012-02-28",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-01-25T14:10:43.939Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f35c4cda353f8584f622"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Aşk ve Gurur",
+      "author": "Jane Austen",
+      "isbn": "9789750735337",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "1813-01-28",
+      "category": "ROMANTİK"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "116"
+  },
+  "offeredBook": {
+    "title": "Beden Dili",
+    "author": "Joe Navarro",
+    "isbn": "9786052994012",
+    "publisher": "Pegasus Yayınları",
+    "publishedDate": "2008-05-15",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:21:16.146Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T14:25:41.250Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f58f4cda353f8584f623"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Define Adası",
+      "author": "Robert Louis Stevenson",
+      "isbn": "9786052954466",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "1883-11-14",
+      "category": "MACERA"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "123"
+  },
+  "offeredBook": {
+    "title": "Alışkanlıkların Gücü",
+    "author": "Charles Duhigg",
+    "isbn": "9786054729261",
+    "publisher": "Optimist Kitap",
+    "publishedDate": "2012-02-28",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:30:39.973Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T14:31:29.481Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f6f94cda353f8584f624"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Düşün ve Zengin Ol",
+      "author": "Napoleon Hill",
+      "isbn": "9786051069277",
+      "publisher": "Epsilon Yayıncılık",
+      "publishedDate": "1937-10-01",
+      "category": "KISISEL_GELISIM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "117"
+  },
+  "offeredBook": {
+    "title": "Alışkanlıkların Gücü",
+    "author": "Charles Duhigg",
+    "isbn": "9786054729261",
+    "publisher": "Optimist Kitap",
+    "publishedDate": "2012-02-28",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:36:41.254Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T15:56:52.179Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f7104cda353f8584f625"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Devlet",
+      "author": "Platon",
+      "isbn": "9786052953124",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "380 BC",
+      "category": "FELSEFE"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "118"
+  },
+  "offeredBook": {
+    "title": "Daha Akıllı Daha Hızlı Daha Başarılı",
+    "author": "Charles Duhigg",
+    "isbn": "9786054729872",
+    "publisher": "Optimist Kitap",
+    "publishedDate": "2016-03-08",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:37:04.288Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T15:57:20.497Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f75d4cda353f8584f626"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Vakıf",
+      "author": "Isaac Asimov",
+      "isbn": "9789752731849",
+      "publisher": "İthaki Yayınları",
+      "publishedDate": "1951-05-30",
+      "category": "BİLİMKURGU"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "119"
+  },
+  "offeredBook": {
+    "title": "İknanın Psikolojisi",
+    "author": "Robert B. Cialdini",
+    "isbn": "9786050606405",
+    "publisher": "MediaCat Kitapları",
+    "publishedDate": "1984-01-01",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:38:21.537Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T15:58:07.953Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f7764cda353f8584f627"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Yeraltından Notlar",
+      "author": "Fyodor Dostoyevski",
+      "isbn": "9789750730448",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "1864-01-01",
+      "category": "DRAM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "120"
+  },
+  "offeredBook": {
+    "title": "Zihinsel Dayanıklılık",
+    "author": "Dr. Jason Selk",
+    "isbn": "9786059728306",
+    "publisher": "Sola Yayınları",
+    "publishedDate": "2014-07-22",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:38:46.467Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T15:58:38.530Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f7914cda353f8584f628"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Küçük Prens",
+      "author": "Antoine de Saint-Exupéry",
+      "isbn": "9789750735443",
+      "publisher": "Can Yayınları",
+      "publishedDate": "1943-04-06",
+      "category": "ŞİİR"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "121"
+  },
+  "offeredBook": {
+    "title": "Atomik Alışkanlıklar",
+    "author": "James Clear",
+    "isbn": "9786052998256",
+    "publisher": "Pegasus Yayınları",
+    "publishedDate": "2018-10-16",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:39:13.274Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T16:01:08.400Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "6794f7a54cda353f8584f629"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Kuzuların Sessizliği",
+      "author": "Thomas Harris",
+      "isbn": "9789752112426",
+      "publisher": "Altın Kitaplar",
+      "publishedDate": "1988-05-19",
+      "category": "GERİLİM"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "122"
+  },
+  "offeredBook": {
+    "title": "Beden Dili",
+    "author": "Joe Navarro",
+    "isbn": "9786052994012",
+    "publisher": "Pegasus Yayınları",
+    "publishedDate": "2008-05-15",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-01-25T14:39:33.102Z"
+  },
+  "updatedDate": {
+    "$date": "2025-01-25T16:01:48.247Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "679fe7253622831e88d7936a"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Sokrates’in Savunması",
+      "author": "Platon",
+      "isbn": "9789754587352",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "-399",
+      "category": "FELSEFE"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "166"
+  },
+  "offeredBook": {
+    "title": "Düşün ve Zengin Ol",
+    "author": "Napoleon Hill",
+    "isbn": "9786051060251",
+    "publisher": "Koridor Yayıncılık",
+    "publishedDate": "1937-01-01",
+    "category": "KISISEL_GELISIM"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-02-02T21:44:05.802Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "67a0accaef6ca050622bd5cb"
+  },
+  "offererId": "6793fe4abec22d58cd85a5e3",
+  "offerList": {
+    "book": {
+      "title": "Sokrates’in Savunması",
+      "author": "Platon",
+      "isbn": "9789754587352",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "-399",
+      "category": "FELSEFE"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "178"
+  },
+  "offeredBook": {
+    "title": "Marslı",
+    "author": "Andy Weir",
+    "isbn": "9786053756640",
+    "publisher": "İthaki Yayınları",
+    "publishedDate": "2011-09-27",
+    "category": "BİLİMKURGU"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-02-03T11:47:21.985Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "67a0b03bef6ca050622bd5cc"
+  },
+  "offererId": "6793fe4abec22d58cd85a5e3",
+  "offerList": {
+    "book": {
+      "title": "Sokrates’in Savunması",
+      "author": "Platon",
+      "isbn": "9789754587352",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "-399",
+      "category": "FELSEFE"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "178"
+  },
+  "offeredBook": {
+    "title": "Marslı",
+    "author": "Andy Weir",
+    "isbn": "9786053756640",
+    "publisher": "İthaki Yayınları",
+    "publishedDate": "2011-09-27",
+    "category": "BİLİMKURGU"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-02-03T12:02:03.219Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "67a0b0adef6ca050622bd5cd"
+  },
+  "offererId": "6793fe4abec22d58cd85a5e3",
+  "offerList": {
+    "book": {
+      "title": "Sokrates’in Savunması",
+      "author": "Platon",
+      "isbn": "9789754587352",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "-399",
+      "category": "FELSEFE"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "178"
+  },
+  "offeredBook": {
+    "title": "Marslı",
+    "author": "Andy Weir",
+    "isbn": "9786053756640",
+    "publisher": "İthaki Yayınları",
+    "publishedDate": "2011-09-27",
+    "category": "BİLİMKURGU"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-02-03T12:03:57.496Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "67a0efc73b6bf87ac543b60e"
+  },
+  "offererId": "6793fe4abec22d58cd85a5e3",
+  "offerList": {
+    "book": {
+      "title": "Sokrates’in Savunması",
+      "author": "Platon",
+      "isbn": "9789754587352",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "-399",
+      "category": "FELSEFE"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "177"
+  },
+  "offeredBook": {
+    "title": "Suç ve Ceza",
+    "author": "Fyodor Dostoyevski",
+    "isbn": "9789750718534",
+    "publisher": "Türkiye İş Bankası Kültür Yayınları",
+    "publishedDate": "1866-01-01",
+    "category": "DRAM"
+  },
+  "offerStatus": "GONDERILDI",
+  "createdDate": {
+    "$date": "2025-02-03T16:33:11.490Z"
+  },
+  "_class": "org.example.entity.Offer"
+},
+{
+  "_id": {
+    "$oid": "67a0f01f3b6bf87ac543b60f"
+  },
+  "offererId": "6793f740d3a7854c55a87124",
+  "offerList": {
+    "book": {
+      "title": "Sokrates’in Savunması",
+      "author": "Platon",
+      "isbn": "9789754587352",
+      "publisher": "İş Bankası Kültür Yayınları",
+      "publishedDate": "-399",
+      "category": "FELSEFE"
+    }
+  },
+  "offeredBookId": {
+    "$numberLong": "160"
+  },
+  "offeredBook": {
+    "title": "Define Adası",
+    "author": "Robert Louis Stevenson",
+    "isbn": "9786053755674",
+    "publisher": "İş Bankası Kültür Yayınları",
+    "publishedDate": "1883-11-14",
+    "category": "MACERA"
+  },
+  "offerStatus": "KABUL",
+  "createdDate": {
+    "$date": "2025-02-03T16:34:39.495Z"
+  },
+  "updatedDate": {
+    "$date": "2025-02-03T17:42:33.566Z"
+  },
+  "_class": "org.example.entity.Offer"
 }]
