@@ -1,0 +1,121 @@
+.profile {
+    background: linear-gradient(to right, aliceblue, lightgray);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.profile > h2 {
+    margin: 20px 0;
+    text-align: center;
+    color: #213547;
+    font-size: 28px;
+    font-weight: 600;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.profile_details {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: aliceblue;
+    padding: 25px;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile_details > h5 {
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color:  #213547;
+}
+
+.profile_details > input,
+.profile_details > textarea {
+    height: 45px;
+    margin-bottom: 12px;
+    background-color: white;
+    width: 100%;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid orange;
+    transition: all 0.3s ease;
+}
+
+.profile_details > textarea {
+    height: 100px;
+    resize: none;
+}
+
+.profile_details > input:focus,
+.profile_details > textarea:focus {
+    border-color: rgb(57, 139, 217);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.button_updateAccount, .button_cancelUpdate {
+    background: orange;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.button_cancelUpdate {
+    background: darkgray;
+}
+
+.button_updateAccount:hover, .button_cancelUpdate:hover {
+    background-color: rgb(57, 139, 217);
+    transform: scale(1.05);
+}
+
+
+@media (max-width: 768px) {
+    .profile_details {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .profile_details > input,
+    .profile_details > textarea {
+        font-size: 14px;
+    }
+
+    .button_updateAccount, .button_cancelUpdate {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile_details {
+        padding: 15px;
+        width: 100%;
+    }
+
+    .profile_details > input,
+    .profile_details > textarea {
+        font-size: 12px;
+        height: 40px;
+    }
+
+    .button_updateAccount, .button_cancelUpdate {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+}
