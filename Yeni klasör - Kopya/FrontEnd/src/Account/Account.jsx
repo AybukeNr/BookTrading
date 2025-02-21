@@ -11,12 +11,13 @@ function Account() {
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [telephone, setTelephone] = useState('');
+    const [iban, setIban] = useState('');
     const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     const handleUpdateAccount = () => {
-        if (!firstname || !lastname || !email || !telephone || !address || !password) {
+        if (!firstname || !lastname || !email || !telephone || !iban || !address || !password) {
             setError('Lütfen düzgünce doldurun!');
             return;
         }
@@ -29,6 +30,7 @@ function Account() {
                 lastname,
                 email,
                 telephone,
+                iban,
                 address,
                 password,
             },
@@ -43,6 +45,7 @@ function Account() {
     //         setEmail(user.email || '');
     //         setTelephone(user.telephone || '');
     //         setAddress(user.address || '');
+    //         setIban(user.iban || '');
     //         setPassword(user.password || '');
     //     }
     // }, [user]);
@@ -53,22 +56,25 @@ function Account() {
             <form className='profile_details'>
 
                 <h5>Ad: </h5>
-                <input type="text" value={firstname} onChange={(e) => setFirstname(e.target.value)}/>
+                <input type="text" value={firstname} onChange={(e) => setFirstname(e.target.value)} required/>
 
                 <h5>Soyad: </h5>
-                <input type="text" value={lastname} onChange={(e) => setLastname(e.target.value)}/>
+                <input type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} required/>
 
                 <h5>E-Mail: </h5>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
 
                 <h5>Telefon No: </h5>
-                <input type="tel" value={telephone} onChange={(e) => setTelephone(e.target.value)}/>
+                <input type="tel" value={telephone} onChange={(e) => setTelephone(e.target.value)} required/>
+
+                <h5>IBAN No: </h5>
+                <input type="text" value={iban} onChange={(e) => setIban(e.target.value)} required/>
 
                 <h5>Adres: </h5>
-                <textarea type="text" value={address} onChange={(e) => setAddress(e.target.value)}/>
+                <textarea type="text" value={address} onChange={(e) => setAddress(e.target.value)} required/>
 
                 <h5>Şifre: </h5>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
 
             </form>
 

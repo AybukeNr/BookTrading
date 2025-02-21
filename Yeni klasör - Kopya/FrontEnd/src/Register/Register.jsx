@@ -3,29 +3,43 @@ import '../Register/Register.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { categories, registerSchemas } from './RegisterSchemas';
+import { instanceAuth } from '../axios';
+// import { setAuthToken } from '../auth';
 
 function Register() {
     const navigate = useNavigate();
+    const [error, setError] = useState('');
 
-    // const register = async (e) => {
-    //     e.preventDefault();
+    const submit = async (values, action) => {
+        setError('');
 
-    //     if (!email || !password) {
-    //         alert('Lütfen e-mail ve şifre giriniz.');
-    //         return;
-    //     }
+        try {
+            const response = await instanceAuth.post('/register', {
+                firstName: values.firstname,
+                lastName: values.lastname,
+                email: values.email,
+                phoneNumber: values.telephone,
+                address: values.address,
+                iban: values.iban,
+                password: values.password,
+            });
 
-    //     try {
-    //         await instance.post('/auth/register', {
-    //             email: email,
-    //             password: password,
-    //         });
-    //         alert('Kayıt Başarılı');
-    //     } catch (error) {
-    //         console.log(error);
-    //         alert('Kayıt Başarısız')
-    //     }
-    // }
+            // const authToken = response.data.token;
+            // setAuthToken(authToken); 
+
+            alert('Kayıt Başarılı');
+            action.resetForm();
+            navigate('/login');
+        } catch (error) {
+            if (error.response) {
+                setError(error.response.data.message || 'Kayıt başarısız. Lütfen tekrar deneyin.');
+            } else if (error.request) {
+                setError('Sunucuya ulaşılamıyor. Lütfen internet bağlantınızı kontrol edin.');
+            } else {
+                setError('Bilinmeyen bir hata oluştu.');
+            }
+        }
+    }
 
     const handleCategoryChange = (category) => {
         const currentCategories = values.categories;
@@ -37,13 +51,6 @@ function Register() {
         }
     };
 
-    const submit = (values, action) => {
-        setTimeout(() => {
-            action.resetForm();
-            navigate('/login');
-        }, 400);
-    }
-
     const { values, errors, handleSubmit, handleChange, handleBlur, touched } = useFormik({
         initialValues: {
             firstname: '',
@@ -51,14 +58,16 @@ function Register() {
             email: '',
             telephone: '',
             address: '',
+            iban: '',
             password: '',
             confirmPassword: '',
             categories: [],
         },
         validationSchema: registerSchemas,
         onSubmit: submit
-
     });
+
+
     return (
         <div className='register'>
             <Link to='/'>
@@ -79,6 +88,9 @@ function Register() {
 
                     <input type="tel" id='telephone' placeholder='Telefon numarası giriniz (Örn: 05XX XXX XXXX)' value={values.telephone} onChange={handleChange} onBlur={handleBlur} maxLength={11} size={11} />
                     {errors.telephone && touched.telephone && <p className='errors'>{errors.telephone}</p>}
+
+                    <input type="text" id='iban' placeholder='IBAN numarası giriniz' value={values.iban} onChange={handleChange} onBlur={handleBlur} maxLength={26} size={26} />
+                    {errors.iban && touched.iban && <p className='errors'>{errors.iban}</p>}
 
                     <textarea type="text" id='address' placeholder='Adres giriniz' value={values.address} onChange={handleChange} onBlur={handleBlur} />
                     {errors.address && touched.address && <p className='errors'>{errors.address}</p>}
@@ -102,9 +114,11 @@ function Register() {
                         {errors.categories && touched.categories && <p className='errors'>{errors.categories}</p>}
                     </div>
 
+                    {error && <p className="error_message">{error}</p>}
+
                     <p style={{ marginTop: 10 }}>"Devam ederek, <a href="#" target="_blank">Kullanım Koşulları</a> ve  <a href="#" target="_blank">Gizlilik Politikası</a>'nı okuduğunuzu, anladığınızı ve kabul ettiğinizi beyan etmiş olursunuz."</p>
 
-                    <button className='register_button' type='submit' >Kaydol</button>
+                    <button className='register_button' type='submit'>Kaydol</button>
                 </form>
 
 

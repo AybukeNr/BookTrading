@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import '../Login/Login.css'
 import { Link, useNavigate } from 'react-router-dom'
-import instance from '../axios';
+import { instanceAuth } from '../axios';
+import { setAuthToken } from '../auth';
 
-function Login() {
+function Login(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -19,22 +20,23 @@ function Login() {
     //     return children;
     // }
 
-    const user = async () => {
-        const token = localStorage.getItem('authToken');
+    // const user = async () => {
+    //     const token = getAuthToken();
 
-        try {
-            const response = await instance.get('http://localhost:5173/user', {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
-            alert('Kullanıcı bilgisi alınamadı.');
-        }
-    }
+    //     try {
+    //         const response = await axios.get('http://localhost:8080/api/v1/users', {
+    //             headers: { Authorization: `Bearer ${token}` },
+    //         });
+    //         console.log(response.data);
+    //     } catch (error) {
+    //         console.log(error);
+    //         alert('Kullanıcı bilgisi alınamadı.');
+    //     }
+    // }
 
     const signIn = async (e) => {
         e.preventDefault();
+        setError('');
 
         if (!email || !password) {
             // alert('Lütfen e-mail ve şifre giriniz.');
@@ -43,19 +45,25 @@ function Login() {
         }
 
         try {
-            const response = await instance.post('/auth/login', {
-                email: email,
-                password: password,
+            const response = await instanceAuth.post('/login', {
+                email,
+                password,
             });
 
             const token = response.data.token;
-            localStorage.setItem('authToken', token);
+            setAuthToken(token);
 
             alert('Giriş Başarılı');
+            props.setIsAuthenticated(true);
             navigate('/');
         } catch (error) {
-            console.log(error);
-            alert('Giriş Başarısız')
+            if (error.response) {
+                setError(error.response.data.message || 'Giriş başarısız. Lütfen tekrar deneyin.');
+            } else if (error.request) {
+                setError('Sunucuya ulaşılamıyor. Lütfen internet bağlantınızı kontrol edin.');
+            } else {
+                setError('Bilinmeyen bir hata oluştu.');
+            }
         }
     }
 
@@ -67,7 +75,7 @@ function Login() {
 
             <div className="login_container">
                 <h1>Giriş Yap</h1>
-                <form>
+                <form onSubmit={signIn}>
                     
                     <input type="email" placeholder='E-mail giriniz' value={email} onChange={e => setEmail(e.target.value)} />
 
@@ -75,7 +83,7 @@ function Login() {
 
                     {error && <p className="error_message">{error}</p>}
 
-                    <button className='login_signInButton' type='submit' onClick={signIn}>Giriş yap</button>
+                    <button className='login_signInButton' type='submit'>Giriş yap</button>
                 </form>
 
                 <button className='login_registerButton' onClick={() => navigate('/register')}>Hesabınız mı yok?</button>
