@@ -10,6 +10,7 @@ import org.example.dto.request.BookRequest;
 import org.example.dto.request.ListRequest;
 import org.example.dto.request.UpdateBookStat;
 import org.example.dto.response.BookResponse;
+import org.example.entity.enums.BookCondition;
 import org.example.external.ListManager;
 import org.example.service.BookService;
 import org.slf4j.Logger;
@@ -133,5 +134,9 @@ public class BookController {
 
     }
 
-
+    @GetMapping(GET_BOOK_CONDITION)
+    public ResponseEntity<BookCondition> getBookCondition(@PathVariable Long bookId) {
+        BookCondition condition = bookService.getBookConditionById(bookId);
+        return ResponseEntity.ok(condition);
+    }
 }

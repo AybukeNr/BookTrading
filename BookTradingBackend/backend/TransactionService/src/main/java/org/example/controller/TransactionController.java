@@ -13,6 +13,7 @@ import org.example.dto.response.TransactionResponse;
 import org.example.service.ICardService;
 import org.example.service.IPaymentService;
 import org.example.service.ITransactionService;
+import org.example.service.impl.TransactionServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ import static org.example.constant.RestApiList.*;
 public class TransactionController {
 
     private final ITransactionService transactionService;
-
+    private final TransactionServiceImpl transactionServiceImpl;
     @Operation(summary = "Get all transactions", description = "Retrieves a list of all transactions.")
     @GetMapping(GET_ALL_TRANSACTIONS)
     public ResponseEntity<List<TransactionResponse>> getAllTransactions() {
@@ -110,4 +111,9 @@ public class TransactionController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    @GetMapping("/{bookId}")
+    public ResponseEntity<Double> getTrustFee(@PathVariable String bookId) {
+        Double trustFee =transactionServiceImpl.calculateTrustFeee(bookId);
+        return ResponseEntity.ok(trustFee);
+    }
 }

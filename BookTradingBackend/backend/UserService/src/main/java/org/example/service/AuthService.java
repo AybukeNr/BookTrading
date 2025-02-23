@@ -28,10 +28,11 @@ public class AuthService {
                 .orElseThrow(() -> new AuthException(ErrorType.INVALID_USERNAME_OR_PASSWORD, "Email/Password Incorrect"));
         if(!user.getPassword().equals(loginRequest.getPassword()))
             throw new AuthException(ErrorType.INVALID_USERNAME_OR_PASSWORD, "Email/Password Incorrect");
-        String token = jwtTokenManager.createToken(user.getId(),user.getUsername(),user.getPhoneNumber())
+        String token = jwtTokenManager.createToken(user.getId(),user.getUsername(),user.getPhoneNumber(),user.getRole())
                 .orElseThrow(() -> new AuthException(ErrorType.INVALID_TOKEN, "Geçersiz Oturum"));
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(token);
+        loginResponse.setRole(user.getRole());
         return loginResponse ;
     }
     // şifreyi güvenli bir şekilde saklamak için Spring Security'nin BCrypt şifreleme algoritmasını kullana
@@ -51,6 +52,7 @@ public class AuthService {
         loginResponse.setToken(token);
         return loginResponse;
         }
+
         public void changePassword(String userId, String oldPassword, String newPassword) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new AuthException(ErrorType.USER_NOT_FOUND, "User not found"));
@@ -64,9 +66,9 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
-    */
 
 
+/*i
 
     // @Transactional
     /* public String changePasswords(ChangePasswordDto changePasswordDto){

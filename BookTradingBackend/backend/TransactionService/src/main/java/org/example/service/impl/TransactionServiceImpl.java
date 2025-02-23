@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.Manager.LibraryManager;
 import org.example.dto.request.*;
 import org.example.dto.request.mail.TransactionMailReq;
 import org.example.dto.response.TransactionResponse;
@@ -28,6 +29,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -47,7 +49,7 @@ public class TransactionServiceImpl implements ITransactionService {
     private final TransactionMapper transactionMapper;
     private final AccountRepsoitory accountRepository;
     private final KafkaTemplate<String, Object> kafkaTemplate;
-
+private  final LibraryManager libraryManager;
 
 
     @Override
@@ -110,6 +112,25 @@ public class TransactionServiceImpl implements ITransactionService {
     @Override
     public Double calculateTrustFee() {
         return 0.0;
+    }
+
+    public Double calculateTrustFeee(String bookId) {
+        // Kitap durumunu alıyoruz
+        String bookCondition = libraryManager.getBookCondition(bookId);
+
+        // Kitap durumu ile güvence bedelini hesaplıyoruz
+        Map<String, Double> conditionTrustFees = Map.of(
+                "NEW", 50.0,
+                "VERY_GOOD", 40.0,
+                "GOOD", 30.0,
+                " ACCEPTABLE", 20.0,
+                "POOR", 10.0
+        );
+        Double trustFee = conditionTrustFees.getOrDefault(bookCondition, 30.0);
+        double cargoFee = 60.0;
+        trustFee += cargoFee;
+        // Kitap durumu için güvence bedelini getir, yoksa varsayılan bedeli uygula
+        return  trustFee;
     }
 
     @Transactional

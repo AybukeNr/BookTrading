@@ -78,7 +78,6 @@ public class ListsService {
                 .collect(Collectors.toList());
     }
 
-
     @Transactional
     public ListResponse createLists(ListRequest lists) {
         Lists newLists = listMapper.ListRequestToList(lists);
@@ -263,5 +262,15 @@ public class ListsService {
         mailManager.testSaleMail(mailRequest);
     }
 
-
+    @Transactional
+    public Boolean updateListApprovalStatus(String listId) {
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        // Eğer şu an OPEN ise CLOSE yap, CLOSE ise OPEN yap
+        list.setStatus(list.getStatus() == ListsStatus.OPEN ? ListsStatus.CLOSED : ListsStatus.OPEN);
+        listsRepository.save(list);
+        log.info("Updated List Status: {} -> {}", listId, list.getStatus());
+        return true;
+    }
+    //81
 }

@@ -8,6 +8,7 @@ import org.example.dto.request.ListRequest;
 import org.example.dto.request.UpdateBookStat;
 import org.example.dto.response.BookResponse;
 import org.example.entity.Books;
+import org.example.entity.enums.BookCondition;
 import org.example.entity.enums.BookStatus;
 import org.example.exception.BookException;
 import org.example.exception.ErrorType;
@@ -103,6 +104,10 @@ public class BookService {
         return true;
     }
 
-
+    public BookCondition getBookConditionById(Long bookId) {
+        Books book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
+        return book.getCondition();
+    }
 
 }
