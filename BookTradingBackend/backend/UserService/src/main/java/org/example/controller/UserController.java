@@ -67,7 +67,7 @@ public class UserController {
             @PathVariable String userId,@RequestBody UpdateUserDto updateUserDto
     ) {
         try {
-            UserResponse updatedUser = userService.updateUser(userId, updateUserDto);
+            UserResponse updatedUser = userService.updateUser( updateUserDto);
             return ResponseEntity.ok(updatedUser);
         }
         catch (AuthException e) {
@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {//request param yapılacak
         try {
             userService.deleteUserById(userId);
             return ResponseEntity.noContent().build();  // 204 No Content yanıtı döner

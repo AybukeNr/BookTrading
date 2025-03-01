@@ -1,0 +1,8 @@
+server:
+  port: 8084
+
+apriori:
+  model:
+    file:
+      path: "classpath:apriori.model"
+

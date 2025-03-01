@@ -6,6 +6,9 @@ import lombok.Data;
 
 @Data
 public class UpdateUserDto {
+
+    @NotNull(message = "User name cannot be empty")
+    private String userId;
     @NotNull(message = "User name cannot be empty")
     @Schema(example = "John")
     private String firstName;

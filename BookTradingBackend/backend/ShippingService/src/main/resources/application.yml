@@ -12,9 +12,3 @@ spring:
       ddl-auto: update
 
 
-kafka:
-  bootstrap-servers: localhost:9092
-  topics:
-    user:
-      shipping: send-shipping-mail
-

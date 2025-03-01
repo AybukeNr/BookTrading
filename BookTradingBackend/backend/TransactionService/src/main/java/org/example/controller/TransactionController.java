@@ -31,6 +31,7 @@ public class TransactionController {
 
     private final ITransactionService transactionService;
 
+
     @Operation(summary = "Get all transactions", description = "Retrieves a list of all transactions.")
     @GetMapping(GET_ALL_TRANSACTIONS)
     public ResponseEntity<List<TransactionResponse>> getAllTransactions() {
