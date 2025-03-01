@@ -16,35 +16,111 @@ import SoldBooks from '../src/SoldBooks/SoldBooks'
 import BookDetails from '../src/BookDetails/BookDetails'
 import UserDetails from '../src/UserDetails/UserDetails'
 import Trade from '../src/Trade/Trade'
+import Admin from '../src/Admin/Admin'
 import { Routes, Route } from 'react-router-dom'
-// import { useEffect } from 'react'
 import { useStateValue } from './StateProvider'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { AuthTokenControl } from './auth'
+import { getAuthToken } from './auth'
 
 function App() {
   const [{ }, dispatch] = useStateValue();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('authToken');
+  useEffect(() => {
+    const token = getAuthToken();
 
-  //   if (token) {
-  //     dispatch({
-  //       type: 'SET_USER',
-  //       user: { token }
-  //     })
+    if (token) {
+      dispatch({
+        type: 'SET_USER',
+        user: { token }
+      });
+      setIsAuthenticated(true);
+    } else {
+      dispatch({
+        type: 'SET_USER',
+        user: null
+      });
+      setIsAuthenticated(false);
+    }
 
-  //   } else {
-  //     dispatch({
-  //       type: 'SET_USER',
-  //       user: null
-  //     })
-  //   }
+  }, [])
 
-  // }, [])
 
-  
   return (
     <div>
       <Routes>
+        {(isAuthenticated || AuthTokenControl()) && (
+          <>
+            <Route path='/bookshelf' element={
+              <>
+                <Header />
+                <Bookshelf />
+              </>
+            } />
+            <Route path='/addBook' element={
+              <>
+                <Header />
+                <AddToBookshelf />
+              </>
+            } />
+            <Route path='/updateBook' element={
+              <>
+                <Header />
+                <UpdateInBookshelf />
+              </>
+            } />
+            <Route path='/myAccount' element={
+              <>
+                <Header />
+                <Account />
+              </>
+            } />
+            <Route path='/myAds' element={
+              <>
+                <Header />
+                <AdvertisedBooks />
+              </>
+            } />
+            <Route path='/myOffers' element={
+              <>
+                <Header />
+                <Offers />
+              </>
+            } />
+            <Route path='/myTrades' element={
+              <>
+                <Header />
+                <TradedBooks />
+              </>
+            } />
+            <Route path='/mySales' element={
+              <>
+                <Header />
+                <SoldBooks />
+              </>
+            } />
+            <Route path='/trade' element={
+              <>
+                <Header />
+                <Trade />
+              </>
+            } />
+            <Route path='/checkout' element={
+              <>
+                <Header />
+                <Checkout />
+              </>
+            } />
+            <Route path='/payment' element={
+              <>
+                <Header />
+                <Payment />
+              </>
+            } />
+          </>
+        )}
         <Route path='/' element={
           <>
             <Header />
@@ -52,65 +128,12 @@ function App() {
           </>
         } />
         <Route path='/login' element={
-          <Login />
+          <Login setIsAuthenticated={setIsAuthenticated} />
         } />
         <Route path='/register' element={
           <Register />
         } />
-        <Route path='/bookshelf' element={
-          <>
-            <Header />
-            <Bookshelf />
-          </>
-        } />
-        <Route path='/addBook' element={
-          <>
-            <Header />
-            <AddToBookshelf />
-          </>
-        } />
-        <Route path='/updateBook' element={
-          <>
-            <Header />
-            <UpdateInBookshelf />
-          </>
-        } />
-        <Route path='/myAccount' element={
-          <>
-            <Header />
-            <Account />
-          </>
-        } />
-        <Route path='/myAds' element={
-          <>
-            <Header />
-            <AdvertisedBooks />
-          </>
-        } />
-        <Route path='/myOffers' element={
-          <>
-            <Header />
-            <Offers />
-          </>
-        } />
-        <Route path='/myTrades' element={
-          <>
-            <Header />
-            <TradedBooks />
-          </>
-        } />
-        <Route path='/mySales' element={
-          <>
-            <Header />
-            <SoldBooks />
-          </>
-        } />
-        <Route path='/trade' element={
-          <>
-            <Header />
-            <Trade />
-          </>
-        } />
+
         <Route path='/bookDetails' element={
           <>
             <Header />
@@ -123,16 +146,9 @@ function App() {
             <UserDetails />
           </>
         } />
-        <Route path='/checkout' element={
+        <Route path='/admin' element={
           <>
-            <Header />
-            <Checkout />
-          </>
-        } />
-        <Route path='/payment' element={
-          <>
-            <Header />
-            <Payment />
+            <Admin />
           </>
         } />
       </Routes>

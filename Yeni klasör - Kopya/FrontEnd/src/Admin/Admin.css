@@ -1,0 +1,36 @@
+.admin {
+  width: 100%;
+  background-color: aliceblue;
+  height: max-content;
+}
+.delete_user_button, .update_ad_button {
+  background-color: aliceblue;
+}
+.delete_user_button:hover {
+  background-color: red;
+  color: aliceblue;
+}
+.update_ad_button:hover {
+  background-color: rgb(57, 139, 217);
+  color: aliceblue;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+tbody {
+  display: table-row-group !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #f2f2f2;
+}
+
+
+

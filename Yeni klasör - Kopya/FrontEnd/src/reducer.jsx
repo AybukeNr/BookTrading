@@ -17,6 +17,10 @@ export const initialState = {
     selectedCategory: null,
     bookDetail: [],
     advertisedBook: [],
+    advertisements: [
+        { id: 1, title: 'Olasılıksız', author: 'Adam Fawer', isbn: 123, publisher: 'April Yayıncılık', publishedDate: '2005', category: 'Kurgu', price: 800, image: 'https://static.nadirkitap.com/fotograf/1255127/28/Kitap_20220724194404125512711.jpg' },
+        { id: 2, title: 'Melekler ve Şeytanlar', author: 'Dan Brown', isbn: 12, publisher: 'Altın Kitaplar', publishedDate: '2005', category: 'Kurgu', image: 'https://s3.cloud.ngn.com.tr/kitantik/images/2023-02-17/1br9qfwle6wpd2u1ly2.jpg' },  
+        ],
     offerSent: [],
     offerReceive: [
         { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '12', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
@@ -28,6 +32,11 @@ export const initialState = {
         'Profiliniz güncellendi.',
     ],
     user: null,
+    users: [
+        { id: 1, firstname: 'Senem', lastname: 'Çayıroğlu', email: 'senem@gmail.com', telephone: '05456328152', iban: 'TR12 3456 7890 1234 5678 9012 34', address: 'İstanbul', password: '123456' },
+        { id: 2, firstname: 'Aybüke Nur', lastname: 'Çorapçı', email: 'aybuq@gmail.com', telephone: '05423678452', iban: 'TR12 3456 7890 1580 5778 4569 34', address: 'İstanbul', password: '1234567' },
+        { id: 3, firstname: 'Beyzanur', lastname: 'Aydın', email: 'beyza@gmail.com', telephone: '05414789652', iban: 'TR12 3456 7890 2244 5434 7890 34', address: 'Eskişehir', password: '1234568' }
+    ],
 };
 
 export const getBasketTotal = (basket) => {
@@ -76,6 +85,13 @@ const reducer = (state, action) => {
                 advertisedBook: state.advertisedBook.filter((book) => book.id !== action.id),
             }
 
+        case 'UPDATE_ADVERTISEMENTS':
+            return {
+                ...state,
+                advertisements: state.advertisements.map((advertisedBook) => advertisedBook.id === action.advertisedBook.id ?
+                    { ...advertisedBook, ...action.advertisedBook } : advertisedBook),
+            }
+
         case 'REMOVE_FROM_BOOKSHELF':
             return {
                 ...state,
@@ -111,6 +127,12 @@ const reducer = (state, action) => {
                 ...state,
                 user: action.user,
             }
+
+        case 'REMOVE_USER':
+            return {
+                ...state,
+                users: state.users.filter((user) => user.id !== action.id),
+            };
 
         case 'UPDATE_USER_ACCOUNT':
             return {
