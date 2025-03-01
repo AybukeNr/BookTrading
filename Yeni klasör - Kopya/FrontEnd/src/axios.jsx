@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getAuthToken, removeAuthToken } from './auth';
+import { useNavigate } from "react-router-dom";
 
 const createInstance = (baseURL) => {
     const instance = axios.create({
@@ -23,8 +24,9 @@ instance.interceptors.response.use(
     (error) => {
       if (error.response && (error.response.status === 401 || error.response.status === 403)) {
         console.log("Oturum süresi doldu. Çıkış yapılıyor...");
-        removeAuthToken('authToken');
-        window.location.href = "/login";
+        removeAuthToken('authToken'); 
+        const navigate = useNavigate();   
+        navigate('/login');
       }
       return Promise.reject(error);
     }

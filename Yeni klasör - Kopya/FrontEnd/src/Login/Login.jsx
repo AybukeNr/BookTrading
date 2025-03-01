@@ -39,7 +39,6 @@ function Login(props) {
         setError('');
 
         if (!email || !password) {
-            // alert('Lütfen e-mail ve şifre giriniz.');
             setError('Lütfen tüm alanları düzgünce doldurun!');
             return;
         }

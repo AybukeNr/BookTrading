@@ -8,6 +8,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useStateValue } from '../StateProvider';
+import { instanceUser, instanceListing } from '../axios';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,21 +45,46 @@ export default function FloatingActionButtonZoom() {
   const [value, setValue] = React.useState(0);
   const [{ users, advertisements, acceptAd }, dispatch] = useStateValue();
 
+  useEffect(() => {
+    fetchUsers();
+    fetchAdvertisements();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await instanceUser.get('/admin');
+      setUsers(response.data);
+    } catch (error) {
+      console.error('Kullanıcıları getirirken hata oluştu:', error);
+    }
+  };
+
+  const fetchAdvertisements = async () => {
+    try {
+      const response = await instanceListing.get('/admin');
+      setAdvertisements(response.data);
+    } catch (error) {
+      console.error('İlanları getirirken hata oluştu:', error);
+    }
+  };
+
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const handleDeleteUser = (userId) => {
+    if (window.confirm("Bu kullanıcıyı silmek istediğinize emin misiniz?")) {
     dispatch({
       type: 'REMOVE_USER',
       id: userId,
-    })
+    }) }
   }
   console.log("Users:", users);
 
-  const handleupdateAdvertisement = (advertisementsId) => {
+  const handleUpdateAdvertisement = (advertisementsId) => {
     dispatch({
-      type: 'UPDATE_ADVERISTMENT',
+      type: 'UPDATE_ADVERTISEMENTS',
       id: advertisementsId,
     })
   }
@@ -109,7 +135,7 @@ export default function FloatingActionButtonZoom() {
                     <td>{user.telephone}</td>
                     <td>{user.iban}</td>
                     <td>{user.address}</td>
-                    <td>{user.password}</td>
+                    <td>{"***"}</td>
                     <td>
                       <button className='delete_user_button' onClick={() => handleDeleteUser(user.id)}>Kullanıcıyı Sil</button>
                     </td>
@@ -154,7 +180,7 @@ export default function FloatingActionButtonZoom() {
                     <td>{adveristedBook.category}</td>
                     <td>{adveristedBook.price ? `${adveristedBook.price}` : 'Takasa Açık'}</td>
                     <td>
-                      <button className='update_ad_button' onClick={() => handleupdateAdvertisement(advertisements.id)}>{acceptAd ? "İlanı Onayla" : "Onaydan Kaldır"}</button>
+                      <button className='update_ad_button' onClick={() => handleUpdateAdvertisement(adveristedBook.id, adState === 'APPROVED' ? 'PENDING' : 'APPROVED')}>{adState === 'APPROVED' ? "İlanı Onayla" : "Onaydan Kaldır"}</button>
                     </td>
                   </tr>
                 ))

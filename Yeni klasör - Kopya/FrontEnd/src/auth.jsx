@@ -1,4 +1,4 @@
-// import jwtDecode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 
 export const getAuthToken = () => {
     return localStorage.getItem('authToken');
@@ -37,12 +37,13 @@ export const removeToken = () => {
 // };  AYBÜQ ŞİFRE YENİLEME YAPUCUK MU?
 
 function isJWT(token) {
+    if (!token) return false;
     const parts = token.split(".");
     return Array.isArray(parts) && parts.length === 3;
 }
 export const getDecodedAuthToken = () => {
     const token = getAuthToken();
-    return jwtDecode(token);
+    return token ? jwtDecode(token) : null;
 }
 
 export const AuthTokenControl = () => {

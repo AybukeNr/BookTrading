@@ -18,32 +18,34 @@ import UserDetails from '../src/UserDetails/UserDetails'
 import Trade from '../src/Trade/Trade'
 import Admin from '../src/Admin/Admin'
 import { Routes, Route } from 'react-router-dom'
-// import { useEffect } from 'react'
 import { useStateValue } from './StateProvider'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { AuthTokenControl } from './auth'
+import { getAuthToken } from './auth'
 
 function App() {
   const [{ }, dispatch] = useStateValue();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // useEffect(() => {
-  //   const token = getAuthToken();
+  useEffect(() => {
+    const token = getAuthToken();
 
-  //   if (token) {
-  //     dispatch({
-  //       type: 'SET_USER',
-  //       user: { token }
-  //     })
+    if (token) {
+      dispatch({
+        type: 'SET_USER',
+        user: { token }
+      });
+      setIsAuthenticated(true);
+    } else {
+      dispatch({
+        type: 'SET_USER',
+        user: null
+      });
+      setIsAuthenticated(false);
+    }
 
-  //   } else {
-  //     dispatch({
-  //       type: 'SET_USER',
-  //       user: null
-  //     })
-  //   }
-
-  // }, [])
+  }, [])
 
 
   return (

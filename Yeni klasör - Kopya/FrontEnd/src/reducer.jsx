@@ -85,7 +85,7 @@ const reducer = (state, action) => {
                 advertisedBook: state.advertisedBook.filter((book) => book.id !== action.id),
             }
 
-        case 'UPDATE_FROM_ADVERTISEMENTS':
+        case 'UPDATE_ADVERTISEMENTS':
             return {
                 ...state,
                 advertisements: state.advertisements.map((advertisedBook) => advertisedBook.id === action.advertisedBook.id ?
