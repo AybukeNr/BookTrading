@@ -16,7 +16,7 @@ public class BookResponse {
     private String isbn;
     private String publisher;
     private String publishedDate;
-    private byte[] image;
+    private String image;
     private BookCategory category;
 
 }
