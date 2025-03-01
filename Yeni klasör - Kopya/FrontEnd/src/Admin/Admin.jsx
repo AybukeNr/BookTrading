@@ -6,11 +6,6 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import Zoom from '@mui/material/Zoom';
-import Fab from '@mui/material/Fab';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { green } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 import { useStateValue } from '../StateProvider';
 
@@ -44,48 +39,14 @@ function a11yProps(index) {
   };
 }
 
-const fabStyle = {
-  position: 'absolute',
-  bottom: 16,
-  right: 16,
-};
-
-const fabGreenStyle = {
-  color: 'common.white',
-  bgcolor: green[500],
-  '&:hover': {
-    bgcolor: green[600],
-  },
-};
-
 export default function FloatingActionButtonZoom() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const [{ users, adveristments }, dispatch] = useStateValue();
+  const [{ users, advertisements, acceptAd }, dispatch] = useStateValue();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const transitionDuration = {
-    enter: theme.transitions.duration.enteringScreen,
-    exit: theme.transitions.duration.leavingScreen,
-  };
-
-  const fabs = [
-    {
-      color: 'primary',
-      sx: fabStyle,
-      icon: <DeleteIcon alt='Tümünü Sil' />,
-      label: 'Delete',
-    },
-    {
-      color: 'secondary',
-      sx: fabStyle,
-      icon: <EditIcon />,
-      label: 'Edit',
-    },
-  ];
 
   const handleDeleteUser = (userId) => {
     dispatch({
@@ -95,13 +56,13 @@ export default function FloatingActionButtonZoom() {
   }
   console.log("Users:", users);
 
-  const handleupdateAdveristment = (adveristmentId) => {
+  const handleupdateAdvertisement = (advertisementsId) => {
     dispatch({
       type: 'UPDATE_ADVERISTMENT',
-      id: adveristmentId,
+      id: advertisementsId,
     })
   }
-  console.log("Adveristments:", adveristments);
+  console.log("Adveristments:", advertisements);
 
   return (
     <Box className='admin'
@@ -125,101 +86,89 @@ export default function FloatingActionButtonZoom() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <table key={users.length}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Ad Soyad</th>
-              <th>Email</th>
-              <th>Tel No</th>
-              <th>Iban</th>
-              <th>Adres</th>
-              <th>Şifre</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.length > 0 ? (
-              users.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.firstname} {user.lastname}</td>
-                  <td>{user.email}</td>
-                  <td>{user.telephone}</td>
-                  <td>{user.iban}</td>
-                  <td>{user.address}</td>
-                  <td>{user.password}</td>
-                  <td>
-                    <button className='delete_user_button' onClick={() => handleDeleteUser(user.id)}>Kullanıcıyı Sil</button>
-                  </td>
-                </tr>
-              ))
-            ) : (
+        <div style={{ overflowX: 'auto' }}>
+          <table key={users.length}>
+            <thead>
               <tr>
-                <td colSpan="3">Kullanıcı bulunamadı.</td>
+                <th>ID</th>
+                <th>Ad Soyad</th>
+                <th>Email</th>
+                <th>Tel No</th>
+                <th>Iban</th>
+                <th>Adres</th>
+                <th>Şifre</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.length > 0 ? (
+                users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.firstname} {user.lastname}</td>
+                    <td>{user.email}</td>
+                    <td>{user.telephone}</td>
+                    <td>{user.iban}</td>
+                    <td>{user.address}</td>
+                    <td>{user.password}</td>
+                    <td>
+                      <button className='delete_user_button' onClick={() => handleDeleteUser(user.id)}>Kullanıcıyı Sil</button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3">Kullanıcı bulunamadı.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={1} dir={theme.direction}>
-      <table key={adveristments.length}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Başlık</th>
-              <th>ISBN</th>
-              <th>Yazar</th>
-              <th>Yayınevi</th>
-              <th>Yayın Tarihi</th>
-              <th>Kategori</th>
-              <th>Fiyat/Takas</th>
-            </tr>
-          </thead>
-          <tbody>
-            {adveristments && adveristments.length > 0 ? (
-              adveristments.map((adveristedBook) => (
-                <tr key={adveristedBook.id}>
-                  <td>{adveristedBook.id}</td>
-                  <td>{adveristedBook.title}</td>
-                  <td>{adveristedBook.image}</td>
-                  <td>{adveristedBook.isbn}</td>
-                  <td>{adveristedBook.author}</td>
-                  <td>{adveristedBook.publisher}</td>
-                  <td>{adveristedBook.publishedDate}</td>
-                  <td>{adveristedBook.category}</td>
-                  <td>{adveristedBook.price ? `${book.price}` : 'Takasa Açık'}</td>
-                  <td>
-                    <button className='update_ad_button' onClick={() => handleupdateAdveristment(adveristments.id)}>{acceptAd ? "İlanı Onayla" : "İlanı Onaydan Kaldır"}</button>
-                  </td>
-                </tr>
-              ))
-            ) : (
+        <div style={{ overflowX: 'auto' }}>
+          <table key={advertisements.length}>
+            <thead>
               <tr>
-                <td colSpan="3">İlanlar bulunamadı.</td>
+                <th>ID</th>
+                <th>Başlık</th>
+                <th>Resim</th>
+                <th>ISBN</th>
+                <th>Yazar</th>
+                <th>Yayınevi</th>
+                <th>Yayın Tarihi</th>
+                <th>Kategori</th>
+                <th>Fiyat/Takas</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {advertisements.length > 0 ? (
+                advertisements.map((adveristedBook) => (
+                  <tr key={adveristedBook.id}>
+                    <td>{adveristedBook.id}</td>
+                    <td>{adveristedBook.title}</td>
+                    <td>{adveristedBook.image}</td>
+                    <td>{adveristedBook.isbn}</td>
+                    <td>{adveristedBook.author}</td>
+                    <td>{adveristedBook.publisher}</td>
+                    <td>{adveristedBook.publishedDate}</td>
+                    <td>{adveristedBook.category}</td>
+                    <td>{adveristedBook.price ? `${adveristedBook.price}` : 'Takasa Açık'}</td>
+                    <td>
+                      <button className='update_ad_button' onClick={() => handleupdateAdvertisement(advertisements.id)}>{acceptAd ? "İlanı Onayla" : "Onaydan Kaldır"}</button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3">İlanlar bulunamadı.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </TabPanel>
-      {fabs.map((fab, index) => (
-        <Zoom
-          key={fab.color}
-          in={value === index}
-          timeout={transitionDuration}
-          style={{
-            transitionDelay: `${value === index ? transitionDuration.exit : 0
-              }ms`,
-          }}
-          unmountOnExit
-        >
-          <Fab sx={fab.sx} aria-label={fab.label} color={fab.color}>
-            {fab.icon}
-          </Fab>
-        </Zoom>
-      ))}
     </Box>
   );
 }
-
 
 
