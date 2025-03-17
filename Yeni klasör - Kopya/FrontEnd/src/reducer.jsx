@@ -14,6 +14,8 @@ export const initialState = {
         { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '14', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', price: 500, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
         { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '1268', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
     ],
+    searchedBooks: [],
+    searchQuery: '',
     selectedCategory: null,
     bookDetail: [],
     advertisedBook: [],
@@ -67,6 +69,17 @@ const reducer = (state, action) => {
                 ...state,
                 basket: newBasket
             }
+        
+        case "SET_SEARCH_QUERY":
+            return {
+                ...state,
+                searchQuery: action.query,
+            };
+        case "SET_SEARCHED_BOOKS":
+            return {
+                ...state,
+                searchedBooks: action.books,
+            };
 
         case 'SET_SELECTED_CATEGORY':
             return {
