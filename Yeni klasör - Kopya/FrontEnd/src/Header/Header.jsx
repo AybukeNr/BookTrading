@@ -7,12 +7,26 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 import Badge from '@mui/material/Badge';
+// import { instance } from '../axios';
+
+// const instance = axios.create({
+//     baseURL: 'http://localhost:8080/api',
+// });
+
+// instance.interceptors.request.use(
+//     (config) => {
+//         const token = localStorage.getItem('authToken');
+//         if (token) {
+//             config.headers.Authorization = `Bearer ${token}`;
+//         }
+//         return config;
+//     },
+//     (error) => Promise.reject(error)
+// );
 
 function Header() {
-    const [{ basket, user, notifications }, dispatch] = useStateValue();
+    const [{ basket, user, notifications, searchQuery, bookList }, dispatch] = useStateValue();
     const navigate = useNavigate();
-    const [searchQuery, setSearchQuery] = useState("");
-    // const [searchResults, setSearchResults] = useState([]); // API sonuçları için state
     const [dropdownVisible, setdropdownVisible] = useState(false);
     const [dropdownCatVisible, setdropdownCatVisible] = useState(false);
     const [notificationsVisible, setNotificationsVisible] = useState(false);
@@ -21,7 +35,7 @@ function Header() {
     const dropdownRef = useRef(null);
     const dropdownCatRef = useRef(null);
 
-    const handleAuthentication = () => {
+    const handleAuthentication = async() => {
         if (user) {
             localStorage.removeItem('authToken');
             dispatch({
@@ -30,38 +44,56 @@ function Header() {
             });
             navigate('/login');
         } else {
-
+            navigate('/login');
         }
     }
 
     //search
+
+    // const handleSearchChange = async (e) => {
+    //     const query = e.target.value;
+    //     dispatch({ type: 'SET_SEARCH_QUERY', query });
+
+    //     if (!query) {
+    //         dispatch({ type: "SET_SEARCHED_BOOKS", books: bookList });
+    //         return;
+    //     }
+
+    //     try {
+    //         const response = await instance.get(`/books/search?query=${query}`);
+    //         dispatch({ type: "SET_SEARCHED_BOOKS", books: response.data });
+    //     } catch (error) {
+    //         console.error("Arama sırasında hata oluştu", error);
+    //     }
+    // };
+
     const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
+        dispatch({
+            type: 'SET_SEARCH_QUERY',
+            query: e.target.value,
+        }),
+        searchBooks(e.target.value);
     };
 
+    const searchBooks = (query) => {
+        if (!query) {
+            dispatch({ type: "SET_SEARCHED_BOOKS", books: bookList });
+            return;
+        }
+    
+        const results = bookList.filter(book =>
+            book.title.toLowerCase().includes(query.toLowerCase()) ||
+            book.author.toLowerCase().includes(query.toLowerCase())
+        );
+    
+        dispatch({ type: "SET_SEARCHED_BOOKS", books: results });
+    };
+    
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        // setLoading(true);
-        // setError(null);
-
-        // try {
-        //     const response = await axios.get(`https://api.example.com/search`, {
-        //         params: { query: searchQuery }
-        //     });
-
-        //     setSearchResults(response.data.results); 
-        // } catch (error) {
-        //     console.error("Arama sırasında hata oluştu:", error);
-        //     setError("Arama sırasında bir hata meydana geldi.");
-        // } finally {
-        //     setLoading(false);
-        // }
-
-        console.log("Filtrelenmiş Sonuçlar:", filteredResults); //bu önceki kısım silinecek.
-        // API'ye istek yapılacak 
-        // Örnek: axios.get(`/search?query=${searchQuery}`)
+        if (!searchQuery.trim()) return;
+        searchBooks(searchQuery);
     };
-
 
     //Account dropdown
     const dropdown = () => {
@@ -101,9 +133,9 @@ function Header() {
                 setNotificationsVisible(false);
             }
         };
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('click', handleClickOutside);
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('click', handleClickOutside);
         };
     }, []);
 
@@ -115,25 +147,11 @@ function Header() {
                 <img className='header_logo' src='https://i.hizliresim.com/obkwl66.png' />
             </Link>
 
-            <div className='header_search' onSubmit={handleSearchSubmit}>
+            <form className='header_search' onSubmit={handleSearchSubmit}>
                 <input className='header_searchInput' type='text' placeholder='Aradığınız metni girin.' value={searchQuery} onChange={handleSearchChange} />
                 <SearchIcon className='header_searchIcon' onClick={handleSearchSubmit} />
-            </div>
-
-            {/* arama kısmı */}
-            {/* {loading && <p>Aranıyor...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
-
-            {searchResults.length > 0 && (
-                <div className="search-results">
-                    {searchResults.map((item) => (
-                        <div key={item.id} className="search-item">
-                            {item.name}
-                        </div>
-                    ))}
-                </div>
-            )} */}
-
+            </form>
+        
             <div className='header_nav'>
                 <Link to={!user && '/login'}>
                     <div onClick={handleAuthentication} className='header_option'>
