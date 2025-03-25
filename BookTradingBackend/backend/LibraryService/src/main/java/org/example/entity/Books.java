@@ -26,7 +26,7 @@ public class Books {
     private String isbn;
     private String publisher;
     private String publishedDate;
-    private byte[] image;
+    private String image;
     @Enumerated(EnumType.STRING)
     private BookCategory category;
     private BookCondition condition;

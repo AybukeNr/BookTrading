@@ -40,8 +40,8 @@ public class RestApiList {
 
     public static final String CREATE_ACCOUNT = "/createAccount";
     public static final String PROCESS_SALES = "/processSale" ;
-
-
+   //library manager
+    public static final String GET_BOOK_CONDITION = "/{bookId}/condition";
 
 }
 
