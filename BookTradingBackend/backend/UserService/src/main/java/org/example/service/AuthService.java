@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final UserRepository userRepository;
     private final JwtTokenManager jwtTokenManager;
+    private final MailService mailService;
 //    private final UserMapper userMapper;
 //    private final UserService userService;
 

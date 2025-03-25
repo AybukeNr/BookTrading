@@ -53,8 +53,8 @@ public class UserService {
 
 
     @Transactional
-    public UserResponse updateUser(String userId, UpdateUserDto updateUserDto) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new AuthException(ErrorType.USER_NOT_FOUND));
+    public UserResponse updateUser( UpdateUserDto updateUserDto) {
+        User user = userRepository.findById(updateUserDto.getUserId()).orElseThrow(() -> new AuthException(ErrorType.USER_NOT_FOUND));
         userMapper.updateUserFromDto(updateUserDto,user);
         userRepository.save(user);
         return userMapper.UserMapToUserResponse(user);
@@ -85,6 +85,7 @@ public class UserService {
                 .orElseThrow(() -> new AuthException(ErrorType.USER_NOT_FOUND));
         userRepository.delete(user);
     }
+
 
     @Transactional
     public User updateOneUser(String userId, User newUser) {

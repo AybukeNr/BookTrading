@@ -9,7 +9,7 @@ spring:
       password: root
       database: UserDB
   mail:
-    password:
+    password: kifu aatc svou synr
     host: smtp.gmail.com
     username: noreply4bookswap@gmail.com
     port: 587
@@ -19,15 +19,6 @@ spring:
           auth: true
           starttls:
             enable: true
-
-kafka:
-  bootstrap-servers: localhost:9092
-  group-id: mail-group
-  topics:
-    user:
-      register: send-register-mail
-      forgot-password: send-forgot-mail
-
 
 front-end:
   url: http://localhost:5173

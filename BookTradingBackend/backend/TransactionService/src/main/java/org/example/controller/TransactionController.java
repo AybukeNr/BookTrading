@@ -31,7 +31,7 @@ import static org.example.constant.RestApiList.*;
 public class TransactionController {
 
     private final ITransactionService transactionService;
-    private final TransactionServiceImpl transactionServiceImpl;
+
     @Operation(summary = "Get all transactions", description = "Retrieves a list of all transactions.")
     @GetMapping(GET_ALL_TRANSACTIONS)
     public ResponseEntity<List<TransactionResponse>> getAllTransactions() {
