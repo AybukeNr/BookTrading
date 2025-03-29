@@ -101,8 +101,8 @@ public class UserController {
     //servisler arası endpointler
     @GetMapping(GET_ADDRESSES)
     public ResponseEntity<Map<String, String>> getAddresses(@RequestParam String ownerId, @RequestParam String offererId) {
-        Map<String, String> addresses = userService.getUsersAddressesAsMap(ownerId, offererId); // Bu metod bir Map döndürmeli.
-        return ResponseEntity.ok(addresses); // ResponseEntity ile sarmalanmış Map döndürülüyor.
+        Map<String, String> addresses = userService.getUsersAddressesAsMap(ownerId, offererId); 
+        return ResponseEntity.ok(addresses); 
     }
 
 
