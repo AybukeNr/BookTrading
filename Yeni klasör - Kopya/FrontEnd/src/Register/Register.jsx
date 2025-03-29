@@ -24,6 +24,8 @@ function Register() {
                 password: values.password,
             });
 
+            console.log("Response:", response.data); 
+
             // const authToken = response.data.token;
             // setAuthToken(authToken); 
 
@@ -86,13 +88,13 @@ function Register() {
                     <input type="email" id='email' placeholder='Email giriniz' value={values.email} onChange={handleChange} onBlur={handleBlur} />
                     {errors.email && touched.email && <p className='errors'>{errors.email}</p>}
 
-                    <input type="tel" id='telephone' placeholder='Telefon numarası giriniz (Örn: 05XX XXX XXXX)' value={values.telephone} onChange={handleChange} onBlur={handleBlur} maxLength={11} size={11} />
+                    <input type="tel" id='telephone' placeholder='Telefon numarası giriniz (Örn: 05XXXXXXXXX)' value={values.telephone} onChange={handleChange} onBlur={handleBlur} maxLength={11} size={11} />
                     {errors.telephone && touched.telephone && <p className='errors'>{errors.telephone}</p>}
 
-                    <input type="text" id='iban' placeholder='IBAN numarası giriniz' value={values.iban} onChange={handleChange} onBlur={handleBlur} maxLength={26} size={26} />
+                    <input type="text" id='iban' placeholder='IBAN numarası giriniz (Örn: TRXXXXXXXXXXXXXXXXXXXXXXX)' value={values.iban} onChange={handleChange} onBlur={handleBlur} maxLength={26} size={26} />
                     {errors.iban && touched.iban && <p className='errors'>{errors.iban}</p>}
 
-                    <textarea type="text" id='address' placeholder='Adres giriniz' value={values.address} onChange={handleChange} onBlur={handleBlur} />
+                    <textarea type="text" id='address' placeholder='Adres giriniz' value={values.address} onChange={handleChange} onBlur={handleBlur} maxLength={175} size={175}/>
                     {errors.address && touched.address && <p className='errors'>{errors.address}</p>}
 
                     <input type="password" id='password' placeholder='Şifre giriniz' value={values.password} onChange={handleChange} onBlur={handleBlur} minLength={6} />

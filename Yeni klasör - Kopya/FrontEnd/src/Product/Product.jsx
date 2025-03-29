@@ -80,7 +80,7 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
               <small>₺</small>
             </p>
           ) : (
-            <p className='product_trade'  onClick={handleNavigate}>Takasa açık</p>
+            <p className='product_trade' onClick={handleNavigate}>Takasa açık</p>
           )}
 
         </div>

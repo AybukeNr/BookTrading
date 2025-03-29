@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export const getAuthToken = () => {
     return localStorage.getItem('authToken');
@@ -26,7 +26,6 @@ export const removeTempToken = () => {
 
 export const removeToken = () => {
     localStorage.removeItem('token');
-    //kullanıcı logout yaptığında çıkış yapacak. hangi maddeler role, email ?
 }
 
 // export const setResetAuthToken = (resetToken) => {
@@ -34,7 +33,7 @@ export const removeToken = () => {
 // };
 // export const getResetAuthToken = () => {
 //     return localStorage.getItem('resetToken');
-// };  AYBÜQ ŞİFRE YENİLEME YAPUCUK MU?
+// };
 
 function isJWT(token) {
     if (!token) return false;
@@ -43,7 +42,7 @@ function isJWT(token) {
 }
 export const getDecodedAuthToken = () => {
     const token = getAuthToken();
-    return token ? jwtDecode(token) : null;
+    return jwtDecode(token);
 }
 
 export const AuthTokenControl = () => {
@@ -66,12 +65,20 @@ export const getDecodedUser = () => {
     return decodedToken.userId;
 }
 
+// export const setDecodedUser = (userId) => {
+//     localStorage.setItem('userId', userId);
+// }
+
+export const getDecodedUserId = () => {
+    return localStorage.getItem('userId');
+}
+
 export const getDecodedUsername = () => {
     const decodedToken = getDecodedAuthToken();
-    return decodedToken.username;
+    return decodedToken ? decodedToken.username : null;
 }
 
 export const getDecodedPhoneNumber = () => {
     const decodedToken = getDecodedAuthToken();
-    return decodedToken.phoneNumber;
+    return decodedToken ? decodedToken.phoneNumber : null;
 }

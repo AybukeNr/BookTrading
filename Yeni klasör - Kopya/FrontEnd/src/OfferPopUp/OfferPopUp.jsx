@@ -3,12 +3,12 @@ import '../OfferPopUp/OfferPopUp.css'
 import { useStateValue } from '../StateProvider';
 import { useNavigate } from 'react-router-dom';
 function OfferPopUp({ onClose }) {
-  const [{ bookshelf }, dispatch] = useStateValue();
+  const [{ advertisedBook }, dispatch] = useStateValue();
   const [selectedBook, setSelectedBook] = useState(null);
   const navigate = useNavigate();
   const popupRef = useRef(null);
 
-  const booksForTrade = bookshelf.filter((item) => !item.price);
+  const booksForTrade = advertisedBook.filter((item) => !item.price);
 
   const handleSelect = (id) => {
     setSelectedBook((prevId) => (prevId === id ? null : id));

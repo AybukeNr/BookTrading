@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import '../AddToBookshelf/AddToBookshelf.css'
 import { useStateValue } from '../StateProvider';
 import { useNavigate } from 'react-router-dom';
+import { instanceLibrary } from '../axios';
+import axios from "axios";
 
 function AddToBookshelf() {
     const [, dispatch] = useStateValue();
@@ -13,54 +15,100 @@ function AddToBookshelf() {
     const [publisher, setPublisher] = useState('');
     const [publishedDate, setPublishedDate] = useState('');
     const [category, setCategory] = useState('');
-    const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
-    const [tradeOption, setTradeOption] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
+    const CLOUDINARY_URL =
+        "https://api.cloudinary.com/v1_1/dlo9y7tcc/image/upload";
+    const CLOUDINARY_UPLOAD_PRESET = "Images";
 
-    const handleAddBook = () => {
-        if (!title || !author || !isbn || !publisher || !publishedDate || !category || !tradeOption || (tradeOption === 'sale' && !price)) {
+    const handleAddBook = async () => {
+        if (!title || !author || !isbn || !publisher || !publishedDate || !category || !image) {
             setError('Lütfen tüm alanları doldurun!');
             return;
         }
-        
-        dispatch({
-            type: 'ADD_TO_BOOKSHELF',
-            book: {
-                id: Date.now(),
-                title: title,
-                author: author,
-                isbn: isbn,
-                publisher: publisher,
-                publishedDate: publishedDate,
-                category: category,
-                price: tradeOption === 'sale' ? price : null,
-                image: image,
-            },
-        });
-        setTitle('');
-        setAuthor('');
-        setIsbn('');
-        setPublisher('');
-        setPublishedDate('');
-        setCategory('');
-        setPrice('');
-        setImage('');
-        setTradeOption('');
+
+        setLoading(true);
         setError('');
-        
-        setTimeout(() => {
-            navigate('/bookshelf')
-        }, 200);
-    };
 
+        const userId = localStorage.getItem('userId');
 
+        if (!userId) {
+            setError('Kullanıcı kimliği bulunamadı. Lütfen tekrar giriş yapın.');
+            return;
+        }
+
+        try {
+            let imageUrl = "";
+            if (image) {
+                const formData = new FormData();
+                formData.append("file", image);
+                formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+                try {
+                    const uploadResponse = await axios.post(CLOUDINARY_URL, formData);
+                    imageUrl = uploadResponse.data.secure_url;
+                    console.log("Cloudinary'den dönen URL:", imageUrl);
+                } catch (error) {
+                    console.error("Resim yükleme hatası:", error);
+                    setError("Resim yüklenirken hata oluştu. Lütfen tekrar deneyin.");
+                    return;
+                }
+            }
+
+            const bookData = {
+                ownerId: userId,
+                title,
+                author,
+                isbn,
+                publisher,
+                publishedDate,
+                category,
+                image: imageUrl,
+            };
+
+            try {
+                const response = await instanceLibrary.post('/createBook', bookData, {
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.status === 201 || response.status === 200) {
+                    dispatch({
+                        type: 'ADD_TO_BOOKSHELF',
+                        book: response.data
+                    });
+
+                    setTitle('');
+                    setAuthor('');
+                    setIsbn('');
+                    setPublisher('');
+                    setPublishedDate('');
+                    setCategory('');
+                    setImage('');
+                    setError('');
+
+                    setTimeout(() => {
+                        navigate('/bookshelf');
+                    }, 200);
+                }
+            } catch {
+                setError('Kitap eklenirken bir hata oluştu. Lütfen tekrar deneyin.');
+            } finally {
+                setLoading(false)
+            }
+        } catch (error) {
+            console.error('Kitap eklenirken hata oluştu:', error);
+            setError('Kitap eklenirken bir hata oluştu. Lütfen tekrar deneyin.');
+        } finally {
+            setLoading(false);
+        }
+    }
     return (
         <div className='AddBookToBookshelf'>
             <h2>Kitap Ekle</h2>
 
-            {error && <p className="error-message">{error}</p>}            
+            {loading && <p>Kitap ekleniyor...</p>}
 
             <div className="book">
                 <h5>Kitap Başlığı:</h5>
@@ -82,72 +130,41 @@ function AddToBookshelf() {
                 <div className='book_category'>
                     <select id="category" value={category} onChange={(e) => setCategory(e.target.value)}>
                         <option value="">Bir kategori seçin</option>
-                        <option value="aile">Aile</option>
-                        <option value="bilgisayar">Bilgisayar</option>
-                        <option value="bilim">Bilim</option>
-                        <option value="bilimKurgu">Bilim Kurgu</option>
-                        <option value="biyografi">Biyografi</option>
-                        <option value="cizgiRoman">Çizgi Roman</option>
-                        <option value="din">Din</option>
-                        <option value="drama">Drama</option>
-                        <option value="eğitim">Eğitim</option>
-                        <option value="felsefe">Felsefe</option>
-                        <option value="gençlikKurgu">Gençlik Kurgu</option>
-                        <option value="is">İş</option>
-                        <option value="kişiselGelişim">Kişisel Gelişim</option>
-                        <option value="kurgu">Kurgu</option>
-                        <option value="psikoloji">Psikoloji</option>
-                        <option value="şiir">Şiir</option>
-                        <option value="siyasetBilimi">Siyaset Bilimi</option>
-                        <option value="sosyalBilimler">Sosyal Bilimler</option>
-                        <option value="spor">Spor</option>
-                        <option value="tarih">Tarih</option>
-                        <option value="yemekPisirme">Yemek Pişirme</option>
+                        <option value="Aile">Aile</option>
+                        <option value="Bilgisayar">Bilgisayar</option>
+                        <option value="Bilim">Bilim</option>
+                        <option value="BilimKurgu">Bilim Kurgu</option>
+                        <option value="Biyografi">Biyografi</option>
+                        <option value="CizgiRoman">Çizgi Roman</option>
+                        <option value="Din">Din</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Eğitim">Eğitim</option>
+                        <option value="Felsefe">Felsefe</option>
+                        <option value="GençlikKurgu">Gençlik Kurgu</option>
+                        <option value="İs">İş</option>
+                        <option value="KişiselGelişim">Kişisel Gelişim</option>
+                        <option value="Kurgu">Kurgu</option>
+                        <option value="Psikoloji">Psikoloji</option>
+                        <option value="Şiir">Şiir</option>
+                        <option value="SiyasetBilimi">Siyaset Bilimi</option>
+                        <option value="SosyalBilimler">Sosyal Bilimler</option>
+                        <option value="Spor">Spor</option>
+                        <option value="Tarih">Tarih</option>
+                        <option value="YemekPisirme">Yemek Pişirme</option>
                     </select>
                 </div>
 
-                <h5>Kitap Değerlendirme Tipi:</h5>
-                <div className='trade_sale'>
-                    <label className="container">
-                        Takasa aç
-                        <input
-                            type="radio"
-                            name="tradeOption"
-                            value="trade"
-                            onChange={(e) => setTradeOption(e.target.value)}
-                        />
-                        <span className="checkmark"></span>
-                    </label>
-                    <label className="container">
-                        Satışa aç
-                        <input
-                            type="radio"
-                            name="tradeOption"
-                            value="sale"
-                            onChange={(e) => setTradeOption(e.target.value)}
-                        />
-                        <span className="checkmark"></span>
-                    </label>
-                </div>
-
-                {tradeOption === 'sale' && (
-                    <>
-                    <h5>Fiyat giriniz:</h5>
-                    <input type="text" placeholder="Fiyat (₺) giriniz." value={price} onChange={(e) => setPrice(e.target.value)} />
-                    </>
-                )}
-
                 <h5>Kitap Fotoğrafı:</h5>
-                <input type="file" onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))} />
+                <input type="file" onChange={(e) => setImage(e.target.files[0])} />
             </div>
 
             {error && <p className="error-message">{error}</p>}
 
-            <button className='button_addBook' onClick={handleAddBook}>Ekle</button>
-            <button className='button_cancel' onClick={() => navigate('/bookshelf')}>İptal</button>
+            <button className='button_addBook' onClick={handleAddBook} disabled={loading}>
+                {loading ? 'Ekleniyor...' : 'Ekle'} </button>
+            <button className='button_cancel' onClick={() => navigate('/bookshelf')} disabled={loading}>
+                İptal</button>
         </div>
-
     )
 }
-
 export default AddToBookshelf

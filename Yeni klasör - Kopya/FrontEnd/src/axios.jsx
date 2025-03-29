@@ -40,7 +40,7 @@ const instanceTransaction = createInstance('http://localhost:9093/api/v1/transac
 const instanceShipping = createInstance('http://localhost:8082/api/v1/shippings');
 const instanceOffer = createInstance('http://localhost:9091/api/v1/offers');
 const instanceLibrary = createInstance('http://localhost:9090/api/v1/books');
-const instanceListing = createInstance('http://localhost:8081/listing/api/v1/lists');
+const instanceListing = createInstance('http://localhost:8081/api/v1/lists');
 
 export { instanceAuth, instanceUser, instanceTransaction, instanceShipping, instanceOffer, instanceLibrary, instanceListing };
 

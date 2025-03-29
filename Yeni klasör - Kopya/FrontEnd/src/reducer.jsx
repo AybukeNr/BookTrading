@@ -1,12 +1,5 @@
 export const initialState = {
-    bookshelf: [
-        { id: 1, title: 'Olasılıksız', author: 'Adam Fawer', isbn: 123, publisher: 'April Yayıncılık', publishedDate: '2005', category: 'Kurgu', price: 800, image: 'https://static.nadirkitap.com/fotograf/1255127/28/Kitap_20220724194404125512711.jpg' },
-        { id: 2, title: 'Melekler ve Şeytanlar', author: 'Dan Brown', isbn: 12, publisher: 'Altın Kitaplar', publishedDate: '2005', category: 'Kurgu', image: 'https://s3.cloud.ngn.com.tr/kitantik/images/2023-02-17/1br9qfwle6wpd2u1ly2.jpg' },
-        { id: 4, title: 'Olasılıksız', author: 'Adam Fawer', isbn: 1, publisher: 'April Yayıncılık', publishedDate: '2000', category: 'Kurgu', price: 500, image: 'https://static.nadirkitap.com/fotograf/1255127/28/Kitap_20220724194404125512711.jpg' },
-        { id: 5, title: 'Bütün Şiirleri', author: 'Sabahattin Ali', isbn: 1234, publisher: 'Yapı Kredi Yayınları', publishedDate: '2012', category: 'Şiir', image: 'https://avatars.mds.yandex.net/i?id=0ba43a652eca109c85bfea51086c6fcb4638c6d2-4551157-images-thumbs&n=13' },
-        { id: 6, title: 'Sofienin Dünyası', author: 'Jostein Gaarder', isbn: 1237, publisher: 'Pan Yayıncılık', publishedDate: '1991', category: 'Felsefe', image: 'https://s3.cloud.ngn.com.tr/kitantik/images/2023-11-29/1br9qfwlpi2ow751yf3.jpg' },
-
-    ],
+    bookshelf: [],
     bookList: [
         { title: 'Nutuk(Özel ciltli)', author: 'Mustafa Kemal Atatürk', isbn: '123', publisher: 'İş Bankası Yayıncılık', publishedDate: '1927', category: 'Tarih', price: 1850, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRXJGIvVqD7poyHq7VGM6hVcnGBRw6tKvsGv-FYam-rSXlmlufSY7H_-ehfRUNKYZ_ods&usqp=CAU' },
         { title: 'Empati', author: 'Adam Fawer', isbn: '1234', publisher: 'April Yayıncılık', publishedDate: '2007', category: 'Kurgu', price: 200, image: 'https://bunuokudum.com/uploads/images/202208/img_1920x_63053a8a9be0b8-88474876-10950506.jpeg' },
@@ -18,11 +11,14 @@ export const initialState = {
     searchQuery: '',
     selectedCategory: null,
     bookDetail: [],
-    advertisedBook: [],
+    advertisedBook: [
+        // { id: 5, title: 'Bütün Şiirleri', author: 'Sabahattin Ali', isbn: 1234, publisher: 'Yapı Kredi Yayınları', publishedDate: '2012', category: 'Şiir', image: 'https://avatars.mds.yandex.net/i?id=0ba43a652eca109c85bfea51086c6fcb4638c6d2-4551157-images-thumbs&n=13' },
+        // { id: 6, title: 'Sofienin Dünyası', author: 'Jostein Gaarder', isbn: 1237, publisher: 'Pan Yayıncılık', publishedDate: '1991', category: 'Felsefe', image: 'https://s3.cloud.ngn.com.tr/kitantik/images/2023-11-29/1br9qfwlpi2ow751yf3.jpg' },
+    ],
     advertisements: [
         { id: 1, title: 'Olasılıksız', author: 'Adam Fawer', isbn: 123, publisher: 'April Yayıncılık', publishedDate: '2005', category: 'Kurgu', price: 800, image: 'https://static.nadirkitap.com/fotograf/1255127/28/Kitap_20220724194404125512711.jpg' },
-        { id: 2, title: 'Melekler ve Şeytanlar', author: 'Dan Brown', isbn: 12, publisher: 'Altın Kitaplar', publishedDate: '2005', category: 'Kurgu', image: 'https://s3.cloud.ngn.com.tr/kitantik/images/2023-02-17/1br9qfwle6wpd2u1ly2.jpg' },  
-        ],
+        { id: 2, title: 'Melekler ve Şeytanlar', author: 'Dan Brown', isbn: 12, publisher: 'Altın Kitaplar', publishedDate: '2005', category: 'Kurgu', image: 'https://s3.cloud.ngn.com.tr/kitantik/images/2023-02-17/1br9qfwle6wpd2u1ly2.jpg' },
+    ],
     offerSent: [],
     offerReceive: [
         { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '12', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
@@ -69,7 +65,7 @@ const reducer = (state, action) => {
                 ...state,
                 basket: newBasket
             }
-        
+
         case "SET_SEARCH_QUERY":
             return {
                 ...state,
@@ -86,6 +82,12 @@ const reducer = (state, action) => {
                 ...state,
                 selectedCategory: action.category,
             };
+
+        case 'SET_AD_BOOKS':
+            return {
+                ...state,
+                advertisedBook: action.book,
+            }
 
         case 'ADD_TO_AD':
             return {
@@ -104,6 +106,11 @@ const reducer = (state, action) => {
                 advertisements: state.advertisements.map((advertisedBook) => advertisedBook.id === action.advertisedBook.id ?
                     { ...advertisedBook, ...action.advertisedBook } : advertisedBook),
             }
+        case 'SET_BOOKSHELF':
+            return {
+                ...state,
+                bookshelf: action.bookshelf,
+            };
 
         case 'REMOVE_FROM_BOOKSHELF':
             return {

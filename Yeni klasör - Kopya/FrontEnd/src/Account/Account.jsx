@@ -5,7 +5,6 @@ import { useStateValue } from '../StateProvider';
 import { instanceUser } from '../axios';
 
 function Account() {
-    const [{ user }, dispatch] = useStateValue();
     const navigate = useNavigate();
 
     const [firstname, setFirstname] = useState('');
@@ -17,54 +16,62 @@ function Account() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+  
 
-    const handleUpdateAccount = async () => {
-        if (!firstname || !lastname || !email || !telephone || !iban || !address || !password) {
-            setError('Lütfen düzgünce doldurun!');
-            return;
-        }
-        try {
-            const response = await instanceUser.put("/account/update", {
-                id: user?.id,
-                firstname,
-                lastname,
-                email,
-                telephone,
-                iban,
-                address,
-                password,
-            });
-
-            dispatch({
-                type: 'UPDATE_USER_ACCOUNT',
-                account: response.data,
-            });
-            navigate('/myAccount')
-        } catch (err) {
-            setError("Hesap güncellenirken hata oluştu!");
-        }
-    }
+    const userId = localStorage.getItem('userId'); 
 
     useEffect(() => {
-        const userData = async () => {
+        const fetchUserData = async () => {
             setLoading(true);
             try {
-                const response = await instanceUser.get("/account");
+                const response = await instanceUser.get(`/getUserById?id=${userId}`);
                 const data = response.data;
-                setFirstname(data.firstname || '');
-                setLastname(data.lastname || '');
-                setEmail(data.email || '');
-                setTelephone(data.telephone || '');
+            
+                setFirstname(data.firstName || '');
+                setLastname(data.lastName || '');
+                setEmail(data.mailAddress || '');
+                setTelephone(data.phoneNumber || ''); 
                 setIban(data.iban || '');
                 setAddress(data.address || '');
+                setPassword(data.password || '');
             } catch (err) {
                 setError("Kullanıcı bilgileri alınamadı!");
             } finally {
                 setLoading(false);
             }
         };
-        userData();
-    }, []);
+
+        if (userId) {
+            fetchUserData();
+        } else {
+            setError("Kullanıcı ID bulunamadı!");
+        }
+    }, [userId]);
+
+    const handleUpdateAccount = async () => {
+        if (!firstname || !lastname || !email || !telephone || !iban || !address || !password) {
+            setError('Lütfen tüm alanları doldurun!');
+            return;
+        }
+
+        try {
+            const response = await instanceUser.put(`/updateUser/${userId}`, {
+            
+                firstName: firstname,
+                lastName: lastname,
+                mailAddress: email,
+                phoneNumber: telephone,
+                iban: iban,
+                address: address,
+                password: password,
+            });
+
+            alert("Hesap başarıyla güncellendi!");
+            navigate('/myAccount');
+        } catch (err) {
+            setError("Hesap güncellenirken hata oluştu!");
+        }
+    };
 
     return (
         <div className='profile'>
@@ -98,11 +105,13 @@ function Account() {
             {error && <p className="errorMessage">{error}</p>}
 
             <div>
-                <button className='button_updateAccount' onClick={handleUpdateAccount} disabled={loading}>{loading ? "Güncelleniyor..." : "Güncelle"}</button>
+                <button className='button_updateAccount' onClick={handleUpdateAccount} disabled={loading}>
+                    {loading ? "Güncelleniyor..." : "Güncelle"}
+                </button>
                 <button className='button_cancelUpdate' onClick={() => navigate('/myAccount')}>İptal</button>
             </div>
         </div>
     );
 }
-
+   
 export default Account
