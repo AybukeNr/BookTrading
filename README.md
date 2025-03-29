@@ -17,3 +17,7 @@ Trade Servisi, kitapların hem takas hem de satış süreçlerini yönetir. Kull
 
 6. Bildirim Servisi (Notification Service)
 Bildirim Servisi, kullanıcıları sistemdeki önemli olaylar hakkında bilgilendirir. Kullanıcılar, takas veya satış teklifleri, kabul/red durumları, güvence bedeli yatırma hatırlatmaları, kargo sürecindeki gelişmeler gibi bildirimler alırlar. Ayrıca, satılan veya takas edilen kitaplar hakkında anlık bildirimler gönderilir. Bu servis, kullanıcıların sistemdeki etkileşimlerini aktif bir şekilde takip etmelerine ve süreçlerde zamanında aksiyon almalarına yardımcı olur.
+
+
+#DataSet
+https://www.kaggle.com/datasets/mohamedbakhet/amazon-books-reviews?select=books_data.csv

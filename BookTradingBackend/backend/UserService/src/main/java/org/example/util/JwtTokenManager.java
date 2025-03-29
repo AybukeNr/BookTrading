@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.example.entity.UserRole;
 import org.example.exception.AuthException;
 import org.example.exception.ErrorType;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +24,7 @@ public class JwtTokenManager {
     @Value("${jwt.issuer}")
     String issuer;
 
-    public Optional<String> createToken(String id,String username, String phoneNumber){
+    public Optional<String> createToken(String id, String username, String phoneNumber , UserRole role){
         try{
             String token;
             token = JWT.create()
@@ -33,8 +34,9 @@ public class JwtTokenManager {
                     .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
                     .withClaim("id", id)
                     .withClaim("username",username)
-                    .withClaim("phonelNumber", phoneNumber)
-                    .sign(Algorithm.HMAC512(secretKey));
+                    .withClaim("phoneNumber", phoneNumber)
+                    .withClaim("role", String.valueOf(role))
+                    .sign(Algorithm.HMAC512(secretKey)) ;
             return Optional.of(token);
         }catch (Exception e){
             return Optional.empty();
@@ -70,5 +72,4 @@ public class JwtTokenManager {
             throw new AuthException(ErrorType.INVALID_TOKEN);
         }
     }
-
 }

@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.request.*;
 import org.example.dto.response.BookResponse;
+import org.example.entity.enums.BookCondition;
 import org.example.external.ListManager;
 import org.example.service.BookService;
 import org.slf4j.Logger;
@@ -159,5 +160,9 @@ public class BookController {
     }
 
 
-
+    @GetMapping(GET_BOOK_CONDITION)
+    public ResponseEntity<BookCondition> getBookCondition(@PathVariable Long bookId) {
+        BookCondition condition = bookService.getBookConditionById(bookId);
+        return ResponseEntity.ok(condition);
+    }
 }

@@ -8,6 +8,7 @@ import org.example.entity.User;
 import org.example.dto.response.UserResponse;
 import org.example.exception.AuthException;
 import org.example.service.UserService;
+import org.example.util.JwtTokenManager;
 import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,11 @@ import static org.example.constant.RestApiList.*;
 public class UserController {
 
     private final UserService userService;
+    private final JwtTokenManager jwtTokenManager;
+    public UserController(UserService userService,JwtTokenManager jwtTokenManager) {
 
-    public UserController(UserService userService) {
         this.userService = userService;
+        this.jwtTokenManager = jwtTokenManager;
     }
 
     @Operation(
@@ -79,7 +82,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {//request param yapılacak
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId ) {
         try {
             userService.deleteUserById(userId);
             return ResponseEntity.noContent().build();  // 204 No Content yanıtı döner

@@ -8,12 +8,14 @@ import org.example.dto.request.UpdateUserDto;
 import org.example.entity.User;
 import org.example.dto.request.UserRequest;
 import org.example.dto.response.UserResponse;
+import org.example.entity.UserRole;
 import org.example.exception.AuthException;
 import org.example.exception.ErrorType;
 
 import org.example.external.TransactionsManager;
 import org.example.mapper.UserMapper;
 import org.example.repository.UserRepository;
+import org.example.util.JwtTokenManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +29,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final TransactionsManager transactionsManager;
     private final MailService mailService;
-
+    private final JwtTokenManager jwtTokenManager ;
 
 
     @Transactional
@@ -86,10 +88,10 @@ public class UserService {
 
 
     @Transactional
-    public  User updateOneUser(String userId,User newUser){
+    public User updateOneUser(String userId, User newUser) {
         Optional<User> user = userRepository.findById(userId);
-        if(user.isPresent()){
-            User foundUser =user.get();
+        if (user.isPresent()) {
+            User foundUser = user.get();
             foundUser.setFirstName((newUser.getFirstName()));
             foundUser.setLastName((newUser.getLastName()));
             foundUser.setEmail(newUser.getEmail());
