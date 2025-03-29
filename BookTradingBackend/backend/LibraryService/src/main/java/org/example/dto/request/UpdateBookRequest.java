@@ -1,16 +1,10 @@
-package org.example.dto.response;
+package org.example.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.example.entity.enums.BookCategory;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class BookResponse {
+public class UpdateBookRequest {
     private String title;
     private String author;
     private String isbn;
@@ -18,6 +12,4 @@ public class BookResponse {
     private String publishedDate;
     private String image;
     private BookCategory category;
-    private Long id;
-
 }

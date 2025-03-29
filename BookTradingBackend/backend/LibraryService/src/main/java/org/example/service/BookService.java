@@ -2,10 +2,7 @@ package org.example.service;
 
 
 import lombok.RequiredArgsConstructor;
-import org.example.dto.request.BookListRequest;
-import org.example.dto.request.BookRequest;
-import org.example.dto.request.ListRequest;
-import org.example.dto.request.UpdateBookStat;
+import org.example.dto.request.*;
 import org.example.dto.response.BookResponse;
 import org.example.entity.Books;
 import org.example.entity.enums.BookStatus;
@@ -102,7 +99,21 @@ public class BookService {
         bookRepository.save(book);
         return true;
     }
+    public BookResponse updateBook(Long bookId, UpdateBookRequest updateBookRequest) {
 
+        Books existingBook = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
+        bookMapper.updateBookFromRequest(updateBookRequest, existingBook);
+        bookRepository.save(existingBook);
+        return bookMapper.BookToBookResponse(existingBook);
+    }
+
+    public void deleteBookById(Long id) {
+
+        Books existingBook = bookRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Book not found with ID: " + id));
+        bookRepository.delete(existingBook);
+    }
 
 
 }

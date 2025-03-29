@@ -1,18 +1,24 @@
 package org.example.entity.enums;
 
 public enum BookCategory {
-    KURGU,
-    BİLİM,
-    TARİH,
-    BİYOGRAFİ,
-    FANTEZİ,
-    GİZEM,
-    ROMANTİK,
-    MACERA,
-    GERİLİM,
-    ŞİİR,
-    DRAM,
-    BİLİMKURGU,
-    FELSEFE,
-    KISISEL_GELISIM
+    Aile,
+    Bilgisayar,
+    Bilim,
+    Biyografi,
+    Çizgi_Roman,
+    Din,
+    Drama,
+    Eğitim,
+    Felsefe,
+    Gençlik,
+    Kurgu,
+    İş,
+    Kişisel_Gelişim,
+    Psikoloji,
+    Şiir,
+    Siyaset_Bilimi,
+    Sosyal_Bilimler,
+    Spor,
+    Tarih,
+    Yemek_Pişirme
 }
