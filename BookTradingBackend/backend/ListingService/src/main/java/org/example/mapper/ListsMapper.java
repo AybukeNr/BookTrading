@@ -22,6 +22,7 @@ public class ListsMapper {
     }
     public ListResponse ListToListResponse(Lists lists){
         return ListResponse.builder()
+                .listId(lists.getId())
                 .book(lists.getBookInfo())
                 .status(lists.getStatus())
                 .build();

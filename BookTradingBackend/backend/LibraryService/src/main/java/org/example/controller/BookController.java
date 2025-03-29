@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.example.dto.request.BookListRequest;
-import org.example.dto.request.BookRequest;
-import org.example.dto.request.ListRequest;
-import org.example.dto.request.UpdateBookStat;
+import org.example.dto.request.*;
 import org.example.dto.response.BookResponse;
 import org.example.entity.enums.BookCondition;
 import org.example.external.ListManager;
@@ -22,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static org.example.constant.RestApiList.*;
+import static org.example.constant.RestApiList.UPDATE_BOOK;
 
 @RestController
 @CrossOrigin("*")
@@ -133,6 +131,34 @@ public class BookController {
         return new ResponseEntity<>(true,HttpStatus.OK);
 
     }
+    @PutMapping(UPDATE_BOOK)
+    public ResponseEntity<BookResponse> updateBook(
+            @RequestParam Long id,
+            @RequestBody UpdateBookRequest bookRequest
+    ) {
+        try {
+            BookResponse updatedBook = bookService.updateBook( id, bookRequest);
+            return ResponseEntity.ok(updatedBook);
+        }
+        catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @DeleteMapping(DELETE_BOOK + "/{id}") // ✅ URL içinde kitap ID'si olacak
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        try {
+            bookService.deleteBookById(id);
+            return ResponseEntity.noContent().build(); // ✅ 204 No Content
+        }
+        catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // ✅ 404 Not Found
+        }
+    }
+
 
     @GetMapping(GET_BOOK_CONDITION)
     public ResponseEntity<BookCondition> getBookCondition(@PathVariable Long bookId) {

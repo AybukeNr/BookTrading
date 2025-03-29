@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.example.entity.enums.BookCategory;
 import org.example.entity.enums.BookCondition;
 import org.example.entity.enums.BookStatus;
+import org.example.entity.enums.ListType;
 
 @Data
 @AllArgsConstructor
@@ -29,8 +30,11 @@ public class Books {
     private String image;
     @Enumerated(EnumType.STRING)
     private BookCategory category;
+    @Enumerated(EnumType.STRING)
     private BookCondition condition;
     private BookStatus status;
+    @Enumerated(EnumType.STRING)
+    private ListType listType;
 
 
 }
