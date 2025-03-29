@@ -24,7 +24,6 @@ import org.example.repository.CardsRepository;
 import org.example.repository.PaymentRepository;
 import org.example.repository.TransactionRepository;
 import org.example.service.ITransactionService;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
