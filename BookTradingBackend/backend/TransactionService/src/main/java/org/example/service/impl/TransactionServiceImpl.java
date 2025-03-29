@@ -47,8 +47,7 @@ public class TransactionServiceImpl implements ITransactionService {
     private final ListManager listManager;
     private final TransactionMapper transactionMapper;
     private final AccountRepsoitory accountRepository;
-    private final KafkaTemplate<String, Object> kafkaTemplate;
-private  final LibraryManager libraryManager;
+    private  final LibraryManager libraryManager;
 
 
     @Override
@@ -362,10 +361,6 @@ private  final LibraryManager libraryManager;
         List<Transactions> transactions = transactionRepository.findAllByOwnerIdOrOffererId(userId,userId).orElseThrow(()-> new TransactionException(ErrorType.TRANSACTION_NOT_FOUND));
         return transactions.stream().map(transactionMapper::transactionToResponse).toList();
 
-    }
-
-    private void sendComplatedMail(TransactionMailReq mailReq){
-        kafkaTemplate.send("send-transaction-complated-mail",mailReq);
     }
 
 }
