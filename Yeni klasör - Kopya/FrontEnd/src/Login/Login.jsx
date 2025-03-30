@@ -3,6 +3,7 @@ import '../Login/Login.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { instanceAuth } from '../axios';
 import { setAuthToken } from '../auth';
+import {jwtDecode} from "jwt-decode";
 
 function Login(props) {
     const [email, setEmail] = useState('');
@@ -10,50 +11,37 @@ function Login(props) {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // const ProtectedRoute = ({ children }) => {
-    //     const token = localStorage.getItem('authToken');
-
-    //     if (!token) {
-    //         return <Navigate to='/login' />
-    //     }
-
-    //     return children;
-    // }
-
-    // const user = async () => {
-    //     const token = getAuthToken();
-
-    //     try {
-    //         const response = await axios.get('http://localhost:8080/api/v1/users', {
-    //             headers: { Authorization: `Bearer ${token}` },
-    //         });
-    //         console.log(response.data);
-    //     } catch (error) {
-    //         console.log(error);
-    //         alert('Kullanıcı bilgisi alınamadı.');
-    //     }
-    // }
-
     const signIn = async (e) => {
         e.preventDefault();
         setError('');
+        
 
         if (!email || !password) {
             setError('Lütfen tüm alanları düzgünce doldurun!');
+            setLoading(false);
             return;
         }
 
         try {
-            const response = await instanceAuth.post('/login', {
+             const response = await instanceAuth.post('/login', {
                 email,
                 password,
             });
 
             const token = response.data.token;
             setAuthToken(token);
+            const decodedToken = jwtDecode(token);
+            console.log("Token İçeriği:", decodedToken);
 
+        
+           const userId = decodedToken.id;
+           console.log("Kullanıcı ID:", userId);
+          
+           localStorage.setItem('userId', userId);
             alert('Giriş Başarılı');
             props.setIsAuthenticated(true);
+            setEmail('');
+            setPassword('');
             navigate('/');
         } catch (error) {
             if (error.response) {
@@ -63,6 +51,9 @@ function Login(props) {
             } else {
                 setError('Bilinmeyen bir hata oluştu.');
             }
+        } finally{
+            
+            
         }
     }
 
@@ -90,4 +81,4 @@ function Login(props) {
         </div>
     );
 }
-export default Login
+export default Login
