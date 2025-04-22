@@ -32,6 +32,8 @@ public class Books {
     private BookCategory category;
     @Enumerated(EnumType.STRING)
     private BookCondition condition;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
     private BookStatus status;
     @Enumerated(EnumType.STRING)
     private ListType listType;

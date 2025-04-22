@@ -60,7 +60,7 @@ public class BookService {
         return bookRepository.saveAll(books).stream().map(bookMapper::BookToBookResponse).collect(Collectors.toList());
     }
 
-    @Transactional
+
     public void createList(BookListRequest bookListRequest) {
         // Kullanıcının etkin kitaplarını getir ve kontrol et
 //        List<Books> enabledBooks = bookRepository.findEnabledBooksByUserId(bookListRequest.getOwnerId())

@@ -50,6 +50,36 @@ public class ListsService {
     public List<ListResponse> getAllLists() {
         return listsRepository.findAll().stream().map(listMapper::ListToListResponse).toList();
     }
+    @Transactional
+    public Boolean deleteList(String listId) {
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        // Kitap ID'sini al ve durumunu güncelle
+        if (list.getBookInfo() != null && list.getBookInfo().getId() != null) {
+            UpdateBookStat updateBookStat = UpdateBookStat.builder()
+                    .bookId(list.getBookInfo().getId()) // Long olarak doğrudan veriyoruz
+                    .status("ENABLED") // veya "DISABLED", sistemin nasıl işlediğine göre
+                    .build();
+
+            bookManager.updateBookStat(updateBookStat);
+            log.info("Book status updated for bookId: {}", list.getBookInfo().getId());
+        } else {
+            log.warn("BookInfo or bookId is null for listId: {}, skipping book status update.", listId);
+        }
+        // İlanı sil
+        listsRepository.deleteById(listId);
+        log.info("List deleted successfully: {}", listId);
+        return true;
+    }
+   /* @Transactional
+    public Boolean deleteList(String listId) {
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+
+        listsRepository.deleteById(listId);
+        log.info("List deleted successfully: {}", listId);
+        return true;
+    }*/
     public ListResponse getListById(String id) {
         Lists lists = listsRepository.findById(id).orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
         log.info("Recieved List: {}", lists);
@@ -106,7 +136,7 @@ public class ListsService {
         request.setOfferedBookName(offer.getOfferedBook().getTitle());
         request.setOfferedBookImage(offer.getOfferedBook().getImage());
         request.setListBookName(lists.getBookInfo().getTitle());
-        request.setListBookImage(lists.getBookInfo().getListBookImage());
+        request.setListBookImage(lists.getBookInfo().getImage());
         mailManager.testExchangeListUpdated(request);
         return listMapper.ListToListResponse(updatedLists);
     }
@@ -180,7 +210,7 @@ public class ListsService {
         ListMailRequest mailRequest = new ListMailRequest();
         mailRequest.setListId(list.getId());
         mailRequest.setListBookName(list.getBookInfo().getTitle());
-        mailRequest.setListBookImage(list.getBookInfo().getListBookImage());
+        mailRequest.setListBookImage(list.getBookInfo().getImage());
         mailRequest.setOwnerId(list.getOwnerId());
         mailRequest.setOffererId(salesRequest.getOffererId());
         mailRequest.setShipmentdeadline(LocalDateTime.now().plusMinutes(5));
@@ -220,7 +250,7 @@ public class ListsService {
         transactionMailReq.setOwnerId(list.getOwnerId());
         transactionMailReq.setOffererId(targetOffer.getOffererId());
         transactionMailReq.setStatus(String.valueOf(response.getStatus()));
-        transactionMailReq.setListBookImage(list.getBookInfo().getListBookImage());
+        transactionMailReq.setListBookImage(list.getBookInfo().getImage());
         transactionMailReq.setListBookName(list.getBookInfo().getTitle());
         transactionMailReq.setOfferedBookName(targetOffer.getOfferedBook().getTitle());
         transactionMailReq.setOfferedBookImage(targetOffer.getOfferedBook().getImage());
@@ -230,7 +260,7 @@ public class ListsService {
         log.info("Shipping created successfully for transaction: {}", response.getTransactionId());
         ListMailRequest mailRequest = new ListMailRequest();
         mailRequest.setListId(list.getId());
-        mailRequest.setListBookImage(list.getBookInfo().getListBookImage());
+        mailRequest.setListBookImage(list.getBookInfo().getImage());
         mailRequest.setListBookName(list.getBookInfo().getTitle());
         mailRequest.setOwnerId(list.getOwnerId());
         mailRequest.setOffererId(targetOffer.getOffererId());

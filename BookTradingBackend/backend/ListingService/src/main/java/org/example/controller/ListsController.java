@@ -37,6 +37,11 @@ public class ListsController {
 
     private final ListsService listsService;
 
+    @DeleteMapping("/delete/{listId}")
+    public ResponseEntity<Boolean> deleteList(@PathVariable String listId) {
+        Boolean isDeleted = listsService.deleteList(listId);
+        return ResponseEntity.ok(isDeleted);
+    }
 
     //servisler arası endpoint
     @Operation(summary = "Create a new list", description = "Creates a new book list with the provided details.")

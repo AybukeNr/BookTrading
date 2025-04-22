@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entity.enums.BookCategory;
+import org.example.entity.enums.BookStatus;
 
 @Data
 @AllArgsConstructor
@@ -19,5 +20,6 @@ public class BookResponse {
     private String image;
     private BookCategory category;
     private Long id;
+    private BookStatus status;
 
 }
