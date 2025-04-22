@@ -101,10 +101,15 @@ function Bookshelf() {
             return;
         }
 
+        if (advertisedBook?.some(ad => ad.book?.id === bookToAdvertise?.id)) {
+            setError("Bu kitap zaten ilana koyulmuş.");
+            return;
+        }
+
         const updatedBook = {
             ...bookToAdvertise,
-            ownerId: userId, 
-            bookId: bookToAdvertise.id, 
+            ownerId: userId,
+            bookId: bookToAdvertise.id,
             type: tradeOption,
             price: tradeOption === 'SALE' ? price : null,
         }
@@ -129,6 +134,9 @@ function Bookshelf() {
             console.error("Kitap ilan verilirken hata oluştu:", error);
             setError("Kitap ilana eklenirken bir hata oluştu.");
         }
+        setTradeOption('');
+        setPrice('');
+        setBookToAdvertise(null);
     };
 
     return (
@@ -140,10 +148,12 @@ function Bookshelf() {
                 {loading && <p>Kitap ekleniyor...</p>}
 
                 <div className="bookshelf_row">
-                    {bookshelf.map((book, index) => {
-                        const isAdvertised = advertisedBook?.some(adBook => adBook.id === book.id);
+                    {bookshelf.map((book) => {
+                        // const advertisedIds = new Set(advertisedBook.map(ad => ad.book?.id));
+                        // const isAdvertised = advertisedIds.has(book.id);
+                        // const isAdvertised = advertisedBook?.some(adBook => adBook.book?.id === book.id);
                         return (
-                            <div className="bookshelf_card" key={index}>
+                            <div className="bookshelf_card" key={book.id}>
                                 <div className="book_info">
                                     <HighlightOffOutlinedIcon onClick={() => handleOpen(book.id)} className='removeButton' />
                                     <p>{book.isbn}/{book.title}-{book.author}/{book.publisher}-{book.publishedDate}/{book.category}</p>
@@ -160,7 +170,7 @@ function Bookshelf() {
 
                                 <img src={book.image} alt='' />
 
-                                {!isAdvertised && (
+                                {book.status !== 'DISABLED' && (
                                     <button className='adButton' onClick={() => handleOpenAdDialog((book))}>İlana Koy</button>
                                 )}
 
@@ -177,7 +187,7 @@ function Bookshelf() {
                 <Dialog open={openAdDialog} onClose={handleCloseAdDialog}>
                     <DialogTitle>Kitap Değerlendirme Tipi:</DialogTitle>
                     <DialogContent>
-                        {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
+                        {error && <p style={{ color: "crimson", fontWeight: "500", marginTop: "10px" }}>{error}</p>}
                         <DialogContent>
                             <div className='trade_sale'>
                                 <label className="container">
@@ -209,7 +219,7 @@ function Bookshelf() {
                                     fontSize: "16px",
                                     color: " #213547"
                                 }}>Fiyat giriniz:</h5>
-                                <input type="text" placeholder="Fiyat (₺) giriniz." style={{
+                                <input type="number" placeholder="Fiyat (₺) giriniz." style={{
                                     width: "auto",
                                     padding: "10px",
                                     fontSize: "14px",

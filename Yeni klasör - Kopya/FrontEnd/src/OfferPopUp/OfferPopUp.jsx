@@ -8,15 +8,15 @@ function OfferPopUp({ onClose }) {
   const navigate = useNavigate();
   const popupRef = useRef(null);
 
-  const booksForTrade = advertisedBook.filter((item) => !item.price);
+  const booksForTrade = advertisedBook.filter((item) => item.type === 'EXCHANGE');
 
-  const handleSelect = (id) => {
-    setSelectedBook((prevId) => (prevId === id ? null : id));
+  const handleSelect = (listId) => {
+    setSelectedBook((prevId) => (prevId === listId ? null : listId));
   }
 
   const offerSubmit = () => {
     if (selectedBook) {
-      const bookToSend = booksForTrade.find((book) => book.id === selectedBook);
+      const bookToSend = booksForTrade.find((book) => book.listId === selectedBook);
       dispatch({
         type: 'ADD_TO_OFFER_SENT',
         item: {
@@ -47,15 +47,15 @@ function OfferPopUp({ onClose }) {
     <div className='offerPopUp' ref={popupRef}>
       {booksForTrade?.length > 0 ? (
         booksForTrade.map((item) => (
-          <div className={`offerPopUp_book ${selectedBook === item.id ? 'selected' : ''}`} key={item.id} onClick={() => handleSelect(item.id)}>
-            <img src={item.image} />
+          <div className={`offerPopUp_book ${selectedBook === item.listId ? 'selected' : ''}`} key={item.listId} onClick={() => handleSelect(item.listId)}>
+            <img src={item.book.image} alt={item.book.title || "Kitap görseli"}/>
             <div className="offerPopUp_bookInfo">
-              <p><strong>{item.title}</strong></p>
-              <p>ISBN: {item.isbn}</p>
-              <p>Yazar: {item.author}</p>
-              <p>Yayınevi: {item.publisher}</p>
-              <p>Yayın Tarihi: {item.publishedDate}</p>
-              <p>Kategori: {item.category}</p>
+              <p><strong>{item.book.title}</strong></p>
+              <p>ISBN: {item.book.isbn}</p>
+              <p>Yazar: {item.book.author}</p>
+              <p>Yayınevi: {item.book.publisher}</p>
+              <p>Yayın Tarihi: {item.book.publishedDate}</p>
+              <p>Kategori: {item.book.category}</p>
             </div>
           </div>
         ))
