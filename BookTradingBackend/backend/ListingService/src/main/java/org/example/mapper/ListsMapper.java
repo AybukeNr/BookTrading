@@ -25,12 +25,14 @@ public class ListsMapper {
                 .listId(lists.getId())
                 .book(lists.getBookInfo())
                 .status(lists.getStatus())
+                .price(lists.getPrice())
+                .type(lists.getType())
                 .build();
     }
     public ListMailResponse ListToListMailResponse(Lists lists){
         return ListMailResponse.builder()
                 .title(lists.getBookInfo().getTitle())
-                .listBookImage(lists.getBookInfo().getListBookImage())
+                .listBookImage(lists.getBookInfo().getImage())
                 .category(String.valueOf(lists.getBookInfo().getCategory()))
                 .isbn(lists.getBookInfo().getIsbn())
                 .author(lists.getBookInfo().getAuthor())

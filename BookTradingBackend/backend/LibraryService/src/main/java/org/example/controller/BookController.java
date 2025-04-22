@@ -29,7 +29,11 @@ public class BookController {
     private static final Logger log = LoggerFactory.getLogger(BookController.class);
     private final BookService bookService;
 
-
+    @DeleteMapping("/deleteBook/{id}")
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+        bookService.deleteBookById(id);
+        return ResponseEntity.ok("Book deleted with ID: " + id);
+    }
 
     @Operation(
             summary = "Getting All Books REST API",
@@ -148,7 +152,7 @@ public class BookController {
         }
     }
 
-    @DeleteMapping(DELETE_BOOK + "/{id}") // ✅ URL içinde kitap ID'si olacak
+    /*@DeleteMapping(DELETE_BOOK + "/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         try {
             bookService.deleteBookById(id);
@@ -157,7 +161,7 @@ public class BookController {
         catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // ✅ 404 Not Found
         }
-    }
+    }*/
 
 
     @GetMapping(GET_BOOK_CONDITION)

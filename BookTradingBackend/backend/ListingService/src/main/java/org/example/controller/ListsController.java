@@ -37,7 +37,17 @@ public class ListsController {
 
     private final ListsService listsService;
 
-
+    @DeleteMapping("/delete/{listId}")
+    public ResponseEntity<Boolean> deleteList(@PathVariable String listId) {
+        Boolean isDeleted = listsService.deleteList(listId);
+        return ResponseEntity.ok(isDeleted);
+    }
+    //Servisler arası endpoint
+    @DeleteMapping("/delete/by-book/{bookId}")
+    public ResponseEntity<String> deleteListsByBookId(@PathVariable Long bookId) {
+        listsService.deleteAllListsByBookId(bookId);
+        return ResponseEntity.ok("All lists with bookId " + bookId + " have been deleted.");
+    }
     //servisler arası endpoint
     @Operation(summary = "Create a new list", description = "Creates a new book list with the provided details.")
     @ApiResponses(value = {

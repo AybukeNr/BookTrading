@@ -12,6 +12,7 @@ import org.example.entity.enums.BookCategory;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookRequest {
+    private  Long id;
     private String ownerId;
     private String title;
     private String author;

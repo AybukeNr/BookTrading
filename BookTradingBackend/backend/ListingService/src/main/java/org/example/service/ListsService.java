@@ -50,6 +50,63 @@ public class ListsService {
     public List<ListResponse> getAllLists() {
         return listsRepository.findAll().stream().map(listMapper::ListToListResponse).toList();
     }
+    @Transactional
+    public Boolean deleteList(String listId) {
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        // Kitap ID'sini al ve durumunu güncelle
+        if (list.getBookInfo() != null && list.getBookInfo().getId() != null) {
+            UpdateBookStat updateBookStat = UpdateBookStat.builder()
+                    .bookId(list.getBookInfo().getId()) // Long olarak doğrudan veriyoruz
+                    .status("ENABLED") // veya "DISABLED", sistemin nasıl işlediğine göre
+                    .build();
+
+            bookManager.updateBookStat(updateBookStat);
+            log.info("Book status updated for bookId: {}", list.getBookInfo().getId());
+        } else {
+            log.warn("BookInfo or bookId is null for listId: {}, skipping book status update.", listId);
+        }
+        // İlanı sil
+        listsRepository.deleteById(listId);
+        log.info("List deleted successfully: {}", listId);
+        return true;
+    }
+    //kitabı silerken kitaba ait tüm ilanları silen metot
+    @Transactional
+    public void deleteAllListsByBookId(Long bookId) {
+        List<Lists> lists = listsRepository.findAll()
+                .stream()
+                .filter(list ->
+                        list.getBookInfo() != null &&
+                                list.getBookInfo().getId() != null &&
+                                list.getBookInfo().getId().equals(bookId)
+                )
+                .collect(Collectors.toList());
+
+        for (Lists list : lists) {
+            listsRepository.deleteById(list.getId());
+            log.info("Deleted list with ID: {} for bookId: {}", list.getId(), bookId);
+        }
+
+        log.info("Total deleted lists for bookId {}: {}", bookId, lists.size());
+    }
+
+    @Transactional
+    public void updateBookInfoInLists(ListBookResponse updatedBookInfo) {
+        List<Lists> listsWithBook = listsRepository.findAll().stream()
+                .filter(list -> list.getBookInfo() != null &&
+                        updatedBookInfo.getId().equals(list.getBookInfo().getId()))
+                .collect(Collectors.toList());
+
+        for (Lists list : listsWithBook) {
+            list.setBookInfo(updatedBookInfo);
+            listsRepository.save(list);
+            log.info("Updated bookInfo in list: {}", list.getId());
+        }
+
+        log.info("Updated bookInfo in {} lists for bookId: {}", listsWithBook.size(), updatedBookInfo.getId());
+    }
+
     public ListResponse getListById(String id) {
         Lists lists = listsRepository.findById(id).orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
         log.info("Recieved List: {}", lists);
@@ -105,7 +162,7 @@ public class ListsService {
         request.setOfferedBookName(offer.getOfferedBook().getTitle());
         request.setOfferedBookImage(offer.getOfferedBook().getImage());
         request.setListBookName(lists.getBookInfo().getTitle());
-        request.setListBookImage(lists.getBookInfo().getListBookImage());
+        request.setListBookImage(lists.getBookInfo().getImage());
         mailManager.testExchangeListUpdated(request);
         return listMapper.ListToListResponse(updatedLists);
     }
@@ -179,7 +236,7 @@ public class ListsService {
         ListMailRequest mailRequest = new ListMailRequest();
         mailRequest.setListId(list.getId());
         mailRequest.setListBookName(list.getBookInfo().getTitle());
-        mailRequest.setListBookImage(list.getBookInfo().getListBookImage());
+        mailRequest.setListBookImage(list.getBookInfo().getImage());
         mailRequest.setOwnerId(list.getOwnerId());
         mailRequest.setOffererId(salesRequest.getOffererId());
         mailRequest.setShipmentdeadline(LocalDateTime.now().plusMinutes(5));
@@ -219,7 +276,7 @@ public class ListsService {
         transactionMailReq.setOwnerId(list.getOwnerId());
         transactionMailReq.setOffererId(targetOffer.getOffererId());
         transactionMailReq.setStatus(String.valueOf(response.getStatus()));
-        transactionMailReq.setListBookImage(list.getBookInfo().getListBookImage());
+        transactionMailReq.setListBookImage(list.getBookInfo().getImage());
         transactionMailReq.setListBookName(list.getBookInfo().getTitle());
         transactionMailReq.setOfferedBookName(targetOffer.getOfferedBook().getTitle());
         transactionMailReq.setOfferedBookImage(targetOffer.getOfferedBook().getImage());
@@ -229,7 +286,7 @@ public class ListsService {
         log.info("Shipping created successfully for transaction: {}", response.getTransactionId());
         ListMailRequest mailRequest = new ListMailRequest();
         mailRequest.setListId(list.getId());
-        mailRequest.setListBookImage(list.getBookInfo().getListBookImage());
+        mailRequest.setListBookImage(list.getBookInfo().getImage());
         mailRequest.setListBookName(list.getBookInfo().getTitle());
         mailRequest.setOwnerId(list.getOwnerId());
         mailRequest.setOffererId(targetOffer.getOffererId());

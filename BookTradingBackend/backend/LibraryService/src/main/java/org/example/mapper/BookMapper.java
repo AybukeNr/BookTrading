@@ -19,11 +19,13 @@ public class BookMapper {
                 .publisher(books.getPublisher())
                 .publishedDate(books.getPublishedDate())
                 .image(books.getImage())
+                .status(books.getStatus())
                 .category(books.getCategory())
                 .build();
     }
     public Books BookResquestToBook(BookRequest bookRequest){
         return Books.builder()
+                .id(bookRequest.getId())
                 .ownerId(bookRequest.getOwnerId())
                 .author(bookRequest.getAuthor())
                 .title(bookRequest.getTitle())
@@ -34,6 +36,7 @@ public class BookMapper {
                 .image(bookRequest.getImage()).build();
 
     }
+
 
     public void updateBookFromRequest(UpdateBookRequest bookRequest, Books book) {
         if (bookRequest.getTitle() != null && !bookRequest.getTitle().isEmpty()) {
