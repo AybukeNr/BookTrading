@@ -15,9 +15,7 @@ import org.example.repository.BooksRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Book;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -101,6 +99,7 @@ public class BookService {
         return true;
     }
     public BookResponse updateBook(Long bookId, UpdateBookRequest updateBookRequest) {
+
         Books existingBook = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
         bookMapper.updateBookFromRequest(updateBookRequest, existingBook);
@@ -108,16 +107,28 @@ public class BookService {
         return bookMapper.BookToBookResponse(existingBook);
     }
 
-    public void deleteBookById(Long id) {
-        Books existingBook = bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Book not found with ID: " + id));
-        bookRepository.delete(existingBook);
-    }
 
+    public void deleteBookById(Long id) {
+        try {
+            Books existingBook = bookRepository.findById(id)
+                    .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
+
+            listManager.deleteAllListsByBookId(id);
+            log.info("Deleted all lists for bookId: {}", id);
+
+            bookRepository.delete(existingBook);
+            log.info("Deleted book with ID: {}", id);
+
+        } catch (Exception e) {
+            log.error("Kitap silinirken hata oluştu: {}", e.getMessage(), e);
+            throw new BookException(ErrorType.INTERNAL_SERVER_ERROR); // ya da detaylı kendi exception
+        }
+    }
     public BookCondition getBookConditionById(Long bookId) {
         Books book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
         return book.getCondition();
     }
+
 
 }

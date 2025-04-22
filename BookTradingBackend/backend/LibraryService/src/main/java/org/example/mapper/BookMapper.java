@@ -37,6 +37,7 @@ public class BookMapper {
 
     }
 
+
     public void updateBookFromRequest(UpdateBookRequest bookRequest, Books book) {
         if (bookRequest.getTitle() != null && !bookRequest.getTitle().isEmpty()) {
             book.setTitle(bookRequest.getTitle());

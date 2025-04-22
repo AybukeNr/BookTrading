@@ -71,15 +71,42 @@ public class ListsService {
         log.info("List deleted successfully: {}", listId);
         return true;
     }
-   /* @Transactional
-    public Boolean deleteList(String listId) {
-        Lists list = listsRepository.findById(listId)
-                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+    //kitabı silerken kitaba ait tüm ilanları silen metot
+    @Transactional
+    public void deleteAllListsByBookId(Long bookId) {
+        List<Lists> lists = listsRepository.findAll()
+                .stream()
+                .filter(list ->
+                        list.getBookInfo() != null &&
+                                list.getBookInfo().getId() != null &&
+                                list.getBookInfo().getId().equals(bookId)
+                )
+                .collect(Collectors.toList());
 
-        listsRepository.deleteById(listId);
-        log.info("List deleted successfully: {}", listId);
-        return true;
-    }*/
+        for (Lists list : lists) {
+            listsRepository.deleteById(list.getId());
+            log.info("Deleted list with ID: {} for bookId: {}", list.getId(), bookId);
+        }
+
+        log.info("Total deleted lists for bookId {}: {}", bookId, lists.size());
+    }
+
+    @Transactional
+    public void updateBookInfoInLists(ListBookResponse updatedBookInfo) {
+        List<Lists> listsWithBook = listsRepository.findAll().stream()
+                .filter(list -> list.getBookInfo() != null &&
+                        updatedBookInfo.getId().equals(list.getBookInfo().getId()))
+                .collect(Collectors.toList());
+
+        for (Lists list : listsWithBook) {
+            list.setBookInfo(updatedBookInfo);
+            listsRepository.save(list);
+            log.info("Updated bookInfo in list: {}", list.getId());
+        }
+
+        log.info("Updated bookInfo in {} lists for bookId: {}", listsWithBook.size(), updatedBookInfo.getId());
+    }
+
     public ListResponse getListById(String id) {
         Lists lists = listsRepository.findById(id).orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
         log.info("Recieved List: {}", lists);

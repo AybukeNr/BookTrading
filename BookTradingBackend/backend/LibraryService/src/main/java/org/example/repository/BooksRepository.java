@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.entity.Books;
+import org.example.entity.enums.BookStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +18,8 @@ public interface BooksRepository extends JpaRepository<Books, Long> {
     Optional<Books> findOptionalById(Long id);
 
     @Query("SELECT b FROM Books b WHERE b.ownerId = :id AND b.status = 0")
-    Optional<List<Books>> findEnabledBooksByUserId(@Param("id") String id);
+   Optional<List<Books>> findEnabledBooksByUserId(@Param("id") String id);
 
+  //  @Query("SELECT b FROM Books b WHERE b.ownerId = :id AND b.status = :status")
+    //Optional<List<Books>> findBooksByUserIdAndStatus(@Param("id") String id, @Param("status") int status);
 }
