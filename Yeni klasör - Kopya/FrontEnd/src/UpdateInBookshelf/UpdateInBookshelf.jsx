@@ -103,7 +103,7 @@ function UpdateInBookshelf() {
                         type: 'UPDATE_IN_BOOKSHELF',
                         book: response.data,
                     });
-                    navigate('/bookshelf');
+                    navigate('/bookshelf', { state: { updated: true } });
                 } else {
                     setError('Kitap güncellenirken bir hata oluştu.');
                 }

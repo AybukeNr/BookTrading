@@ -16,9 +16,9 @@ function Account() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-  
 
-    const userId = localStorage.getItem('userId'); 
+
+    const userId = localStorage.getItem('userId');
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -26,11 +26,11 @@ function Account() {
             try {
                 const response = await instanceUser.get(`/getUserById?id=${userId}`);
                 const data = response.data;
-            
+
                 setFirstname(data.firstName || '');
                 setLastname(data.lastName || '');
                 setEmail(data.mailAddress || '');
-                setTelephone(data.phoneNumber || ''); 
+                setTelephone(data.phoneNumber || '');
                 setIban(data.iban || '');
                 setAddress(data.address || '');
                 setPassword(data.password || '');
@@ -56,7 +56,7 @@ function Account() {
 
         try {
             const response = await instanceUser.put(`/updateUser/${userId}`, {
-            
+
                 firstName: firstname,
                 lastName: lastname,
                 mailAddress: email,
@@ -67,7 +67,9 @@ function Account() {
             });
 
             alert("Hesap başarıyla güncellendi!");
-            navigate('/myAccount');
+            setTimeout(() => {
+                navigate('/');
+            }, 1000);
         } catch (err) {
             setError("Hesap güncellenirken hata oluştu!");
         }
@@ -113,5 +115,5 @@ function Account() {
         </div>
     );
 }
-   
+
 export default Account

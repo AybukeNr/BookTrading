@@ -11,10 +11,7 @@ export const initialState = {
     searchQuery: '',
     selectedCategory: null,
     bookDetail: [],
-    advertisedBook: [
-        // { id: 5, title: 'Bütün Şiirleri', author: 'Sabahattin Ali', isbn: 1234, publisher: 'Yapı Kredi Yayınları', publishedDate: '2012', category: 'Şiir', image: 'https://avatars.mds.yandex.net/i?id=0ba43a652eca109c85bfea51086c6fcb4638c6d2-4551157-images-thumbs&n=13' },
-        // { id: 6, title: 'Sofienin Dünyası', author: 'Jostein Gaarder', isbn: 1237, publisher: 'Pan Yayıncılık', publishedDate: '1991', category: 'Felsefe', image: 'https://s3.cloud.ngn.com.tr/kitantik/images/2023-11-29/1br9qfwlpi2ow751yf3.jpg' },
-    ],
+    advertisedBook: [],
     advertisements: [
         { id: 1, title: 'Olasılıksız', author: 'Adam Fawer', isbn: 123, publisher: 'April Yayıncılık', publishedDate: '2005', category: 'Kurgu', price: 800, image: 'https://static.nadirkitap.com/fotograf/1255127/28/Kitap_20220724194404125512711.jpg' },
         { id: 2, title: 'Melekler ve Şeytanlar', author: 'Dan Brown', isbn: 12, publisher: 'Altın Kitaplar', publishedDate: '2005', category: 'Kurgu', image: 'https://s3.cloud.ngn.com.tr/kitantik/images/2023-02-17/1br9qfwle6wpd2u1ly2.jpg' },
@@ -86,7 +83,7 @@ const reducer = (state, action) => {
         case 'SET_AD_BOOKS':
             return {
                 ...state,
-                advertisedBook: action.book,
+                advertisedBook: action.advertisedBook,
             }
 
         case 'ADD_TO_AD':
@@ -97,7 +94,7 @@ const reducer = (state, action) => {
         case 'REMOVE_FROM_AD':
             return {
                 ...state,
-                advertisedBook: state.advertisedBook.filter((book) => book.id !== action.id),
+                advertisedBook: state.advertisedBook.filter(item => item.listId !== action.id),
             }
 
         case 'UPDATE_ADVERTISEMENTS':
