@@ -14,7 +14,7 @@ public class ListsMapper {
     public Lists ListRequestToList(ListRequest listRequest){
         return Lists.builder()
                 .bookInfo(listRequest.getBookInfo())
-                .status(ListsStatus.OPEN)
+                .status(ListsStatus.CLOSED)
                 .type(listRequest.getType())
                 .price(listRequest.getPrice())
                 .ownerId(listRequest.getOwnerId()).build();

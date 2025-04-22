@@ -139,6 +139,18 @@ public class ListsController {
         log.info("Received List Request: {}", listReq);
         return new ResponseEntity<>(listsService.updateListStatus(listReq), HttpStatus.OK);
     }
+
+    @PutMapping("/approval/{listId}")
+    public ResponseEntity<String> updateListApprovalStatus(@PathVariable String listId) {
+        boolean updated = listsService.updateListApprovalStatus(listId);
+
+        if (updated) {
+            return ResponseEntity.ok("List status updated successfully.");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to update list status.");
+        }
+    }
+
     //servisler arası endpoint
     @PutMapping (PROCESS_SALES)
     public ResponseEntity<Boolean> processSales(@RequestBody SalesRequest sale) {

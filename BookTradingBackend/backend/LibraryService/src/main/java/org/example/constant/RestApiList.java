@@ -18,6 +18,6 @@ public class RestApiList {
     public static final String DELETE_BOOK = "/deleteBook";
     public static final String CREATE_MANY_BOOK = "/createManyBooks";
     public static final String CREATE_LISTS = "/createLists";
-
+    public static final String GET_BOOK_CONDITION = "/{bookId}/condition";
 
 }

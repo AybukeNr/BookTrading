@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.dto.request.*;
 import org.example.dto.response.BookResponse;
 import org.example.entity.Books;
+import org.example.entity.enums.BookCondition;
 import org.example.entity.enums.BookStatus;
 import org.example.exception.BookException;
 import org.example.exception.ErrorType;
@@ -100,7 +101,6 @@ public class BookService {
         return true;
     }
     public BookResponse updateBook(Long bookId, UpdateBookRequest updateBookRequest) {
-
         Books existingBook = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
         bookMapper.updateBookFromRequest(updateBookRequest, existingBook);
@@ -109,11 +109,15 @@ public class BookService {
     }
 
     public void deleteBookById(Long id) {
-
         Books existingBook = bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found with ID: " + id));
         bookRepository.delete(existingBook);
     }
 
+    public BookCondition getBookConditionById(Long bookId) {
+        Books book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
+        return book.getCondition();
+    }
 
 }
