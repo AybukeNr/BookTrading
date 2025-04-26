@@ -4,13 +4,14 @@ import lombok.Data;
 import org.example.entity.enums.BookCategory;
 
 @Data
-public class UpdateBookRequest {
+public class BookUpdateRequest {
     private Long id;
     private String title;
     private String author;
     private String isbn;
     private String publisher;
     private String publishedDate;
-    private String image;
+    private String Image;
     private BookCategory category;
+
 }

@@ -13,5 +13,7 @@ public interface ListsRepository extends MongoRepository<Lists, String> {
 
     Optional<Lists> findById(String listId);
 
+    List<Lists> findByBookInfo_Id(Long Id);
+
 
 }

@@ -9,11 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
-
-import org.example.dto.request.ListRequest;
-import org.example.dto.request.SalesRequest;
-import org.example.dto.request.UpdateListReq;
-import org.example.dto.request.UpdateOfferRequest;
+import org.example.dto.request.*;
 import org.example.dto.response.ListMailResponse;
 import org.example.dto.response.ListResponse;
 
@@ -54,6 +50,13 @@ public class ListsController {
             @ApiResponse(responseCode = "200", description = "List created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid input provided")
     })
+
+    @PutMapping("/update-book-info")
+    public void updateBookInfoInLists(@RequestBody BookUpdateRequest updateBookRequest) {
+        //System.out.println(">>> updateBookInfoInLists çalıştı! BookId: " + updateBookRequest.getId());
+        listsService.updateBookInfo(updateBookRequest);
+    }
+
     @PostMapping(CREATE_LISTS)
     public ResponseEntity<Boolean> createList(@RequestBody ListRequest lists) {
         log.info("Received ListRequest: {}", lists);

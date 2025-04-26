@@ -1,6 +1,7 @@
 package org.example.entity;
 
 
+import jakarta.persistence.Embedded;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class Lists {
     @Id
     private String id;
     private String ownerId;
+    @Embedded
     private ListBookResponse bookInfo;
     private ListsStatus status;
     private ListType type;

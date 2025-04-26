@@ -106,6 +106,22 @@ public class ListsService {
 
         log.info("Updated bookInfo in {} lists for bookId: {}", listsWithBook.size(), updatedBookInfo.getId());
     }
+    public void updateBookInfo(BookUpdateRequest request) {
+        List<Lists> lists = listsRepository.findByBookInfo_Id(request.getId());
+        for (Lists list : lists) {
+            ListBookResponse bookInfo = list.getBookInfo();
+            if (bookInfo != null) {
+                bookInfo.setTitle(request.getTitle());
+                bookInfo.setAuthor(request.getAuthor());
+                bookInfo.setIsbn(request.getIsbn());
+                bookInfo.setPublisher(request.getPublisher());
+                bookInfo.setPublishedDate(request.getPublishedDate());
+                bookInfo.setImage(request.getImage());
+                bookInfo.setCategory(request.getCategory());
+            }
+        }
+        listsRepository.saveAll(lists);
+    }
 
     public ListResponse getListById(String id) {
         Lists lists = listsRepository.findById(id).orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));

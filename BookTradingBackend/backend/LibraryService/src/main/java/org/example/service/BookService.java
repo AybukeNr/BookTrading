@@ -98,14 +98,30 @@ public class BookService {
         bookRepository.save(book);
         return true;
     }
-    public BookResponse updateBook(Long bookId, UpdateBookRequest updateBookRequest) {
 
-        Books existingBook = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
-        bookMapper.updateBookFromRequest(updateBookRequest, existingBook);
-        bookRepository.save(existingBook);
-        return bookMapper.BookToBookResponse(existingBook);
-    }
+   public BookResponse updateBook(Long bookId, UpdateBookRequest updateBookRequest) {
+       Books existingBook = bookRepository.findById(bookId)
+               .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
+
+       bookMapper.updateBookFromRequest(updateBookRequest, existingBook);
+       bookRepository.save(existingBook);
+
+       // BookUpdateRequest oluşturup id'yi manuel ekliyoruz
+       BookUpdateRequest bookUpdateRequest = BookUpdateRequest.builder()
+               .id(bookId)  // ← Buraya dikkat! id dışarıdan geliyor!
+               .title(updateBookRequest.getTitle())
+               .author(updateBookRequest.getAuthor())
+               .isbn(updateBookRequest.getIsbn())
+               .publisher(updateBookRequest.getPublisher())
+               .publishedDate(updateBookRequest.getPublishedDate())
+               .image(updateBookRequest.getImage())
+               .category(updateBookRequest.getCategory())
+               .build();
+
+       listManager.updateBookInfo(bookUpdateRequest);
+
+       return bookMapper.BookToBookResponse(existingBook);
+   }
 
 
     public void deleteBookById(Long id) {
