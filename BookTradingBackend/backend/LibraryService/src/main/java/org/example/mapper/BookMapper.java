@@ -13,7 +13,7 @@ public class BookMapper {
     public BookResponse BookToBookResponse(Books books){
         return BookResponse.builder()
                 .title(books.getTitle())
-                .id(books.getId())
+                .pk(books.getPk())
                 .author(books.getAuthor())
                 .isbn(books.getIsbn())
                 .publisher(books.getPublisher())
@@ -21,11 +21,11 @@ public class BookMapper {
                 .image(books.getImage())
                 .status(books.getStatus())
                 .category(books.getCategory())
+                .description(books.getDescription())
                 .build();
     }
     public Books BookResquestToBook(BookRequest bookRequest){
         return Books.builder()
-                .id(bookRequest.getId())
                 .ownerId(bookRequest.getOwnerId())
                 .author(bookRequest.getAuthor())
                 .title(bookRequest.getTitle())
@@ -33,6 +33,8 @@ public class BookMapper {
                 .publisher(bookRequest.getPublisher())
                 .publishedDate(bookRequest.getPublishedDate())
                 .category(bookRequest.getCategory())
+                .description(bookRequest.getDescription())
+                .pk(bookRequest.getOwnerId().substring(0,4)+bookRequest.getIsbn().substring(0,4))
                 .image(bookRequest.getImage()).build();
 
     }
@@ -59,6 +61,9 @@ public class BookMapper {
         }
         if (bookRequest.getCategory() != null) {
             book.setCategory(bookRequest.getCategory());
+        }
+        if (bookRequest.getDescription() != null) {
+            book.setDescription(bookRequest.getDescription());
         }
     }
 }

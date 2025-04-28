@@ -25,7 +25,7 @@ public class RecommendationService {
 
 
     @Value("${apriori.model.file.path}")
-    private String modelFilePath; // Örn: "classpath:apriori.model"
+    private String modelFilePath; // application.yml "classpath:apriori.model"
 
     private AssociationRules associationRules;
 

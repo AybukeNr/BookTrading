@@ -10,5 +10,5 @@ import static org.example.constant.RestApiList.GET_BOOK_CONDITION;
 @FeignClient(url="http://localhost:9090/ api/ v1/ books",name = "LibraryManager")
 public interface LibraryManager {
     @GetMapping(GET_BOOK_CONDITION)
-    String getBookCondition(@PathVariable("bookId") String bookId);
+    String getBookCondition(@PathVariable("bookId") Long bookId);
 }

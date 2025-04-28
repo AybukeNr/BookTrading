@@ -37,11 +37,16 @@ public class RestApiList {
     //List Manager
     public static final String GET_LIST_BY_ID = "/getListsById";
     public static final String UPDATE_LIST_STATUS = "/updateListStat";
+    public static final String GET_LIST_PRICE= "/getListPrice";
 
     public static final String CREATE_ACCOUNT = "/createAccount";
     public static final String PROCESS_SALES = "/processSale" ;
    //library manager
     public static final String GET_BOOK_CONDITION = "/{bookId}/condition";
+
+    //user manager
+    public static final String REDUCE_TRUST_POINT = "/reduceTrustPoint";
+
 
 }
 

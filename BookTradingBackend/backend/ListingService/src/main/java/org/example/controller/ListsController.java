@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.example.constants.RestApiList.*;
@@ -168,6 +169,12 @@ public class ListsController {
     public ResponseEntity<ListMailResponse> mailInfo(@RequestParam String listId){
         log.info("Getting infos for list {}",listId);
         return new ResponseEntity<>(listsService.listMailSummary(listId), HttpStatus.OK);
+    }
+    //servisler arası endpoint
+    @GetMapping(GET_LIST_PRICE)
+    public ResponseEntity<Double> getListPrice(@RequestParam String listId){
+        log.info("Getting price for list {}",listId);
+        return new ResponseEntity<>(listsService.getListPrice(listId), HttpStatus.OK);
     }
 
 }

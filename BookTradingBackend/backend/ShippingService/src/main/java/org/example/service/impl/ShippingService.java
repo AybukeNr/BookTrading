@@ -273,6 +273,7 @@ public class ShippingService implements IShippingService {
                 TransferAllReq transferAllReq = new TransferAllReq();
                 transferAllReq.setTransactionId(exchange.getTransactionId());
                 transferAllReq.setTransferUserId(recipient);
+
                transactionsManager.transferAll(transferAllReq);
                exchange.setStatus(ExchangeStatus.İPTAL_EDİLDİ);
                exchangeRepository.save(exchange);

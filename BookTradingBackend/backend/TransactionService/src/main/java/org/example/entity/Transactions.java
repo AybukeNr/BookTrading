@@ -31,7 +31,9 @@ public class Transactions {
     private String offererId; // Karşı tarafın kullanıcı ID'si
 
     private Double ownerDeposit; // Göndericinin yatırdığı güvence bedeli
-    private Double offererDeposit; // Alıcının yatırdığı güvence bedeli
+    private Double offererDeposit;// Alıcının yatırdığı güvence bedeli
+    private Double trustFee; // iki tarafında yatırması gereken güvence bedeli,satış durumunda ilan fiyatı
+
 
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;

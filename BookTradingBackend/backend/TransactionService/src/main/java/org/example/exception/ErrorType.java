@@ -31,6 +31,7 @@ public enum ErrorType {
     NO_TRANSACTIONS_FOUND(2003,"Takas bulunamadı" ,HttpStatus.NOT_FOUND ),
     INVALID_CARD_INFO(2004,"Geçersiz kart bilgisi" ,HttpStatus.BAD_REQUEST );
 
+
     int code;
     String message;
     HttpStatus httpStatus;

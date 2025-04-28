@@ -108,16 +108,16 @@ public class BookService {
     }
 
 
-    public void deleteBookById(Long id) {
+    public void deleteBookById(String pk) {
         try {
-            Books existingBook = bookRepository.findById(id)
+            Books existingBook = bookRepository.findOptionalByPk(pk)
                     .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
 
-            listManager.deleteAllListsByBookId(id);
-            log.info("Deleted all lists for bookId: {}", id);
+            listManager.deleteAllListsByBookId(existingBook.getId());
+            log.info("Deleted all lists for bookId: {}", existingBook.getId());
 
             bookRepository.delete(existingBook);
-            log.info("Deleted book with ID: {}", id);
+            log.info("Deleted book with ID: {}", existingBook.getId());
 
         } catch (Exception e) {
             log.error("Kitap silinirken hata oluştu: {}", e.getMessage(), e);

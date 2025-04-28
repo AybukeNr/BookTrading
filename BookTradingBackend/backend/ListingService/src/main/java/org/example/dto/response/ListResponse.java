@@ -19,6 +19,6 @@ public class ListResponse {
     private ListBookResponse book;
     private ListsStatus status;
     private ListType type;
-    private BigDecimal price;
+    private Double price;
 
 }

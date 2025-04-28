@@ -96,14 +96,20 @@ public class UserController {
         }
     }
 
-
-
     //servisler arası endpointler
+    @Operation(
+            summary = "Getting Users address,servisler arası endpoint"
+    )
     @GetMapping(GET_ADDRESSES)
     public ResponseEntity<Map<String, String>> getAddresses(@RequestParam String ownerId, @RequestParam String offererId) {
         Map<String, String> addresses = userService.getUsersAddressesAsMap(ownerId, offererId); 
         return ResponseEntity.ok(addresses); 
     }
 
+    @PutMapping(REDUCE_TRUST_POINT)
+    public ResponseEntity<Void> reduceTrustPoint(@RequestParam String userId){
+        userService.reduceUsertrustPoint(userId);
+        return ResponseEntity.ok().build();
+    }
 
 }

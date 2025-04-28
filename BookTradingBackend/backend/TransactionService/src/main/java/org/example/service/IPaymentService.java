@@ -12,7 +12,7 @@ import java.util.List;
 // Payment Service Interface
 public interface IPaymentService {
 
-    PaymentResponse createPayment(CreatePaymentRequest createPaymentRequest);
+    void createPayment(CreatePaymentRequest createPaymentRequest);
 
     List<PaymentResponse> getAllPayments();
 

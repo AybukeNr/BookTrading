@@ -12,7 +12,7 @@ import org.example.entity.enums.BookCategory;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookRequest {
-    private  Long id;
+    private String pk;
     private String ownerId;
     private String title;
     private String author;
@@ -21,4 +21,5 @@ public class BookRequest {
     private String publishedDate;
     private String image;
     private BookCategory category;
+    private String description;
 }

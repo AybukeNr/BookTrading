@@ -40,54 +40,36 @@ public class PaymentServiceImpl implements IPaymentService {
 
     @Override
     public Boolean checkCardInfos(CreatePaymentRequest createPaymentRequest, Cards cards) {
-        // Kart numarası ve CVV kontrolü
+        // Kart bilgisi kontrolü
         boolean isCardNumberValid = createPaymentRequest.getCardNumber().equals(cards.getCardNumber());
         boolean isCvvValid = createPaymentRequest.getCvv().equals(cards.getCvv());
         boolean isFullnameValid = createPaymentRequest.getFullName().equals(cards.getFullName());
         boolean isExpiryValid = createPaymentRequest.getExpiryDate().equals(cards.getExpiryDate());
 
-
-        // Tüm koşullar sağlanıyorsa true döndür
         return isCardNumberValid && isCvvValid && isExpiryValid && isFullnameValid;
     }
 
 
-
     /**
      * Ödeme başarılı ise transactiona aktarılır
-     * @param createPaymentRequest
-     * @return
-     */
-    /**
-     * Ödeme başarılı ise transactiona aktarılır.
-     *
-     * @param createPaymentRequest Ödeme talebi.
-     * @return Ödeme yanıtı.
      */
     @Override
     @Transactional
-    public PaymentResponse createPayment(CreatePaymentRequest createPaymentRequest) {
+    public void createPayment(CreatePaymentRequest createPaymentRequest) {
         log.info("create payment request {}",createPaymentRequest);
         log.info("Creating payment for list: {}", createPaymentRequest.getListId());
 
-        // Kart bilgilerini veri tabanından getir
         Cards cards = cardsRepository.findByCardNumber(createPaymentRequest.getCardNumber())
                 .orElseThrow(() -> new TransactionException(ErrorType.CARD_NOT_FOUND));
 
-        // Kart bilgilerini doğrula
+
         if (!(checkCardInfos(createPaymentRequest, cards))) {
             log.error("Card information is invalid for card: {}", cards.getCardNumber());
             throw new TransactionException(ErrorType.INVALID_CARD_INFO);
         }
 
-        // Bakiye kontrolü
         if (cards.getBalance() < createPaymentRequest.getAmount()) {
             log.warn("Insufficient balance for card: {}", cards.getCardNumber());
-
-            // Başarısız ödeme kaydı
-            Payment failedPayment = paymentMapper.requestToPayment(createPaymentRequest);
-            failedPayment.setStatus(PaymentStatus.FAILED);
-            paymentRepository.save(failedPayment);
 
             throw new TransactionException(ErrorType.INSUFFICIENT_BALANCE);
         }
@@ -96,31 +78,35 @@ public class PaymentServiceImpl implements IPaymentService {
         cards.setBalance(cards.getBalance() - createPaymentRequest.getAmount());
         cardsRepository.save(cards);
 
-        // Başarılı ödeme kaydı
-        Payment successfulPayment = paymentMapper.requestToPayment(createPaymentRequest);
-        successfulPayment.setStatus(PaymentStatus.SUCCESS);
-        successfulPayment.setPaymentDate(LocalDateTime.now());
-        if(createPaymentRequest.getListType().equals(ListType.SALE)){
-            SalesRequest salesRequest = SalesRequest.builder()
-                            .offererId(createPaymentRequest.getUserId())
-                                    .listId(createPaymentRequest.getListId()).build();
-            listManager.processSales(salesRequest);
-            log.info("sale processing requested {}", salesRequest);
+        for (String listId : createPaymentRequest.getListId()) {
+            Double listPrice = listManager.getListPrice(listId).getBody();
 
+            // Ödemeyi transaction servisine aktar
+            TakePaymentRequest takePaymentRequest = TakePaymentRequest.builder()
+                    .amount(listPrice)
+                    .listId(listId)
+                    .userId(createPaymentRequest.getUserId())
+                    .build();
+
+            transactionService.takePayment(takePaymentRequest);
+
+            Payment successfulPayment = paymentMapper.requestToPayment(createPaymentRequest);
+            successfulPayment.setStatus(PaymentStatus.SUCCESS);
+            successfulPayment.setPaymentDate(LocalDateTime.now());
+            if (createPaymentRequest.getListType().equals(ListType.SALE)) {
+                SalesRequest salesRequest = SalesRequest.builder()
+                        .offererId(createPaymentRequest.getUserId())
+                        .listId(listId).build();
+                listManager.processSales(salesRequest);
+                log.info("sale processing requested {}", salesRequest);
+
+            }
+            paymentRepository.save(successfulPayment);
+            cards.setBalance(cards.getBalance() - createPaymentRequest.getAmount());
+            cardsRepository.save(cards);
         }
-        // Ödemeyi transaction servisine aktar
-        TakePaymentRequest takePaymentRequest = TakePaymentRequest.builder()
-                .amount(createPaymentRequest.getAmount())
-                .listId(createPaymentRequest.getListId())
-                .userId(createPaymentRequest.getUserId())
-                .build();
-
-        transactionService.takePayment(takePaymentRequest);
-
-        // Ödemeyi kaydet ve yanıt döndür
-        Payment savedPayment = paymentRepository.save(successfulPayment);
-        return paymentMapper.paymentToResponse(savedPayment);
     }
+
     @Override
     public List<PaymentResponse> getAllPayments() {
         List<Payment> payments = paymentRepository.findAll();

@@ -13,12 +13,14 @@ public class PaymentMapper {
                 .status(payment.getStatus())
                 .senderCardNumber(payment.getSenderCardNumber()).build();
     }
-    public Payment requestToPayment(CreatePaymentRequest createPaymentRequest){
+    public Payment requestToPayment(CreatePaymentRequest createPaymentRequest) {
         return Payment.builder()
-                .listId(createPaymentRequest.getListId())
+                .listId(String.join(",", createPaymentRequest.getListId()))
                 .senderCardNumber(createPaymentRequest.getCardNumber())
-                .amount(createPaymentRequest.getAmount()).build();
+                .amount(createPaymentRequest.getAmount())
+                .build();
     }
+
 
 
 }

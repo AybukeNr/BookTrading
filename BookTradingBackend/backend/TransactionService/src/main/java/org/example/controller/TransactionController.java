@@ -85,10 +85,11 @@ public class TransactionController {
 
     @Operation(summary = "Take payment", description = "Processes payment collection for a transaction.")
     @PutMapping(TAKE_PAYMENT)
-    public ResponseEntity<TransactionResponse> takePayment(
+    public ResponseEntity<Void> takePayment(
             @Parameter(description = "Request body containing payment collection details", required = true)
             @RequestBody TakePaymentRequest takePaymentRequest) {
-        return ResponseEntity.ok(transactionService.takePayment(takePaymentRequest));
+        transactionService.takePayment(takePaymentRequest);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Transfer all funds", description = "Transfers the entire amount to the specified party.")
@@ -112,8 +113,8 @@ public class TransactionController {
     }
 
     @GetMapping("/{bookId}")
-    public ResponseEntity<Double> getTrustFee(@PathVariable String bookId) {
-        Double trustFee =transactionServiceImpl.calculateTrustFeee(bookId);
+    public ResponseEntity<Double> getTrustFee(@PathVariable Long bookId) {
+        Double trustFee =transactionService.calculateTrustFee(bookId);
         return ResponseEntity.ok(trustFee);
     }
 }

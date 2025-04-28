@@ -14,11 +14,11 @@ import org.example.exception.ListException;
 import org.example.external.*;
 import org.example.mapper.ListsMapper;
 import org.example.repository.ListsRepository;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -256,6 +256,7 @@ public class ListsService {
                 .listType(list.getType())
                 .ownerId(list.getOwnerId())
                 .offererId(targetOffer.getOffererId())
+                .price(list.getPrice())
                 .build();
         TransactionResponse response = transactionManager.createTransaction(transactionRequest).getBody();
         log.info("Transaction created {}",response);
@@ -330,4 +331,8 @@ public class ListsService {
         return true;
     }
     //81
+
+    public Double getListPrice(String listId){
+        return listsRepository.findPriceById(listId);
+    }
 }

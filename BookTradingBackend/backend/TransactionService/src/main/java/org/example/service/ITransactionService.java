@@ -20,14 +20,13 @@ public interface ITransactionService {
 
     public TransactionResponse getTransaction(String transactionId);
 
-    public TransactionResponse takePayment(TakePaymentRequest takePaymentRequest);
+    public void takePayment(TakePaymentRequest takePaymentRequest);
 
     public void checkTransactionStatus();
+
     public Boolean setTransactionStatus(String id, String status);
 
-    public Double calculateTrustFee();
-
-
+    public Double calculateTrustFee(Long bookId);
 
     public TransactionResponse refundBothParties(ExchangeComplatedRequest exchangeComplatedRequest);
 
@@ -38,6 +37,8 @@ public interface ITransactionService {
     public boolean isDeadlineExceeded(Transactions transaction);
 
     public Boolean createAccount(AccountRequest accountRequest);
+
+
 
 
 
