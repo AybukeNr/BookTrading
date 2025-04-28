@@ -31,7 +31,7 @@ public class Lists {
     private ListBookResponse bookInfo;
     private ListsStatus status;
     private ListType type;
-    private BigDecimal price;
+    private Double price;
     private List<SentOffer> offers;
 
 

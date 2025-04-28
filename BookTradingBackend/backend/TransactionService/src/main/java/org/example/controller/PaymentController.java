@@ -33,7 +33,8 @@ public class PaymentController {
         return new ResponseEntity<>(paymentService.getUsersPayment(userId), HttpStatus.OK);
     }
     @PostMapping(CREATE_PAYMENT)
-    public ResponseEntity<PaymentResponse> createPayment(@RequestBody CreatePaymentRequest createPaymentRequest) {
-        return new ResponseEntity<>(paymentService.createPayment(createPaymentRequest), HttpStatus.CREATED);
+    public ResponseEntity<Void> createPayment(@RequestBody CreatePaymentRequest createPaymentRequest) {
+        paymentService.createPayment(createPaymentRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

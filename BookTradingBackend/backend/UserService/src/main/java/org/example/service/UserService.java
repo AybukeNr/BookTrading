@@ -100,5 +100,14 @@ public class UserService {
         } else return null;
     }
 
+    @Transactional
+    public void reduceUsertrustPoint(String userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            User foundUser = user.get();
+            foundUser.setTrustPoint(user.get().getTrustPoint()-1);
+        }
+    }
+
 
 }

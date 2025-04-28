@@ -16,6 +16,7 @@ import org.example.entity.enums.TransactionType;
 import org.example.exception.ErrorType;
 import org.example.exception.TransactionException;
 import org.example.external.ListManager;
+import org.example.external.UserManager;
 import org.example.mapper.CardMapper;
 import org.example.mapper.PaymentMapper;
 import org.example.mapper.TransactionMapper;
@@ -32,6 +33,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -47,7 +49,8 @@ public class TransactionServiceImpl implements ITransactionService {
     private final ListManager listManager;
     private final TransactionMapper transactionMapper;
     private final AccountRepsoitory accountRepository;
-    private  final LibraryManager libraryManager;
+    private final LibraryManager libraryManager;
+    private final UserManager userManager;
 
 
     @Override
@@ -62,7 +65,6 @@ public class TransactionServiceImpl implements ITransactionService {
 
     }
 
-
     /**
      * her dakika depozitler yatırıldı mı diye kontrol eder
      */
@@ -70,27 +72,21 @@ public class TransactionServiceImpl implements ITransactionService {
     @Override
     //@Scheduled(cron = "*/30 * * * * *")
     public void checkTransactionStatus() {
-        // Devam eden (ONGOING) işlemleri filtrele
+
         List<Transactions> ongoingTransactions = transactionRepository.findAllByStatus(TransactionStatus.ONGOING);
 
-        // Eğer devam eden işlem yoksa işlem yapılmaz
         if (!ongoingTransactions.isEmpty()) {
             log.info("ONGOING Transactions are checking.");
 
-
-            // Thread havuzu oluştur (örnek: 10 thread)
             ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-            // Paralel işlem için her bir transaction'ı ayrı bir thread'de çalıştır
             List<Transactions> transactionsToUpdate = ongoingTransactions.parallelStream().map(transaction -> {
                 executorService.submit(() -> processTransaction(transaction));
                 return transaction;
             }).toList();
 
-            // Thread havuzunu kapat
             executorService.shutdown();
 
-            // Güncellemeleri toplu olarak kaydet
             transactionRepository.saveAll(transactionsToUpdate);
             log.info("Batch update completed for {} transactions.", transactionsToUpdate.size());
         }
@@ -108,11 +104,7 @@ public class TransactionServiceImpl implements ITransactionService {
     }
 
     @Override
-    public Double calculateTrustFee() {
-        return 0.0;
-    }
-
-    public Double calculateTrustFeee(String bookId) {
+    public Double calculateTrustFee(Long bookId) {
         // Kitap durumunu alıyoruz
         String bookCondition = libraryManager.getBookCondition(bookId);
 
@@ -167,7 +159,7 @@ public class TransactionServiceImpl implements ITransactionService {
                 transactionMailReq.setOffererId(transaction.getOffererId());
                 transactionMailReq.setOwnerId(transaction.getOwnerId());
                 transactionMailReq.setTrustFee(0.0);
-                sendComplatedMail(transactionMailReq);
+                //sendComplatedMail(transactionMailReq);
             }
         } catch (Exception e) {
             log.error("Error processing transaction {}: {}", transaction.getTransactionId(), e.getMessage());
@@ -258,7 +250,6 @@ public class TransactionServiceImpl implements ITransactionService {
                 .listingId(transactions.getListId()).build();
         listManager.updateListStatus(updateListReq);
         log.info("Update List Request: {}", updateListReq);
-
         log.info("Payment Finalize process completed for transaction: {}", transactions.getTransactionId());
         return transactionMapper.transactionToResponse(transactions);
     }
@@ -283,6 +274,7 @@ public class TransactionServiceImpl implements ITransactionService {
                 .listingId(transactions.getListId()).build();
         listManager.updateListStatus(updateListReq);
         log.info("Update List Request: {}", updateListReq);
+        userManager.reduceTrustPoint(transferAllReq.getTransferUserId().equals(transactions.getOwnerId()) ? transactions.getOffererId() : transactions.getOwnerId());
         return transactionMapper.transactionToResponse(transactions);
     }
 
@@ -309,7 +301,7 @@ public class TransactionServiceImpl implements ITransactionService {
 
     @Override
     @Transactional
-    public TransactionResponse takePayment(TakePaymentRequest takePaymentRequest) {
+    public void takePayment(TakePaymentRequest takePaymentRequest) {
         Transactions transactions = transactionRepository.findByListId(takePaymentRequest.getListId())//.filter(t -> t.getStatus().equals(TransactionStatus.ONGOING))
                 .orElseThrow(()-> new TransactionException(ErrorType.LIST_NOT_FOUND));
         if(Objects.equals(transactions.getOwnerId(), takePaymentRequest.getUserId())) {
@@ -321,8 +313,6 @@ public class TransactionServiceImpl implements ITransactionService {
                 .listingId(transactions.getListId()).build();
         listManager.updateListStatus(updateListReq);
         log.info("Update List Request: {}", updateListReq);
-
-        return transactionMapper.transactionToResponse(transactions);
     }
 
     @Override
@@ -339,9 +329,12 @@ public class TransactionServiceImpl implements ITransactionService {
         if(transactionRequest.getListType() == ListType.EXCHANGE){
             transactions.setTransactionType(TransactionType.EXCHANGE);
             transactions.setOwnerDeposit(0.0);
+            transactions.setTrustFee(calculateTrustFee(transactionRequest.getBookId()));// her iki tarafında ödeyeceği güvence bedeli
+            transactions.setTrustFee(calculateTrustFee(transactionRequest.getBookId()));
         }
         else{
             transactions.setTransactionType(TransactionType.SALE);
+            transactions.setTrustFee(listManager.getListPrice(transactionRequest.getListId()).getBody());
         }
         transactions.setStatus(TransactionStatus.ONGOING);
         transactions.setDeadline(LocalDateTime.now().plusMinutes(5));

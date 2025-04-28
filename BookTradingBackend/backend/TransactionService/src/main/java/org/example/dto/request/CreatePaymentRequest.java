@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.dto.response.enums.ListType;
 
+import java.util.List;
 
 
 @Data
@@ -12,7 +13,7 @@ import org.example.dto.response.enums.ListType;
 @NoArgsConstructor
 public class CreatePaymentRequest {
 
-    private String listId;
+    private List<String> listId;
     private ListType listType;
     private String userId;
     private String fullName;

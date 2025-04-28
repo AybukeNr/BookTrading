@@ -19,6 +19,6 @@ public class ListRequest {
     private String ownerId;
     private ListBookResponse bookInfo;
     private ListType type;
-    private BigDecimal price;
+    private Double price;
 
 }

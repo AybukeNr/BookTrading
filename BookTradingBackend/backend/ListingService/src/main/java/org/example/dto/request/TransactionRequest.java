@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entity.enums.ListType;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,5 +18,6 @@ public class TransactionRequest {
     private ListType listType;
     private String ownerId; // İlk tarafın kullanıcı ID'si
     private String offererId; // Karşı tarafın kullanıcı ID'si
+    private Double price;
 
 }

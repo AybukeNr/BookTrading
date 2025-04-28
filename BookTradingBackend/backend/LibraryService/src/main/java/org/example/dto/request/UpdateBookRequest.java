@@ -12,4 +12,5 @@ public class UpdateBookRequest {
     private String publishedDate;
     private String image;
     private BookCategory category;
+    private String description;
 }

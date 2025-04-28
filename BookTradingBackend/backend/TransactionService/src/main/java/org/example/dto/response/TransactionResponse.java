@@ -22,6 +22,7 @@ public class TransactionResponse {
     private String transactionId;
     private Double ownerDeposit; // Göndericinin yatırdığı güvence bedeli
     private Double offererDeposit; // Alıcının yatırdığı güvence bedeli
+    private Double trustFee;
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
     @Enumerated(EnumType.STRING)

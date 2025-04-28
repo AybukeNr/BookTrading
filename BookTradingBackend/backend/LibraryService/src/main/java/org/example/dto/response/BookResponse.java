@@ -19,7 +19,8 @@ public class BookResponse {
     private String publishedDate;
     private String image;
     private BookCategory category;
-    private Long id;
+    private String pk;
     private BookStatus status;
+    private String description;
 
 }
