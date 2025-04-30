@@ -3,19 +3,29 @@ import '../Home/Home.css'
 import Product from '../Product/Product'
 import Slider from "react-slick";
 import { useStateValue } from '../StateProvider';
+import { instanceLibrary } from '../axios';
 // import axios from '../axios';
 
 function Home() {
     const [{ bookList, selectedCategory, searchedBooks, searchQuery }, dispatch] = useStateValue();
     // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
+    // const [error, setError] = useState('');
 
     // useEffect(() => {
     //     const fetchBooks = async () => {
+    //         setLoading(true);
+    //         setError('');
     //         try {
-    //             const response = await axios.get('http://localhost:9090/api/v1/books');
-    //             dispatch({ type: "SET_BOOK_LIST", books: response.data });
-    //             dispatch({ type: "SET_SEARCHED_BOOKS", books: response.data });
+    //             const response = await instanceLibrary.get('/getAllBooks');
+
+    //             dispatch({ 
+    //                 type: "SET_BOOK_LIST", 
+    //                 books: response.data 
+    //             });
+    //             dispatch({ 
+    //                 type: "SET_SEARCHED_BOOKS", 
+    //                 books: response.data 
+    //             });
     //         } catch (err) {
     //             setError('Kitaplar yüklenirken bir hata oluştu.');
     //         } finally {
@@ -27,7 +37,10 @@ function Home() {
 
 
     useEffect(() => {
-        dispatch({ type: "SET_SEARCHED_BOOKS", books: bookList });
+        dispatch({ 
+            type: "SET_SEARCHED_BOOKS", 
+            books: bookList 
+        });
     }, [bookList, dispatch]);
 
     const settings = {
@@ -94,6 +107,7 @@ function Home() {
                             publisher={book.publisher}
                             publishedDate={book.publishedDate}
                             category={book.category}
+                            description={book.description}
                             price={book.price}
                             image={book.image}
                         />
@@ -101,7 +115,7 @@ function Home() {
                         <p>Sonuç bulunamadı.</p>
                     )}
                 </div>
-
+                {/* )} */}
 
             </div>
         </div>

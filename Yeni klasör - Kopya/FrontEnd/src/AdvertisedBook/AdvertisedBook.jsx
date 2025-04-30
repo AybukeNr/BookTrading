@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import '../AdvertisedBook/AdvertisedBook.css'
-import { useLocation } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 import { instanceListing } from '../axios';
 import { getAuthToken } from '../auth';

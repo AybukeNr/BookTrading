@@ -20,6 +20,8 @@ function CheckoutProduct({id, image, title, author, isbn, publisher, publishedDa
         <div className='checkoutProduct_info'>
             <p className='checkoutProduct_name'>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}</p>
 
+            <p className='checkoutProduct_description'>{description}</p>
+
             <p className='checkoutProduct_price'>
                 <small>₺</small>
                 <strong>{price}</strong>

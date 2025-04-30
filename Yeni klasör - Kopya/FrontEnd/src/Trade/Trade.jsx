@@ -29,7 +29,7 @@ function Trade() {
           <div className="trade_items">
             <div className="sendBook">
               <h4>Gönderilecek Kitap</h4>
-              {/* {offerSent.map(item => (
+              {/* {sentOffer.map(item => (
                 <div className="offer_info" key={item.index}>
                   <img src={item.image} alt={item.title} />
                   <div>
@@ -39,13 +39,14 @@ function Trade() {
                     <p>Yayın Tarihi: {item.publishedDate}</p>
                     <p>ISBN: {item.isbn}</p>
                     <p>Kategori: {item.category}</p>
+                    <p>Açıklama: {item.description}</p>
                   </div>
                 </div>
               ))} */}
             </div>
             <div className="receiveBook">
               <h4>Alınacak Kitap</h4>
-              {offerReceive.map((item, index) => (
+              {receiveOffer.map((item, index) => (
                 <div className="offer_info" key={index}>
                   <img src={item.image} alt={item.title} />
                   <div>
@@ -55,6 +56,7 @@ function Trade() {
                     <p>Yayın Tarihi: {item.publishedDate}</p>
                     <p>ISBN: {item.isbn}</p>
                     <p>Kategori: {item.category}</p>
+                    <p>Açıklama: {item.description}</p>
                   </div>
                 </div>
               ))}

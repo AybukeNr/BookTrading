@@ -30,6 +30,7 @@ function BookDetails() {
                     publisher: bookDetail.publisher,
                     publishedDate: bookDetail.publishedDate,
                     category: bookDetail.category,
+                    description: bookDetail.description,
                     image: bookDetail.image,
                     price: bookDetail.price
                 }
@@ -71,6 +72,7 @@ function BookDetails() {
                         <p><strong>Yayınevi: </strong>{bookDetail.publisher}</p>
                         <p><strong>Yayın Tarihi: </strong>{bookDetail.publishedDate}</p>
                         <p><strong>Kategori: </strong>{bookDetail.category}</p>
+                        <p><strong>Açıklama: </strong>{bookDetail.description}</p>
                         <p><strong>Fiyat: </strong>{bookDetail.price ? `${bookDetail.price}` : 'Takasa Açık'}</p>
                     </div>
                 </div>

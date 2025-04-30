@@ -85,6 +85,7 @@ function Payment() {
                                 publisher={item.publisher}
                                 publishedDate={item.publishedDate}
                                 category={item.category}
+                                description={item.description}
                                 image={item.image}
                                 price={item.price}
                             />

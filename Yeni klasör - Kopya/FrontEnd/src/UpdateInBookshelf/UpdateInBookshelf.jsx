@@ -17,6 +17,7 @@ function UpdateInBookshelf() {
     const [publisher, setPublisher] = useState('');
     const [publishedDate, setPublishedDate] = useState('');
     const [category, setCategory] = useState('');
+    const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -37,6 +38,7 @@ function UpdateInBookshelf() {
                     setIsbn(book.isbn || '');
                     setPublisher(book.publisher || '');
                     setPublishedDate(book.publishedDate || '');
+                    setDescription(book.description || '');
                     setCategory(book.category || '');
                     setImage(book.image || '');
                 })
@@ -52,7 +54,7 @@ function UpdateInBookshelf() {
     }, [bookId]);
 
     const handleUpdateBook = async () => {
-        if (!title || !author || !isbn || !publisher || !publishedDate || !category || !image) {
+        if (!title || !author || !isbn || !publisher || !publishedDate || !description || !category || !image) {
             setError('Lütfen tüm alanları düzgünce doldurun!');
             return;
         }
@@ -88,6 +90,7 @@ function UpdateInBookshelf() {
                 isbn,
                 publisher,
                 publishedDate,
+                description,
                 category,
                 image: imageUrl || image,
             };
@@ -138,6 +141,9 @@ function UpdateInBookshelf() {
 
                 <h5>Kitap Yayın Tarihi:</h5>
                 <input type="text" placeholder="Kitabın yayın yılını giriniz" value={publishedDate} onChange={(e) => setPublishedDate(e.target.value)} />
+
+                <h5>Kitap Açıklaması:</h5>
+                <input type="text" placeholder="Kitabın açıklamasını giriniz" value={description} onChange={(e) => setDescription(e.target.value)} />                
 
                 <h5>Kitap Kategorisi Seçiniz:</h5>
                 <div className='book_category'>

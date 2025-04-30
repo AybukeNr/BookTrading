@@ -15,6 +15,7 @@ function SoldBooks() {
           <p>Yayın Tarihi: </p>
           <p>ISBN: </p>
           <p>Kategori: </p>
+          <p>Açıklama: </p>
           <p>Fiyatı: </p>
         </div>
       </div>

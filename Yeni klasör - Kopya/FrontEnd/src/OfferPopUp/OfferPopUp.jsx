@@ -21,10 +21,12 @@ function OfferPopUp({ onClose }) {
         type: 'ADD_TO_OFFER_SENT',
         item: {
           ...bookToSend,
-          status: 'sent',
+          status: 'GONDERILDI',
         },
       });
       navigate('/myOffers');
+    } else {
+      alert("Lütfen teklif göndermek için bir kitap seçin!");
     }
   }
 
@@ -55,7 +57,8 @@ function OfferPopUp({ onClose }) {
               <p>Yazar: {item.book.author}</p>
               <p>Yayınevi: {item.book.publisher}</p>
               <p>Yayın Tarihi: {item.book.publishedDate}</p>
-              <p>Kategori: {item.book.category}</p>
+              <p>Kategori: {item.book.category}</p>              
+              <p>Açıklama: {item.book.description}</p>              
             </div>
           </div>
         ))

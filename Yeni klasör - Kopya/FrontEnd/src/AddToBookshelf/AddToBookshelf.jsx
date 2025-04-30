@@ -65,6 +65,7 @@ function AddToBookshelf() {
                 publisher,
                 publishedDate,
                 category,
+                description,
                 image: imageUrl,
             };
 
@@ -86,6 +87,7 @@ function AddToBookshelf() {
                     setPublishedDate('');
                     setCategory('');
                     setImage('');
+                    setDescription('');
                     setError('');
 
                     setTimeout(() => {
@@ -125,6 +127,9 @@ function AddToBookshelf() {
 
                 <h5>Kitap Yayın Tarihi:</h5>
                 <input type="text" placeholder="Kitabın yayın yılını giriniz" value={publishedDate} onChange={(e) => setPublishedDate(e.target.value)} />
+
+                <h5>Kitap Acıklaması:</h5>
+                <input type="text" placeholder="Kitabın acıklamasını giriniz" value={description} onChange={(e) => setDescription(e.target.value)} />
 
                 <h5>Kitap Kategorisi Seçiniz:</h5>
                 <div className='book_category'>
