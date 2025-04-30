@@ -1,10 +1,8 @@
 import * as yup from 'yup'
 
 export const categories = [
-    "Aile",
     "Bilgisayar",
     "Bilim",
-    "Bilim Kurgu",
     "Biyografi",
     "Çizgi Roman",
     "Din",
