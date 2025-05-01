@@ -17,6 +17,7 @@ import BookDetails from '../src/BookDetails/BookDetails'
 import UserDetails from '../src/UserDetails/UserDetails'
 import Trade from '../src/Trade/Trade'
 import Admin from '../src/Admin/Admin'
+import Search from '../src/Search/Search'
 import { Routes, Route } from 'react-router-dom'
 import { useStateValue } from './StateProvider'
 import { useEffect } from 'react'
@@ -132,6 +133,13 @@ function App() {
         } />
         <Route path='/register' element={
           <Register />
+        } />
+
+        <Route path='/search' element={
+          <>
+            <Header />
+            <Search />
+          </>
         } />
 
         <Route path='/bookDetails' element={

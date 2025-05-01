@@ -107,7 +107,7 @@ function Offers() {
         publisher: item.publisher,
         publishedDate: item.publishedDate,
         category: item.category,
-        description: item.description,
+        // description: item.description,
         image: item.image,
         price: item.price,
         fromOffers: true
@@ -170,7 +170,7 @@ function Offers() {
                 <p><strong>Yayın Tarihi: </strong>{item.book.publishedDate}</p>
                 <p><strong>ISBN: </strong> {item.book.isbn}</p>
                 <p><strong>Kategori: </strong>{item.book.category}</p>
-                <p><strong>Açıklama: </strong>{item.book.description}</p>
+                {/* <p><strong>Açıklama: </strong>{item.book.description}</p> */}
               </div>
               <div className='accept_callback' style={{ fontSize: "14px" }}>
                 {item.offerStatus === "KABUL" ? (
@@ -201,7 +201,7 @@ function Offers() {
                 <p><strong>Yayın Tarihi: </strong>{item.publishedDate}</p>
                 <p><strong>ISBN: </strong>{item.isbn}</p>
                 <p><strong>Kategori: </strong>{item.category}</p>
-                <p><strong>Açıklama: </strong>{item.description}</p>
+                {/* <p><strong>Açıklama: </strong>{item.description}</p> */}
               </div>
               <div className='receive_buttons'>
                 <button onClick={() => acceptOffer(item.offerId, item.offererId, item.offerListId)}>Teklifi kabul et</button>

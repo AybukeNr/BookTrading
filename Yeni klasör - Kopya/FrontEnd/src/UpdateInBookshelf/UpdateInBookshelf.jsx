@@ -17,7 +17,7 @@ function UpdateInBookshelf() {
     const [publisher, setPublisher] = useState('');
     const [publishedDate, setPublishedDate] = useState('');
     const [category, setCategory] = useState('');
-    const [description, setDescription] = useState('');
+    // const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -38,7 +38,7 @@ function UpdateInBookshelf() {
                     setIsbn(book.isbn || '');
                     setPublisher(book.publisher || '');
                     setPublishedDate(book.publishedDate || '');
-                    setDescription(book.description || '');
+                    // setDescription(book.description || '');
                     setCategory(book.category || '');
                     setImage(book.image || '');
                 })
@@ -54,7 +54,7 @@ function UpdateInBookshelf() {
     }, [bookId]);
 
     const handleUpdateBook = async () => {
-        if (!title || !author || !isbn || !publisher || !publishedDate || !description || !category || !image) {
+        if (!title || !author || !isbn || !publisher || !publishedDate || !category || !image) {
             setError('Lütfen tüm alanları düzgünce doldurun!');
             return;
         }
@@ -90,7 +90,7 @@ function UpdateInBookshelf() {
                 isbn,
                 publisher,
                 publishedDate,
-                description,
+                // description,
                 category,
                 image: imageUrl || image,
             };
@@ -142,7 +142,7 @@ function UpdateInBookshelf() {
                 <h5>Kitap Yayın Tarihi:</h5>
                 <input type="text" placeholder="Kitabın yayın yılını giriniz" value={publishedDate} onChange={(e) => setPublishedDate(e.target.value)} />
 
-                <h5>Kitap Açıklaması:</h5>
+                {/* <h5>Kitap Açıklaması:</h5>
                 <input type="text" placeholder="Kitabın açıklamasını giriniz" value={description} onChange={(e) => setDescription(e.target.value)} />                
 
                 <h5>Kitap Kategorisi Seçiniz:</h5>
@@ -167,6 +167,34 @@ function UpdateInBookshelf() {
                         <option value="Sports">Spor</option>
                         <option value="History">Tarih</option>
                         <option value="Cooking">Yemek Pişirme</option>
+                    </select>
+                </div> */}
+
+                <h5>Kitap Kategorisi Seçiniz:</h5>
+                <div className='book_category'>
+                    <select id="category" value={category} onChange={(e) => setCategory(e.target.value)}>
+                        <option value="">Bir kategori seçin</option>
+                        <option value="Aile">Aile</option>
+                        <option value="Bilgisayar">Bilgisayar</option>
+                        <option value="Bilim">Bilim</option>
+                        <option value="BilimKurgu">Bilim Kurgu</option>
+                        <option value="Biyografi">Biyografi</option>
+                        <option value="CizgiRoman">Çizgi Roman</option>
+                        <option value="Din">Din</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Eğitim">Eğitim</option>
+                        <option value="Felsefe">Felsefe</option>
+                        <option value="GençlikKurgu">Gençlik Kurgu</option>
+                        <option value="İs">İş</option>
+                        <option value="KişiselGelişim">Kişisel Gelişim</option>
+                        <option value="Kurgu">Kurgu</option>
+                        <option value="Psikoloji">Psikoloji</option>
+                        <option value="Şiir">Şiir</option>
+                        <option value="SiyasetBilimi">Siyaset Bilimi</option>
+                        <option value="SosyalBilimler">Sosyal Bilimler</option>
+                        <option value="Spor">Spor</option>
+                        <option value="Tarih">Tarih</option>
+                        <option value="YemekPisirme">Yemek Pişirme</option>
                     </select>
                 </div>
 

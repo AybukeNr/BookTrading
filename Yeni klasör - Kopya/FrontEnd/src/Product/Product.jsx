@@ -25,7 +25,7 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
         publisher: publisher,
         publishedDate: publishedDate,
         category: category,
-        description: description,
+        // description: description,
         image: image,
         price: price
       }
@@ -42,7 +42,7 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
         publisher,
         publishedDate,
         category,
-        description,
+        // description,
         image,
         price
       }
@@ -75,7 +75,7 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
         <div className="product_info">
           <p onClick={handleNavigate}>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}</p>
           <p onClick={() => navigate("/userDetails")}>Ad Soyad <Rating className='rating' /> </p>
-          <p onClick={handleNavigate}>{description}</p>
+          {/* <p onClick={handleNavigate}>{description}</p> */}
 
           {price ? (
             <p className='product_price' onClick={handleNavigate}>
@@ -101,7 +101,7 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
           <div className="popUp">
             <div className="popUp_inner" ref={popUpRef}>
               <h2>Takas için kitap seç</h2>
-              <OfferPopUp onClose={offerPopUp} />
+              <OfferPopUp onClose={offerPopUp}/>
               <div>
                 <button onClick={offerPopUp}>İptal</button>
               </div>

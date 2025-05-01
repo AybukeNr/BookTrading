@@ -5,8 +5,7 @@ import { instanceListing } from '../axios';
 import { getAuthToken } from '../auth';
 
 function AdvertisedBook() {
-    const [{ advertisedBook }, dispatch] = useStateValue();
-    // const [advertisedBooks, setAdvertisedBooks] = useState([]);
+    const [{ advertisedBook, adUpdated }, dispatch] = useStateValue();
 
     const ownerId = localStorage.getItem('userId');
 
@@ -23,7 +22,6 @@ function AdvertisedBook() {
                         Authorization: `Bearer ${getAuthToken()}`,
                     },
                 });
-                // setAdvertisedBooks(response.data);
 
                 console.log("Gelen ilan verileri:", response.data);
 
@@ -31,15 +29,21 @@ function AdvertisedBook() {
                     type: 'SET_AD_BOOKS',
                     advertisedBook: response.data,
                 });
+
+                dispatch({
+                    type: 'SET_AD_UPDATED',
+                    payload: false,
+                });
+
             } catch (error) {
                 console.error("İlanlar yüklenirken hata oluştu:", error);
             }
         };
 
-        if (location.state?.updated || advertisedBook.length === 0) {
+        if (adUpdated || advertisedBook.length === 0) {
             fetchAdvertisedBooks();
         }
-    }, [ownerId, location.state]);
+    }, [ownerId, adUpdated]);
 
     useEffect(() => {
         console.log("Redux state güncellendi (takip):", advertisedBook);
@@ -80,6 +84,7 @@ function AdvertisedBook() {
                                 <p>Yayınevi: {item.book.publisher}</p>
                                 <p>Yayın Tarihi: {item.book.publishedDate}</p>
                                 <p>Kategori: {item.book.category}</p>
+                                {/* <p>Açıklama: {item.book.description}</p> */}
                                 <p>Değeri: {item.type === 'SALE' && item.price ? `${item.price} ₺` : item.type === 'EXCHANGE' ? 'Takasa Açık' : 'Hatalı değer'}</p>
                             </div>
                             <button onClick={() => { console.log("Butona tıklandı"); removeFromAd(item.listId)}} >İlandan Kaldır</button>

@@ -128,7 +128,12 @@ function Bookshelf() {
                 item: updatedBook,
             });
 
-            navigate("/myAds", { state: updatedBook });
+            dispatch({
+                type: 'SET_AD_UPDATED',
+                payload: true,
+            });
+            navigate("/myAds");
+            
             handleCloseAdDialog();
         } catch (error) {
             console.error("Kitap ilan verilirken hata oluştu:", error);
@@ -157,7 +162,7 @@ function Bookshelf() {
                                 <div className="book_info">
                                     <HighlightOffOutlinedIcon onClick={() => handleOpen(book.id)} className='removeButton' />
                                     <p>{book.isbn}/{book.title}-{book.author}/{book.publisher}-{book.publishedDate}/{book.category}</p>
-                                    <p>{book.description}</p>
+                                    {/* <p>{book.description}</p> */}
 
                                     {/* {book.price ? (
                                         <p className='book_price'>

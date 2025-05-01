@@ -163,7 +163,7 @@ export default function FloatingActionButtonZoom() {
                 <th>Yayınevi</th>
                 <th>Yayın Tarihi</th>
                 <th>Kategori</th>
-                <th>Açıklama</th>
+                {/* <th>Açıklama</th> */}
                 <th>Fiyat/Takas</th>
               </tr>
             </thead>
@@ -179,7 +179,7 @@ export default function FloatingActionButtonZoom() {
                     <td>{adveristedBook.publisher}</td>
                     <td>{adveristedBook.publishedDate}</td>
                     <td>{adveristedBook.category}</td>
-                    <td>{adveristedBook.description}</td>
+                    {/* <td>{adveristedBook.description}</td> */}
                     <td>{adveristedBook.price ? `${adveristedBook.price}` : 'Takasa Açık'}</td>
                     <td>
                       <button className='update_ad_button' onClick={() => handleUpdateAdvertisement(adveristedBook.id, adState === 'APPROVED' ? 'PENDING' : 'APPROVED')}>{adState === 'APPROVED' ? "İlanı Onayla" : "Onaydan Kaldır"}</button>

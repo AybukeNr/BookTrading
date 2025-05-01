@@ -56,7 +56,7 @@ function Trade() {
                     <p>Yayın Tarihi: {item.publishedDate}</p>
                     <p>ISBN: {item.isbn}</p>
                     <p>Kategori: {item.category}</p>
-                    <p>Açıklama: {item.description}</p>
+                    {/* <p>Açıklama: {item.description}</p> */}
                   </div>
                 </div>
               ))}

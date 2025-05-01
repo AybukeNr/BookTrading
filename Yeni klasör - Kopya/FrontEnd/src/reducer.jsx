@@ -1,12 +1,6 @@
 export const initialState = {
     bookshelf: [],
-    bookList: [
-        { title: 'Nutuk(Özel ciltli)', author: 'Mustafa Kemal Atatürk', isbn: '123', publisher: 'İş Bankası Yayıncılık', publishedDate: '1927', category: 'Tarih', price: 1850, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRXJGIvVqD7poyHq7VGM6hVcnGBRw6tKvsGv-FYam-rSXlmlufSY7H_-ehfRUNKYZ_ods&usqp=CAU' },
-        { title: 'Empati', author: 'Adam Fawer', isbn: '1234', publisher: 'April Yayıncılık', publishedDate: '2007', category: 'Kurgu', price: 200, image: 'https://bunuokudum.com/uploads/images/202208/img_1920x_63053a8a9be0b8-88474876-10950506.jpeg' },
-        { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '12', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
-        { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '14', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', price: 500, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
-        { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '1268', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
-    ],
+    bookList: [],
     searchedBooks: [],
     searchQuery: '',
     selectedCategory: null,
@@ -78,7 +72,7 @@ const reducer = (state, action) => {
                 ...state,
                 selectedCategory: action.category,
             };
-        
+
         case 'SET_BOOK_LIST':
             return {
                 ...state,
@@ -90,6 +84,12 @@ const reducer = (state, action) => {
                 ...state,
                 advertisedBook: action.advertisedBook,
             }
+
+        case 'SET_AD_UPDATED':
+            return {
+                ...state,
+                adUpdated: action.payload,
+            };
 
         case 'ADD_TO_AD':
             return {
@@ -146,7 +146,7 @@ const reducer = (state, action) => {
                 ...state,
                 receivedOffers: [...state.receivedOffers, action.item],
             }
-        
+
         case 'SET_OFFER_SENT':
             return {
                 ...state,
@@ -158,7 +158,7 @@ const reducer = (state, action) => {
                 ...state,
                 receivedOffers: action.payload,
             };
-        
+
         case 'UPDATE_OFFER_STATUS':
             return {
                 ...state,
