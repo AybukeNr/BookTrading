@@ -128,7 +128,12 @@ function Bookshelf() {
                 item: updatedBook,
             });
 
-            navigate("/myAds", { state: updatedBook });
+            dispatch({
+                type: 'SET_AD_UPDATED',
+                payload: true,
+            });
+            navigate("/myAds");
+            
             handleCloseAdDialog();
         } catch (error) {
             console.error("Kitap ilan verilirken hata oluştu:", error);
@@ -148,15 +153,16 @@ function Bookshelf() {
                 {loading && <p>Kitap ekleniyor...</p>}
 
                 <div className="bookshelf_row">
-                    {bookshelf.map((book) => {
+                    {bookshelf.map((book, index) => {
                         // const advertisedIds = new Set(advertisedBook.map(ad => ad.book?.id));
                         // const isAdvertised = advertisedIds.has(book.id);
                         // const isAdvertised = advertisedBook?.some(adBook => adBook.book?.id === book.id);
                         return (
-                            <div className="bookshelf_card" key={book.id}>
+                            <div className="bookshelf_card" key={index}>
                                 <div className="book_info">
                                     <HighlightOffOutlinedIcon onClick={() => handleOpen(book.id)} className='removeButton' />
                                     <p>{book.isbn}/{book.title}-{book.author}/{book.publisher}-{book.publishedDate}/{book.category}</p>
+                                    {/* <p>{book.description}</p> */}
 
                                     {/* {book.price ? (
                                         <p className='book_price'>

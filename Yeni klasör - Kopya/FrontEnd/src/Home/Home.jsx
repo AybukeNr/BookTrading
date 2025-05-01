@@ -3,31 +3,45 @@ import '../Home/Home.css'
 import Product from '../Product/Product'
 import Slider from "react-slick";
 import { useStateValue } from '../StateProvider';
+import { instanceListing } from '../axios';
 // import axios from '../axios';
 
+const ownerId = localStorage.getItem('userId');
 function Home() {
-    const [{ bookList, selectedCategory, searchedBooks, searchQuery }, dispatch] = useStateValue();
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
+    const [{ bookList, selectedCategory }, dispatch] = useStateValue();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
-    // useEffect(() => {
-    //     const fetchBooks = async () => {
-    //         try {
-    //             const response = await axios.get('http://localhost:9090/api/v1/books');
-    //             dispatch({ type: "SET_BOOK_LIST", books: response.data });
-    //             dispatch({ type: "SET_SEARCHED_BOOKS", books: response.data });
-    //         } catch (err) {
-    //             setError('Kitaplar yüklenirken bir hata oluştu.');
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    //     fetchBooks();
-    // }, [dispatch]);
+    useEffect(() => {
+        const fetchBooks = async () => {
+            setLoading(true);
+            setError('');
+            try {
+                const response = await instanceListing.get(`/getListsExcludingOwner?ownerId=${ownerId}`);
+
+                dispatch({
+                    type: "SET_BOOK_LIST",
+                    books: response.data
+                });
+                dispatch({
+                    type: "SET_SEARCHED_BOOKS",
+                    books: response.data
+                });
+            } catch (err) {
+                setError('Kitaplar yüklenirken bir hata oluştu.');
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchBooks();
+    }, [dispatch]);
 
 
     useEffect(() => {
-        dispatch({ type: "SET_SEARCHED_BOOKS", books: bookList });
+        dispatch({
+            type: "SET_SEARCHED_BOOKS",
+            books: bookList
+        });
     }, [bookList, dispatch]);
 
     const settings = {
@@ -56,14 +70,13 @@ function Home() {
         ],
     };
 
-    const filteredBooks = searchQuery.trim() ?
-        searchedBooks : (selectedCategory ?
-            bookList.filter((book) => book.category === selectedCategory) : bookList);
+    const filteredBooks = selectedCategory ?
+        bookList.filter((book) => book.book.category === selectedCategory) : bookList;
 
     return (
         <div className='home'>
             <div className="home_container">
-                {!searchQuery.trim() && (
+                {!selectedCategory && (
                     <div className="home_slider">
                         <Slider {...settings}>
                             <div>
@@ -80,29 +93,41 @@ function Home() {
                 )}
 
                 <h2 className='home_title'>
-                    {searchQuery.trim() ? "Arama Sonuçları" : "Önerilenler"}
+                    {selectedCategory ? (selectedCategory + ' Kategorisi İlanları') : 'İlanlar'}
                 </h2>
 
-                {/* {loading ? <p>Yükleniyor...</p> : error ? <p>{error}</p> : ( */}
-                <div className="home_row">
-                    {filteredBooks.length > 0 ? filteredBooks.map((book, index) => (
-                        <Product
-                            key={index}
-                            title={book.title}
-                            author={book.author}
-                            isbn={book.isbn}
-                            publisher={book.publisher}
-                            publishedDate={book.publishedDate}
-                            category={book.category}
-                            price={book.price}
-                            image={book.image}
-                        />
-                    )) : (
-                        <p>Sonuç bulunamadı.</p>
-                    )}
-                </div>
+                {loading ? <p>Yükleniyor...</p> : error ? <p>{error}</p> : (
+                    <div className="home_row">
+                        {filteredBooks.length > 0 ? filteredBooks.map((book, index) => (
+                            <Product
+                                key={index}
+                                title={book.book.title}
+                                author={book.book.author}
+                                isbn={book.book.isbn}
+                                publisher={book.book.publisher}
+                                publishedDate={book.book.publishedDate}
+                                category={book.book.category}
+                                // description={book.book.description}
+                                price={book.price}
+                                image={book.book.image}
+                            />
+                        )) : (
+                            <p>Sonuç bulunamadı.</p>
+                        )}
+                    </div>
+                )}
 
+                {!selectedCategory && (
+                    <>
+                        <h2 className='home_title'>
+                            Önerilen İlanlar
+                        </h2>
 
+                        <div className="home_row">
+                            {/* öneri sistemi ile gelecek kitaplar */}
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     )

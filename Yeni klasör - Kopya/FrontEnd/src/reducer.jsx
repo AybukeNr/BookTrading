@@ -1,12 +1,6 @@
 export const initialState = {
     bookshelf: [],
-    bookList: [
-        { title: 'Nutuk(Özel ciltli)', author: 'Mustafa Kemal Atatürk', isbn: '123', publisher: 'İş Bankası Yayıncılık', publishedDate: '1927', category: 'Tarih', price: 1850, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRXJGIvVqD7poyHq7VGM6hVcnGBRw6tKvsGv-FYam-rSXlmlufSY7H_-ehfRUNKYZ_ods&usqp=CAU' },
-        { title: 'Empati', author: 'Adam Fawer', isbn: '1234', publisher: 'April Yayıncılık', publishedDate: '2007', category: 'Kurgu', price: 200, image: 'https://bunuokudum.com/uploads/images/202208/img_1920x_63053a8a9be0b8-88474876-10950506.jpeg' },
-        { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '12', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
-        { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '14', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', price: 500, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
-        { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '1268', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
-    ],
+    bookList: [],
     searchedBooks: [],
     searchQuery: '',
     selectedCategory: null,
@@ -16,10 +10,8 @@ export const initialState = {
         { id: 1, title: 'Olasılıksız', author: 'Adam Fawer', isbn: 123, publisher: 'April Yayıncılık', publishedDate: '2005', category: 'Kurgu', price: 800, image: 'https://static.nadirkitap.com/fotograf/1255127/28/Kitap_20220724194404125512711.jpg' },
         { id: 2, title: 'Melekler ve Şeytanlar', author: 'Dan Brown', isbn: 12, publisher: 'Altın Kitaplar', publishedDate: '2005', category: 'Kurgu', image: 'https://s3.cloud.ngn.com.tr/kitantik/images/2023-02-17/1br9qfwle6wpd2u1ly2.jpg' },
     ],
-    offerSent: [],
-    offerReceive: [
-        { title: 'Hesaplaşma', author: 'Atakan Büyükdağ', isbn: '12', publisher: 'Destek Yayınları', publishedDate: '2017', category: 'Tarih', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmczQk_DGGYwPRkGaGlyd3hZ_1zMEB0Veew&s' },
-    ],
+    sentOffers: [],
+    receivedOffers: [],
     basket: [],
     notifications: [
         'Yeni bir mesajınız var.',
@@ -68,6 +60,7 @@ const reducer = (state, action) => {
                 ...state,
                 searchQuery: action.query,
             };
+
         case "SET_SEARCHED_BOOKS":
             return {
                 ...state,
@@ -80,17 +73,30 @@ const reducer = (state, action) => {
                 selectedCategory: action.category,
             };
 
+        case 'SET_BOOK_LIST':
+            return {
+                ...state,
+                bookList: action.books,
+            };
+
         case 'SET_AD_BOOKS':
             return {
                 ...state,
                 advertisedBook: action.advertisedBook,
             }
 
+        case 'SET_AD_UPDATED':
+            return {
+                ...state,
+                adUpdated: action.payload,
+            };
+
         case 'ADD_TO_AD':
             return {
                 ...state,
                 advertisedBook: [...state.advertisedBook, action.item],
             }
+
         case 'REMOVE_FROM_AD':
             return {
                 ...state,
@@ -103,6 +109,7 @@ const reducer = (state, action) => {
                 advertisements: state.advertisements.map((advertisedBook) => advertisedBook.id === action.advertisedBook.id ?
                     { ...advertisedBook, ...action.advertisedBook } : advertisedBook),
             }
+
         case 'SET_BOOKSHELF':
             return {
                 ...state,
@@ -120,6 +127,7 @@ const reducer = (state, action) => {
                 ...state,
                 bookshelf: [...state.bookshelf, action.book],
             };
+
         case 'UPDATE_IN_BOOKSHELF':
             return {
                 ...state,
@@ -130,14 +138,33 @@ const reducer = (state, action) => {
         case 'ADD_TO_OFFER_SENT':
             return {
                 ...state,
-                offerSent: [...state.offerSent, action.item],
+                sentOffers: [...state.sentOffers, action.item],
             };
 
         case 'ADD_TO_OFFER_RECEIVE':
             return {
                 ...state,
-                offerReceive: [...state.offerReceive, action.item],
+                receivedOffers: [...state.receivedOffers, action.item],
             }
+
+        case 'SET_OFFER_SENT':
+            return {
+                ...state,
+                sentOffers: action.payload,
+            };
+
+        case 'SET_OFFER_RECEIVE':
+            return {
+                ...state,
+                receivedOffers: action.payload,
+            };
+
+        case 'UPDATE_OFFER_STATUS':
+            return {
+                ...state,
+                offerSent: state.offerSent.map((offer) => offer.id === action.id ?
+                    { ...offer, status: action.status } : offer),
+            };
 
         case 'SET_USER':
             return {

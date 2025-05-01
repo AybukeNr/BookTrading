@@ -15,6 +15,7 @@ function AddToBookshelf() {
     const [publisher, setPublisher] = useState('');
     const [publishedDate, setPublishedDate] = useState('');
     const [category, setCategory] = useState('');
+    // const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -65,6 +66,7 @@ function AddToBookshelf() {
                 publisher,
                 publishedDate,
                 category,
+                // description,
                 image: imageUrl,
             };
 
@@ -86,6 +88,7 @@ function AddToBookshelf() {
                     setPublishedDate('');
                     setCategory('');
                     setImage('');
+                    // setDescription('');
                     setError('');
 
                     setTimeout(() => {
@@ -125,6 +128,34 @@ function AddToBookshelf() {
 
                 <h5>Kitap Yayın Tarihi:</h5>
                 <input type="text" placeholder="Kitabın yayın yılını giriniz" value={publishedDate} onChange={(e) => setPublishedDate(e.target.value)} />
+
+                {/* <h5>Kitap Açıklaması:</h5>
+                <input type="text" placeholder="Kitabın açıklamasını giriniz" value={description} onChange={(e) => setDescription(e.target.value)} />
+
+                <h5>Kitap Kategorisi Seçiniz:</h5>
+                <div className='book_category'>
+                    <select id="category" value={category} onChange={(e) => setCategory(e.target.value)}>
+                        <option value="">Bir kategori seçin</option>
+                        <option value="Computers">Bilgisayar</option>
+                        <option value="Science">Bilim</option>
+                        <option value="Biography">Biyografi</option>
+                        <option value="Comics">Çizgi Roman</option>
+                        <option value="Din">Din</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Education">Eğitim</option>
+                        <option value="Philosophy">Felsefe</option>
+                        <option value="Juvenile_Ficton">Gençlik Kurgu</option>
+                        <option value="Bussiness">İş</option>
+                        <option value="Self_Help">Kişisel Gelişim</option>
+                        <option value="Ficton">Kurgu</option>
+                        <option value="Pyschology">Psikoloji</option>
+                        <option value="Poetry">Şiir</option>
+                        <option value="Social_Sciences">Sosyal Bilimler</option>
+                        <option value="Sports">Spor</option>
+                        <option value="History">Tarih</option>
+                        <option value="Cooking">Yemek Pişirme</option>
+                    </select>
+                </div> */}
 
                 <h5>Kitap Kategorisi Seçiniz:</h5>
                 <div className='book_category'>

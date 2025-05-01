@@ -27,15 +27,16 @@ import Badge from '@mui/material/Badge';
 function Header() {
     const [{ basket, user, notifications, searchQuery, bookList }, dispatch] = useStateValue();
     const navigate = useNavigate();
-    const [dropdownVisible, setdropdownVisible] = useState(false);
+    const [input, setInput] = useState('');
+    const [dropdownAccVisible, setdropdownAccVisible] = useState(false);
     const [dropdownCatVisible, setdropdownCatVisible] = useState(false);
     const [notificationsVisible, setNotificationsVisible] = useState(false);
     const [hasNotifications, setHasNotifications] = useState(true);
     const notificationRef = useRef(null);
-    const dropdownRef = useRef(null);
+    const dropdownAccRef = useRef(null);
     const dropdownCatRef = useRef(null);
 
-    const handleAuthentication = async() => {
+    const handleAuthentication = async () => {
         if (user) {
             localStorage.removeItem('authToken');
             dispatch({
@@ -48,59 +49,26 @@ function Header() {
         }
     }
 
-    //search
-
-    // const handleSearchChange = async (e) => {
-    //     const query = e.target.value;
-    //     dispatch({ type: 'SET_SEARCH_QUERY', query });
-
-    //     if (!query) {
-    //         dispatch({ type: "SET_SEARCHED_BOOKS", books: bookList });
-    //         return;
-    //     }
-
-    //     try {
-    //         const response = await instance.get(`/books/search?query=${query}`);
-    //         dispatch({ type: "SET_SEARCHED_BOOKS", books: response.data });
-    //     } catch (error) {
-    //         console.error("Arama sırasında hata oluştu", error);
-    //     }
-    // };
-
-    const handleSearchChange = (e) => {
-        dispatch({
-            type: 'SET_SEARCH_QUERY',
-            query: e.target.value,
-        }),
-        searchBooks(e.target.value);
-    };
-
-    const searchBooks = (query) => {
-        if (!query) {
-            dispatch({ type: "SET_SEARCHED_BOOKS", books: bookList });
-            return;
-        }
-    
-        const results = bookList.filter(book =>
-            book.title.toLowerCase().includes(query.toLowerCase()) ||
-            book.author.toLowerCase().includes(query.toLowerCase())
-        );
-    
-        dispatch({ type: "SET_SEARCHED_BOOKS", books: results });
-    };
-    
-    const handleSearchSubmit = (e) => {
+    const handleSearch = (e) => {
         e.preventDefault();
-        if (!searchQuery.trim()) return;
-        searchBooks(searchQuery);
+        dispatch({
+            type: "SET_SEARCH_QUERY",
+            query: input
+        });
+        const results = bookList.filter(book =>
+            book.book.title.toLowerCase().includes(input.toLowerCase())
+        );
+        dispatch({
+            type: "SET_SEARCHED_BOOKS",
+            books: results
+        });
+        navigate("/search");
     };
 
-    //Account dropdown
-    const dropdown = () => {
-        setdropdownVisible(!dropdownVisible);
+    const dropdownAccount = () => {
+        setdropdownAccVisible(!dropdownAccVisible);
     }
 
-    //Category Dropdown
     const dropdownCategory = () => {
         setdropdownCatVisible(!dropdownCatVisible);
     }
@@ -110,9 +78,9 @@ function Header() {
             type: 'SET_SELECTED_CATEGORY',
             category: category,
         });
+        navigate("/");
     }
 
-    //notification
     const toggleNotifications = () => {
         setNotificationsVisible(!notificationsVisible);
         if (hasNotifications) {
@@ -123,8 +91,8 @@ function Header() {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setdropdownVisible(false);
+            if (dropdownAccRef.current && !dropdownAccRef.current.contains(event.target)) {
+                setdropdownAccVisible(false);
             }
             if (dropdownCatRef.current && !dropdownCatRef.current.contains(event.target)) {
                 setdropdownCatVisible(false);
@@ -147,11 +115,11 @@ function Header() {
                 <img className='header_logo' src='https://i.hizliresim.com/obkwl66.png' />
             </Link>
 
-            <form className='header_search' onSubmit={handleSearchSubmit}>
-                <input className='header_searchInput' type='text' placeholder='Aradığınız metni girin.' value={searchQuery} onChange={handleSearchChange} />
-                <SearchIcon className='header_searchIcon' onClick={handleSearchSubmit} />
+            <form className='header_search' onSubmit={handleSearch}>
+                <input className='header_searchInput' type='text' placeholder='Aradığınız metni girin.' value={input}  onChange={(e) => setInput(e.target.value)} />
+                <SearchIcon className='header_searchIcon' type='submit' onClick={handleSearch} />
             </form>
-        
+
             <div className='header_nav'>
                 <Link to={!user && '/login'}>
                     <div onClick={handleAuthentication} className='header_option'>
@@ -163,6 +131,27 @@ function Header() {
                     <span className='header_optionLineTwo'>Kategoriler</span>
                     {dropdownCatVisible && (
                         <div className="dropdown_category">
+                            {/* <ul>
+                                <li onClick={() => handleCategory('Computers')}>Bilgisayar Bilimi</li>
+                                <li onClick={() => handleCategory('Science')}>Bilim</li>
+                                <li onClick={() => handleCategory('Biography')}>Biyografi</li>
+                                <li onClick={() => handleCategory('Comics')}>Çizgi Roman</li>
+                                <li onClick={() => handleCategory('Religion')}>Din</li>
+                                <li onClick={() => handleCategory('Drama')}>Dram</li>
+                                <li onClick={() => handleCategory('Education')}>Eğitim</li>
+                                <li onClick={() => handleCategory('Philosophy')}>Felsefe</li>
+                                <li onClick={() => handleCategory('Juvenile_Ficton')}>Gençlik Kurgu</li>
+                                <li onClick={() => handleCategory('Bussiness')}>İş</li>
+                                <li onClick={() => handleCategory('Self_Help')}>Kişisel Gelişim</li>
+                                <li onClick={() => handleCategory('Ficton')}>Kurgu</li>
+                                <li onClick={() => handleCategory('Pyschology')}>Psikoloji</li>
+                                <li onClick={() => handleCategory('Poetry')}>Şiir</li>
+                                <li onClick={() => handleCategory('Social_Sciences')}>Toplum Bilimi</li>
+                                <li onClick={() => handleCategory('Sports')}>Spor</li>
+                                <li onClick={() => handleCategory('History')}>Tarih</li>
+                                <li onClick={() => handleCategory('Cooking')}>Yemek Pişirme</li>
+                            </ul> */}
+
                             <ul>
                                 <li onClick={() => handleCategory('Aile')}>Aile</li>
                                 <li onClick={() => handleCategory('Bilgisayar')}>Bilgisayar</li>
@@ -184,15 +173,15 @@ function Header() {
                                 <li onClick={() => handleCategory('Spor')}>Spor</li>
                                 <li onClick={() => handleCategory('Tarih')}>Tarih</li>
                                 <li onClick={() => handleCategory('Yemek Pişirme')}>Yemek Pişirme</li>
-
                             </ul>
+
                         </div>
                     )}
                 </div>
 
-                <div className='header_optionAccount' onClick={dropdown} ref={dropdownRef}>
+                <div className='header_optionAccount' onClick={dropdownAccount} ref={dropdownAccRef}>
                     <AccountBoxOutlinedIcon />
-                    {dropdownVisible && (
+                    {dropdownAccVisible && (
                         <div className="dropdown_menu">
                             <ul>
                                 <Link to='/myAccount'><li>Hesap Bilgilerim</li></Link>
