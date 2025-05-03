@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class TransactionRequest {
-
     private Long bookId;
     private String listId;
     private ListType listType;

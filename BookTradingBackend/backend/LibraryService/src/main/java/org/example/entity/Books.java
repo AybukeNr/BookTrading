@@ -21,7 +21,6 @@ public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String pk;
     private String ownerId;
     private String title;
     private String author;
@@ -38,8 +37,6 @@ public class Books {
     private BookStatus status;
     @Enumerated(EnumType.STRING)
     private ListType listType;
-    @Lob
-    @Column(name = "description", columnDefinition = "text")
     private String description;
 
 }

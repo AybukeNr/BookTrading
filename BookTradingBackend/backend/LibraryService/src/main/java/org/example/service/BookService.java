@@ -4,6 +4,7 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.request.*;
 import org.example.dto.response.BookResponse;
+import org.example.dto.response.OfferBookResponse;
 import org.example.entity.Books;
 import org.example.entity.enums.BookCondition;
 import org.example.entity.enums.BookStatus;
@@ -43,6 +44,10 @@ public class BookService {
         return bookMapper.BookToBookResponse(bookRepository.findById(id).orElseThrow(() -> new BookException(ErrorType.BAD_REQUEST_ERROR)));
     }
 
+    public OfferBookResponse getOfferBookById(Long id) {
+        return bookMapper.bookToOfferBookResponse(bookRepository.findById(id).orElseThrow(() -> new BookException(ErrorType.BAD_REQUEST_ERROR)));
+    }
+
     public BookResponse getBookByTitle(String title) {
         Books books = bookRepository.findByTitle(title).orElseThrow(() -> new BookException(ErrorType.BAD_REQUEST_ERROR));
         return bookMapper.BookToBookResponse(books);
@@ -51,7 +56,9 @@ public class BookService {
     public BookResponse createBook(BookRequest bookRequest) {
         Books books = bookMapper.BookResquestToBook(bookRequest);
         log.info("Create book: {}", books);
-        return bookMapper.BookToBookResponse(bookRepository.save(books));
+        log.info("Create book: {}", books.toString());
+        bookRepository.save(books);
+        return bookMapper.BookToBookResponse(books);
 
     }
     public List<BookResponse> createAlotBooks(List<BookRequest> bookRequests) {
@@ -98,19 +105,19 @@ public class BookService {
         bookRepository.save(book);
         return true;
     }
-    public BookResponse updateBook(Long bookId, UpdateBookRequest updateBookRequest) {
+    public BookResponse updateBook(UpdateBookRequest updateBookRequest) {
 
-        Books existingBook = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
+        Books existingBook = bookRepository.findById(updateBookRequest.getId())
+                .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
         bookMapper.updateBookFromRequest(updateBookRequest, existingBook);
         bookRepository.save(existingBook);
         return bookMapper.BookToBookResponse(existingBook);
     }
 
 
-    public void deleteBookById(String pk) {
+    public void deleteBookById(Long id) {
         try {
-            Books existingBook = bookRepository.findOptionalByPk(pk)
+            Books existingBook = bookRepository.findById(id)
                     .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
 
             listManager.deleteAllListsByBookId(existingBook.getId());
@@ -121,7 +128,7 @@ public class BookService {
 
         } catch (Exception e) {
             log.error("Kitap silinirken hata oluştu: {}", e.getMessage(), e);
-            throw new BookException(ErrorType.INTERNAL_SERVER_ERROR); // ya da detaylı kendi exception
+            throw new BookException(ErrorType.INTERNAL_SERVER_ERROR);
         }
     }
     public BookCondition getBookConditionById(Long bookId) {

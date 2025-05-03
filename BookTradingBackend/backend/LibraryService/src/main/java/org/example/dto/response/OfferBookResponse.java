@@ -1,26 +1,23 @@
-package org.example.dto.request;
-
+package org.example.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entity.enums.BookCategory;
-import org.example.entity.enums.BookCondition;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookRequest {
-    private String ownerId;
+@Builder
+public class OfferBookResponse {
     private String title;
     private String author;
     private String isbn;
     private String publisher;
     private String publishedDate;
-    private String image;
     private BookCategory category;
-    private BookCondition condition;
-    private String description;
+    private String image;
+    private Long id;
+
 }

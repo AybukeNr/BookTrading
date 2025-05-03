@@ -1,18 +1,32 @@
 package org.example.dto.response.enums;
 
 public enum BookCategory {
-    KURGU,
-    BİLİM,
-    TARİH,
-    BİYOGRAFİ,
-    FANTEZİ,
-    GİZEM,
-    ROMANTİK,
-    MACERA,
-    GERİLİM,
-    ŞİİR,
-    DRAM,
-    BİLİMKURGU,
-    FELSEFE,
-    KISISEL_GELISIM
+    Fiction("Kurgu"),
+    Science ("Bilim"),
+    History("Tarih"),
+    Biography("Biyografi"),
+    Social_Science("Toplum Bilimi"),
+    Comics("Çizgi Roman"),
+    Business("İş"),
+    Sports("Spor"),
+    Religion("Din"),
+    Poetry("Şiir"),
+    Drama("Dram"),
+    Psychology("Psikoloji"),
+    Philosophy("Felsefe"),
+    Self_Help("Kişisel Gelişim"),
+    Computers("Bilgisayar Bilimi"),
+    Cooking("Yemek"),
+    Education("Eğitim"),
+    Juvenile_Fiction("Gençlik Romanları");
+
+    private final String description;
+
+    BookCategory(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

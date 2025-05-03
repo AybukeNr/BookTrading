@@ -36,7 +36,7 @@ public class ShippingController {
         return ResponseEntity.ok(shippingService.getUsersShippings(userId));
     }
 
-    @Operation(summary = "Create a new shipping", description = "Creates a new shipping record based on the provided details.")
+    @Operation(summary = "Create a new shipping,servisler arası endpoint", description = "Creates a new shipping record based on the provided details.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Shipping created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid input provided")

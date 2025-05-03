@@ -17,6 +17,6 @@ public class ListBookResponse {
     private String publisher;
     private String publishedDate;
     private BookCategory category;
-    private String Image;
-    private Long Id;
+    private String image;
+    private Long id;
 }

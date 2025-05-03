@@ -57,17 +57,15 @@ public class TransactionController {
     }
 
     //servisler arası endpointler,buradan aşağısı
-    @Operation(summary = "Create a new transaction", description = "Creates a new transaction and returns its details.")
+    @Operation(summary = "Create a new transaction,servisler arası endpoint", description = "Creates a new transaction and returns its details.")
     @PostMapping(CREATE_TRANSACTION)
-    public ResponseEntity<TransactionResponse> createTransaction(
-            @Parameter(description = "Request body containing transaction details", required = true)
-            @RequestBody TransactionRequest transactionRequest) {
+    public ResponseEntity<TransactionResponse> createTransaction(@RequestBody TransactionRequest transactionRequest) {
         TransactionResponse response = transactionService.createTransaciton(transactionRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
-    @Operation(summary = "Refund deposits to both parties", description = "Processes refunds for both parties involved in an exchange.")
+    @Operation(summary = "Refund deposits to both parties,servisler arası endpoint", description = "Processes refunds for both parties involved in an exchange.")
     @PutMapping(REFUND_DEPOSITS)
     public ResponseEntity<TransactionResponse> refundBothParties(
             @Parameter(description = "Request body containing exchange completion details", required = true)
@@ -75,7 +73,7 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.refundBothParties(exchangeComplatedRequest));
     }
 
-    @Operation(summary = "Finalize payment", description = "Finalizes the payment for a transaction after an exchange is completed.")
+    @Operation(summary = "Finalize payment,servisler arası endpoint", description = "Finalizes the payment for a transaction after an exchange is completed.")
     @PutMapping(FINALIZE_PAYMENT)
     public ResponseEntity<TransactionResponse> finalizePayment(
             @Parameter(description = "Request body containing exchange completion details", required = true)
@@ -83,7 +81,7 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.finalizePayment(exchangeComplatedRequest));
     }
 
-    @Operation(summary = "Take payment", description = "Processes payment collection for a transaction.")
+    @Operation(summary = "Take payment,servisler arası endpoint", description = "Processes payment collection for a transaction.")
     @PutMapping(TAKE_PAYMENT)
     public ResponseEntity<Void> takePayment(
             @Parameter(description = "Request body containing payment collection details", required = true)
@@ -92,19 +90,21 @@ public class TransactionController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Transfer all funds", description = "Transfers the entire amount to the specified party.")
+    @Operation(summary = "Transfer all funds,servisler arası endpoint", description = "Transfers the entire amount to the specified party.")
     @PutMapping(TRANSFER_ALL)
     public ResponseEntity<TransactionResponse> transferAll(
             @Parameter(description = "Request body containing transfer details", required = true)
             @RequestBody TransferAllReq transferAllReq) {
         return ResponseEntity.ok(transactionService.transferAll(transferAllReq));
     }
+    @Operation(summary = "servisler arası endpoint")
     @PostMapping(CREATE_ACCOUNT)
     public ResponseEntity<Boolean> createAccount(@RequestBody AccountRequest accountRequest){
         log.info("account request {}" ,accountRequest);
         transactionService.createAccount(accountRequest);
         return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
+    @Operation(summary = "servisler arası endpoint")
     @PutMapping(SET_STATUS)
     public ResponseEntity<Boolean> setStatus(@RequestParam String transacId,@RequestParam String status){
         log.info("Transaction {} will be set to : {}" ,transacId,status);

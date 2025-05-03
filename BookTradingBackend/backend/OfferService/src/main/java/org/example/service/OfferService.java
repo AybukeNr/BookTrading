@@ -3,12 +3,13 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.dto.request.UpdateBookStat;
 import org.example.entity.Offer;
 import org.example.entity.enums.OfferStatus;
 import org.example.dto.request.CreateOfferRequest;
 import org.example.dto.request.UpdateOfferRequest;
 import org.example.dto.response.OfferBookResponse;
-import org.example.dto.response.ListResponse;
+import org.example.dto.response.OfferListResponse;
 import org.example.dto.response.SentOffer;
 import org.example.exception.ErrorType;
 import org.example.exception.OfferException;
@@ -34,7 +35,7 @@ public class OfferService {
     @Transactional
     public Offer createOffer(CreateOfferRequest offer) {
         // İlgili listeyi ve kitabı servislerden al
-        ListResponse offerList = getList(offer.getListingId());
+        OfferListResponse offerList = getList(offer.getListingId());
         OfferBookResponse offeredBook = getBook(offer.getOfferedBookId());
 
         // Yeni bir teklif oluştur ve kaydet
@@ -50,29 +51,32 @@ public class OfferService {
                         .build()
         );
 
-        // Teklifi ilana gönder
-        listManager.takeOffer(
-                SentOffer.builder()
-                        .offerId(newOffer.getId())
-                        .offererId(newOffer.getOffererId())
-                        .offerListId(offer.getListingId())
-                        .offeredBookId(offer.getOfferedBookId())
-                        .offeredBook(offeredBook)
-                        .offerStatus(OfferStatus.ALINDI)
-                        .createdDate(LocalDateTime.now())
-                        .build()
-        );
+       SentOffer sentOffer =  SentOffer.builder()
+                .offerId(newOffer.getId())
+                .offererId(newOffer.getOffererId())
+                .offerListId(offer.getListingId())
+                .offeredBookId(offer.getOfferedBookId())
+                .offeredBook(offeredBook)
+                .offerStatus(OfferStatus.ALINDI)
+                .createdDate(LocalDateTime.now())
+                .updatedDate(LocalDateTime.now())
+                .build();
 
+        listManager.takeOffer(sentOffer);
+
+        bookManager.updateBookStat(UpdateBookStat.builder()
+                .bookId(offer.getOfferedBookId())
+                .status("DISABLED").build());
         return newOffer;
     }
 
-    private ListResponse getList(String listingId) {
-        return Optional.ofNullable(listManager.getListById(listingId).getBody())
+    private OfferListResponse getList(String listingId) {
+        return Optional.ofNullable(listManager.getOfferListById(listingId).getBody())
                 .orElseThrow(() -> new OfferException(ErrorType.LIST_NOT_FOUND));
     }
 
     private OfferBookResponse getBook(Long bookId) {
-        return Optional.ofNullable(bookManager.findById(bookId).getBody())
+        return Optional.ofNullable(bookManager.getOfferBookById(bookId).getBody())
                 .orElseThrow(() -> new OfferException(ErrorType.BOOK_NOT_FOUND));
     }
 

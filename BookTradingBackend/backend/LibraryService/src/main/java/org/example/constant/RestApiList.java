@@ -13,11 +13,12 @@ public class RestApiList {
     public static final String GET_BOOKS_BY_OWNER_ID = "/getBookByOwnerId";
     public static final String GET_BOOK_BY_ID = "/getBookById";
     public static final String CREATE_BOOK = "/createBook";
-    public static final String UPDATE_BOOK_STATUS   = "/updateBook";
-    public static final String UPDATE_BOOK = "/update";
+    public static final String UPDATE_BOOK_STATUS   = "/updateBookStat";
+    public static final String UPDATE_BOOK = "/updateBook";
     public static final String DELETE_BOOK = "/deleteBook";
     public static final String CREATE_MANY_BOOK = "/createManyBooks";
     public static final String CREATE_LISTS = "/createLists";
     public static final String GET_BOOK_CONDITION = "/{bookId}/condition";
+    public static final String GET_OFFER_BOOK_BY_ID ="/getOfferBookById";
 
 }

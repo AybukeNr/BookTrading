@@ -17,4 +17,5 @@ public class UpdateOfferRequest {
     private String offerId;
     private String listingId;
     private String offerStatus;
+    private Long bookId;
 }

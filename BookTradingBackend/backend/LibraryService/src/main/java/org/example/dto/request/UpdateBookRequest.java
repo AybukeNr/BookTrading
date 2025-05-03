@@ -5,6 +5,7 @@ import org.example.entity.enums.BookCategory;
 
 @Data
 public class UpdateBookRequest {
+    private Long id;
     private String title;
     private String author;
     private String isbn;
