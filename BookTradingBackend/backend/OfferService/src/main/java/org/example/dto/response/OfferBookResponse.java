@@ -16,7 +16,8 @@ public class OfferBookResponse {
     private String isbn;
     private String publisher;
     private String publishedDate;
-    private byte[] image;
     private BookCategory category;
+    private String image;
+    private Long id;
 
 }

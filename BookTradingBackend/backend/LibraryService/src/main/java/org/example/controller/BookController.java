@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.request.*;
 import org.example.dto.response.BookResponse;
+import org.example.dto.response.OfferBookResponse;
 import org.example.entity.enums.BookCondition;
 import org.example.external.ListManager;
 import org.example.service.BookService;
@@ -30,9 +31,9 @@ public class BookController {
     private final BookService bookService;
 
     @DeleteMapping("/deleteBook/{id}")
-    public ResponseEntity<String> deleteBook(@PathVariable String pk) {
-        bookService.deleteBookById(pk);
-        return ResponseEntity.ok("Book deleted with ID: " + pk);
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+        bookService.deleteBookById(id);
+        return ResponseEntity.ok("Book deleted with ID: " + id);
     }
 
     @Operation(
@@ -135,13 +136,17 @@ public class BookController {
         return new ResponseEntity<>(true,HttpStatus.OK);
 
     }
+    @GetMapping(GET_OFFER_BOOK_BY_ID)
+    public ResponseEntity<OfferBookResponse> GET_OFFER_BOOK_BY_ID(@RequestParam Long id){
+        OfferBookResponse bookResponse = bookService.getOfferBookById(id);
+        return new ResponseEntity<>(bookResponse,HttpStatus.OK);
+    }
     @PutMapping(UPDATE_BOOK)
     public ResponseEntity<BookResponse> updateBook(
-            @RequestParam Long id,
             @RequestBody UpdateBookRequest bookRequest
     ) {
         try {
-            BookResponse updatedBook = bookService.updateBook( id, bookRequest);
+            BookResponse updatedBook = bookService.updateBook(bookRequest);
             return ResponseEntity.ok(updatedBook);
         }
         catch (RuntimeException e) {

@@ -15,6 +15,11 @@ public class RestApiList {
     public static final String GET_BOOK_BY_ID = "/getBookById";
     public static final String GET_LIST_BY_ID = "/getListsById";
     public static final String TAKE_OFFER = "/takeOffer";
+    public static final String GET_LIST_BY_ID_OFFER = "/getListForOffer";
+    public static final String GET_OFFER_BOOK_BY_ID ="/getOfferBookById";
+
+    public static final String UPDATE_BOOK_STATUS   = "/updateBookStat";
+
 
 
 

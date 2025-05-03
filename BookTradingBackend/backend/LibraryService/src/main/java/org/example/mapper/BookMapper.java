@@ -3,7 +3,9 @@ package org.example.mapper;
 import org.example.dto.request.BookRequest;
 import org.example.dto.request.UpdateBookRequest;
 import org.example.dto.response.BookResponse;
+import org.example.dto.response.OfferBookResponse;
 import org.example.entity.Books;
+import org.example.entity.enums.BookStatus;
 import org.springframework.stereotype.Component;
 
 
@@ -13,7 +15,6 @@ public class BookMapper {
     public BookResponse BookToBookResponse(Books books){
         return BookResponse.builder()
                 .title(books.getTitle())
-                .pk(books.getPk())
                 .author(books.getAuthor())
                 .isbn(books.getIsbn())
                 .publisher(books.getPublisher())
@@ -22,6 +23,8 @@ public class BookMapper {
                 .status(books.getStatus())
                 .category(books.getCategory())
                 .description(books.getDescription())
+                .condition(books.getCondition())
+                .id(books.getId())
                 .build();
     }
     public Books BookResquestToBook(BookRequest bookRequest){
@@ -34,8 +37,23 @@ public class BookMapper {
                 .publishedDate(bookRequest.getPublishedDate())
                 .category(bookRequest.getCategory())
                 .description(bookRequest.getDescription())
-                .pk(bookRequest.getOwnerId().substring(0,4)+bookRequest.getIsbn().substring(0,4))
+                .status(BookStatus.ENABLED)
+                .condition(bookRequest.getCondition())
                 .image(bookRequest.getImage()).build();
+
+    }
+
+    public OfferBookResponse bookToOfferBookResponse(Books books){
+        return OfferBookResponse.builder().
+                isbn(books.getIsbn()).
+                title(books.getTitle()).
+                id(books.getId()).
+                image(books.getImage()).
+                publishedDate(books.getPublishedDate())
+                        .publisher(books.getPublisher())
+                                .author(books.getAuthor())
+                                        .category(books.getCategory())
+                                                .build();
 
     }
 

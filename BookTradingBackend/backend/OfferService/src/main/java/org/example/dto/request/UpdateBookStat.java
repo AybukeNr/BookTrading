@@ -1,4 +1,4 @@
-package org.example.dto.response;
+package org.example.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListResponse {
-    private String listid;
-    private OfferBookResponse book;
-
+public class UpdateBookStat {
+    private String status;
+    private Long bookId;
 }

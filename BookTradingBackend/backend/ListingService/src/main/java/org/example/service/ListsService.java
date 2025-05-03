@@ -2,6 +2,7 @@ package org.example.service;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.*;
 import org.example.dto.request.mail.ListMailRequest;
@@ -54,11 +55,11 @@ public class ListsService {
     public Boolean deleteList(String listId) {
         Lists list = listsRepository.findById(listId)
                 .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
-        // Kitap ID'sini al ve durumunu güncelle
+
         if (list.getBookInfo() != null && list.getBookInfo().getId() != null) {
             UpdateBookStat updateBookStat = UpdateBookStat.builder()
-                    .bookId(list.getBookInfo().getId()) // Long olarak doğrudan veriyoruz
-                    .status("ENABLED") // veya "DISABLED", sistemin nasıl işlediğine göre
+                    .bookId(list.getBookInfo().getId()) //
+                    .status("ENABLED") //
                     .build();
 
             bookManager.updateBookStat(updateBookStat);
@@ -184,24 +185,23 @@ public class ListsService {
         Lists list = listsRepository.findById(updateOfferRequest.getListingId())
                 .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));//sadece ilgili ilanı bulması için refactor
 
-        // Teklifi bul
-        SentOffer targetOffer = list.getOffers().stream()
-                .filter(offer -> offer.getOfferId().equals(updateOfferRequest.getOfferId())
-                        && offer.getOffererId().equals(updateOfferRequest.getOffererId()))
-                .findFirst()
+        if (list.getOffers() == null) {
+            throw new ListException(ErrorType.OFFER_NOT_FOUND); //
+        }
+
+        List<SentOffer> offers = list.getOffers();
+        SentOffer targetOffer = offers.stream().filter(sentOffer -> sentOffer.getOfferId().equals(updateOfferRequest.getOfferId())).findFirst()
                 .orElseThrow(() -> new ListException(ErrorType.OFFER_NOT_FOUND));
 
-        // Teklif durumu güncelle
         targetOffer.setOfferStatus(OfferStatus.valueOf(updateOfferRequest.getOfferStatus()));
         targetOffer.setUpdatedDate(LocalDateTime.now());
         listsRepository.save(list);
 
-        // Eğer teklif kabul edildiyse
         if (updateOfferRequest.getOfferStatus().equals(String.valueOf(OfferStatus.KABUL) )) {
             processAcceptedOffer(list, targetOffer);
             UpdateBookStat updateBookStat = UpdateBookStat.builder()
                             .bookId(targetOffer.getOfferedBookId())
-                                    .status("DISABLED").build();//ilanın kitabı da disabled edilecek
+                                    .status("DISABLED").build();
             bookManager.updateBookStat(updateBookStat);
 
             log.info("Update list mail sent");
@@ -214,6 +214,7 @@ public class ListsService {
     public Boolean processSales(SalesRequest salesRequest){
         Lists list = listsRepository.findById(salesRequest.getListId()).orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
         TransactionRequest transactionRequest = TransactionRequest.builder()
+                .bookId(list.getBookInfo().getId())
                 .listId(list.getId())
                 .listType(list.getType())
                 .ownerId(list.getOwnerId())
@@ -246,12 +247,10 @@ public class ListsService {
     }
 
     private void processAcceptedOffer(Lists list, SentOffer targetOffer) {
-        // Kullanıcı adreslerini al
         Map<String, String> addresses =  userManager.getAddresses(list.getOwnerId(), targetOffer.getOffererId());
-
-
         // Transaction oluştur
         TransactionRequest transactionRequest = TransactionRequest.builder()
+                .bookId(list.getBookInfo().getId())
                 .listId(list.getId())
                 .listType(list.getType())
                 .ownerId(list.getOwnerId())
@@ -334,5 +333,11 @@ public class ListsService {
 
     public Double getListPrice(String listId){
         return listsRepository.findPriceById(listId);
+    }
+
+    public OfferListResponse getOfferListById(String listId){
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        return listMapper.ListToOfferListResponse(list);
     }
 }

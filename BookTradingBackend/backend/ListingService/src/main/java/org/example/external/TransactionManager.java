@@ -18,16 +18,14 @@ import static org.example.constants.RestApiList.TAKE_PAYMENT;
 @FeignClient(url = "http://localhost:9093/api/v1/transactions",name = "transactionManager")
 public interface TransactionManager {
 
-    @Operation(summary = "Take payment", description = "Processes payment collection for a transaction.")
+   //feing clinet patch desteklemiyor ?
     @PatchMapping(TAKE_PAYMENT)
     public ResponseEntity<TransactionResponse> takePayment(
-            @Parameter(description = "Request body containing payment collection details", required = true)
             @RequestBody TakePaymentRequest takePaymentRequest);
 
-    @Operation(summary = "Create a new transaction", description = "Creates a new transaction and returns its details.")
+
     @PostMapping(CREATE_TRANSACTION)
     public ResponseEntity<TransactionResponse> createTransaction(
-            @Parameter(description = "Request body containing transaction details", required = true)
             @RequestBody TransactionRequest transactionRequest);
 
 }

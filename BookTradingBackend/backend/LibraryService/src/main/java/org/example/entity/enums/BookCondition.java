@@ -1,5 +1,4 @@
 package org.example.entity.enums;
-
 public enum BookCondition {
     NEW("Yeni"),
     LIKE_NEW("Yeni Gibi"),
@@ -8,13 +7,13 @@ public enum BookCondition {
     ACCEPTABLE("Kabul Edilebilir"),
     POOR("Kötü");
 
-    private final String description;
+    private final String label;
 
-    BookCondition(String description) {
-        this.description = description;
+    BookCondition(String label) {
+        this.label = label;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLabel() {
+        return label;
     }
 }

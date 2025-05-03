@@ -17,6 +17,7 @@ import org.example.dto.request.UpdateOfferRequest;
 import org.example.dto.response.ListMailResponse;
 import org.example.dto.response.ListResponse;
 
+import org.example.dto.response.OfferListResponse;
 import org.example.dto.response.SentOffer;
 import org.example.service.ListsService;
 import org.springframework.http.HttpStatus;
@@ -44,13 +45,14 @@ public class ListsController {
         return ResponseEntity.ok(isDeleted);
     }
     //Servisler arası endpoint
+    @Operation(summary = "Servisler arası endpoint")
     @DeleteMapping("/delete/by-book/{bookId}")
     public ResponseEntity<String> deleteListsByBookId(@PathVariable Long bookId) {
         listsService.deleteAllListsByBookId(bookId);
         return ResponseEntity.ok("All lists with bookId " + bookId + " have been deleted.");
     }
     //servisler arası endpoint
-    @Operation(summary = "Create a new list", description = "Creates a new book list with the provided details.")
+    @Operation(summary = "Create a new list,Servisler arası endpoint", description = "Creates a new book list with the provided details.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid input provided")
@@ -98,7 +100,7 @@ public class ListsController {
     }
 
     //servisler arası endpoint
-    @Operation(summary = "Take an offer", description = "Accepts an offer for a specific list.")
+    @Operation(summary = "Take an offer,Servisler arası endpoint", description = "Accepts an offer for a specific list.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Offer accepted successfully"),
             @ApiResponse(responseCode = "404", description = "Offer not found")
@@ -122,7 +124,7 @@ public class ListsController {
     }
 
     //servisler arası endpoint
-    @Operation(summary = "BURAYI KULLANMA", description = "DİKKAT , İLAN GÜNCELLEMEK İÇİN BU ENDPOİNT KULLANILAMAZ,SONSUZ DÖNGÜYE GİRER")
+    @Operation(summary = "BURAYI KULLANMA,Servisler arası endpoint", description = "DİKKAT , İLAN GÜNCELLEMEK İÇİN BU ENDPOİNT KULLANILAMAZ,SONSUZ DÖNGÜYE GİRER")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Offer updated successfully"),
             @ApiResponse(responseCode = "404", description = "Offer not found")
@@ -135,7 +137,7 @@ public class ListsController {
     }
 
     //servisler arası endpoint
-    @Operation(summary = "Update list status", description = "Updates the status of a specific list.")
+    @Operation(summary = "Update list status,Servisler arası endpoint", description = "Updates the status of a specific list.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List status updated successfully"),
             @ApiResponse(responseCode = "404", description = "List not found")
@@ -158,6 +160,7 @@ public class ListsController {
     }
 
     //servisler arası endpoint
+    @Operation(summary = "Servisler arası endpoint")
     @PutMapping (PROCESS_SALES)
     public ResponseEntity<Boolean> processSales(@RequestBody SalesRequest sale) {
         log.info("Received Sale Request: {}", sale);
@@ -165,16 +168,31 @@ public class ListsController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
     //servisler arası endpoint
+    @Operation(summary = "Servisler arası endpoint")
     @GetMapping(LIST_MAIL_INFOS)
     public ResponseEntity<ListMailResponse> mailInfo(@RequestParam String listId){
         log.info("Getting infos for list {}",listId);
         return new ResponseEntity<>(listsService.listMailSummary(listId), HttpStatus.OK);
     }
     //servisler arası endpoint
+    @Operation(summary = "Servisler arası endpoint")
     @GetMapping(GET_LIST_PRICE)
     public ResponseEntity<Double> getListPrice(@RequestParam String listId){
         log.info("Getting price for list {}",listId);
         return new ResponseEntity<>(listsService.getListPrice(listId), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get list by ID", description = "Retrieves a specific list by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "List not found")
+    })
+    @GetMapping(GET_LIST_BY_ID_OFFER)
+    public ResponseEntity<OfferListResponse> getOfferListById(@RequestParam String listId) {
+        OfferListResponse lists = listsService.getOfferListById(listId);
+        log.info("Received ListRequest: {}", lists);
+        log.info("Received Book: {}", lists.getBook());
+        return new ResponseEntity<>(lists, HttpStatus.OK);
     }
 
 }

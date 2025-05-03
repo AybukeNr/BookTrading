@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.dto.response.OfferBookResponse;
 import org.example.entity.enums.OfferStatus;
-import org.example.dto.response.ListResponse;
+import org.example.dto.response.OfferListResponse;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,7 +22,7 @@ public class Offer {
     private String id;
     private String offererId;
     private String offeredListId;
-    private ListResponse offerList;
+    private OfferListResponse offerList;
     private Long offeredBookId;
     private OfferBookResponse offeredBook;
     private OfferStatus offerStatus;
