@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.entity.Lists;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -15,9 +16,6 @@ public interface ListsRepository extends MongoRepository<Lists, String> {
     Optional<Lists> findById(String listId);
 
     @Query(value = "{ '_id': ?0 }", fields = "{ 'price': 1 }")
-    Double findPriceById(String listId);
-
-
-
+    String findPriceById(String listId);
 
 }
