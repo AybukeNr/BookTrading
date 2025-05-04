@@ -329,12 +329,12 @@ public class TransactionServiceImpl implements ITransactionService {
         if(transactionRequest.getListType() == ListType.EXCHANGE){
             transactions.setTransactionType(TransactionType.EXCHANGE);
             transactions.setOwnerDeposit(0.0);
-            transactions.setTrustFee(calculateTrustFee(transactionRequest.getBookId()));// her iki tarafında ödeyeceği güvence bedeli
             transactions.setTrustFee(calculateTrustFee(transactionRequest.getBookId()));
         }
         else{
             transactions.setTransactionType(TransactionType.SALE);
-            transactions.setTrustFee(listManager.getListPrice(transactionRequest.getListId()).getBody());
+            Double price = listManager.getListPrice(transactionRequest.getListId()).getBody();
+            transactions.setTrustFee(price);
         }
         transactions.setStatus(TransactionStatus.ONGOING);
         transactions.setDeadline(LocalDateTime.now().plusMinutes(5));

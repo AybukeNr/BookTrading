@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +49,6 @@ public class PaymentServiceImpl implements IPaymentService {
 
         return isCardNumberValid && isCvvValid && isExpiryValid && isFullnameValid;
     }
-
 
     /**
      * Ödeme başarılı ise transactiona aktarılır
@@ -74,16 +74,43 @@ public class PaymentServiceImpl implements IPaymentService {
             throw new TransactionException(ErrorType.INSUFFICIENT_BALANCE);
         }
 
-        // Bakiyeyi güncelle
-        cards.setBalance(cards.getBalance() - createPaymentRequest.getAmount());
-        cardsRepository.save(cards);
+        if (createPaymentRequest.getListType().equals(ListType.SALE)) {
+            for (String listId : createPaymentRequest.getListId()) {
+                Double listPrice = listManager.getListPrice(listId).getBody();
 
-        for (String listId : createPaymentRequest.getListId()) {
-            Double listPrice = listManager.getListPrice(listId).getBody();
+                TakePaymentRequest takePaymentRequest = TakePaymentRequest.builder()
+                        .amount(listPrice)
+                        .listId(listId)
+                        .userId(createPaymentRequest.getUserId())
+                        .build();
 
-            // Ödemeyi transaction servisine aktar
+                transactionService.takePayment(takePaymentRequest);
+
+                Payment successfulPayment = paymentMapper.requestToPayment(createPaymentRequest);
+                successfulPayment.setStatus(PaymentStatus.SUCCESS);
+                successfulPayment.setPaymentDate(LocalDateTime.now());
+                successfulPayment.setListId(listId);
+                successfulPayment.setUserId(createPaymentRequest.getUserId());
+                paymentRepository.save(successfulPayment);
+
+                SalesRequest salesRequest = SalesRequest.builder()
+                        .offererId(createPaymentRequest.getUserId())
+                        .listId(listId)
+                        .build();
+                listManager.processSales(salesRequest);
+
+                log.info("Sale processing requested {}", salesRequest);
+
+            }
+            cards.setBalance(cards.getBalance() - createPaymentRequest.getAmount());
+            cardsRepository.save(cards);
+
+        } else {
+
+            String listId = createPaymentRequest.getListId().get(0);
+
             TakePaymentRequest takePaymentRequest = TakePaymentRequest.builder()
-                    .amount(listPrice)
+                    .amount(createPaymentRequest.getAmount())
                     .listId(listId)
                     .userId(createPaymentRequest.getUserId())
                     .build();
@@ -93,15 +120,10 @@ public class PaymentServiceImpl implements IPaymentService {
             Payment successfulPayment = paymentMapper.requestToPayment(createPaymentRequest);
             successfulPayment.setStatus(PaymentStatus.SUCCESS);
             successfulPayment.setPaymentDate(LocalDateTime.now());
-            if (createPaymentRequest.getListType().equals(ListType.SALE)) {
-                SalesRequest salesRequest = SalesRequest.builder()
-                        .offererId(createPaymentRequest.getUserId())
-                        .listId(listId).build();
-                listManager.processSales(salesRequest);
-                log.info("sale processing requested {}", salesRequest);
-
-            }
+            successfulPayment.setListId(listId);
+            successfulPayment.setUserId(createPaymentRequest.getUserId());
             paymentRepository.save(successfulPayment);
+
             cards.setBalance(cards.getBalance() - createPaymentRequest.getAmount());
             cardsRepository.save(cards);
         }

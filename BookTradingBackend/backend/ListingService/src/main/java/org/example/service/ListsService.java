@@ -15,6 +15,7 @@ import org.example.exception.ListException;
 import org.example.external.*;
 import org.example.mapper.ListsMapper;
 import org.example.repository.ListsRepository;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -332,7 +333,8 @@ public class ListsService {
     //81
 
     public Double getListPrice(String listId){
-        return listsRepository.findPriceById(listId);
+        String priceStr = listsRepository.findPriceById(listId);
+        return priceStr != null ? Double.valueOf(priceStr) : 0.0;
     }
 
     public OfferListResponse getOfferListById(String listId){

@@ -73,6 +73,7 @@ public class ShippingService implements IShippingService {
             offererShipping.setCreatedDate(LocalDateTime.now());
             offererShipping.setUpdatedDate(LocalDateTime.now());
             offererShipping.setTrackingNumber(TrackingNumberUtil.generateTrackingNumber());
+            offererShipping.setDeadline(LocalDateTime.now().plusMinutes(5));
             offererShipping.setStatus(ShippingStatus.BEKLEMEDE);
 
             shippingRepository.save(offererShipping);
