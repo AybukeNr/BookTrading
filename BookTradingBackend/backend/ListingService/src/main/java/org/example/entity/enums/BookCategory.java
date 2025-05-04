@@ -1,5 +1,10 @@
 package org.example.entity.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import java.util.Arrays;
+
 public enum BookCategory {
     Fiction("Kurgu"),
     Science ("Bilim"),
@@ -20,13 +25,21 @@ public enum BookCategory {
     Education("Eğitim"),
     Juvenile_Fiction("Gençlik Romanları");
 
-    private final String description;
+    private final String displayName;
 
-    BookCategory(String description) {
-        this.description = description;
+    BookCategory(String displayName) {
+        this.displayName = displayName;
     }
 
-    public String getDescription() {
-        return description;
+    @JsonValue
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public static BookCategory fromDisplayName(String value) {
+        return Arrays.stream(BookCategory.values())
+                .filter(cat -> cat.getDisplayName().equalsIgnoreCase(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Kategori bulunamadı: " + value));
     }
 }

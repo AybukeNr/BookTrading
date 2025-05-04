@@ -5,6 +5,7 @@ import org.example.dto.request.UpdateBookRequest;
 import org.example.dto.response.BookResponse;
 import org.example.dto.response.OfferBookResponse;
 import org.example.entity.Books;
+import org.example.entity.enums.BookCategory;
 import org.example.entity.enums.BookStatus;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,22 @@ public class BookMapper {
                 .publishedDate(books.getPublishedDate())
                 .image(books.getImage())
                 .status(books.getStatus())
-                .category(books.getCategory())
+                .category(books.getCategory().getDisplayName())
+                .description(books.getDescription())
+                .condition(books.getCondition())
+                .id(books.getId())
+                .build();
+    }
+    public BookResponse BookToBookResponseForDisplay(Books books){
+        return BookResponse.builder()
+                .title(books.getTitle())
+                .author(books.getAuthor())
+                .isbn(books.getIsbn())
+                .publisher(books.getPublisher())
+                .publishedDate(books.getPublishedDate())
+                .image(books.getImage())
+                .status(books.getStatus())
+                .category(books.getCategory().getDisplayName())
                 .description(books.getDescription())
                 .condition(books.getCondition())
                 .id(books.getId())
@@ -35,7 +51,7 @@ public class BookMapper {
                 .isbn(bookRequest.getIsbn())
                 .publisher(bookRequest.getPublisher())
                 .publishedDate(bookRequest.getPublishedDate())
-                .category(bookRequest.getCategory())
+                .category(BookCategory.fromDisplayName(bookRequest.getCategory()))
                 .description(bookRequest.getDescription())
                 .status(BookStatus.ENABLED)
                 .condition(bookRequest.getCondition())
@@ -52,7 +68,7 @@ public class BookMapper {
                 publishedDate(books.getPublishedDate())
                         .publisher(books.getPublisher())
                                 .author(books.getAuthor())
-                                        .category(books.getCategory())
+                                        .category(String.valueOf(books.getCategory()))
                                                 .build();
 
     }
