@@ -19,7 +19,7 @@ public class BookResponse {
     private String publisher;
     private String publishedDate;
     private String image;
-    private BookCategory category;
+    private String category;
     private BookCondition condition;
     private Long id;
     private BookStatus status;

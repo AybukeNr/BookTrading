@@ -20,7 +20,7 @@ public class BookRequest {
     private String publisher;
     private String publishedDate;
     private String image;
-    private BookCategory category;
+    private String category;
     private BookCondition condition;
     private String description;
 }
