@@ -170,8 +170,8 @@ public class BookController {
 
 
     @GetMapping(GET_BOOK_CONDITION)
-    public ResponseEntity<BookCondition> getBookCondition(@PathVariable Long bookId) {
+    public ResponseEntity<String> getBookCondition(@PathVariable Long bookId) {
         BookCondition condition = bookService.getBookConditionById(bookId);
-        return ResponseEntity.ok(condition);
+        return ResponseEntity.ok(String.valueOf(condition));
     }
 }

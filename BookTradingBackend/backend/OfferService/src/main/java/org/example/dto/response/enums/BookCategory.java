@@ -1,6 +1,5 @@
-package org.example.entity.enums;
+package org.example.dto.response.enums;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;

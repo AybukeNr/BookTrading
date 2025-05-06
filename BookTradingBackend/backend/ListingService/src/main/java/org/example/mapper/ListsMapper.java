@@ -39,7 +39,7 @@ public class ListsMapper {
                 .publishedDate(listBookResponse.getPublishedDate())
                 .isbn(listBookResponse.getIsbn())
                 .author(listBookResponse.getAuthor())
-                .category(listBookResponse.getCategory())
+                .category(listBookResponse.getCategory().getDisplayName())
                 .id(listBookResponse.getId())
                 .build();
     }
