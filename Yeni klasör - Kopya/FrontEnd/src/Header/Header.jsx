@@ -7,6 +7,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 import Badge from '@mui/material/Badge';
+
 // import { instance } from '../axios';
 
 // const instance = axios.create({
@@ -131,7 +132,7 @@ function Header() {
                     <span className='header_optionLineTwo'>Kategoriler</span>
                     {dropdownCatVisible && (
                         <div className="dropdown_category">
-                            {/* <ul>
+                            <ul>
                                 <li onClick={() => handleCategory('Computers')}>Bilgisayar Bilimi</li>
                                 <li onClick={() => handleCategory('Science')}>Bilim</li>
                                 <li onClick={() => handleCategory('Biography')}>Biyografi</li>
@@ -140,41 +141,17 @@ function Header() {
                                 <li onClick={() => handleCategory('Drama')}>Dram</li>
                                 <li onClick={() => handleCategory('Education')}>Eğitim</li>
                                 <li onClick={() => handleCategory('Philosophy')}>Felsefe</li>
-                                <li onClick={() => handleCategory('Juvenile_Ficton')}>Gençlik Kurgu</li>
+                                <li onClick={() => handleCategory('Juvenile_Ficton')}>Gençlik Romanları</li>
                                 <li onClick={() => handleCategory('Bussiness')}>İş</li>
                                 <li onClick={() => handleCategory('Self_Help')}>Kişisel Gelişim</li>
                                 <li onClick={() => handleCategory('Ficton')}>Kurgu</li>
                                 <li onClick={() => handleCategory('Pyschology')}>Psikoloji</li>
                                 <li onClick={() => handleCategory('Poetry')}>Şiir</li>
-                                <li onClick={() => handleCategory('Social_Sciences')}>Toplum Bilimi</li>
+                                <li onClick={() => handleCategory('Social_Science')}>Toplum Bilimi</li>
                                 <li onClick={() => handleCategory('Sports')}>Spor</li>
                                 <li onClick={() => handleCategory('History')}>Tarih</li>
                                 <li onClick={() => handleCategory('Cooking')}>Yemek Pişirme</li>
-                            </ul> */}
-
-                            <ul>
-                                <li onClick={() => handleCategory('Aile')}>Aile</li>
-                                <li onClick={() => handleCategory('Bilgisayar')}>Bilgisayar</li>
-                                <li onClick={() => handleCategory('Bilim')}>Bilim</li>
-                                <li onClick={() => handleCategory('Biyografi')}>Biyografi</li>
-                                <li onClick={() => handleCategory('Çizgi Roman')}>Çizgi Roman</li>
-                                <li onClick={() => handleCategory('Din')}>Din</li>
-                                <li onClick={() => handleCategory('Drama')}>Drama</li>
-                                <li onClick={() => handleCategory('Eğitim')}>Eğitim</li>
-                                <li onClick={() => handleCategory('Felsefe')}>Felsefe</li>
-                                <li onClick={() => handleCategory('Gençlik Kurgu')}>Gençlik Kurgu</li>
-                                <li onClick={() => handleCategory('İş')}>İş</li>
-                                <li onClick={() => handleCategory('Kişisel Gelişim')}>Kişisel Gelişim</li>
-                                <li onClick={() => handleCategory('Kurgu')}>Kurgu</li>
-                                <li onClick={() => handleCategory('Psikoloji')}>Psikoloji</li>
-                                <li onClick={() => handleCategory('Şiir')}>Şiir</li>
-                                <li onClick={() => handleCategory('Siyaset Bilimi')}>Siyaset Bilimi</li>
-                                <li onClick={() => handleCategory('Sosyal Bilimler')}>Sosyal Bilimler</li>
-                                <li onClick={() => handleCategory('Spor')}>Spor</li>
-                                <li onClick={() => handleCategory('Tarih')}>Tarih</li>
-                                <li onClick={() => handleCategory('Yemek Pişirme')}>Yemek Pişirme</li>
                             </ul>
-
                         </div>
                     )}
                 </div>

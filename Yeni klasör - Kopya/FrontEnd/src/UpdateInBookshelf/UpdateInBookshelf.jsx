@@ -17,7 +17,7 @@ function UpdateInBookshelf() {
     const [publisher, setPublisher] = useState('');
     const [publishedDate, setPublishedDate] = useState('');
     const [category, setCategory] = useState('');
-    // const [description, setDescription] = useState('');
+    const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -38,7 +38,7 @@ function UpdateInBookshelf() {
                     setIsbn(book.isbn || '');
                     setPublisher(book.publisher || '');
                     setPublishedDate(book.publishedDate || '');
-                    // setDescription(book.description || '');
+                    setDescription(book.description || '');
                     setCategory(book.category || '');
                     setImage(book.image || '');
                 })
@@ -54,7 +54,7 @@ function UpdateInBookshelf() {
     }, [bookId]);
 
     const handleUpdateBook = async () => {
-        if (!title || !author || !isbn || !publisher || !publishedDate || !category || !image) {
+        if (!title || !author || !isbn || !publisher || !publishedDate || !description || !category || !image) {
             setError('Lütfen tüm alanları düzgünce doldurun!');
             return;
         }
@@ -90,13 +90,13 @@ function UpdateInBookshelf() {
                 isbn,
                 publisher,
                 publishedDate,
-                // description,
+                description,
                 category,
                 image: imageUrl || image,
             };
 
             try {
-                const response = await instanceLibrary.put(`/update?id=${bookId}`, updatedBook, {
+                const response = await instanceLibrary.put(`/updateBook?id=${bookId}`, updatedBook, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -142,59 +142,31 @@ function UpdateInBookshelf() {
                 <h5>Kitap Yayın Tarihi:</h5>
                 <input type="text" placeholder="Kitabın yayın yılını giriniz" value={publishedDate} onChange={(e) => setPublishedDate(e.target.value)} />
 
-                {/* <h5>Kitap Açıklaması:</h5>
-                <input type="text" placeholder="Kitabın açıklamasını giriniz" value={description} onChange={(e) => setDescription(e.target.value)} />                
-
-                <h5>Kitap Kategorisi Seçiniz:</h5>
-                <div className='book_category'>
-                    <select id="category" value={category} onChange={(e) => setCategory(e.target.value)}>
-                    <option value="">Bir kategori seçin</option>
-                        <option value="Computers">Bilgisayar</option>
-                        <option value="Science">Bilim</option>
-                        <option value="Biography">Biyografi</option>
-                        <option value="Comics">Çizgi Roman</option>
-                        <option value="Religion">Din</option>
-                        <option value="Drama">Drama</option>
-                        <option value="Education">Eğitim</option>
-                        <option value="Philosophy">Felsefe</option>
-                        <option value="Juvenile_Ficton">Gençlik Kurgu</option>
-                        <option value="Bussiness">İş</option>
-                        <option value="Self_Help">Kişisel Gelişim</option>
-                        <option value="Ficton">Kurgu</option>
-                        <option value="Pyschology">Psikoloji</option>
-                        <option value="Poetry">Şiir</option>
-                        <option value="Social_Sciences">Sosyal Bilimler</option>
-                        <option value="Sports">Spor</option>
-                        <option value="History">Tarih</option>
-                        <option value="Cooking">Yemek Pişirme</option>
-                    </select>
-                </div> */}
+                <h5>Kitap Açıklaması:</h5>
+                <input type="text" placeholder="Kitabın açıklamasını giriniz" value={description} onChange={(e) => setDescription(e.target.value)} />
 
                 <h5>Kitap Kategorisi Seçiniz:</h5>
                 <div className='book_category'>
                     <select id="category" value={category} onChange={(e) => setCategory(e.target.value)}>
                         <option value="">Bir kategori seçin</option>
-                        <option value="Aile">Aile</option>
-                        <option value="Bilgisayar">Bilgisayar</option>
+                        <option value="Bilgisayar Bilimi">Bilgisayar Bilimi</option>
                         <option value="Bilim">Bilim</option>
-                        <option value="BilimKurgu">Bilim Kurgu</option>
                         <option value="Biyografi">Biyografi</option>
-                        <option value="CizgiRoman">Çizgi Roman</option>
+                        <option value="Çizgi Roman">Çizgi Roman</option>
                         <option value="Din">Din</option>
-                        <option value="Drama">Drama</option>
+                        <option value="Dram">Dram</option>
                         <option value="Eğitim">Eğitim</option>
                         <option value="Felsefe">Felsefe</option>
-                        <option value="GençlikKurgu">Gençlik Kurgu</option>
-                        <option value="İs">İş</option>
-                        <option value="KişiselGelişim">Kişisel Gelişim</option>
+                        <option value="Gençlik Romanları">Gençlik Romanları</option>
+                        <option value="İş">İş</option>
+                        <option value="Kişisel Gelişim">Kişisel Gelişim</option>
                         <option value="Kurgu">Kurgu</option>
                         <option value="Psikoloji">Psikoloji</option>
                         <option value="Şiir">Şiir</option>
-                        <option value="SiyasetBilimi">Siyaset Bilimi</option>
-                        <option value="SosyalBilimler">Sosyal Bilimler</option>
+                        <option value="Toplum Bilimi">Toplum Bilimi</option>
                         <option value="Spor">Spor</option>
                         <option value="Tarih">Tarih</option>
-                        <option value="YemekPisirme">Yemek Pişirme</option>
+                        <option value="Yemek">Yemek Pişirme</option>
                     </select>
                 </div>
 
