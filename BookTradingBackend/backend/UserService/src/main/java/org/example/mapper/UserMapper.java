@@ -48,6 +48,8 @@ public class UserMapper {
                 .userName(user.getUsername())
                 .mailAddress(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
+                .iban(user.getIban())
+                .password(user.getPassword())
                 .address(user.getAddress()).build();
     }
 

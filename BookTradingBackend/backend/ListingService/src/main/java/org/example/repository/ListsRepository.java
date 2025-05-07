@@ -18,4 +18,7 @@ public interface ListsRepository extends MongoRepository<Lists, String> {
     @Query(value = "{ '_id': ?0 }", fields = "{ 'price': 1 }")
     String findPriceById(String listId);
 
+    List<Lists> findByBookInfo_Id(Long Id);
+
+    List<Lists> findByOwnerIdNot(String ownerId);
 }

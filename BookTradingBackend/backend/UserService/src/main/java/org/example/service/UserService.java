@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.AccountRequest;
 import org.example.dto.request.mail.RegisterMailRequest;
 import org.example.dto.request.UpdateUserDto;
+import org.example.dto.response.UserResponseId;
 import org.example.entity.User;
 import org.example.dto.request.UserRequest;
 import org.example.dto.response.UserResponse;
@@ -108,6 +109,17 @@ public class UserService {
             foundUser.setTrustPoint(user.get().getTrustPoint()-1);
         }
     }
+    public UserResponseId getUserResponseById(String id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
 
+        return UserResponseId.builder()
+                .id(user.getId())
+                .userName(user.getUsername())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .trustPoint(user.getTrustPoint())
+                .build();
+    }
 
 }

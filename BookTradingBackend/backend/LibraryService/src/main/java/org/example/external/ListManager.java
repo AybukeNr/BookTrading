@@ -2,12 +2,10 @@ package org.example.external;
 
 
 import org.example.dto.request.ListRequest;
+import org.example.dto.request.BookUpdateRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import static org.example.constant.RestApiList.CREATE_LISTS;
 
@@ -20,4 +18,6 @@ public interface ListManager {
     @DeleteMapping("/delete/by-book/{bookId}")
     ResponseEntity<String> deleteAllListsByBookId(@PathVariable("bookId") Long bookId);
 
+    @PutMapping("/update-book-info")
+    void updateBookInfo(@RequestBody BookUpdateRequest bookUpdateRequest);
 }

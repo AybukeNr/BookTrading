@@ -26,4 +26,6 @@ public class UpdateUserDto {
     @NotNull
     @Schema(example = "Kılıçali Paşa Mh. Beyoğlu/İstanbul PK:34433")
     private String address;
+    private  String iban;
+    private String password;
 }

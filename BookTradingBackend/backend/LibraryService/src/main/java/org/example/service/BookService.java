@@ -4,13 +4,16 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.request.*;
 import org.example.dto.response.BookResponse;
+import org.example.dto.response.BookResponseN;
 import org.example.dto.response.OfferBookResponse;
+import org.example.dto.response.UserResponseId;
 import org.example.entity.Books;
 import org.example.entity.enums.BookCondition;
 import org.example.entity.enums.BookStatus;
 import org.example.exception.BookException;
 import org.example.exception.ErrorType;
 import org.example.external.ListManager;
+import org.example.external.UserManager;
 import org.example.mapper.BookMapper;
 import org.example.repository.BooksRepository;
 import org.slf4j.Logger;
@@ -28,7 +31,7 @@ public class BookService {
     private final BooksRepository bookRepository;
     private final BookMapper bookMapper;
     private final ListManager listManager;
-
+    private final UserManager userManager;
     public List<BookResponse> getAllBooks() {
         return bookRepository.findAll()
                 .stream()
@@ -40,8 +43,29 @@ public class BookService {
         List<Books> books = bookRepository.findByOwnerId(id).orElseThrow(() -> new BookException(ErrorType.BAD_REQUEST_ERROR));
         return books.stream().map(bookMapper::BookToBookResponse).collect(Collectors.toList());
     }
-    public BookResponse getBookById(Long id) {
-        return bookMapper.BookToBookResponse(bookRepository.findById(id).orElseThrow(() -> new BookException(ErrorType.BAD_REQUEST_ERROR)));
+    public BookResponseN getBookById(Long id) {
+        Books book = bookRepository.findById(id)
+                .orElseThrow(() -> new BookException(ErrorType.BAD_REQUEST_ERROR));
+
+        // Feign Client ile kullanıcı bilgisi al
+        UserResponseId userResponse = userManager.getUserResponseById(book.getOwnerId());
+
+        // Book + User bilgileriyle BookResponseN oluştur
+        return BookResponseN.builder()
+                .id(book.getId())
+                .ownerId(book.getOwnerId())
+                .title(book.getTitle())
+                .author(book.getAuthor())
+                .isbn(book.getIsbn())
+                .publisher(book.getPublisher())
+                .publishedDate(book.getPublishedDate())
+                .image(book.getImage())
+                .category(book.getCategory())
+                .firstName(userResponse.getFirstName())
+                .lastName(userResponse.getLastName())
+                .userName(userResponse.getUserName())
+                .trustPoint(userResponse.getTrustPoint())
+                .build();
     }
 
     public OfferBookResponse getOfferBookById(Long id) {
@@ -105,12 +129,28 @@ public class BookService {
         bookRepository.save(book);
         return true;
     }
-    public BookResponse updateBook(UpdateBookRequest updateBookRequest) {
+    public BookResponse updateBook(Long bookId, UpdateBookRequest updateBookRequest) {
+        Books existingBook = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
 
-        Books existingBook = bookRepository.findById(updateBookRequest.getId())
-                .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
         bookMapper.updateBookFromRequest(updateBookRequest, existingBook);
         bookRepository.save(existingBook);
+
+        // BookUpdateRequest oluşturup id'yi manuel ekliyoruz
+        BookUpdateRequest bookUpdateRequest = BookUpdateRequest.builder()
+                .id(bookId)
+                .title(updateBookRequest.getTitle())
+                .author(updateBookRequest.getAuthor())
+                .isbn(updateBookRequest.getIsbn())
+                .publisher(updateBookRequest.getPublisher())
+                .publishedDate(updateBookRequest.getPublishedDate())
+                .image(updateBookRequest.getImage())
+                .category(updateBookRequest.getCategory())
+                .description(updateBookRequest.getDescription())
+                .build();
+
+        listManager.updateBookInfo(bookUpdateRequest);
+
         return bookMapper.BookToBookResponse(existingBook);
     }
 

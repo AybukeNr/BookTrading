@@ -30,8 +30,8 @@ public class RestApiList {
     public static final String TEST_ACCEPTED_OFFER = "/test-accepted-offer";
     public static final String GET_LIST_PRICE= "/getListPrice";
     public static final String GET_LIST_BY_ID_OFFER = "/getListForOffer";
-
-
+    public static final String GET_USER_RESPONSE_BY_ID = "/getUserResponseById";
+    public static final String GET_LISTS_EXCLUDING_OWNER = "/getListsExcludingOwner";
 
 
     public static final String PROCESS_SALES = "/processSale" ;

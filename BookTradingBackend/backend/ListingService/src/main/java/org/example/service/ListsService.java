@@ -52,6 +52,29 @@ public class ListsService {
     public List<ListResponse> getAllLists() {
         return listsRepository.findAll().stream().map(listMapper::ListToListResponse).toList();
     }
+    public List<ListResponseN> getListsExcludingOwner(String ownerId) {
+        List<Lists> lists = listsRepository.findByOwnerIdNot(ownerId);
+
+        return lists.stream()
+                .map(list -> {
+                    // Kullanıcı bilgisi alınır
+                    UserResponse userResponse = userManager.getUserResponseById(list.getOwnerId());
+
+                    // Kitap bilgisi doğrudan alınıyor
+                    ListBookResponse bookResponse = list.getBookInfo();
+
+                    // ListResponseN oluşturuluyor
+                    return ListResponseN.builder()
+                            .listId(list.getId())
+                            .book(bookResponse)
+                            .status(list.getStatus())
+                            .type(list.getType())
+                            .price(list.getPrice())
+                            .user(userResponse)
+                            .build();
+                })
+                .toList();
+    }
     @Transactional
     public Boolean deleteList(String listId) {
         Lists list = listsRepository.findById(listId)
@@ -109,15 +132,52 @@ public class ListsService {
         log.info("Updated bookInfo in {} lists for bookId: {}", listsWithBook.size(), updatedBookInfo.getId());
     }
 
-    public ListResponse getListById(String id) {
-        Lists lists = listsRepository.findById(id).orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
-        log.info("Recieved List: {}", lists);
-        log.info("Recieved Book: {}", lists.getBookInfo());
-        ListResponse listResponse = listMapper.ListToListResponse(lists);
-        log.info("Recieved List: {}", listResponse);
-        log.info("Recieved Book : {}", listResponse.getBook());
-        return listResponse;
+    public ListResponseN getListById(String id) {
+        // Retrieve list by ID
+        Lists lists = listsRepository.findById(id)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+
+        log.info("Received List: {}", lists);
+        log.info("Received Book: {}", lists.getBookInfo());
+
+        // Fetch user details from user service using the Feign client
+        UserResponse userResponse = userManager.getUserResponseById(lists.getOwnerId());
+
+        log.info("Received User: {}", userResponse);
+
+        // Map List to ListResponseN
+        ListResponseN listResponseN = ListResponseN.builder()
+                .listId(lists.getId())
+                .book(lists.getBookInfo()) // assuming the ListBookResponse is embedded in Lists
+                .status(lists.getStatus())
+                .type(lists.getType())
+                .price(lists.getPrice())
+                .user(userResponse) // Set the user details
+                .build();
+
+        log.info("Mapped ListResponseN: {}", listResponseN);
+
+        return listResponseN;
     }
+    public void updateBookInfo(BookUpdateRequest request) {
+        List<Lists> lists = listsRepository.findByBookInfo_Id(request.getId());
+        for (Lists list : lists) {
+            ListBookResponse bookInfo = list.getBookInfo();
+            if (bookInfo != null) {
+                bookInfo.setTitle(request.getTitle());
+                bookInfo.setAuthor(request.getAuthor());
+                bookInfo.setIsbn(request.getIsbn());
+                bookInfo.setPublisher(request.getPublisher());
+                bookInfo.setPublishedDate(request.getPublishedDate());
+                bookInfo.setImage(request.getImage());
+                bookInfo.setCategory(request.getCategory());
+                bookInfo.setDescription(request.getDescription());
+            }
+        }
+        listsRepository.saveAll(lists);
+    }
+
+
     public ListResponse getListByIdForPayment(String id) {
         Lists lists = listsRepository.findById(id).orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
         log.info("Recieved List: {}", lists);
