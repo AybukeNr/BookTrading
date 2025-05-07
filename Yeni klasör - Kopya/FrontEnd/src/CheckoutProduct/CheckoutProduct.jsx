@@ -1,8 +1,10 @@
 import React from 'react'
 import '../CheckoutProduct/CheckoutProduct.css'
 import { useStateValue } from '../StateProvider';
+import { Rating } from '@mui/material';
 
-function CheckoutProduct({id, image, title, author, isbn, publisher, publishedDate, category, price}) {
+function CheckoutProduct({id, image, title, author, isbn, publisher, publishedDate, description, condition, category, price, firstName, lastName, trustPoint}) {
+
   const [{ basket }, dispatch] = useStateValue();
 
   const removeFromBasket = () => {
@@ -18,7 +20,7 @@ function CheckoutProduct({id, image, title, author, isbn, publisher, publishedDa
         <img className='checkoutProduct_image' src={image} alt="" />
 
         <div className='checkoutProduct_info'>
-            <p className='checkoutProduct_name'>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}</p>
+            <p className='checkoutProduct_name'>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}/{condition}</p>
             <p className='checkoutProduct_description'>{description}</p>
 
             <p className='checkoutProduct_price'>

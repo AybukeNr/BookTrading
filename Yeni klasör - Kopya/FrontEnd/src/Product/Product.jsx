@@ -5,7 +5,7 @@ import { useStateValue } from '../StateProvider'
 import { useNavigate } from 'react-router-dom';
 import OfferPopUp from '../OfferPopUp/OfferPopUp';
 
-function Product({ id, title, author, isbn, publisher, publishedDate, category, description, image, price, firstName, lastName, trustPoint }) {
+function Product({ id, title, author, isbn, publisher, publishedDate, category, description, condition,image, price, firstName, lastName, trustPoint }) {
 
   const navigate = useNavigate();
   const [{ basket }, dispatch] = useStateValue();
@@ -26,6 +26,7 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
         publishedDate: publishedDate,
         category: category,
         description: description,
+        condition: condition,
         image: image,
         price: price,
       }
@@ -43,6 +44,7 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
         publishedDate,
         category,
         description,
+        condition,
         image,
         price,
       }
@@ -72,7 +74,7 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
     <>
       <div className={`product ${showOfferPopUp ? 'inactive' : ''}`}>
         <div className="product_info">
-          <p onClick={handleNavigate}>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}</p>
+          <p onClick={handleNavigate}>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}/{condition}</p>
           <p onClick={() => navigate("/userDetails")}>{firstName + " " + lastName} - Güvence: {trustPoint}<Rating className='rating' /></p>
           <p onClick={handleNavigate}>{description}</p>
 

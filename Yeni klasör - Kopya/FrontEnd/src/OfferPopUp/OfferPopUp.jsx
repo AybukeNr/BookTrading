@@ -130,6 +130,7 @@ function OfferPopUp({ onClose }) {
               <p>Yayın Tarihi: {item.book.publishedDate}</p>
               <p>Kategori: {item.book.category}</p>
               <p>Açıklama: {item.book.description}</p>
+              <p>Durumu: {item.book.condition}</p>
             </div>
           </div>
         ))

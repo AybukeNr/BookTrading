@@ -20,7 +20,7 @@ function UserDetails() {
                 <h3>Kullanıcının İlanları:</h3>
                 <div className='AdsBooks'>
                     <div className="bookInfo">
-                        <p>ISBN/Başlık-Yazar/Yayınevi-Yayın tarihi/Kategori</p>
+                        <p>ISBN/Başlık-Yazar/Yayınevi-Yayın tarihi/Kategori/Durum</p>
                         <p>Açıklama</p>
 
                             <p className='bookPrice'>
