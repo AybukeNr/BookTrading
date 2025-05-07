@@ -27,6 +27,7 @@ function Checkout() {
                                 publishedDate={item.publishedDate}
                                 category={item.category}
                                 description={item.description}
+                                condition={item.condition}
                                 image={item.image}
                                 price={item.price}
                             />

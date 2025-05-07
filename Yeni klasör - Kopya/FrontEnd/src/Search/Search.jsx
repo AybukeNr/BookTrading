@@ -19,6 +19,8 @@ function Search() {
                             publisher={book.book.publisher}
                             publishedDate={book.book.publishedDate}
                             category={book.book.category}
+                            description={book.book.description}
+                            condition={book.book.condition}
                             price={book.price}
                             image={book.book.image}
                         />

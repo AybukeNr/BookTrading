@@ -18,6 +18,7 @@ function UpdateInBookshelf() {
     const [publishedDate, setPublishedDate] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
+    const [condition, setCondition] = useState('');
     const [image, setImage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -39,6 +40,7 @@ function UpdateInBookshelf() {
                     setPublisher(book.publisher || '');
                     setPublishedDate(book.publishedDate || '');
                     setDescription(book.description || '');
+                    setCondition(book.condition || '');
                     setCategory(book.category || '');
                     setImage(book.image || '');
                 })
@@ -54,7 +56,7 @@ function UpdateInBookshelf() {
     }, [bookId]);
 
     const handleUpdateBook = async () => {
-        if (!title || !author || !isbn || !publisher || !publishedDate || !description || !category || !image) {
+        if (!title || !author || !isbn || !publisher || !publishedDate || !description || !condition || !category || !image) {
             setError('Lütfen tüm alanları düzgünce doldurun!');
             return;
         }
@@ -91,6 +93,7 @@ function UpdateInBookshelf() {
                 publisher,
                 publishedDate,
                 description,
+                condition,
                 category,
                 image: imageUrl || image,
             };
@@ -144,6 +147,19 @@ function UpdateInBookshelf() {
 
                 <h5>Kitap Açıklaması:</h5>
                 <input type="text" placeholder="Kitabın açıklamasını giriniz" value={description} onChange={(e) => setDescription(e.target.value)} />
+
+                <h5>Kitap Durumunu Seçiniz:</h5>
+                <div className='book_condition'>
+                    <select id="condition" value={condition} onChange={(e) => setCondition(e.target.value)}>
+                        <option value="">Bir durum seçin</option>
+                        <option value="Yeni">Yeni</option>
+                        <option value="Yeni Gibi">Yeni Gibi</option>
+                        <option value="Çok İyi">Çok İyi</option>
+                        <option value="İyi">İyi</option>    
+                        <option value="Kabul Edilebilir">Kabul Edilebilir</option>
+                        <option value="Kötü">Kötü</option>
+                    </select>
+                </div>
 
                 <h5>Kitap Kategorisi Seçiniz:</h5>
                 <div className='book_category'>
