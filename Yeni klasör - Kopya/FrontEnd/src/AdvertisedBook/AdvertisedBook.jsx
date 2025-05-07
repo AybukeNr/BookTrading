@@ -84,7 +84,7 @@ function AdvertisedBook() {
                                 <p>Yayınevi: {item.book.publisher}</p>
                                 <p>Yayın Tarihi: {item.book.publishedDate}</p>
                                 <p>Kategori: {item.book.category}</p>
-                                {/* <p>Açıklama: {item.book.description}</p> */}
+                                <p>Açıklama: {item.book.description}</p>
                                 <p>Değeri: {item.type === 'SALE' && item.price ? `${item.price} ₺` : item.type === 'EXCHANGE' ? 'Takasa Açık' : 'Hatalı değer'}</p>
                             </div>
                             <button onClick={() => { console.log("Butona tıklandı"); removeFromAd(item.listId)}} >İlandan Kaldır</button>

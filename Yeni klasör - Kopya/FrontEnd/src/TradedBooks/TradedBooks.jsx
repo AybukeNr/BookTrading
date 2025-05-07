@@ -15,7 +15,7 @@ function TradedBooks() {
           <p>Yayın Tarihi: </p>
           <p>ISBN: </p>
           <p>Kategori: </p>
-          {/* <p>Açıklama: </p> */}
+          <p>Açıklama: </p>
         </div>
         <div className='bookReceive'>
           <h4>Alınan Kitap:</h4>
@@ -26,7 +26,7 @@ function TradedBooks() {
           <p>Yayın Tarihi: </p>
           <p>ISBN: </p>
           <p>Kategori: </p>
-          {/* <p>Açıklama: </p> */}
+          <p>Açıklama: </p>
         </div>
       </div>
       <div className="tradersInfos">

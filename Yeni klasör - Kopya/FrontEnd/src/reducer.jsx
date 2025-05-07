@@ -4,6 +4,7 @@ export const initialState = {
     searchedBooks: [],
     searchQuery: '',
     selectedCategory: null,
+    selectedAdvertisement: [],
     bookDetail: [],
     advertisedBook: [],
     advertisements: [
@@ -71,6 +72,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 selectedCategory: action.category,
+            };
+
+        case 'SET_SELECTED_ADVERTISED_BOOK':
+            return {
+                ...state,
+                selectedAdvertisedBook: action.selectedAdvertisedBook,
             };
 
         case 'SET_BOOK_LIST':
@@ -164,6 +171,12 @@ const reducer = (state, action) => {
                 ...state,
                 offerSent: state.offerSent.map((offer) => offer.id === action.id ?
                     { ...offer, status: action.status } : offer),
+            };
+        
+        case 'SET_BOOK_DETAIL':
+            return {
+                ...state,
+                bookDetail: action.bookDetail,
             };
 
         case 'SET_USER':

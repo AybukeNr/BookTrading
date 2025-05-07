@@ -5,7 +5,7 @@ import { useStateValue } from '../StateProvider'
 import { useNavigate } from 'react-router-dom';
 import OfferPopUp from '../OfferPopUp/OfferPopUp';
 
-function Product({ id, title, author, isbn, publisher, publishedDate, category, description, image, price }) {
+function Product({ id, title, author, isbn, publisher, publishedDate, category, description, image, price, firstName, lastName, trustPoint }) {
 
   const navigate = useNavigate();
   const [{ basket }, dispatch] = useStateValue();
@@ -25,9 +25,9 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
         publisher: publisher,
         publishedDate: publishedDate,
         category: category,
-        // description: description,
+        description: description,
         image: image,
-        price: price
+        price: price,
       }
     });
   }
@@ -42,13 +42,12 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
         publisher,
         publishedDate,
         category,
-        // description,
+        description,
         image,
-        price
+        price,
       }
     });
   }
-
 
   const offerPopUp = () => {
     setShowOfferPopUp(!showOfferPopUp);
@@ -56,26 +55,26 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-        if (popUpRef.current && !popUpRef.current.contains(event.target)) {
-            setShowOfferPopUp(false);
-        }
+      if (popUpRef.current && !popUpRef.current.contains(event.target)) {
+        setShowOfferPopUp(false);
+      }
     };
 
     if (showOfferPopUp) {
-        document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
     }
     return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-}, [showOfferPopUp]);
+  }, [showOfferPopUp]);
 
   return (
     <>
       <div className={`product ${showOfferPopUp ? 'inactive' : ''}`}>
         <div className="product_info">
           <p onClick={handleNavigate}>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}</p>
-          <p onClick={() => navigate("/userDetails")}>Ad Soyad <Rating className='rating' /> </p>
-          {/* <p onClick={handleNavigate}>{description}</p> */}
+          <p onClick={() => navigate("/userDetails")}>{firstName + " " + lastName} - Güvence: {trustPoint}<Rating className='rating' /></p>
+          <p onClick={handleNavigate}>{description}</p>
 
           {price ? (
             <p className='product_price' onClick={handleNavigate}>
@@ -91,9 +90,9 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
         <img src={image} alt='' onClick={handleNavigate} />
 
         {price ? (
-          <button onClick={addToBasket}>Satın almak için sepete ekle</button>
+          <button onClick={ (e) =>{ e.stopPropagation(); addToBasket() }}>Satın almak için sepete ekle</button>
         ) : (
-          <button onClick={offerPopUp}>Takas için teklif ver</button>
+          <button onClick={ (e) =>{ e.stopPropagation(); offerPopUp() }}>Takas için teklif ver</button>
         )}
       </div>
       <>
@@ -101,7 +100,7 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
           <div className="popUp">
             <div className="popUp_inner" ref={popUpRef}>
               <h2>Takas için kitap seç</h2>
-              <OfferPopUp onClose={offerPopUp}/>
+              <OfferPopUp onClose={offerPopUp} />
               <div>
                 <button onClick={offerPopUp}>İptal</button>
               </div>

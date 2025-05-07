@@ -21,13 +21,13 @@ function UserDetails() {
                 <div className='AdsBooks'>
                     <div className="bookInfo">
                         <p>ISBN/Başlık-Yazar/Yayınevi-Yayın tarihi/Kategori</p>
-                        {/* <p>Açıklama</p> */}
+                        <p>Açıklama</p>
 
                             <p className='bookPrice'>
                                 <strong>Fiyat</strong>
                                 <small>₺</small>
                             </p>
-                            {/* <p className='bookTrade'>Takasa açık</p> */}
+                            <p className='bookTrade'>Takasa açık</p>
 
                     </div>
 

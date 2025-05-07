@@ -16,16 +16,9 @@ function Offers() {
 
   const fetchOffers = async () => {
     try {
-      const sentResponse = await instanceListing.get(`/getRecievedOffers`, {
-        params: { userId: ownerId }
-      });
+      const sentResponse = await instanceListing.get(`/getRecievedOffers?userId=${ownerId}`);
 
-      const receivedResponse = await instanceOffer.get(`/getOffersByOwnerId`, {
-        params: { userId: ownerId }
-      });
-
-      console.log("Sent Offers:", sentResponse.data);
-      console.log("Received Offers:", receivedResponse.data);
+      const receivedResponse = await instanceOffer.get(`/getOffersByOwnerId?userId=${ownerId}`);
 
       dispatch({
         type: 'SET_OFFER_SENT',
@@ -107,7 +100,7 @@ function Offers() {
         publisher: item.publisher,
         publishedDate: item.publishedDate,
         category: item.category,
-        // description: item.description,
+        description: item.description,
         image: item.image,
         price: item.price,
         fromOffers: true
@@ -164,13 +157,13 @@ function Offers() {
               <img src={item.book.image} alt={item.book.title} />
               <div>
                 <h4>{item.book.title}</h4>
-                <p>Ad Soyad <Rating className='rating' /></p>
+                <p><strong>{item.user.firstName + " " + item.user.lastName} - Güvence: {item.user.trustPoint}</strong><Rating className='rating' /></p>
                 <p><strong>Yazar: </strong>{item.book.author}</p>
                 <p><strong>Yayınevi: </strong>{item.book.publisher}</p>
                 <p><strong>Yayın Tarihi: </strong>{item.book.publishedDate}</p>
                 <p><strong>ISBN: </strong> {item.book.isbn}</p>
                 <p><strong>Kategori: </strong>{item.book.category}</p>
-                {/* <p><strong>Açıklama: </strong>{item.book.description}</p> */}
+                <p><strong>Açıklama: </strong>{item.book.description}</p>
               </div>
               <div className='accept_callback' style={{ fontSize: "14px" }}>
                 {item.offerStatus === "KABUL" ? (
