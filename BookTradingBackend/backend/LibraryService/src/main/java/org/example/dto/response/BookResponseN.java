@@ -5,20 +5,25 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entity.enums.BookCategory;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OfferBookResponse {
+public class BookResponseN {
+    private Long id;
+    private String ownerId;
     private String title;
     private String author;
     private String isbn;
     private String publisher;
     private String publishedDate;
-    private String category;
     private String image;
-    private Long id;
+    private BookCategory category;
     private String description;
+    // Kullanıcı bilgileri
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private Double trustPoint;
 
 }

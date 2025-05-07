@@ -21,4 +21,5 @@ public class RestApiList {
     public static final String GET_BOOK_CONDITION = "/{bookId}/condition";
     public static final String GET_OFFER_BOOK_BY_ID ="/getOfferBookById";
 
+    public static final String GET_USER_RESPONSE_BY_ID = "/getUserResponseById";
 }

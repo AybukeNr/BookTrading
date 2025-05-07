@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.example.dto.request.UpdateUserDto;
+import org.example.dto.response.UserResponseId;
 import org.example.entity.User;
 import org.example.dto.response.UserResponse;
 import org.example.exception.AuthException;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.example.constant.RestApiList.*;
+import static org.example.constant.RestApiList.GET_USER_RESPONSE_BY_ID;
 
 
 @RestController
@@ -59,7 +61,11 @@ public class UserController {
         UserResponse userResponse = userService.findUserById(id);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
-
+    @GetMapping(GET_USER_RESPONSE_BY_ID)
+    public ResponseEntity<UserResponseId> getUserResponseById(@RequestParam String id) {
+        UserResponseId userResponseId = userService.getUserResponseById(id);
+        return new ResponseEntity<>(userResponseId, HttpStatus.OK);
+    }
 
     @PutMapping("/update/{userId}")
     public User updateOneUser(@PathVariable String userId,@RequestBody User newUser){

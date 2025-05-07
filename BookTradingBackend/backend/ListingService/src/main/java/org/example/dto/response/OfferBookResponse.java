@@ -19,6 +19,7 @@ public class OfferBookResponse {
     private String publishedDate;
     private BookCategory category;
     private String image;
+    private String description;
     private Long id;
 
 }

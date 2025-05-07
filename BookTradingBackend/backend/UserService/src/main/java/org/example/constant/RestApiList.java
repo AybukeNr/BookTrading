@@ -38,4 +38,5 @@ public class RestApiList {
     public static final String TEST_EXCHANGE_LIST_UPDATE = "/test-exchange-list-update";
     public static final String TEST_ACCEPTED_OFFER = "/test-accepted-offer";
     public static final String REDUCE_TRUST_POINT = "/reduceTrustPoint";
+    public static final String GET_USER_RESPONSE_BY_ID = "/getUserResponseById";
 }
