@@ -1,6 +1,7 @@
 package org.example.dto.request;
 
 import lombok.Data;
+import org.example.dto.response.BookCondition;
 import org.example.entity.enums.BookCategory;
 @Data
 public class BookUpdateRequest {
@@ -13,5 +14,6 @@ public class BookUpdateRequest {
     private String image;
     private BookCategory category;
     private String description;
+    private BookCondition condition;
 
 }

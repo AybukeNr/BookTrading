@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entity.enums.BookCategory;
+import org.example.entity.enums.BookCondition;
 
 @Data
 @AllArgsConstructor
@@ -20,5 +21,6 @@ public class OfferBookResponse {
     private String image;
     private Long id;
     private String description;
+    private BookCondition condition;
 
 }

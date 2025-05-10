@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entity.enums.BookCategory;
+import org.example.entity.enums.BookCondition;
 
 @Data
 @Builder
@@ -20,5 +21,6 @@ public class BookUpdateRequest {
     private String image;
     private BookCategory category;
     private String description;
+    private BookCondition condition;
 }
 
