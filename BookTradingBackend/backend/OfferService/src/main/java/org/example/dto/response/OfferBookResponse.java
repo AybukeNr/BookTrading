@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.dto.response.enums.BookCondition;
 
 @Data
 @AllArgsConstructor
@@ -19,5 +20,6 @@ public class OfferBookResponse {
     private String image;
     private String description;
     private Long id;
+    private BookCondition condition;
 
 }

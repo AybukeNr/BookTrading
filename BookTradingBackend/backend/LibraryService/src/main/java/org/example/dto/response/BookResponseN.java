@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entity.enums.BookCategory;
+import org.example.entity.enums.BookCondition;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +22,7 @@ public class BookResponseN {
     private String image;
     private BookCategory category;
     private String description;
+    private BookCondition condition;
     // Kullanıcı bilgileri
     private String firstName;
     private String lastName;

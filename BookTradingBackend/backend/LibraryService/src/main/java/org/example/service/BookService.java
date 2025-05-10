@@ -59,6 +59,7 @@ public class BookService {
                 .isbn(book.getIsbn())
                 .publisher(book.getPublisher())
                 .publishedDate(book.getPublishedDate())
+                .condition(book.getCondition())
                 .image(book.getImage())
                 .category(book.getCategory())
                 .firstName(userResponse.getFirstName())
@@ -147,6 +148,7 @@ public class BookService {
                 .image(updateBookRequest.getImage())
                 .category(updateBookRequest.getCategory())
                 .description(updateBookRequest.getDescription())
+                .condition(updateBookRequest.getCondition())
                 .build();
 
         listManager.updateBookInfo(bookUpdateRequest);

@@ -65,6 +65,7 @@ public class BookMapper {
                 title(books.getTitle()).
                 id(books.getId()).
                 image(books.getImage()).
+                condition(books.getCondition()).
                 publishedDate(books.getPublishedDate())
                         .publisher(books.getPublisher())
                                 .author(books.getAuthor())
@@ -98,6 +99,9 @@ public class BookMapper {
         }
         if (bookRequest.getDescription() != null) {
             book.setDescription(bookRequest.getDescription());
+        }
+        if (bookRequest.getCondition() != null) {
+            book.setCondition(bookRequest.getCondition());
         }
     }
 }

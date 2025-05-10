@@ -29,6 +29,12 @@ public class UserMapper {
         if (updateUserDto.getPhoneNumber() != null && !updateUserDto.getPhoneNumber().isEmpty()) {
             user.setPhoneNumber(updateUserDto.getPhoneNumber());
         }
+        if (updateUserDto.getPassword() != null && !updateUserDto.getPassword().isEmpty()) {
+            user.setPassword(updateUserDto.getPassword());
+        }
+        if (updateUserDto.getIban() != null && !updateUserDto.getIban().isEmpty()) {
+            user.setIban(updateUserDto.getIban());
+        }
     }
     public User UserRequestMapToUser(UserRequest request) {
         return User.builder().email(request.getEmail())

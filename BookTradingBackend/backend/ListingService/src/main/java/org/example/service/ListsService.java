@@ -172,6 +172,7 @@ public class ListsService {
                 bookInfo.setImage(request.getImage());
                 bookInfo.setCategory(request.getCategory());
                 bookInfo.setDescription(request.getDescription());
+                bookInfo.setCondition(request.getCondition());
             }
         }
         listsRepository.saveAll(lists);
