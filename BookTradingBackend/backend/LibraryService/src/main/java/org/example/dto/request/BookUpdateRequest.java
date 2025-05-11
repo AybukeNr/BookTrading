@@ -19,8 +19,8 @@ public class BookUpdateRequest {
     private String publisher;
     private String publishedDate;
     private String image;
-    private BookCategory category;
+    private String category;
     private String description;
-    private BookCondition condition;
+    private String condition;
 }
 

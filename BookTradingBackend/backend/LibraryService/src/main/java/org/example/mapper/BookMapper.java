@@ -6,6 +6,7 @@ import org.example.dto.response.BookResponse;
 import org.example.dto.response.OfferBookResponse;
 import org.example.entity.Books;
 import org.example.entity.enums.BookCategory;
+import org.example.entity.enums.BookCondition;
 import org.example.entity.enums.BookStatus;
 import org.springframework.stereotype.Component;
 
@@ -22,27 +23,13 @@ public class BookMapper {
                 .publishedDate(books.getPublishedDate())
                 .image(books.getImage())
                 .status(books.getStatus())
-                .category(books.getCategory().getDisplayName())
+                .category(books.getCategory())
                 .description(books.getDescription())
                 .condition(books.getCondition())
                 .id(books.getId())
                 .build();
     }
-    public BookResponse BookToBookResponseForDisplay(Books books){
-        return BookResponse.builder()
-                .title(books.getTitle())
-                .author(books.getAuthor())
-                .isbn(books.getIsbn())
-                .publisher(books.getPublisher())
-                .publishedDate(books.getPublishedDate())
-                .image(books.getImage())
-                .status(books.getStatus())
-                .category(books.getCategory().getDisplayName())
-                .description(books.getDescription())
-                .condition(books.getCondition())
-                .id(books.getId())
-                .build();
-    }
+
     public Books BookResquestToBook(BookRequest bookRequest){
         return Books.builder()
                 .ownerId(bookRequest.getOwnerId())
@@ -51,7 +38,7 @@ public class BookMapper {
                 .isbn(bookRequest.getIsbn())
                 .publisher(bookRequest.getPublisher())
                 .publishedDate(bookRequest.getPublishedDate())
-                .category(BookCategory.fromDisplayName(bookRequest.getCategory()))
+                .category(bookRequest.getCategory())
                 .description(bookRequest.getDescription())
                 .status(BookStatus.ENABLED)
                 .condition(bookRequest.getCondition())

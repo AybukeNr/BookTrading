@@ -16,5 +16,6 @@ public interface TransactionRepository  extends JpaRepository<Transactions, Long
     Optional<Transactions> findByOwnerIdAndOffererIdAndTransactionId(String ownerId, String offererId, String transactionId);
     Optional<Transactions> findByListId(String listId);
     List<Transactions> findAllByStatus(TransactionStatus status);
+    Optional<List<Transactions>> findAllByOwnerIdOrOffererIdAndTransactionType(String ownerId,String offererId, String transactionType);
 
 }

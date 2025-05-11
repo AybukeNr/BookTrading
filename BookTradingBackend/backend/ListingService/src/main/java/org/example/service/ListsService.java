@@ -261,14 +261,16 @@ public class ListsService {
 
         if (updateOfferRequest.getOfferStatus().equals(String.valueOf(OfferStatus.KABUL) )) {
             processAcceptedOffer(list, targetOffer);
-            UpdateBookStat updateBookStat = UpdateBookStat.builder()
-                            .bookId(targetOffer.getOfferedBookId())
-                                    .status("DISABLED").build();
-            bookManager.updateBookStat(updateBookStat);
-
             log.info("Update list mail sent");
         }
-
+        else if (updateOfferRequest.getOfferStatus().equals(String.valueOf(OfferStatus.RET)) && updateOfferRequest.getOfferStatus().equals(String.valueOf(OfferStatus.RET))) {
+            UpdateBookStat updateBookStat = UpdateBookStat.builder()
+                    .bookId(targetOffer.getOfferedBookId())
+                    .status("ENABLED").build();
+            bookManager.updateBookStat(updateBookStat);
+            list.setStatus(ListsStatus.OPEN);
+            log.info("Update list mail sent");
+        }
         log.info("Offer updated successfully: Offer ID = {}, Status = {}", targetOffer.getOfferId(), targetOffer.getOfferStatus());
 
     }
@@ -385,13 +387,11 @@ public class ListsService {
     public Boolean updateListApprovalStatus(String listId) {
         Lists list = listsRepository.findById(listId)
                 .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
-        // Eğer şu an OPEN ise CLOSE yap, CLOSE ise OPEN yap
         list.setStatus(list.getStatus() == ListsStatus.OPEN ? ListsStatus.CLOSED : ListsStatus.OPEN);
         listsRepository.save(list);
         log.info("Updated List Status: {} -> {}", listId, list.getStatus());
         return true;
     }
-    //81
 
     public Double getListPrice(String listId){
         String priceStr = listsRepository.findPriceById(listId);

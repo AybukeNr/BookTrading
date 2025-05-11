@@ -21,6 +21,6 @@ public class BookRequest {
     private String publishedDate;
     private String image;
     private String category;
-    private BookCondition condition;
+    private String condition;
     private String description;
 }

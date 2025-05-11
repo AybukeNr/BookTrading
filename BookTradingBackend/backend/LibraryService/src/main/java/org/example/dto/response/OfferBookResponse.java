@@ -21,6 +21,6 @@ public class OfferBookResponse {
     private String image;
     private Long id;
     private String description;
-    private BookCondition condition;
+    private String condition;
 
 }

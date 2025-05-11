@@ -80,7 +80,7 @@ public class OfferService {
                 .orElseThrow(() -> new OfferException(ErrorType.BOOK_NOT_FOUND));
     }
 
-    @Transactional//todo -> kaubl ve ret sadece ilan sahibi,iptal edildi ise sadece teklif sahibi tarafından gerçekleştirilmeli
+    @Transactional
     public Boolean updateOffer(UpdateOfferRequest updateOfferRequest) {
         Offer offer = offerRepository.findByOffererIdAndId(updateOfferRequest.getOffererId(), updateOfferRequest.getOfferId())
                 .orElseThrow(() -> new OfferException(ErrorType.OFFER_NOT_FOUND));

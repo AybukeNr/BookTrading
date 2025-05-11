@@ -13,7 +13,7 @@ public class ListsMapper {
     public Lists ListRequestToList(ListRequest listRequest){
         return Lists.builder()
                 .bookInfo(listRequest.getBookInfo())
-                .status(ListsStatus.CLOSED)
+                .status(ListsStatus.OPEN)
                 .type(listRequest.getType())
                 .price(listRequest.getPrice())
                 .ownerId(listRequest.getOwnerId()).build();
@@ -39,7 +39,7 @@ public class ListsMapper {
                 .publishedDate(listBookResponse.getPublishedDate())
                 .isbn(listBookResponse.getIsbn())
                 .author(listBookResponse.getAuthor())
-                .category(listBookResponse.getCategory().getDisplayName())
+                .category(listBookResponse.getCategory())
                 .id(listBookResponse.getId())
                 .build();
     }

@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -173,11 +174,31 @@ public class BookService {
             throw new BookException(ErrorType.INTERNAL_SERVER_ERROR);
         }
     }
-    public BookCondition getBookConditionById(Long bookId) {
+    private void deleteUsersBookAndListById(String userId) {
+        try {
+            List<Books> existingBooks = bookRepository.findByOwnerId(userId)
+                    .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
+
+            List<Long> bookIds = existingBooks.stream()
+                    .map(Books::getId)
+                    .collect(Collectors.toList());
+
+            bookIds.forEach(listManager::deleteAllListsByBookId);
+            bookRepository.deleteAllById(bookIds);
+
+        } catch (Exception e) {
+            log.error("Kitap silinirken hata oluştu: {}", e.getMessage(), e);
+            throw new BookException(ErrorType.INTERNAL_SERVER_ERROR);
+        }
+    }
+    public String getBookConditionById(Long bookId) {
         Books book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
         return book.getCondition();
     }
 
-
+    public List<BookResponse> getUsersEnabledBooks(String userId){
+        List<Books> enabledBooks = bookRepository.findByOwnerIdAndStatus(userId,BookStatus.ENABLED.getValue()).orElseThrow(() -> new BookException(ErrorType.BOOK_NOT_FOUND));
+        return enabledBooks.stream().map(bookMapper::BookToBookResponse).toList();
+    }
 }

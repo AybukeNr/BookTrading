@@ -38,7 +38,11 @@ public interface ITransactionService {
 
     public Boolean createAccount(AccountRequest accountRequest);
 
+    public List<TransactionResponse> getUsersExchanges(String ownerId);
 
+    public List<TransactionResponse> getUsersSales(String ownerId);
+
+   // public void cancelTransaction();
 
 
 

@@ -29,7 +29,8 @@ public class CardsController {
         return new ResponseEntity<>(cardService.getUsersCards(userId),HttpStatus.OK);
     }
     @PostMapping(CREATE_CARD)
-    public ResponseEntity<CardResponse> createCard(@RequestBody CreateCardRequest createCardRequest){
-        return new ResponseEntity<>(cardService.createCard(createCardRequest),HttpStatus.CREATED);
+    public ResponseEntity<Void> createCard(@RequestBody CreateCardRequest createCardRequest){
+        cardService.createCard(createCardRequest);
+        return ResponseEntity.noContent().build();
     }
 }

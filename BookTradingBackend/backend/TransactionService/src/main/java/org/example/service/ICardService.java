@@ -9,7 +9,7 @@ public interface ICardService {
 
     List<CardResponse> getAllCards();
 
-    CardResponse createCard(CreateCardRequest createCardRequest);
+    void createCard(CreateCardRequest createCardRequest);
 
     List<CardResponse> getUsersCards(String userId);
 
