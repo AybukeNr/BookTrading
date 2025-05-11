@@ -34,12 +34,12 @@ public class CardsServiceImpl implements ICardService {
 
     @Override
     @Transactional
-    public CardResponse createCard(CreateCardRequest createCardRequest) {
+    public void createCard(CreateCardRequest createCardRequest) {
         Cards card = cardMapper.requsetToCards(createCardRequest);
         card.setBalance(1000.0);
         card.setSaveDate(LocalDateTime.now());
         log.info("Create card: {}", card);
-        return cardMapper.cardsToResponse(cardsRepository.save(card));
+        cardsRepository.save(card);
     }
 
     @Override

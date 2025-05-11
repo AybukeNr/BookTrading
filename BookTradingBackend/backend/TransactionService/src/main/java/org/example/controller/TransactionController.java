@@ -117,4 +117,18 @@ public class TransactionController {
         Double trustFee =transactionService.calculateTrustFee(bookId);
         return ResponseEntity.ok(trustFee);
     }
+
+    @Operation(summary = "kullanıcının takaslarını getirir")
+    @GetMapping(GET_USERS_EXCHANGES)
+    public ResponseEntity<List<TransactionResponse>> getUsersExchanges(@RequestParam String ownerId){
+        return new ResponseEntity<>(transactionService.getUsersExchanges(ownerId),HttpStatus.OK);
+    }
+
+    @Operation(summary = "kullanıcının satışlarını getirir")
+    @GetMapping(GET_USERS_SALES)
+    public ResponseEntity<List<TransactionResponse>> getUsersSales(@RequestParam String ownerId){
+        return new ResponseEntity<>(transactionService.getUsersSales(ownerId),HttpStatus.OK);
+    }
+
+
 }

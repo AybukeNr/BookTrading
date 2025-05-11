@@ -3,6 +3,7 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.AccountRequest;
+import org.example.dto.request.CreateCardRequest;
 import org.example.dto.request.mail.RegisterMailRequest;
 import org.example.dto.request.UpdateUserDto;
 import org.example.dto.response.UserResponseId;
@@ -13,9 +14,11 @@ import org.example.entity.UserRole;
 import org.example.exception.AuthException;
 import org.example.exception.ErrorType;
 
+import org.example.external.CardsManager;
 import org.example.external.TransactionsManager;
 import org.example.mapper.UserMapper;
 import org.example.repository.UserRepository;
+import org.example.util.CardNumberUtil;
 import org.example.util.JwtTokenManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +32,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final TransactionsManager transactionsManager;
+    private final CardsManager cardsManager;
     private final MailService mailService;
-    private final JwtTokenManager jwtTokenManager ;
-
 
     @Transactional
     public UserResponse createUser(UserRequest userRequest) {
@@ -43,6 +45,8 @@ public class UserService {
                 .iban(userRequest.getIban())
                 .fullName(userRequest.getFirstName() +" "+userRequest.getLastName()).build();
         transactionsManager.createAccount(accountRequest);
+        cardsManager.createCard(CreateCardRequest.builder().cardNumber(CardNumberUtil.generateCardNumber()).cvv("123")
+                .expiryDate("12/25").fullName(user.getFirstName()+""+user.getLastName()).userId(user.getId()).build());
         log.info("Account created: {}", accountRequest);
         RegisterMailRequest request = new RegisterMailRequest();
         request.setPassword(userRequest.getPassword());
@@ -51,7 +55,6 @@ public class UserService {
         mailService.sendRegisterMail(request);
         return userMapper.UserMapToUserResponse(user);
     }
-
 
     @Transactional
     public UserResponse updateUser( UpdateUserDto updateUserDto) {

@@ -21,6 +21,8 @@ public class RestApiList {
     public static final String TAKE_PAYMENT = "/takePayment";
     public static final String TRANSFER_ALL = "/transfer";
     public static final String SET_STATUS = "/setStatus";
+    public static final String GET_USERS_EXCHANGES = "/getUsersExchanges";
+    public static final String GET_USERS_SALES = "/getUsersSales";
 
     // Payment endpoints
     public static final String CREATE_PAYMENT = "/createPayment";

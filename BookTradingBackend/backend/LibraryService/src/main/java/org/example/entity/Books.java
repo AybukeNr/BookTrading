@@ -28,11 +28,8 @@ public class Books {
     private String publisher;
     private String publishedDate;
     private String image;
-    @Enumerated(EnumType.STRING)
-    private BookCategory category;
-    @Enumerated(EnumType.STRING)
-    private BookCondition condition;
-    @Enumerated(EnumType.ORDINAL)
+    private String category;
+    private String condition;
     @Column(name = "status")
     private BookStatus status;
     @Enumerated(EnumType.STRING)

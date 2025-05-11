@@ -20,6 +20,7 @@ public class OfferBookResponse {
     private String category;
     private String image;
     private String description;
+    private String condition;
     private Long id;
 
 }

@@ -159,10 +159,14 @@ public class BookController {
         }
     }
 
-
     @GetMapping(GET_BOOK_CONDITION)
     public ResponseEntity<String> getBookCondition(@PathVariable Long bookId) {
-        BookCondition condition = bookService.getBookConditionById(bookId);
-        return ResponseEntity.ok(String.valueOf(condition));
+        String condition = bookService.getBookConditionById(bookId);
+        return ResponseEntity.ok(condition);
+    }
+    @GetMapping(GET_ENABLED_BOOKS)
+    public ResponseEntity<List<BookResponse>> getUsersEnabledBooks(@RequestParam String ownerId) {
+        List<BookResponse> bookResponses = bookService.getUsersEnabledBooks(ownerId);
+        return ResponseEntity.ok(bookResponses);
     }
 }

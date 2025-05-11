@@ -95,10 +95,16 @@ public class TransactionServiceImpl implements ITransactionService {
         }
     }
 
-    //todo -> bi ara düzeltirim
     @Override
     public Boolean setTransactionStatus(String transacId, String status) {
         Transactions transactions = transactionRepository.findByTransactionId(transacId).orElseThrow(() -> new TransactionException(ErrorType.TRANSACTION_NOT_FOUND));
+        if(status.equals(TransactionStatus.valueOf("CANCELLED"))) {
+            ExchangeComplatedRequest exchangeComplatedRequest = new ExchangeComplatedRequest();
+            exchangeComplatedRequest.setTransactionId(transacId);
+            exchangeComplatedRequest.setOffererId(transactions.getOffererId());
+            exchangeComplatedRequest.setOwnerId(transactions.getOwnerId());
+            refundBothParties(exchangeComplatedRequest);
+        }
         transactions.setStatus(TransactionStatus.valueOf(status));
         return true;
     }
@@ -110,11 +116,10 @@ public class TransactionServiceImpl implements ITransactionService {
 
         // Kitap durumu ile güvence bedelini hesaplıyoruz
         Map<String, Double> conditionTrustFees = Map.of(
-                "NEW", 50.0,
-                "VERY_GOOD", 40.0,
-                "GOOD", 30.0,
-                " ACCEPTABLE", 20.0,
-                "POOR", 10.0
+                "Yeni", 50.0,
+                "İyi", 40.0,
+                "Kabul Edilebilir", 30.0,
+                "Kötü", 10.0
         );
         Double trustFee = conditionTrustFees.getOrDefault(bookCondition, 30.0);
         double cargoFee = 60.0;
@@ -151,7 +156,6 @@ public class TransactionServiceImpl implements ITransactionService {
                     }
                 }
 
-                // Güncelleme zamanı ayarla
                 transaction.setUpdatedDate(LocalDateTime.now());
                 transactionRepository.save(transaction);
                 TransactionMailReq transactionMailReq = new TransactionMailReq();
@@ -175,19 +179,16 @@ public class TransactionServiceImpl implements ITransactionService {
     @Override
     @Transactional
     public TransactionResponse refundBothParties(ExchangeComplatedRequest exchangeComplatedRequest) {
-        // Retrieve the transaction
+
         Transactions transactions = transactionRepository.findByOwnerIdAndOffererIdAndTransactionId(
                         exchangeComplatedRequest.getOwnerId(),
                         exchangeComplatedRequest.getOffererId(),
                         exchangeComplatedRequest.getTransactionId())
                 .orElseThrow(() -> new TransactionException(ErrorType.TRANSACTION_NOT_FOUND));
 
-        // Ensure the transaction is completed before refunds
         if (!TransactionStatus.COMPLETED.equals(transactions.getStatus())) {
             throw new TransactionException(ErrorType.INVALID_TRANSACTION_STATUS);
         }
-
-        // Retrieve accounts of both parties
         Account offererAccount = accountRepository.findByUserId(exchangeComplatedRequest.getOffererId())
                 .orElseThrow(() -> new TransactionException(ErrorType.ACCOUNT_NOT_FOUND));
         Account ownerAccount = accountRepository.findByUserId(exchangeComplatedRequest.getOwnerId())
@@ -230,7 +231,6 @@ public class TransactionServiceImpl implements ITransactionService {
                         exchangeComplatedRequest.getOffererId(),
                         exchangeComplatedRequest.getTransactionId())
                 .orElseThrow(() -> new TransactionException(ErrorType.TRANSACTION_NOT_FOUND));
-        // Ensure the transaction is completed before refunds
         if (!TransactionStatus.COMPLETED.equals(transactions.getStatus())) {
             throw new TransactionException(ErrorType.INVALID_TRANSACTION_STATUS);
         }
@@ -298,6 +298,19 @@ public class TransactionServiceImpl implements ITransactionService {
         return true;
     }
 
+    @Override
+    public List<TransactionResponse> getUsersExchanges(String userId) {
+        List<Transactions> exchanges = transactionRepository.findAllByOwnerIdOrOffererIdAndTransactionType(userId,userId,String.valueOf(TransactionType.EXCHANGE))
+                .orElseThrow(()-> new TransactionException(ErrorType.LIST_NOT_FOUND));
+        return exchanges.stream().map(transactionMapper::transactionToResponse).toList();
+    }
+
+    @Override
+    public List<TransactionResponse> getUsersSales(String userId) {
+        List<Transactions> exchanges = transactionRepository.findAllByOwnerIdOrOffererIdAndTransactionType(userId,userId, String.valueOf(TransactionType.SALE))
+                .orElseThrow(()-> new TransactionException(ErrorType.LIST_NOT_FOUND));
+        return exchanges.stream().map(transactionMapper::transactionToResponse).toList();
+    }
 
     @Override
     @Transactional

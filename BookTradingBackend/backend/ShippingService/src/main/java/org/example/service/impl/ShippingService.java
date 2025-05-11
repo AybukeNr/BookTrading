@@ -337,16 +337,14 @@ public class ShippingService implements IShippingService {
     @Override
     @Transactional
     public ExchangeResponse cancelExchangeStatus(String transactionId) {
-        // Exchange'i bul veya hata fırlat
+
         Exchange exchange = exchangeRepository.findByTransactionId(transactionId)
                 .orElseThrow(() -> new ShippingException(ErrorType.EXCHANGE_NOT_FOUND));
 
-        // Kargo takip numaralarını kontrol et
         boolean ownerHasTrackingNumber = exchange.getOwnerTrackingNumber() != null && !exchange.getOwnerTrackingNumber().isBlank();
         boolean offererHasTrackingNumber = exchange.getOffererTrackingNumber() != null && !exchange.getOffererTrackingNumber().isBlank();
 
         if (!ownerHasTrackingNumber && !offererHasTrackingNumber) {
-            // İptal edilebilir
             exchange.setStatus(ExchangeStatus.İPTAL_EDİLDİ);
             exchange.setUpdatedDate(LocalDateTime.now());
             exchangeRepository.save(exchange);
@@ -354,7 +352,6 @@ public class ShippingService implements IShippingService {
             log.info("Exchange cancelled successfully for transaction ID: {}", transactionId);
             return shippingMapper.exchangeToResponse(exchange);
         } else {
-            // Hata fırlat
             throw new ShippingException(ErrorType.EXCHANGE_CANNOT_BE_CANCELLED);
         }
     }

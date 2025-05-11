@@ -1,19 +1,29 @@
 package org.example.entity.enums;
+
 public enum BookCondition {
-    NEW("Yeni"),
-    LIKE_NEW("Yeni Gibi"),
-    VERY_GOOD("Çok İyi"),
-    GOOD("İyi"),
-    ACCEPTABLE("Kabul Edilebilir"),
-    POOR("Kötü");
+        NEW("Yeni"),
+        GOOD("İyi"),
+        ACCEPTABLE("Kabul Edilebilir"),
+        POOR("Kötü");
 
-    private final String label;
+        private final String description;
 
-    BookCondition(String label) {
-        this.label = label;
-    }
+        BookCondition(String description) {
+            this.description = description;
+        }
 
-    public String getLabel() {
-        return label;
-    }
+        public String getDescription() {
+            return description;
+        }
+
+        public static BookCondition fromDescription(String description) {
+            for (BookCondition condition : values()) {
+                if (condition.getDescription().equalsIgnoreCase(description)) {
+                    return condition;
+                }
+            }
+            throw new IllegalArgumentException("Invalid book condition: " + description);
+        }
+
+
 }
