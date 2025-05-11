@@ -12,6 +12,10 @@ function OfferPopUp({ onClose }) {
   const popupRef = useRef(null);
   const [exchangeBooks, setExchangeBooks] = useState([]);
 
+    useEffect(() => {
+    console.log("Seçilen ilan (karşı tarafın kitabı):", selectedAdvertisedBook);
+  }, [selectedAdvertisedBook]);
+
   useEffect(() => {
     if (!advertisedBook || advertisedBook.length === 0) {
       const storedUserId = localStorage.getItem("userId");
@@ -51,6 +55,7 @@ function OfferPopUp({ onClose }) {
   const handleSelect = (listId) => {
     setSelectedBook((prevId) => (prevId === listId ? null : listId));
   };
+
   const offerSubmit = async () => {
     const storedUserId = localStorage.getItem("userId");
     const bookToSend = exchangeBooks.find(
@@ -138,7 +143,7 @@ function OfferPopUp({ onClose }) {
         <p>Takasa açık kitabınız şu anda yok.</p>
       )}
       <div>
-        <button onClick={(e) => { e.stopPropagation(); offerSubmit() }} className="offerPopUp_button">
+        <button onClick={offerSubmit} className="offerPopUp_button">
           Teklif Gönder
         </button>
       </div>

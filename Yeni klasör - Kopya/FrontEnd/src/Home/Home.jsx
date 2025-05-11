@@ -76,18 +76,6 @@ function Home() {
     ? bookList.filter((book) => book.book.category === selectedCategory)
     : bookList;
 
-  const handleBookClick = (book) => {
-    dispatch({
-      type: "SET_SELECTED_ADVERTISED_BOOK",
-      selectedAdvertisedBook: book,
-    });
-    navigate("/bookDetails", {
-      state: { 
-        listId: book.listId,
-        bookDetail: book,
-      },
-    });
-  };
 
   return (
     <div className="home">
@@ -131,24 +119,8 @@ function Home() {
           <div className="home_row">
             {filteredBooks.length > 0 ? (
               filteredBooks.map((book, index) => (
-                <div key={index} onClick={() => handleBookClick(book)}>
-                  <Product
-                    key={index}
-                    id={book.book.id}
-                    title={book.book.title}
-                    author={book.book.author}
-                    isbn={book.book.isbn}
-                    publisher={book.book.publisher}
-                    publishedDate={book.book.publishedDate}
-                    category={book.book.category}
-                    description={book.book.description}
-                    condition={book.book.condition}
-                    price={book.price}
-                    image={book.book.image}
-                    firstName={book.user.firstName}
-                    lastName={book.user.lastName}
-                    trustPoint={book.user.trustPoint}
-                  />
+                <div key={index}>
+                  <Product key={index} book={book} />
                 </div>
               ))
             ) : (

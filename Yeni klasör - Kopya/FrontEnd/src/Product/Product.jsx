@@ -5,7 +5,7 @@ import { useStateValue } from '../StateProvider'
 import { useNavigate } from 'react-router-dom';
 import OfferPopUp from '../OfferPopUp/OfferPopUp';
 
-function Product({ id, title, author, isbn, publisher, publishedDate, category, description, condition,image, price, firstName, lastName, trustPoint }) {
+function Product({ book }) {
 
   const navigate = useNavigate();
   const [{ basket }, dispatch] = useStateValue();
@@ -13,6 +13,24 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
   const popUpRef = useRef(null);
 
   console.log('sepet deneme', basket);
+
+  const {
+    book: {
+      id,
+      title,
+      author,
+      isbn,
+      publisher,
+      publishedDate,
+      category,
+      description,
+      condition,
+      image,
+    },
+    price,
+    user: { firstName, lastName, trustPoint },
+    listId,
+  } = book;
 
   const addToBasket = () => {
     dispatch({
@@ -36,24 +54,21 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
   const handleNavigate = () => {
     navigate('/bookDetails', {
       state: {
-        id,
-        title,
-        author,
-        isbn,
-        publisher,
-        publishedDate,
-        category,
-        description,
-        condition,
-        image,
-        price,
+        listId,
+        bookDetail: book,
       }
     });
   }
 
-  const offerPopUp = () => {
-    setShowOfferPopUp(!showOfferPopUp);
-  }
+    const offerPopUp = (e) => {
+    e.stopPropagation();
+    dispatch({
+      type: 'SET_SELECTED_ADVERTISED_BOOK',
+      selectedAdvertisedBook: book,
+    });
+    setShowOfferPopUp(true);
+  };
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -92,9 +107,9 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
         <img src={image} alt='' onClick={handleNavigate} />
 
         {price ? (
-          <button onClick={ (e) =>{ e.stopPropagation(); addToBasket() }}>Satın almak için sepete ekle</button>
+          <button onClick={(e) => { e.stopPropagation(); addToBasket() }}>Satın almak için sepete ekle</button>
         ) : (
-          <button onClick={ (e) =>{ e.stopPropagation(); offerPopUp() }}>Takas için teklif ver</button>
+          <button onClick={offerPopUp}>Takas için teklif ver</button>
         )}
       </div>
       <>
@@ -102,9 +117,9 @@ function Product({ id, title, author, isbn, publisher, publishedDate, category, 
           <div className="popUp">
             <div className="popUp_inner" ref={popUpRef}>
               <h2>Takas için kitap seç</h2>
-              <OfferPopUp onClose={offerPopUp} />
+              <OfferPopUp onClose={() => setShowOfferPopUp(false)} />
               <div>
-                <button onClick={offerPopUp}>İptal</button>
+                <button onClick={() => setShowOfferPopUp(false)}>İptal</button>
               </div>
             </div>
           </div>

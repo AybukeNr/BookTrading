@@ -84,8 +84,13 @@ function BookDetails() {
     }
 
     const offerPopUp = () => {
+        dispatch({
+            type: 'SET_SELECTED_ADVERTISED_BOOK',
+            selectedAdvertisedBook: bookDetail,
+        });
         setShowPopUp(!showPopUp);
-    }
+    };
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
