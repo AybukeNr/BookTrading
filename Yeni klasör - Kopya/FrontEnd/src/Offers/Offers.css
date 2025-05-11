@@ -62,6 +62,18 @@
     height: auto;
     margin-right: 10px;
 } 
+
+.offer_cancel_button {
+    color: red;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-bottom: auto;
+}
+
+.offer_cancel_button:hover {
+    transform: scale(1.2);
+
+}
  
 .receive_buttons {
     display: flex;

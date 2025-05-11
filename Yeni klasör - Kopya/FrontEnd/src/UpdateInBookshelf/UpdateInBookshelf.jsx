@@ -152,12 +152,12 @@ function UpdateInBookshelf() {
                 <div className='book_condition'>
                     <select id="condition" value={condition} onChange={(e) => setCondition(e.target.value)}>
                         <option value="">Bir durum seçin</option>
-                        <option value="Yeni">Yeni</option>
-                        <option value="Yeni Gibi">Yeni Gibi</option>
-                        <option value="Çok İyi">Çok İyi</option>
-                        <option value="İyi">İyi</option>    
-                        <option value="Kabul Edilebilir">Kabul Edilebilir</option>
-                        <option value="Kötü">Kötü</option>
+                        <option value="NEW">Yeni</option>
+                        <option value="LIKE_NEW">Yeni Gibi</option>
+                        <option value="VERY_GOOD">Çok İyi</option>
+                        <option value="GOOD">İyi</option>
+                        <option value="ACCEPTABLE">Kabul Edilebilir</option>
+                        <option value="POOR">Kötü</option>
                     </select>
                 </div>
 

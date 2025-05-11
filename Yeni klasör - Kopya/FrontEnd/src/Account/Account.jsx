@@ -56,7 +56,7 @@ function Account() {
 
         try {
             const response = await instanceUser.put(`/updateUser/${userId}`, {
-
+                userId: userId,
                 firstName: firstname,
                 lastName: lastname,
                 mailAddress: email,
