@@ -3,22 +3,20 @@ import '../Trade/Trade.css'
 import PaymentCard from '../PaymentCard/PaymentCard'
 import { useStateValue } from '../StateProvider';
 function Trade() {
-  const [{ offerReceive }, dispatch] = useStateValue();
+  const [{ receivedOffers, sentOffers, user }, dispatch] = useStateValue();
 
   return (
     <div className='trade'>
       <div className="trade_container">
         <h1> Ürünler </h1>
-
         <div className="trade_section">
           <div className="trade_title">
             <h3>Teslimat Adresleri: </h3>
           </div>
           <div className="trade_address">
-            <p>Email</p>
-            {/* <p>{user?.email}</p> */}
-            <p>Adres</p>
-            {/* <p>{user?.address}</p> */}
+            {/* <p>{user?.firstName} {user?.lastName}</p>
+            <p>{user?.email}</p>
+            <p>{user?.address}</p> */}
           </div>
         </div>
 
@@ -29,7 +27,7 @@ function Trade() {
           <div className="trade_items">
             <div className="sendBook">
               <h4>Gönderilecek Kitap</h4>
-              {/* {sentOffer.map(item => (
+              {sentOffers.map(item => (
                 <div className="offer_info" key={item.index}>
                   <img src={item.image} alt={item.title} />
                   <div>
@@ -40,13 +38,14 @@ function Trade() {
                     <p>ISBN: {item.isbn}</p>
                     <p>Kategori: {item.category}</p>
                     <p>Açıklama: {item.description}</p>
+                    <p>Durum: {item.condition}</p>
                   </div>
                 </div>
-              ))} */}
+              ))}
             </div>
             <div className="receiveBook">
               <h4>Alınacak Kitap</h4>
-              {receiveOffer.map((item, index) => (
+              {receivedOffers.map((item, index) => (
                 <div className="offer_info" key={index}>
                   <img src={item.image} alt={item.title} />
                   <div>
@@ -56,7 +55,8 @@ function Trade() {
                     <p>Yayın Tarihi: {item.publishedDate}</p>
                     <p>ISBN: {item.isbn}</p>
                     <p>Kategori: {item.category}</p>
-                    {/* <p>Açıklama: {item.description}</p> */}
+                    <p>Açıklama: {item.description}</p>
+                    <p>Durum: {item.condition}</p>
                   </div>
                 </div>
               ))}

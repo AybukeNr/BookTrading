@@ -1,38 +1,81 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../UserDetails/UserDetails.css'
 import { Rating } from '@mui/material'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useStateValue } from '../StateProvider';
+import { instanceListing, instanceUser } from '../axios';
 
 function UserDetails() {
-    // const navigate = useNavigate();
+    const [{ userDetail , userAds }, dispatch] = useStateValue();
+    const { state } = useLocation();
+    const userId = state?.user;
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const response = await instanceUser.get(`/getUserById?id=${userId}`);
+                const data = response.data;
+
+                dispatch({
+                    type: 'SET_USER_DETAILS',
+                    payload: data
+                });
+            } catch (error) {
+                console.error("Kullanıcı detayları alınırken hata:", error);
+            }
+        };
+
+        if (userId) {
+            fetchUserDetails();
+        }
+    }, [userId]);
+
+    useEffect(() => {
+        const fetchUserAds = async () => {
+            try {
+                const response = await instanceListing.get(`/getListsByOwnerId?ownerId=${userId}`);
+                const data = response.data;
+
+                dispatch({
+                    type: 'SET_USER_ADS',
+                    payload: data
+                });
+            } catch (error) {
+                console.error("Kullanıcı detayları alınırken hata:", error);
+            }
+        };
+
+        if (userId) {
+            fetchUserAds();
+        }
+    }, [userId]);
 
     return (
         <div className='userDetails'>
             <div className="userInfo">
                 <AccountCircleOutlinedIcon />
-                <p>Ad Soyad</p>
-                <p>Kullanıcı Değerlendirmesi: <Rating className='rating' /></p>
-                <p>Email</p>
-                <p>Telefon</p>
+                <p>{userDetail.firstName} {userDetail.lastName}</p>
+                <p>Kullanıcı Değerlendirmesi: {userDetail.trustPoint} <Rating className='rating' value={userDetail.trustPoint || 0} readOnly /></p>
+                <p>{userDetail.mailAddress}</p>
+                <p>{userDetail.phoneNumber}</p>
             </div>
+
             <div className="userAds">
                 <h3>Kullanıcının İlanları:</h3>
-                <div className='AdsBooks'>
-                    <div className="bookInfo">
-                        <p>ISBN/Başlık-Yazar/Yayınevi-Yayın tarihi/Kategori/Durum</p>
-                        <p>Açıklama</p>
-
-                            <p className='bookPrice'>
-                                <strong>Fiyat</strong>
-                                <small>₺</small>
-                            </p>
-                            <p className='bookTrade'>Takasa açık</p>
-
-                    </div>
-
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRXJGIvVqD7poyHq7VGM6hVcnGBRw6tKvsGv-FYam-rSXlmlufSY7H_-ehfRUNKYZ_ods&usqp=CAU" alt='' />
-                </div>
+                {userAds.length > 0 ? (
+                    userAds.map((adv) => (
+                        <div className='AdsBooks' key={adv.listId}>
+                            <div className="bookInfo">
+                                <p>{adv.book.isbn}/{adv.book.title}-{adv.book.author}/{adv.book.publisher}-{adv.book.publishedDate}/{adv.book.category}/{adv.book.condition}</p>
+                                <p>{adv.book.description}</p>
+                                <p>{adv.type === 'SALE' && adv.price ? `${adv.price} ₺` : adv.type === 'EXCHANGE' ? 'Takasa açık' : 'Hatalı değer'}</p>
+                            </div>
+                            <img src={adv.book.image} alt={adv.title} />
+                        </div>
+                    ))) : (
+                    <p>İlan bulunamadı.</p>
+                )}
             </div>
         </div>
     )

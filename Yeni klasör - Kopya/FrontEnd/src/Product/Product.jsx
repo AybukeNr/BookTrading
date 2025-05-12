@@ -90,7 +90,8 @@ function Product({ book }) {
       <div className={`product ${showOfferPopUp ? 'inactive' : ''}`}>
         <div className="product_info">
           <p onClick={handleNavigate}>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}/{condition}</p>
-          <p onClick={() => navigate("/userDetails")}>{firstName + " " + lastName} - Güvence: {trustPoint}<Rating className='rating' /></p>
+          <p onClick={() => navigate("/userDetails", {
+                state: { user: book.user.id } })}>{firstName + " " + lastName} - Güvence: {trustPoint}<Rating className='rating' /></p>
           <p onClick={handleNavigate}>{description}</p>
 
           {price ? (
