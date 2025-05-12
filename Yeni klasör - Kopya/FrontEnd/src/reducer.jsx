@@ -7,6 +7,8 @@ export const initialState = {
     selectedAdvertisedBook: null,
     selectedAdvertisement: [],
     bookDetail: [],
+    userDetail: [],
+    userAds: [],
     advertisedBook: [],
     advertisements: [
         { id: 1, title: 'Olasılıksız', author: 'Adam Fawer', isbn: 123, publisher: 'April Yayıncılık', publishedDate: '2005', category: 'Kurgu', price: 800, image: 'https://static.nadirkitap.com/fotograf/1255127/28/Kitap_20220724194404125512711.jpg' },
@@ -178,6 +180,18 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 bookDetail: action.bookDetail,
+            };
+        
+        case 'SET_USER_DETAILS':
+            return {
+                ...state,
+                userDetail: action.payload,
+            };
+
+        case 'SET_USER_ADS':
+            return {
+                ...state,
+                userAds: action.payload,
             };
 
         case 'SET_USER':

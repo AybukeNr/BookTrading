@@ -11,6 +11,7 @@ function OfferPopUp({ onClose }) {
   const navigate = useNavigate();
   const popupRef = useRef(null);
   const [exchangeBooks, setExchangeBooks] = useState([]);
+  const [loading, setLoading] = useState(false);
 
     useEffect(() => {
     console.log("Seçilen ilan (karşı tarafın kitabı):", selectedAdvertisedBook);
@@ -67,6 +68,8 @@ function OfferPopUp({ onClose }) {
       return;
     }
 
+    setLoading(true);
+
     const offerRequest = {
       offererId: storedUserId,
       listingId: selectedAdvertisedBook.listId,
@@ -79,9 +82,9 @@ function OfferPopUp({ onClose }) {
           Authorization: `Bearer ${getAuthToken()}`,
         },
       });
-
+      
       console.log("Teklif başarıyla oluşturuldu:", response.data);
-
+      
       dispatch({
         type: "ADD_TO_OFFER_SENT",
         item: {
@@ -144,7 +147,7 @@ function OfferPopUp({ onClose }) {
       )}
       <div>
         <button onClick={offerSubmit} className="offerPopUp_button">
-          Teklif Gönder
+          {loading ? 'Teklif Gönderiliyor...' : 'Teklif Gönder'} 
         </button>
       </div>
     </div>

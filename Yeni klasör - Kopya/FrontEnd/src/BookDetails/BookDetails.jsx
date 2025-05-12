@@ -66,7 +66,7 @@ function BookDetails() {
                 item: {
                     title: bookDetail.book.title,
                     author: bookDetail.book.author,
-                    isbn: bookDetail.book.title,
+                    isbn: bookDetail.book.isbn,
                     publisher: bookDetail.book.publisher,
                     publishedDate: bookDetail.book.publishedDate,
                     category: bookDetail.book.category,

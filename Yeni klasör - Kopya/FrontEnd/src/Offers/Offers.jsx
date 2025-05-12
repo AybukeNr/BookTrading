@@ -59,6 +59,8 @@ function Offers() {
         id: offerId,
         status: "KABUL"
       });
+
+      fetchOffers();
       navigate('/trade');
     } catch (error) {
       console.error("Teklif kabul edilirken hata:", error);
@@ -81,6 +83,8 @@ function Offers() {
           id: selectedOffer.offerId,
           status: "RET",
         });
+        fetchOffers();
+
       } catch (error) {
         console.error("Teklif reddedilirken hata:", error);
       }
@@ -96,20 +100,16 @@ function Offers() {
   const handleDetails = (item) => {
     navigate("/bookDetails", {
       state: {
-        id: item.id,
-        title: item.title,
-        author: item.author,
-        isbn: item.isbn,
-        publisher: item.publisher,
-        publishedDate: item.publishedDate,
-        category: item.category,
-        description: item.description,
-        condition: item.condition,
-        image: item.image,
-        price: item.price,
-        fromOffers: true
+        listId: item.offerListId,
+        fromOffers: true,
+        bookDetail: {
+          book: item.offeredBook,
+          user: item.offerer,
+          price: item.offeredBook?.price || null,
+          fromOffers: true,
+        }
       }
-    });
+      });
   };
 
   const handleCancelOffer = async (item) => {
@@ -128,7 +128,7 @@ function Offers() {
         status: "IPTAL_EDILDI"
       });
 
-      // fetchOffers();
+      fetchOffers();
       console.log("Teklif Durumu:", item.offerStatus);
 
     } catch (error) {
@@ -150,27 +150,16 @@ function Offers() {
               <div className="offer_info" key={index}>
                 <HighlightOffOutlinedIcon onClick={() => handleCancelOffer(item)} className='offer_cancel_button' />
                 <div>
-                  <h4>Senin Kitabın</h4>
-                  <img
-                    src={yourBook?.image}
-                    alt={yourBook?.title || "Senin kitabın"}
-                    onClick={() => handleDetails(yourBook)}
-                  />
-                  <p>{yourBook?.title}</p>
-                  <p>{yourBook?.author}</p>
+                  <h4>Teklif edilen</h4>
+                  <img src={yourBook?.image} alt={yourBook?.title || "Senin kitabın"} onClick={() => handleDetails(yourBook)} />
                   <p>{yourBook?.isbn}</p>
+                  <p>{yourBook?.title}/{yourBook?.author}</p>
                 </div>
 
                 <div>
-                  <h4>Karşı Tarafın Kitabı</h4>
-                  <img
-                    src={theirBook?.image}
-                    alt={theirBook?.title || "Karşı tarafın kitabı"}
-                    onClick={() => handleDetails(theirBook)}
-                  />
-                  <p>{theirBook?.title}</p>
-                  <p>{theirBook?.author}</p>
-                  <p>{theirBook?.isbn}</p>
+                  <h4>Teklif verilen</h4>
+                  <img src={theirBook?.image} alt={theirBook?.title || "Karşı tarafın kitabı"} onClick={() => handleDetails(theirBook)} />
+                  <p>{theirBook?.isbn}/{theirBook?.title}/{theirBook?.author}</p>
                   <p>{theirUser?.firstName} {theirUser?.lastName}</p>
                 </div>
 
@@ -197,57 +186,47 @@ function Offers() {
             {console.log("ALINAN TEKLİFLER RENDER EDİLİYOR", receivedOffers)}
             {receivedOffers.map((item, index) => {
               const book = item.offeredBook;
+              const user = item.offerer;
+
               return (
                 <div className="offer_info" key={index}>
-                  <img
-                    src={book?.image}
-                    alt={book?.title || "Teklif edilen kitap"}
-                    onClick={() => handleDetails(book)}
-                  />
-                  <div onClick={() => handleDetails(book)}>
-                    <h4>{book.title}</h4>
-                    <p>
-                      <strong>Yazar: </strong>
-                      {book.author}
-                    </p>
-                    <p>
-                      <strong>Yayınevi: </strong>
-                      {book.publisher}
-                    </p>
-                    <p>
-                      <strong>Yayın Tarihi: </strong>
-                      {book.publishedDate}
-                    </p>
-                    <p>
-                      <strong>ISBN: </strong>
-                      {book.isbn}
-                    </p>
-                    <p>
-                      <strong>Kategori: </strong>
-                      {book.category}
-                    </p>
+                  <div>
+                    <h4>İlandaki Teklifim</h4>
+                    <img src={item.offerList?.book?.image} alt={item.offerList?.book?.title || "İlandaki kitap"} />
+                    <h4>{item.offerList?.book?.title}</h4>
+                    <p><strong>Yazar: </strong>{item.offerList?.book?.author}</p>
+                    <p><strong>ISBN: </strong>{item.offerList?.book?.isbn}</p>
+                    <p><strong>Açıklama: </strong>{item.offerList?.book?.description}</p>
+                    <p><strong>Durum: </strong>{item.offerList?.book?.condition}</p>
+                  </div>
+                  <div>
+                    <h4>Alınan Teklif</h4>
+                    <img src={book?.image} alt={book?.title || "Teklif edilen kitap"} onClick={() => handleDetails(book)} />
+                    <div onClick={() => handleDetails(book)}>
+                      <h4>{book.title}</h4>
+                      <p><strong>Yazar: </strong>{book.author}</p>
+                      <p><strong>ISBN: </strong>{book.isbn}</p>
+                      <p><strong>Açıklama: </strong>{book.description}</p>
+                      <p><strong>Durum: </strong>{book.condition}</p>
+                      <p>{user.firstName} {user.lastName}</p>
+                    </div>
                   </div>
                   {item.offerStatus === "IPTAL_EDILDI" ? (
                     <div className="accept_callback" style={{ fontSize: "16px" }}>
-                      <p style={{ color: "red" }}>Gönderen kişi teklifi iptal etti.</p>
+                      <p style={{ color: "blue" }}>Gönderen kişi teklifi iptal etti.</p>
+                    </div>
+                  ) : item.offerStatus === "KABUL" ? (
+                    <div className="accept_callback" style={{ fontSize: "16px" }}>
+                      <p style={{ color: "green" }}>Teklifi kabul ettiniz!</p>
+                    </div>
+                  ) : item.offerStatus === "RET" ? (
+                    <div className="accept_callback" style={{ fontSize: "16px" }}>
+                      <p style={{ color: "red" }}>Teklifi reddettiniz.</p>
                     </div>
                   ) : (
                     <div className="receive_buttons">
-                      <button
-                        onClick={() =>
-                          acceptOffer(
-                            item.offerId,
-                            item.offererId,
-                            item.offerListId,
-                            item.offeredBook?.id
-                          )
-                        }
-                      >
-                        Teklifi kabul et
-                      </button>
-                      <button onClick={() => handleRejectOffer(item)}>
-                        Teklifi reddet
-                      </button>
+                      <button onClick={() => acceptOffer(item.offerId, item.offererId, item.offerListId, item.offeredBook?.id)}>Teklifi kabul et</button>
+                      <button onClick={() => handleRejectOffer(item)}>Teklifi reddet</button>
                     </div>
                   )}
                 </div>
@@ -257,6 +236,9 @@ function Offers() {
         ) : (
           <p>Alınan hiç teklif yok.</p>
         )}
+        <div>
+
+        </div>
       </div>
 
 
