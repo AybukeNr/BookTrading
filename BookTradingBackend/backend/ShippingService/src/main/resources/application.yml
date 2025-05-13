@@ -5,7 +5,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
-    password: 123456
+    password: root
     url: jdbc:postgresql://localhost:5432/ShippingDB
   jpa:
     hibernate:

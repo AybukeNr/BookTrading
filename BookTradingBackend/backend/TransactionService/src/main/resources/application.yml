@@ -5,17 +5,9 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
-    password: 123456
+    password: root
     url: jdbc:postgresql://localhost:5432/TransactionsDB
   jpa:
     hibernate:
       ddl-auto: update
-
-
-kafka:
-  bootstrap-servers: localhost:9092
-  topics:
-    user:
-      transaction-created: send-transaction-create-mail
-      transaction-complated: send-transaction-complated-mail
 

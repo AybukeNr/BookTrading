@@ -2,12 +2,16 @@ package org.example.service;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.*;
 import org.example.dto.request.mail.ListMailRequest;
 import org.example.dto.request.mail.TransactionMailReq;
 import org.example.dto.response.*;
+import org.example.dto.response.offer.OfferBookResponse;
+import org.example.dto.response.offer.OfferListResponse;
+import org.example.dto.response.offer.OfferStatus;
+import org.example.dto.response.offer.SentOffer;
+import org.example.dto.response.transaciton.TransactionResponse;
 import org.example.entity.Lists;
 import org.example.entity.enums.ListsStatus;
 import org.example.exception.ErrorType;
@@ -15,14 +19,13 @@ import org.example.exception.ListException;
 import org.example.external.*;
 import org.example.mapper.ListsMapper;
 import org.example.repository.ListsRepository;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -283,6 +286,40 @@ public class ListsService {
     }
 
 
+<<<<<<< Updated upstream
+=======
+    public List<SentOffer> getAcceptedOffers(String userId) {
+        List<Lists> userLists = listsRepository.findAllByOwnerId(userId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+
+        return userLists.stream()
+                .filter(list -> list.getOffers() != null)
+                .flatMap(list -> list.getOffers().stream())
+                .filter(offer -> "KABUL".equals(offer.getOfferStatus()))
+                .collect(Collectors.toList());
+    }
+
+    public Map<String,Object> getExchangeBooks(String listId) {
+        Map<String,Object> exchangeBooks = new HashMap<>();
+         Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+         OfferBookResponse acceptedBook = list.getOffers().stream().filter(offer -> "KABUL".equals(offer.getOfferStatus())).toList().getFirst().getOfferedBook();
+         ListBookResponse listBook = list.getBookInfo();
+
+         exchangeBooks.put("acceptedBook",acceptedBook);
+         exchangeBooks.put("listBook",listBook);
+         return exchangeBooks;
+    }
+
+    // Kabul edilen teklifteki alınacak kitabı bulmak için yardımcı metod
+    private ListBookResponse fetchReceivedBook(String listId) {
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        return list.getBookInfo();
+    }
+
+
+>>>>>>> Stashed changes
 
     @Transactional
     public void updateOffer(UpdateOfferRequest updateOfferRequest) {

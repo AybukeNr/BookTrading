@@ -10,11 +10,15 @@ ext{
             swaggerDoc          : '1.7.0',
             kafka               : '3.3.1',
             freemaker           : '3.4.1',
-            weka                : '3.9.6'
+            weka                : '3.9.6',
+            jacoco              : '0.8.12',
+            junit               : '5.10.0',
+            mockito             : '5.11.0'
     ]
 
     libs = [
             springBootStarterWeb            : "org.springframework.boot:spring-boot-starter-web:${versions.springBoot}",
+            springBootStarterTest           : "org.springframework.boot:spring-boot-starter-test:${versions.springBoot}",
             springBootDataJpa               : "org.springframework.boot:spring-boot-starter-data-jpa:${versions.springBoot}",
             springCloudStarterOpenFeign     : "org.springframework.cloud:spring-cloud-starter-openfeign:${versions.springCloud}",
             springBootDataMongo             : "org.springframework.boot:spring-boot-starter-data-mongodb:${versions.springBoot}",
@@ -27,7 +31,12 @@ ext{
             kafka                           : "org.springframework.kafka:spring-kafka:${versions.kafka}",
             freemaker                       : "org.springframework.boot:spring-boot-starter-freemarker:${versions.freemaker}",
             mailSender                      : "org.springframework.boot:spring-boot-starter-mail:${versions.springBoot}",
-            weka                            : "nz.ac.waikato.cms.weka:weka-dev:${versions.weka}"
+            weka                            : "nz.ac.waikato.cms.weka:weka-dev:${versions.weka}",
+            jacoco                          : "org.jacoco:jacoco-maven-plugin:${versions.jacoco}",
+
+            junitApi            : "org.junit.jupiter:junit-jupiter-api:${versions.junit}",
+            junitEngine         : "org.junit.jupiter:junit-jupiter-engine:${versions.junit}",
+            mockitoCore         : "org.mockito:mockito-core:${versions.mockito}"
 
     ]
 }

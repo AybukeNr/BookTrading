@@ -10,13 +10,11 @@ import org.example.entity.enums.ListsStatus;
 import org.example.dto.response.ListBookResponse;
 
 
-import org.example.dto.response.SentOffer;
+import org.example.dto.response.offer.SentOffer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-
-import java.math.BigDecimal;
 import java.util.List;
 
 @Builder

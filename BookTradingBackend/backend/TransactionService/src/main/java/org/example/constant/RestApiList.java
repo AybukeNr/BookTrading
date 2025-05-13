@@ -40,6 +40,7 @@ public class RestApiList {
     public static final String GET_LIST_BY_ID = "/getListsById";
     public static final String UPDATE_LIST_STATUS = "/updateListStat";
     public static final String GET_LIST_PRICE= "/getListPrice";
+    public static final String GET_OFFER_BOOKS = "/getOfferBooks";
 
     public static final String CREATE_ACCOUNT = "/createAccount";
     public static final String PROCESS_SALES = "/processSale" ;

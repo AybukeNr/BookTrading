@@ -1,6 +1,7 @@
 package org.example.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.request.CreatePaymentRequest;
 import org.example.dto.response.PaymentResponse;
@@ -20,6 +21,7 @@ public class PaymentController {
 
     private final IPaymentService paymentService;
 
+    @Operation(description = "Satın alma ve güvence bedeli ödeme buradan yapılır")
     @GetMapping(GET_PAYMENT_BY_ID)
     public ResponseEntity<PaymentResponse> getPayment(@RequestParam String paymentId) {
         return new ResponseEntity<>(paymentService.getPayment(paymentId), HttpStatus.OK);

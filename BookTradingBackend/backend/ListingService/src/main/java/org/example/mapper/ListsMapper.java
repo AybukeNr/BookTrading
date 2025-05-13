@@ -2,6 +2,8 @@ package org.example.mapper;
 
 
 import org.example.dto.response.*;
+import org.example.dto.response.offer.OfferBookResponse;
+import org.example.dto.response.offer.OfferListResponse;
 import org.example.entity.Lists;
 import org.example.entity.enums.ListsStatus;
 
