@@ -61,6 +61,7 @@ public class BookService {
                 .publisher(book.getPublisher())
                 .publishedDate(book.getPublishedDate())
                 .condition(book.getCondition())
+                .description(book.getDescription())
                 .image(book.getImage())
                 .category(book.getCategory())
                 .firstName(userResponse.getFirstName())

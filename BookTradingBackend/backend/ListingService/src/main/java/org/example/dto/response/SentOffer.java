@@ -16,6 +16,8 @@ public class SentOffer {
     private String offerId;
     private String offererId;
     private String offerListId;
+    private UserResponse offerer;
+    private OfferListResponse offerList;
     private Long offeredBookId;
     private OfferBookResponse offeredBook;
     private OfferStatus offerStatus;

@@ -55,6 +55,7 @@ public class UserMapper {
                 .mailAddress(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
                 .iban(user.getIban())
+                .trustPoint(user.getTrustPoint())
                 .password(user.getPassword())
                 .address(user.getAddress()).build();
     }

@@ -38,6 +38,8 @@ public class ListsMapper {
                 .title(listBookResponse.getTitle())
                 .publishedDate(listBookResponse.getPublishedDate())
                 .isbn(listBookResponse.getIsbn())
+                .description(listBookResponse.getDescription())
+                .condition(listBookResponse.getCondition())
                 .author(listBookResponse.getAuthor())
                 .category(listBookResponse.getCategory())
                 .id(listBookResponse.getId())
@@ -45,7 +47,7 @@ public class ListsMapper {
     }
 
     public OfferListResponse ListToOfferListResponse(Lists lists){
-        return OfferListResponse.builder().listid(lists.getId())
+        return OfferListResponse.builder().listid(lists.getId()).ownerId(lists.getOwnerId())
                 .book(listBookToOfferBook(lists))
                 .build();
     }

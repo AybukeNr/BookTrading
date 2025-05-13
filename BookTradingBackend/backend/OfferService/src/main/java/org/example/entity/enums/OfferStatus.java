@@ -5,5 +5,5 @@ public enum OfferStatus {
     GONDERILDI,
     KABUL,
     RET,
-    İPTAL_EDİLDİ
+    IPTAL_EDILDI
 }

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OfferListResponse {
     private String listid;
+    private String ownerId;
     private OfferBookResponse book;
 
 }
