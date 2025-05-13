@@ -22,4 +22,5 @@ public class SentOffer {
     private OfferStatus offerStatus;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private OfferListResponse offerList;
 }

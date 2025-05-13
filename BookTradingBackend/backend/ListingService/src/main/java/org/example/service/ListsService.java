@@ -48,10 +48,10 @@ public class ListsService {
         ListMailResponse mailResponse = listMapper.ListToListMailResponse(lists);
         return mailResponse;
     }
-
     public List<ListResponse> getAllLists() {
         return listsRepository.findAll().stream().map(listMapper::ListToListResponse).toList();
     }
+
     public List<ListResponseN> getListsExcludingOwner(String ownerId) {
         List<Lists> lists = listsRepository.findByOwnerIdNot(ownerId);
 
@@ -229,17 +229,60 @@ public class ListsService {
         mailManager.testExchangeListUpdated(request);
         return listMapper.ListToListResponse(updatedLists);
     }
+    private OfferBookResponse mapToOfferBookResponse(ListBookResponse book) {
+        if (book == null) return null;
+
+        return OfferBookResponse.builder()
+                .id(book.getId())
+                .title(book.getTitle())
+                .author(book.getAuthor())
+                .isbn(book.getIsbn())
+                .publisher(book.getPublisher())
+                .publishedDate(book.getPublishedDate())
+                .category(String.valueOf(book.getCategory()))
+                .description(book.getDescription())
+                .image(book.getImage())
+                .condition(book.getCondition())
+                .build();
+    }
+
 
     //kullanıcıya ait olan ilanların tekliflerini görüntüler
     public List<SentOffer> getRecievedOffers(String userId) {
-        List<Lists> userLists = listsRepository.findAllByOwnerId(userId).orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        List<Lists> userLists = listsRepository.findAllByOwnerId(userId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
 
         return userLists.stream()
                 .filter(list -> list.getOffers() != null)
-                .flatMap(list -> list.getOffers().stream())
-                .collect(Collectors.toList());
+                .flatMap(list -> list.getOffers().stream().map(offer -> {
+                    UserResponse offererUser = null;
+                    try {
+                        offererUser = userManager.getUserResponseById(offer.getOffererId());
+                    } catch (Exception e) {
+                        System.out.println("Kullanıcı bilgisi çekilemedi: " + offer.getOffererId());
+                    }
 
+                    return SentOffer.builder()
+                            .offerId(offer.getOfferId())
+                            .offererId(offer.getOffererId())
+                            .offerer(offererUser) // kullanıcı bilgisi eklendi
+                            .offerListId(list.getId())
+                            .offerList(OfferListResponse.builder()
+                                    .listid(list.getId())
+                                    .ownerId(list.getOwnerId())
+                                    .book(mapToOfferBookResponse(list.getBookInfo()))
+                                    .build())
+                            .offeredBookId(offer.getOfferedBookId())
+                            .offeredBook(offer.getOfferedBook())
+                            .offerStatus(offer.getOfferStatus())
+                            .createdDate(offer.getCreatedDate())
+                            .updatedDate(offer.getUpdatedDate())
+                            .build();
+                }))
+                .collect(Collectors.toList());
     }
+
+
 
     @Transactional
     public void updateOffer(UpdateOfferRequest updateOfferRequest) {

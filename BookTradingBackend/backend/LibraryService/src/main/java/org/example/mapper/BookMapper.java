@@ -42,7 +42,8 @@ public class BookMapper {
                 .description(bookRequest.getDescription())
                 .status(BookStatus.ENABLED)
                 .condition(bookRequest.getCondition())
-                .image(bookRequest.getImage()).build();
+                .image(bookRequest.getImage())
+                .build();
 
     }
 
@@ -53,6 +54,7 @@ public class BookMapper {
                 id(books.getId()).
                 image(books.getImage()).
                 condition(books.getCondition()).
+                description(books.getDescription()).
                 publishedDate(books.getPublishedDate())
                         .publisher(books.getPublisher())
                                 .author(books.getAuthor())

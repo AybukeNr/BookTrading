@@ -4,6 +4,7 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.UpdateBookStat;
+import org.example.dto.response.UserResponse;
 import org.example.entity.Offer;
 import org.example.entity.enums.OfferStatus;
 import org.example.dto.request.CreateOfferRequest;
@@ -15,6 +16,7 @@ import org.example.exception.ErrorType;
 import org.example.exception.OfferException;
 import org.example.external.BookManager;
 import org.example.external.ListManager;
+import org.example.external.UserManager;
 import org.example.repository.OfferRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +33,7 @@ public class OfferService {
     private final OfferRepository offerRepository;
     private final ListManager listManager;
     private final BookManager bookManager;
+    private final UserManager userManager;
 
     @Transactional
     public Offer createOffer(CreateOfferRequest offer) {
@@ -79,6 +82,7 @@ public class OfferService {
         return Optional.ofNullable(bookManager.getOfferBookById(bookId).getBody())
                 .orElseThrow(() -> new OfferException(ErrorType.BOOK_NOT_FOUND));
     }
+    //todo -> kaubl ve ret sadece ilan sahibi,iptal edildi ise sadece teklif sahibi tarafından gerçekleştirilmeli
 
     @Transactional
     public Boolean updateOffer(UpdateOfferRequest updateOfferRequest) {
@@ -99,9 +103,24 @@ public class OfferService {
         return true;
     }
 
-    public List<Offer> getUsersOffers(String userId){
-        return offerRepository.findAllByOffererId(userId).orElse(new ArrayList<>());
+    public List<Offer> getUsersOffers(String userId) {
+        List<Offer> offers = offerRepository.findAllByOffererId(userId).orElse(new ArrayList<>());
+
+        for (Offer offer : offers) {
+            if (offer.getOfferList() != null && offer.getOfferList().getOwnerId() != null) {
+                try {
+                    UserResponse user = userManager.getUserResponseById(offer.getOfferList().getOwnerId());
+                    offer.getOfferList().setOwner(user);
+                } catch (Exception e) {
+                    // Feign call failed, log or handle as needed
+                    System.out.println("User bilgisi çekilemedi: " + e.getMessage());
+                }
+            }
+        }
+
+        return offers;
     }
+
 
 
     public List<Offer> getAllOffers() {

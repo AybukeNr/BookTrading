@@ -39,7 +39,7 @@ public class UserRequest {
     @NotNull
     @Schema(example = "Kılıçali Paşa Mh. Beyoğlu/İstanbul PK:34433")
     private String address;
-
+    private Double trustPoint;
 
 
 }
