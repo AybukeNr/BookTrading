@@ -3,7 +3,7 @@ import '../Header/Header.css'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+// import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 import Badge from '@mui/material/Badge';
@@ -32,8 +32,8 @@ function Header(props) {
     const [input, setInput] = useState('');
     const [dropdownAccVisible, setdropdownAccVisible] = useState(false);
     const [dropdownCatVisible, setdropdownCatVisible] = useState(false);
-    const [notificationsVisible, setNotificationsVisible] = useState(false);
-    const [hasNotifications, setHasNotifications] = useState(true);
+    // const [notificationsVisible, setNotificationsVisible] = useState(false);
+    // const [hasNotifications, setHasNotifications] = useState(true);
     const notificationRef = useRef(null);
     const dropdownAccRef = useRef(null);
     const dropdownCatRef = useRef(null);
@@ -85,12 +85,12 @@ function Header(props) {
         navigate("/");
     }
 
-    const toggleNotifications = () => {
-        setNotificationsVisible(!notificationsVisible);
-        if (hasNotifications) {
-            setHasNotifications(false);
-        }
-    };
+    // const toggleNotifications = () => {
+    //     setNotificationsVisible(!notificationsVisible);
+    //     if (hasNotifications) {
+    //         setHasNotifications(false);
+    //     }
+    // };
 
 
     useEffect(() => {
@@ -115,7 +115,7 @@ function Header(props) {
     return (
         <div className='header'>
 
-            <Link to='/'>
+            <Link to='/' onClick={() => { dispatch({ type: 'SET_SELECTED_CATEGORY', category: '' });}}>
                 <img className='header_logo' src='https://i.hizliresim.com/obkwl66.png' />
             </Link>
 
@@ -125,11 +125,6 @@ function Header(props) {
             </form>
 
             <div className='header_nav'>
-                {/* <Link to={!user && '/login'}>
-                    <div onClick={handleAuthentication} className='header_option'>
-                        <span className='header_optionLineTwo'>{user ? 'Çıkış Yap' : 'Giriş Yap'}</span>
-                    </div>
-                </Link> */}
                 {user ? (
                     <div onClick={handleAuthentication} className='header_option'>
                         <span className='header_optionLineTwo'>Çıkış Yap</span>

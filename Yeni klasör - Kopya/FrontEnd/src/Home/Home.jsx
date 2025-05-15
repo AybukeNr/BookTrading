@@ -30,10 +30,10 @@ function Home() {
           type: "SET_SEARCHED_BOOKS",
           books: response.data,
         });
-        // dispatch({
-        //   type: "SET_SELECTED_CATEGORY",
-        //   category: "",
-        // });
+        dispatch({
+          type: "SET_SELECTED_CATEGORY",
+          category: "",
+        });
       } catch (err) {
         setError("Kitaplar yüklenirken bir hata oluştu.");
       } finally {

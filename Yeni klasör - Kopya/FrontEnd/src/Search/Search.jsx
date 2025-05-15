@@ -11,19 +11,7 @@ function Search() {
             {searchedBooks.length > 0 ? (
                 <div className="home_row">
                     {searchedBooks.map((book, index) => (
-                        <Product
-                            key={index}
-                            title={book.book.title}
-                            author={book.book.author}
-                            isbn={book.book.isbn}
-                            publisher={book.book.publisher}
-                            publishedDate={book.book.publishedDate}
-                            category={book.book.category}
-                            description={book.book.description}
-                            condition={book.book.condition}
-                            price={book.price}
-                            image={book.book.image}
-                        />
+                        <Product key={index} book={book} />
                     ))}
                 </div>
             ) : (
