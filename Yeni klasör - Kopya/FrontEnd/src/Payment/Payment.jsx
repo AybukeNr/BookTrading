@@ -65,10 +65,9 @@ function Payment() {
                         <h3>Teslimat Adresi: </h3>
                     </div>
                     <div className="payment_address">
-                        <p>Email</p>
-                        {/* <p>{user?.email}</p> */}
-                        <p>Adres</p>
-                        {/* <p>{user?.address}</p> */}
+                        <p><strong>Ad Soyad:</strong>{user?.firstName + " " + user?.lastName}</p>
+                        <p><strong>Email:</strong>{user?.email}</p>
+                        <p><strong>Adres:</strong>{user?.address}</p>
                     </div>
                 </div>
 
@@ -79,16 +78,20 @@ function Payment() {
                     <div className="payment_items">
                         {basket.map((item, index) => (
                             <CheckoutProduct key={index}
-                                isbn={item.isbn}
-                                title={item.title}
-                                author={item.author}
-                                publisher={item.publisher}
-                                publishedDate={item.publishedDate}
-                                category={item.category}
-                                description={item.description}
-                                condition={item.condition}
-                                image={item.image}
-                                price={item.price}
+                                isbn={item.book.isbn}
+                                title={item.book.title}
+                                author={item.book.author}
+                                publisher={item.book.publisher}
+                                publishedDate={item.book.publishedDate}
+                                category={item.book.category}
+                                description={item.book.description}
+                                condition={item.book.condition}
+                                image={item.book.image}
+                                price={item.book.price}
+                                firstName={item.user.firstName}
+                                lastName={item.user.lastName}
+                                trustPoint={item.user.trustPoint}
+                                email={item.user.email}
                             />
                         ))}
                     </div>

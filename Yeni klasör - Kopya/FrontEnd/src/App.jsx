@@ -18,26 +18,33 @@ import UserDetails from '../src/UserDetails/UserDetails'
 import Trade from '../src/Trade/Trade'
 import Admin from '../src/Admin/Admin'
 import Search from '../src/Search/Search'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useStateValue } from './StateProvider'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { AuthTokenControl } from './auth'
 import { getAuthToken } from './auth'
+import { jwtDecode } from 'jwt-decode'
+import PrivateRoute from './PrivateRoute'
 
 function App() {
-  const [{ }, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const token = getAuthToken();
-
     if (token) {
+      const decodedToken = jwtDecode(token);
       dispatch({
         type: 'SET_USER',
-        user: { token }
+        user: decodedToken
       });
       setIsAuthenticated(true);
+      // const currentTime = Date.now() / 1000;
+      // if (decodedToken.exp < currentTime) {
+      //   removeAuthToken();
+      //   setIsAuthenticated(false);
+      //   return;
+      // }
     } else {
       dispatch({
         type: 'SET_USER',
@@ -45,86 +52,70 @@ function App() {
       });
       setIsAuthenticated(false);
     }
-
   }, [])
 
 
   return (
     <div>
+      <Header setIsAuthenticated={setIsAuthenticated} />
       <Routes>
-        {(isAuthenticated || AuthTokenControl()) && (
-          <>
-            <Route path='/bookshelf' element={
-              <>
-                <Header />
-                <Bookshelf />
-              </>
-            } />
-            <Route path='/addBook' element={
-              <>
-                <Header />
-                <AddToBookshelf />
-              </>
-            } />
-            <Route path='/updateBook' element={
-              <>
-                <Header />
-                <UpdateInBookshelf />
-              </>
-            } />
-            <Route path='/myAccount' element={
-              <>
-                <Header />
-                <Account />
-              </>
-            } />
-            <Route path='/myAds' element={
-              <>
-                <Header />
-                <AdvertisedBooks />
-              </>
-            } />
-            <Route path='/myOffers' element={
-              <>
-                <Header />
-                <Offers />
-              </>
-            } />
-            <Route path='/myTrades' element={
-              <>
-                <Header />
-                <TradedBooks />
-              </>
-            } />
-            <Route path='/mySales' element={
-              <>
-                <Header />
-                <SoldBooks />
-              </>
-            } />
-            <Route path='/trade' element={
-              <>
-                <Header />
-                <Trade />
-              </>
-            } />
-            <Route path='/checkout' element={
-              <>
-                <Header />
-                <Checkout />
-              </>
-            } />
-            <Route path='/payment' element={
-              <>
-                <Header />
-                <Payment />
-              </>
-            } />
-          </>
-        )}
+        <Route path='/bookshelf' element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <Bookshelf />
+          </PrivateRoute>
+        } />
+        <Route path='/addBook' element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <AddToBookshelf />
+          </PrivateRoute>
+        } />
+        <Route path='/updateBook' element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <UpdateInBookshelf />
+          </PrivateRoute>
+        } />
+        <Route path='/myAccount' element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <Account />
+          </PrivateRoute>
+        } />
+        <Route path='/myAds' element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <AdvertisedBooks />
+          </PrivateRoute>
+        } />
+        <Route path='/myOffers' element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <Offers />
+          </PrivateRoute>
+        } />
+        <Route path='/myTrades' element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <TradedBooks />
+          </PrivateRoute>
+        } />
+        <Route path='/mySales' element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <SoldBooks />
+          </PrivateRoute>
+        } />
+        <Route path='/trade' element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <Trade />
+          </PrivateRoute>
+        } />
+        <Route path='/checkout' element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <Checkout />
+          </PrivateRoute>
+        } />
+        <Route path='/payment' element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <Payment />
+          </PrivateRoute>
+        } />
         <Route path='/' element={
           <>
-            <Header />
             <Home />
           </>
         } />
@@ -137,27 +128,24 @@ function App() {
 
         <Route path='/search' element={
           <>
-            <Header />
             <Search />
           </>
         } />
 
         <Route path='/bookDetails' element={
           <>
-            <Header />
             <BookDetails />
           </>
         } />
         <Route path='/userDetails' element={
-          <>
-            <Header />
+          <PrivateRoute isAuthenticated={isAuthenticated}>
             <UserDetails />
-          </>
+          </PrivateRoute>
         } />
         <Route path='/admin' element={
-          <>
+          <PrivateRoute isAuthenticated={isAuthenticated}>
             <Admin />
-          </>
+          </PrivateRoute>
         } />
       </Routes>
     </div>

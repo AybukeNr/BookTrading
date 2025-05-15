@@ -25,8 +25,11 @@ function Bookshelf() {
         const fetchBooks = async () => {
             setLoading(true);
             setError('');
+            const storedUserId = localStorage.getItem("userId");
+            const effectiveUserId = storedUserId && storedUserId !== "null" ? storedUserId : 0;
+
             try {
-                const response = await instanceLibrary.get(`/getBookByOwnerId?ownerId=${userId}`)
+                const response = await instanceLibrary.get(`/getBookByOwnerId?ownerId=${effectiveUserId}`);
                 const data = response.data;
 
                 dispatch({
@@ -133,7 +136,7 @@ function Bookshelf() {
                 payload: true,
             });
             navigate("/myAds");
-            
+
             handleCloseAdDialog();
         } catch (error) {
             console.error("Kitap ilan verilirken hata oluştu:", error);

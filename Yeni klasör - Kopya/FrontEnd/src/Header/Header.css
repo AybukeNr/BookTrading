@@ -78,6 +78,7 @@
     margin-left: 10px;
     margin-right: 10px;
     color: aliceblue;
+    cursor: pointer;
 }
 
 .header_optionBasket, .header_optionAccount, .header_optionCategory, .header_optionNotification {

@@ -1,29 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../Login/Login.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { instanceAuth } from '../axios';
 import { setAuthToken } from '../auth';
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+import { useStateValue } from '../StateProvider';
 
 function Login(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [{ }, dispatch] = useStateValue();
 
     const signIn = async (e) => {
         e.preventDefault();
         setError('');
-        
 
         if (!email || !password) {
             setError('Lütfen tüm alanları düzgünce doldurun!');
-            setLoading(false);
             return;
         }
 
         try {
-             const response = await instanceAuth.post('/login', {
+            const response = await instanceAuth.post('/login', {
                 email,
                 password,
             });
@@ -33,16 +33,22 @@ function Login(props) {
             const decodedToken = jwtDecode(token);
             console.log("Token İçeriği:", decodedToken);
 
-        
-           const userId = decodedToken.id;
-           console.log("Kullanıcı ID:", userId);
-          
-           localStorage.setItem('userId', userId);
+
+            const userId = decodedToken.id;
+            console.log("Kullanıcı ID:", userId);
+
+            localStorage.setItem('userId', userId);
+
+            dispatch({
+                type: 'SET_USER',
+                user: decodedToken,
+            });
+
             alert('Giriş Başarılı');
             props.setIsAuthenticated(true);
             setEmail('');
             setPassword('');
-            navigate('/');
+            setTimeout(() => navigate("/"), 0);
         } catch (error) {
             if (error.response) {
                 setError(error.response.data.message || 'Giriş başarısız. Lütfen tekrar deneyin.');
@@ -51,9 +57,6 @@ function Login(props) {
             } else {
                 setError('Bilinmeyen bir hata oluştu.');
             }
-        } finally{
-            
-            
         }
     }
 
@@ -66,7 +69,7 @@ function Login(props) {
             <div className="login_container">
                 <h1>Giriş Yap</h1>
                 <form onSubmit={signIn}>
-                    
+
                     <input type="email" placeholder='E-mail giriniz' value={email} onChange={e => setEmail(e.target.value)} />
 
                     <input type="password" placeholder='Şifre giriniz' value={password} onChange={e => setPassword(e.target.value)} />
@@ -81,4 +84,4 @@ function Login(props) {
         </div>
     );
 }
-export default Login
+export default Login

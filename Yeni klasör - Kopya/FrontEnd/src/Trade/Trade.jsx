@@ -3,7 +3,22 @@ import '../Trade/Trade.css'
 import PaymentCard from '../PaymentCard/PaymentCard'
 import { useStateValue } from '../StateProvider';
 function Trade() {
-  const [{ receivedOffers, sentOffers, user }, dispatch] = useStateValue();
+  const [{ receiveOffer, sendOffer, otherUser, user }, dispatch] = useStateValue();
+
+  // const tradeOffer = async () => {
+  //   try {
+  //     const response = await instanceOffer.post(`/createTrade`, {
+  //       offerId: receiveOffer.offerId,
+  //       offererId: receiveOffer.offererId,
+  //       offeredListId: sendOffer.offeredListId,
+  //       offeredBookId: sendOffer.offeredBookId,
+  //       offerStatus: "KABUL",
+  //     });
+  //     console.log("Trade offer created successfully:", response.data);
+  //   } catch (error) {
+  //     console.error("Error creating trade offer:", error);
+  //   }
+  // }
 
   return (
     <div className='trade'>
@@ -14,9 +29,14 @@ function Trade() {
             <h3>Teslimat Adresleri: </h3>
           </div>
           <div className="trade_address">
-            {/* <p>{user?.firstName} {user?.lastName}</p>
+            <h4>Diğer Kullanıcı Adresi</h4>
+            <p>{otherUser?.firstName} {otherUser?.lastName}</p>
+            <p>{otherUser?.email}</p>
+            <p>{otherUser?.address}</p>
+            <h4>Senin Adresin</h4>
+            <p>{user?.firstName} {user?.lastName}</p>
             <p>{user?.email}</p>
-            <p>{user?.address}</p> */}
+            <p>{user?.address}</p>
           </div>
         </div>
 
@@ -27,7 +47,7 @@ function Trade() {
           <div className="trade_items">
             <div className="sendBook">
               <h4>Gönderilecek Kitap</h4>
-              {sentOffers.map(item => (
+              {sendBook.map(item => (
                 <div className="offer_info" key={item.index}>
                   <img src={item.image} alt={item.title} />
                   <div>
@@ -45,7 +65,7 @@ function Trade() {
             </div>
             <div className="receiveBook">
               <h4>Alınacak Kitap</h4>
-              {receivedOffers.map((item, index) => (
+              {receiveBook.map((item, index) => (
                 <div className="offer_info" key={index}>
                   <img src={item.image} alt={item.title} />
                   <div>
