@@ -6,6 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import OfferPopUp from '../OfferPopUp/OfferPopUp';
 
 function Product({ book }) {
+  if (!book || !book.book) {
+    return null; // render etme
+  }
 
   const navigate = useNavigate();
   const [{ basket }, dispatch] = useStateValue();
