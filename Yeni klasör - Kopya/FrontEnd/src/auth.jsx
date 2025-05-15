@@ -73,6 +73,10 @@ export const getDecodedUserId = () => {
     return localStorage.getItem('userId');
 }
 
+export const removeDecodedUserId = () => {
+    return localStorage.removeItem('userId');
+}
+
 export const getDecodedUsername = () => {
     const decodedToken = getDecodedAuthToken();
     return decodedToken ? decodedToken.username : null;

@@ -7,6 +7,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 import Badge from '@mui/material/Badge';
+import { removeAuthToken, removeDecodedUserId } from '../auth';
 
 // import { instance } from '../axios';
 
@@ -25,7 +26,7 @@ import Badge from '@mui/material/Badge';
 //     (error) => Promise.reject(error)
 // );
 
-function Header() {
+function Header(props) {
     const [{ basket, user, notifications, searchQuery, bookList }, dispatch] = useStateValue();
     const navigate = useNavigate();
     const [input, setInput] = useState('');
@@ -38,14 +39,16 @@ function Header() {
     const dropdownCatRef = useRef(null);
 
     const handleAuthentication = async () => {
-        if (user) {
-            localStorage.removeItem('authToken');
+        if (!user) {
+            navigate('/login');
+        } else {
+            removeAuthToken();
+            removeDecodedUserId();
             dispatch({
                 type: 'SET_USER',
                 user: null
             });
-            navigate('/login');
-        } else {
+            props.setIsAuthenticated(false);
             navigate('/login');
         }
     }
@@ -117,40 +120,50 @@ function Header() {
             </Link>
 
             <form className='header_search' onSubmit={handleSearch}>
-                <input className='header_searchInput' type='text' placeholder='Aradığınız metni girin.' value={input}  onChange={(e) => setInput(e.target.value)} />
+                <input className='header_searchInput' type='text' placeholder='Aradığınız metni girin.' value={input} onChange={(e) => setInput(e.target.value)} />
                 <SearchIcon className='header_searchIcon' type='submit' onClick={handleSearch} />
             </form>
 
             <div className='header_nav'>
-                <Link to={!user && '/login'}>
+                {/* <Link to={!user && '/login'}>
                     <div onClick={handleAuthentication} className='header_option'>
                         <span className='header_optionLineTwo'>{user ? 'Çıkış Yap' : 'Giriş Yap'}</span>
                     </div>
-                </Link>
-
+                </Link> */}
+                {user ? (
+                    <div onClick={handleAuthentication} className='header_option'>
+                        <span className='header_optionLineTwo'>Çıkış Yap</span>
+                    </div>
+                ) : (
+                    <Link to="/login" className='header_option'>
+                        <div className='header_option'>
+                            <span className='header_optionLineTwo'>Giriş Yap</span>
+                        </div>
+                    </Link>
+                )}
                 <div className='header_optionCategory' onClick={dropdownCategory} ref={dropdownCatRef}>
                     <span className='header_optionLineTwo'>Kategoriler</span>
                     {dropdownCatVisible && (
                         <div className="dropdown_category">
                             <ul>
-                                <li onClick={() => handleCategory('Computers')}>Bilgisayar Bilimi</li>
-                                <li onClick={() => handleCategory('Science')}>Bilim</li>
-                                <li onClick={() => handleCategory('Biography')}>Biyografi</li>
-                                <li onClick={() => handleCategory('Comics')}>Çizgi Roman</li>
-                                <li onClick={() => handleCategory('Religion')}>Din</li>
-                                <li onClick={() => handleCategory('Drama')}>Dram</li>
-                                <li onClick={() => handleCategory('Education')}>Eğitim</li>
-                                <li onClick={() => handleCategory('Philosophy')}>Felsefe</li>
-                                <li onClick={() => handleCategory('Juvenile_Ficton')}>Gençlik Romanları</li>
-                                <li onClick={() => handleCategory('Bussiness')}>İş</li>
-                                <li onClick={() => handleCategory('Self_Help')}>Kişisel Gelişim</li>
-                                <li onClick={() => handleCategory('Ficton')}>Kurgu</li>
-                                <li onClick={() => handleCategory('Pyschology')}>Psikoloji</li>
-                                <li onClick={() => handleCategory('Poetry')}>Şiir</li>
-                                <li onClick={() => handleCategory('Social_Science')}>Toplum Bilimi</li>
-                                <li onClick={() => handleCategory('Sports')}>Spor</li>
-                                <li onClick={() => handleCategory('History')}>Tarih</li>
-                                <li onClick={() => handleCategory('Cooking')}>Yemek Pişirme</li>
+                                <li onClick={() => handleCategory('Bilgisayar Bilimi')}>Bilgisayar Bilimi</li>
+                                <li onClick={() => handleCategory('Bilim')}>Bilim</li>
+                                <li onClick={() => handleCategory('Biyografi')}>Biyografi</li>
+                                <li onClick={() => handleCategory('Çizgi Roman')}>Çizgi Roman</li>
+                                <li onClick={() => handleCategory('Din')}>Din</li>
+                                <li onClick={() => handleCategory('Dram')}>Dram</li>
+                                <li onClick={() => handleCategory('Eğitim')}>Eğitim</li>
+                                <li onClick={() => handleCategory('Felsefe')}>Felsefe</li>
+                                <li onClick={() => handleCategory('Gençlik Romanları')}>Gençlik Romanları</li>
+                                <li onClick={() => handleCategory('İş')}>İş</li>
+                                <li onClick={() => handleCategory('Kişisel Gelişim')}>Kişisel Gelişim</li>
+                                <li onClick={() => handleCategory('Kurgu')}>Kurgu</li>
+                                <li onClick={() => handleCategory('Psikoloji')}>Psikoloji</li>
+                                <li onClick={() => handleCategory('Şiir')}>Şiir</li>
+                                <li onClick={() => handleCategory('Toplum Bilimi')}>Toplum Bilimi</li>
+                                <li onClick={() => handleCategory('Spor')}>Spor</li>
+                                <li onClick={() => handleCategory('Tarih')}>Tarih</li>
+                                <li onClick={() => handleCategory('Yemek')}>Yemek Pişirme</li>
                             </ul>
                         </div>
                     )}
@@ -172,7 +185,7 @@ function Header() {
                     )}
                 </div>
 
-                <div className='header_optionNotification' onClick={toggleNotifications} ref={notificationRef}>
+                {/* <div className='header_optionNotification' onClick={toggleNotifications} ref={notificationRef}>
                     <Badge color='warning' variant={hasNotifications ? "dot" : undefined}>
                         <NotificationsNoneIcon />
                     </Badge>
@@ -185,7 +198,7 @@ function Header() {
                             </ul>
                         </div>
                     )}
-                </div>
+                </div> */}
 
                 <Link to='/checkout'>
                     <div className='header_optionBasket'>

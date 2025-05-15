@@ -13,23 +13,27 @@ function Checkout() {
                 <img className='checkout_ad' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI5W1AjZSgok7PuSE5WdeAZD8f_Das4XX1Ng&s" alt="" />
                 <div>
                     <h1 className="checkout_title">Alışveriş Sepetim</h1>
-                    {/* <h3>{user?.ad}</h3> */}
-                    {/* <h3>{user?.soyad}</h3> */}
+                    {/* <h3>{user?.firstName}</h3>
+                    <h3>{user?.lastName}</h3> */}
 
                     {basket?.length > 0 ? (
                         basket.map((item, index) => (
                             <CheckoutProduct
                                 key={index} 
-                                isbn={item.isbn}
-                                title={item.title}
-                                author={item.author}
-                                publisher={item.publisher}
-                                publishedDate={item.publishedDate}
-                                category={item.category}
-                                description={item.description}
-                                condition={item.condition}
-                                image={item.image}
-                                price={item.price}
+                                isbn={item.book.isbn}
+                                title={item.book.title}
+                                author={item.book.author}
+                                publisher={item.book.publisher}
+                                publishedDate={item.book.publishedDate}
+                                category={item.book.category}
+                                description={item.book.description}
+                                condition={item.book.condition}
+                                image={item.book.image}
+                                price={item.book.price}
+                                firstName={item.user.firstName}
+                                lastName={item.user.lastName}
+                                trustPoint={item.user.trustPoint}
+                                email={item.user.email}
                             />
                         ))
                     ) : (

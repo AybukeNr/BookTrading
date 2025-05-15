@@ -14,6 +14,7 @@ function AdvertisedBook() {
             console.error("Kullanıcı ID bulunamadı.");
             return;
         }
+        
 
         const fetchAdvertisedBooks = async () => {
             try {

@@ -31,7 +31,7 @@ export const initialState = {
 };
 
 export const getBasketTotal = (basket) => {
-    return basket?.reduce((amount, item) => item.price + amount, 0);
+    return basket?.reduce((amount, item) => item.book.price + amount, 0);
 }
 
 const reducer = (state, action) => {

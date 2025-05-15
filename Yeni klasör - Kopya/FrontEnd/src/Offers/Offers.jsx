@@ -61,7 +61,24 @@ function Offers() {
       });
 
       fetchOffers();
-      navigate('/trade');
+      navigate('/trade', {
+        state: {
+          acceptedOffer: {
+            offerId,
+            offererId,
+            offeredListId,
+            bookId: offeredBookId,
+            offerItem: {
+              sentOffer: {
+                ...sentOffers.find(offer => offer.offerId === offerId)
+              },
+              receivedOffer: {
+                ...receivedOffers.find(offer => offer.offerId === offerId)
+              }
+            }
+          }
+        }
+      });
     } catch (error) {
       console.error("Teklif kabul edilirken hata:", error);
     }
@@ -109,7 +126,7 @@ function Offers() {
           fromOffers: true,
         }
       }
-      });
+    });
   };
 
   const handleCancelOffer = async (item) => {
@@ -152,15 +169,15 @@ function Offers() {
                 <div>
                   <h4>Teklif edilen</h4>
                   <img src={yourBook?.image} alt={yourBook?.title || "Senin kitabın"} onClick={() => handleDetails(yourBook)} />
-                  <p>{yourBook?.isbn}</p>
-                  <p>{yourBook?.title}/{yourBook?.author}</p>
+                  <p><strong>ISBN: </strong>{yourBook?.isbn}</p>
+                  <p><strong>Kitap/Yazar: </strong>{yourBook?.title}/{yourBook?.author}</p>
                 </div>
 
                 <div>
                   <h4>Teklif verilen</h4>
                   <img src={theirBook?.image} alt={theirBook?.title || "Karşı tarafın kitabı"} onClick={() => handleDetails(theirBook)} />
-                  <p>{theirBook?.isbn}/{theirBook?.title}/{theirBook?.author}</p>
-                  <p>{theirUser?.firstName} {theirUser?.lastName}</p>
+                  <p><strong>ISBN/Kitap/Yazar: </strong>{theirBook?.isbn}/{theirBook?.title}/{theirBook?.author}</p>
+                  <p><strong>Kullanıcı: </strong>{theirUser?.firstName} {theirUser?.lastName}</p>
                 </div>
 
                 <div className="accept_callback" style={{ fontSize: "14px" }}>
@@ -208,7 +225,7 @@ function Offers() {
                       <p><strong>ISBN: </strong>{book.isbn}</p>
                       <p><strong>Açıklama: </strong>{book.description}</p>
                       <p><strong>Durum: </strong>{book.condition}</p>
-                      <p>{user.firstName} {user.lastName}</p>
+                      <p><strong>Kullanıcı: </strong>{user.firstName} {user.lastName}</p>
                     </div>
                   </div>
                   {item.offerStatus === "IPTAL_EDILDI" ? (

@@ -28,7 +28,7 @@ function Product({ book }) {
       image,
     },
     price,
-    user: { firstName, lastName, trustPoint },
+    user: { firstName, lastName, trustPoint, email, address },
     listId,
   } = book;
 
@@ -36,17 +36,14 @@ function Product({ book }) {
     dispatch({
       type: 'ADD_TO_BASKET',
       item: {
-        id: id,
-        title: title,
-        author: author,
-        isbn: isbn,
-        publisher: publisher,
-        publishedDate: publishedDate,
-        category: category,
-        description: description,
-        condition: condition,
-        image: image,
-        price: price,
+        book: {
+          id, title, author, isbn, publisher, publishedDate,
+          category, description, condition, image, price
+        },
+        user: {
+          firstName, lastName, trustPoint, email
+        },
+        listId,
       }
     });
   }
@@ -60,7 +57,7 @@ function Product({ book }) {
     });
   }
 
-    const offerPopUp = (e) => {
+  const offerPopUp = (e) => {
     e.stopPropagation();
     dispatch({
       type: 'SET_SELECTED_ADVERTISED_BOOK',
@@ -68,7 +65,6 @@ function Product({ book }) {
     });
     setShowOfferPopUp(true);
   };
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -91,7 +87,8 @@ function Product({ book }) {
         <div className="product_info">
           <p onClick={handleNavigate}>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}/{condition}</p>
           <p onClick={() => navigate("/userDetails", {
-                state: { user: book.user.id } })}>{firstName + " " + lastName} - Güvence: {trustPoint}<Rating className='rating' /></p>
+            state: { user: book.user.id }
+          })}>{firstName + " " + lastName} - Güvence: {trustPoint}<Rating className='rating' /></p>
           <p onClick={handleNavigate}>{description}</p>
 
           {price ? (

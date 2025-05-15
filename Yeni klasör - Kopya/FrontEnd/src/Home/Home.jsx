@@ -6,10 +6,8 @@ import { useStateValue } from "../StateProvider";
 import { instanceListing } from "../axios";
 import { useNavigate } from "react-router-dom";
 
-const ownerId = localStorage.getItem("userId");
 function Home() {
   const [{ bookList, selectedCategory }, dispatch] = useStateValue();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -17,9 +15,11 @@ function Home() {
     const fetchBooks = async () => {
       setLoading(true);
       setError("");
+        const storedOwnerId = localStorage.getItem("userId");
+        const effectiveOwnerId = storedOwnerId && storedOwnerId !== "null" ? storedOwnerId : 1;
       try {
         const response = await instanceListing.get(
-          `/getListsExcludingOwner?ownerId=${ownerId}`
+          `/getListsExcludingOwner?ownerId=${effectiveOwnerId}`, 
         );
 
         dispatch({
@@ -30,6 +30,10 @@ function Home() {
           type: "SET_SEARCHED_BOOKS",
           books: response.data,
         });
+        // dispatch({
+        //   type: "SET_SELECTED_CATEGORY",
+        //   category: "",
+        // });
       } catch (err) {
         setError("Kitaplar yüklenirken bir hata oluştu.");
       } finally {
@@ -119,9 +123,7 @@ function Home() {
           <div className="home_row">
             {filteredBooks.length > 0 ? (
               filteredBooks.map((book, index) => (
-                <div key={index}>
                   <Product key={index} book={book} />
-                </div>
               ))
             ) : (
               <p>Sonuç bulunamadı.</p>
