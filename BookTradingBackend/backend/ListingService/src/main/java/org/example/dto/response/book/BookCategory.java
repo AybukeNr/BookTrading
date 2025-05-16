@@ -1,4 +1,4 @@
-package org.example.dto.response;
+package org.example.dto.response.book;
 
 public enum BookCategory {
     Fiction("Kurgu"),

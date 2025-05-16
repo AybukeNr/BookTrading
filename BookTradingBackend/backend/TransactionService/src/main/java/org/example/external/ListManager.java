@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import static org.example.constant.RestApiList.*;
 
@@ -25,5 +26,8 @@ public interface ListManager {
 
     @GetMapping(GET_LIST_PRICE)
     public ResponseEntity<Double> getListPrice(@RequestParam String listId);
+
+    @GetMapping(GET_OFFER_BOOKS)
+    public ResponseEntity<Map<String,Object>> getExchangeBooks(@RequestParam String userId);
 
 }

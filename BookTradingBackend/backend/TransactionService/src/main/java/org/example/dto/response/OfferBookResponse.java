@@ -1,11 +1,9 @@
 package org.example.dto.response;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.entity.enums.BookCategory;
 
 @Data
 @Builder
@@ -22,5 +20,4 @@ public class OfferBookResponse {
     private String description;
     private String condition;
     private Long id;
-
 }

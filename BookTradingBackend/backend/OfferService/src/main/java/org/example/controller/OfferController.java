@@ -52,4 +52,11 @@ public class OfferController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    @GetMapping(GET_ALL_ACCEPTED_OFFERS)
+    public ResponseEntity<List<Offer>> getAllAcceptedOffers(@RequestParam String userId) {
+        log.info("Getting all offers...");
+        List<Offer> offerResponses = offerService.getAcceptedOffers(userId);
+        return new ResponseEntity<>(offerResponses, HttpStatus.OK);
+    }
+
 }

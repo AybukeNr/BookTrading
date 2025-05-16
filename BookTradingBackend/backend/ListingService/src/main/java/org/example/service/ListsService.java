@@ -8,6 +8,11 @@ import org.example.dto.request.*;
 import org.example.dto.request.mail.ListMailRequest;
 import org.example.dto.request.mail.TransactionMailReq;
 import org.example.dto.response.*;
+import org.example.dto.response.offer.OfferBookResponse;
+import org.example.dto.response.offer.OfferListResponse;
+import org.example.dto.response.offer.OfferStatus;
+import org.example.dto.response.offer.SentOffer;
+import org.example.dto.response.transaciton.TransactionResponse;
 import org.example.entity.Lists;
 import org.example.entity.enums.ListsStatus;
 import org.example.exception.ErrorType;
@@ -23,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -48,10 +54,10 @@ public class ListsService {
         ListMailResponse mailResponse = listMapper.ListToListMailResponse(lists);
         return mailResponse;
     }
+
     public List<ListResponse> getAllLists() {
         return listsRepository.findAll().stream().map(listMapper::ListToListResponse).toList();
     }
-
     public List<ListResponseN> getListsExcludingOwner(String ownerId) {
         List<Lists> lists = listsRepository.findByOwnerIdNot(ownerId);
 
@@ -282,6 +288,25 @@ public class ListsService {
                 .collect(Collectors.toList());
     }
 
+    //ilanın kabul edilen teklifinin kitabını ve ilandaki kitabı çeker
+    public ExchangeDetails getExchangeBooks(String listId) {
+        ExchangeDetails exchangeDetails = new ExchangeDetails();
+         Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+         OfferBookResponse acceptedBook = list.getOffers().stream().filter(offer -> OfferStatus.KABUL.equals(offer.getOfferStatus())).toList().getFirst().getOfferedBook();
+         ListBookResponse listBook = list.getBookInfo();
+         exchangeDetails.setListBook(listBook);
+         exchangeDetails.setAcceptedBook(acceptedBook);
+         return exchangeDetails;
+    }
+
+    // Kabul edilen teklifteki alınacak kitabı bulmak için yardımcı metod
+    private ListBookResponse fetchReceivedBook(String listId) {
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        return list.getBookInfo();
+    }
+
 
 
     @Transactional
@@ -436,14 +461,21 @@ public class ListsService {
         return true;
     }
 
-    public Double getListPrice(String listId){
-        String priceStr = listsRepository.findPriceById(listId);
-        return priceStr != null ? Double.valueOf(priceStr) : 0.0;
-    }
+//    public Double getListPrice(String listId){
+//        String price = listsRepository.findPriceById(listId);
+//        return price != null ? Double.valueOf(price) : 0.0;
+//    }
 
     public OfferListResponse getOfferListById(String listId){
         Lists list = listsRepository.findById(listId)
                 .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
         return listMapper.ListToOfferListResponse(list);
     }
+
+    public String getListType(String listId){
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        return String.valueOf(list.getType());
+    }
+
 }

@@ -121,6 +121,10 @@ public class OfferService {
         return offers;
     }
 
+    public List<Offer> getAcceptedOffers(String userId){
+        List<Offer> acceptedOffers = offerRepository.findAllByOffererIdAndOfferStatus(userId,"KABUL").orElseThrow(() -> new OfferException(ErrorType.OFFER_NOT_FOUND));
+        return acceptedOffers;
+    }
 
 
     public List<Offer> getAllOffers() {

@@ -12,13 +12,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.*;
 import org.example.dto.response.*;
 
+import org.example.dto.response.offer.OfferListResponse;
+import org.example.dto.response.offer.SentOffer;
 import org.example.service.ListsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import static org.example.constants.RestApiList.*;
 
@@ -203,6 +205,12 @@ public class ListsController {
         log.info("Received ListRequest: {}", lists);
         log.info("Received Book: {}", lists.getBook());
         return new ResponseEntity<>(lists, HttpStatus.OK);
+    }
+    @Operation(summary = "Takaslanan kitapları getirir", description = "servisler arası endpoint")
+    @GetMapping(GET_EXCHANGE_BOOKS)
+    public ResponseEntity<Map<String,Object>> getExchangeBooks(@RequestParam String userId){
+        Map<String,Object> acceptedOfferBooks = listsService.getExchangeBooks(userId);
+        return new ResponseEntity<>(acceptedOfferBooks, HttpStatus.OK);
     }
 
 }

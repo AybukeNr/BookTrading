@@ -1,11 +1,9 @@
 package org.example.external;
 
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import org.example.dto.request.TakePaymentRequest;
 import org.example.dto.request.TransactionRequest;
-import org.example.dto.response.TransactionResponse;
+import org.example.dto.response.transaciton.TransactionResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
