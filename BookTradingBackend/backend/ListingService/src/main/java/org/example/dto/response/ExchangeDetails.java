@@ -5,12 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.dto.response.offer.OfferBookResponse;
+import org.example.dto.response.transaciton.ExchangeInfos;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExchangeDetails {
-    private OfferBookResponse sentBook;
-    private ListBookResponse receivedBook;
+    private OfferBookResponse acceptedBook;
+    private ListBookResponse listBook;
 }

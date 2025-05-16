@@ -2,6 +2,7 @@ package org.example.service;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.*;
 import org.example.dto.request.mail.ListMailRequest;
@@ -19,10 +20,12 @@ import org.example.exception.ListException;
 import org.example.external.*;
 import org.example.mapper.ListsMapper;
 import org.example.repository.ListsRepository;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,10 +54,10 @@ public class ListsService {
         ListMailResponse mailResponse = listMapper.ListToListMailResponse(lists);
         return mailResponse;
     }
+
     public List<ListResponse> getAllLists() {
         return listsRepository.findAll().stream().map(listMapper::ListToListResponse).toList();
     }
-
     public List<ListResponseN> getListsExcludingOwner(String ownerId) {
         List<Lists> lists = listsRepository.findByOwnerIdNot(ownerId);
 
@@ -285,30 +288,16 @@ public class ListsService {
                 .collect(Collectors.toList());
     }
 
-
-<<<<<<< Updated upstream
-=======
-    public List<SentOffer> getAcceptedOffers(String userId) {
-        List<Lists> userLists = listsRepository.findAllByOwnerId(userId)
-                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
-
-        return userLists.stream()
-                .filter(list -> list.getOffers() != null)
-                .flatMap(list -> list.getOffers().stream())
-                .filter(offer -> "KABUL".equals(offer.getOfferStatus()))
-                .collect(Collectors.toList());
-    }
-
-    public Map<String,Object> getExchangeBooks(String listId) {
-        Map<String,Object> exchangeBooks = new HashMap<>();
+    //ilanın kabul edilen teklifinin kitabını ve ilandaki kitabı çeker
+    public ExchangeDetails getExchangeBooks(String listId) {
+        ExchangeDetails exchangeDetails = new ExchangeDetails();
          Lists list = listsRepository.findById(listId)
                 .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
-         OfferBookResponse acceptedBook = list.getOffers().stream().filter(offer -> "KABUL".equals(offer.getOfferStatus())).toList().getFirst().getOfferedBook();
+         OfferBookResponse acceptedBook = list.getOffers().stream().filter(offer -> OfferStatus.KABUL.equals(offer.getOfferStatus())).toList().getFirst().getOfferedBook();
          ListBookResponse listBook = list.getBookInfo();
-
-         exchangeBooks.put("acceptedBook",acceptedBook);
-         exchangeBooks.put("listBook",listBook);
-         return exchangeBooks;
+         exchangeDetails.setListBook(listBook);
+         exchangeDetails.setAcceptedBook(acceptedBook);
+         return exchangeDetails;
     }
 
     // Kabul edilen teklifteki alınacak kitabı bulmak için yardımcı metod
@@ -319,7 +308,6 @@ public class ListsService {
     }
 
 
->>>>>>> Stashed changes
 
     @Transactional
     public void updateOffer(UpdateOfferRequest updateOfferRequest) {
@@ -473,14 +461,21 @@ public class ListsService {
         return true;
     }
 
-    public Double getListPrice(String listId){
-        String priceStr = listsRepository.findPriceById(listId);
-        return priceStr != null ? Double.valueOf(priceStr) : 0.0;
-    }
+//    public Double getListPrice(String listId){
+//        String price = listsRepository.findPriceById(listId);
+//        return price != null ? Double.valueOf(price) : 0.0;
+//    }
 
     public OfferListResponse getOfferListById(String listId){
         Lists list = listsRepository.findById(listId)
                 .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
         return listMapper.ListToOfferListResponse(list);
     }
+
+    public String getListType(String listId){
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        return String.valueOf(list.getType());
+    }
+
 }
