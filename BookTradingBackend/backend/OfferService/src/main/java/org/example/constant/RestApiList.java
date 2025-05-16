@@ -17,12 +17,8 @@ public class RestApiList {
     public static final String TAKE_OFFER = "/takeOffer";
     public static final String GET_LIST_BY_ID_OFFER = "/getListForOffer";
     public static final String GET_OFFER_BOOK_BY_ID ="/getOfferBookById";
-<<<<<<< Updated upstream
     public static final String GET_USER_RESPONSE_BY_ID = "/getUserResponseById";
-=======
     public static final String GET_ALL_ACCEPTED_OFFERS = "/getAllAcceptedOffers";
-
->>>>>>> Stashed changes
     public static final String UPDATE_BOOK_STATUS   = "/updateBookStat";
 
 

@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.dto.request.*;
 import org.example.dto.response.CardResponse;
 import org.example.dto.response.PaymentResponse;
+import org.example.dto.response.TransactionInfo;
 import org.example.dto.response.TransactionResponse;
 import org.example.entity.Transactions;
 import org.example.entity.enums.TransactionStatus;
@@ -42,7 +43,7 @@ public interface ITransactionService {
 
     public List<TransactionResponse> getUsersSales(String ownerId);
 
-   // public void cancelTransaction();
+    public List<TransactionInfo> transactionAllInfos(String userId);
 
 
 

@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.dto.request.CreateExchangeRequest;
 import org.example.dto.request.CreateShippingRequest;
 import org.example.dto.request.UpdateShippingRequest;
+import org.example.dto.response.ExchangeInfos;
 import org.example.dto.response.ExchangeResponse;
 import org.example.dto.response.ShippingResponse;
 import org.example.entity.Shippings;
@@ -28,6 +29,7 @@ public interface IShippingService {
 
 
 
+    public ExchangeInfos getExchangeInfos(String userId,String listId);
 
     /**
      * Kargo durumunu günceller.

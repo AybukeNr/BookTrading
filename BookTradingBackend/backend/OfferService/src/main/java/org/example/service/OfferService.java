@@ -126,7 +126,6 @@ public class OfferService {
         return acceptedOffers;
     }
 
-
     public List<Offer> getAllOffers() {
         List<Offer> offers = offerRepository.findAll();
         return offers;

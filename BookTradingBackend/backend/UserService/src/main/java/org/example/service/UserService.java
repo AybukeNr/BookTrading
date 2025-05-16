@@ -6,6 +6,7 @@ import org.example.dto.request.AccountRequest;
 import org.example.dto.request.CreateCardRequest;
 import org.example.dto.request.mail.RegisterMailRequest;
 import org.example.dto.request.UpdateUserDto;
+import org.example.dto.response.UserContactInfos;
 import org.example.dto.response.UserResponseId;
 import org.example.entity.User;
 import org.example.dto.request.UserRequest;
@@ -20,6 +21,7 @@ import org.example.mapper.UserMapper;
 import org.example.repository.UserRepository;
 import org.example.util.CardNumberUtil;
 import org.example.util.JwtTokenManager;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,11 +50,11 @@ public class UserService {
         cardsManager.createCard(CreateCardRequest.builder().cardNumber(CardNumberUtil.generateCardNumber()).cvv("123")
                 .expiryDate("12/25").fullName(user.getFirstName()+""+user.getLastName()).userId(user.getId()).build());
         log.info("Account created: {}", accountRequest);
-        RegisterMailRequest request = new RegisterMailRequest();
-        request.setPassword(userRequest.getPassword());
-        request.setUsername(userRequest.getUserName());
-        request.setSentToMailAddress(userRequest.getEmail());
-        mailService.sendRegisterMail(request);
+//        RegisterMailRequest request = new RegisterMailRequest();
+//        request.setPassword(userRequest.getPassword());
+//        request.setUsername(userRequest.getUserName());
+//        request.setSentToMailAddress(userRequest.getEmail());
+//        mailService.sendRegisterMail(request);
         return userMapper.UserMapToUserResponse(user);
     }
 
@@ -125,4 +127,19 @@ public class UserService {
                 .build();
     }
 
+    public Map<String,UserContactInfos> getUserContactInfos(String ownerId,String offererId) {
+        Map<String,UserContactInfos> userContactInfos = new HashMap<>();
+        User owner = userRepository.findById(ownerId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + ownerId));
+        User offerer = userRepository.findById(offererId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + offererId));
+        UserContactInfos ownerInfo = UserContactInfos.builder().email(owner.getEmail()).phone(owner.getPhoneNumber())
+                        .address(owner.getAddress()).fullName(owner.getFirstName()+""+owner.getLastName()).build();
+        UserContactInfos offererInfos = UserContactInfos.builder().email(offerer.getEmail()).phone(offerer.getPhoneNumber())
+                .address(offerer.getAddress()).fullName(offerer.getFirstName()+""+offerer.getLastName()).build();
+        userContactInfos.put("owner",ownerInfo);
+        userContactInfos.put("offerer",offererInfos);
+        return userContactInfos;
+
+    }
 }

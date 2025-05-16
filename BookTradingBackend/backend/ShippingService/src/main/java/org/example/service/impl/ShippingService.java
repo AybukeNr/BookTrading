@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.*;
 import org.example.dto.request.mail.ShippingMailReq;
+import org.example.dto.response.ExchangeInfos;
 import org.example.dto.response.ExchangeResponse;
 import org.example.dto.response.ShippingResponse;
 import org.example.entity.Exchange;
@@ -126,7 +127,6 @@ public class ShippingService implements IShippingService {
     }
 
 
-
     //kargo takip no girme
     @Override
     @Transactional
@@ -153,13 +153,13 @@ public class ShippingService implements IShippingService {
             exchange.setStatus(ExchangeStatus.KARGO_BEKLENIYOR);
             exchangeRepository.save(exchange);
             log.info("Exchange : {}", exchange);
-            ShippingMailReq mailReq = new ShippingMailReq();
-            mailReq.setSenderId(shippings.getSenderId());
-            mailReq.setRecipientId(shippings.getRecieverId());
-            mailReq.setTrackingNumber(shippings.getTrackingNumber());
-            mailReq.setAddress(shippings.getRecieverAddress());
-            mailReq.setListId(exchange.getListId());
-            mailManager.testShippingMail(mailReq);
+//            ShippingMailReq mailReq = new ShippingMailReq();
+//            mailReq.setSenderId(shippings.getSenderId());
+//            mailReq.setRecipientId(shippings.getRecieverId());
+//            mailReq.setTrackingNumber(shippings.getTrackingNumber());
+//            mailReq.setAddress(shippings.getRecieverAddress());
+//            mailReq.setListId(exchange.getListId());
+//            mailManager.testShippingMail(mailReq);
         }
         return shippingMapper.ShippingToResponse(shippings);
     }
@@ -438,5 +438,14 @@ public class ShippingService implements IShippingService {
         mailManager.testShippingMail(mailReq);
     }
 
+    @Override
+    public ExchangeInfos getExchangeInfos(String userId,String listId) {
+        Exchange exchange = exchangeRepository.findByListId(listId).
+                orElseThrow(() -> new ShippingException(ErrorType.EXCHANGE_NOT_FOUND));
+        Shippings shippings = shippingRepository.findBySenderIdAndListId(userId,listId).orElseThrow(() -> new ShippingException(ErrorType.SHIPPING_NOT_FOUND));
+        return ExchangeInfos.builder().shippingSerialNumber(shippings.getShippingSerialNumber())
+                .userTracking(shippings.getTrackingNumber())
+                .status(String.valueOf(exchange.getStatus())).build();
+    }
 
 }

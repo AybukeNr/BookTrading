@@ -224,15 +224,15 @@ public class ListsService {
         lists.getOffers().add(offer);
         Lists updatedLists = listsRepository.save(lists);
         log.info("Take List after update: {}", updatedLists);
-        ListMailRequest request = new ListMailRequest();
-        request.setOwnerId(lists.getOwnerId());
-        request.setOffererId(offer.getOffererId());
-        request.setListId(offer.getOfferListId());
-        request.setOfferedBookName(offer.getOfferedBook().getTitle());
-        request.setOfferedBookImage(offer.getOfferedBook().getImage());
-        request.setListBookName(lists.getBookInfo().getTitle());
-        request.setListBookImage(lists.getBookInfo().getImage());
-        mailManager.testExchangeListUpdated(request);
+//        ListMailRequest request = new ListMailRequest();
+//        request.setOwnerId(lists.getOwnerId());
+//        request.setOffererId(offer.getOffererId());
+//        request.setListId(offer.getOfferListId());
+//        request.setOfferedBookName(offer.getOfferedBook().getTitle());
+//        request.setOfferedBookImage(offer.getOfferedBook().getImage());
+//        request.setListBookName(lists.getBookInfo().getTitle());
+//        request.setListBookImage(lists.getBookInfo().getImage());
+//        mailManager.testExchangeListUpdated(request);
         return listMapper.ListToListResponse(updatedLists);
     }
     private OfferBookResponse mapToOfferBookResponse(ListBookResponse book) {
@@ -461,10 +461,11 @@ public class ListsService {
         return true;
     }
 
-//    public Double getListPrice(String listId){
-//        String price = listsRepository.findPriceById(listId);
-//        return price != null ? Double.valueOf(price) : 0.0;
-//    }
+    public Double getListPrice(String listId){
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        return list.getPrice() != null ? list.getPrice() : 0.0;
+    }
 
     public OfferListResponse getOfferListById(String listId){
         Lists list = listsRepository.findById(listId)
