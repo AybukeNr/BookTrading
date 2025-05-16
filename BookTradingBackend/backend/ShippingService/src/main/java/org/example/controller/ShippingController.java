@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.request.CreateShippingRequest;
 import org.example.dto.request.UpdateShippingRequest;
+import org.example.dto.response.ExchangeInfos;
 import org.example.dto.response.ExchangeResponse;
 import org.example.dto.response.ShippingResponse;
 import org.example.service.impl.ShippingService;
@@ -133,5 +134,9 @@ public class ShippingController {
     @GetMapping(GET_USERS_EXCHANGE)
     public ResponseEntity<List<ExchangeResponse>> getExchangesByUserId(@RequestParam String userId) {
         return ResponseEntity.ok(shippingService.getExchangeByUserID(userId));
+    }
+    @GetMapping(GET_EXCHANGE_INFOS)
+    public ResponseEntity<ExchangeInfos> getExchangeInfos(@RequestParam String userId, @RequestParam String listId){
+        return ResponseEntity.ok(shippingService.getExchangeInfos(userId, listId));
     }
 }

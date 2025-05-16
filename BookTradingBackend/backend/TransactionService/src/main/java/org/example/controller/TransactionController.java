@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.dto.request.*;
 import org.example.dto.response.CardResponse;
 import org.example.dto.response.PaymentResponse;
+import org.example.dto.response.TransactionInfo;
 import org.example.dto.response.TransactionResponse;
 import org.example.service.ICardService;
 import org.example.service.IPaymentService;
@@ -128,6 +129,12 @@ public class TransactionController {
     @GetMapping(GET_USERS_SALES)
     public ResponseEntity<List<TransactionResponse>> getUsersSales(@RequestParam String ownerId){
         return new ResponseEntity<>(transactionService.getUsersSales(ownerId),HttpStatus.OK);
+    }
+
+    @Operation(summary = "kullanıcının takaslarının tüm bilgilerini getirir",description = "takaslarla ilgili her halt gelir")
+    @GetMapping(GET_TRANSACTION_INFOS)
+    public ResponseEntity<List<TransactionInfo>> transactionAllInfos(@RequestParam String userId){
+        return new ResponseEntity<>(this.transactionService.transactionAllInfos(userId),HttpStatus.OK);
     }
 
 

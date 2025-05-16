@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.Manager.LibraryManager;
 import org.example.dto.request.*;
 import org.example.dto.request.mail.TransactionMailReq;
-import org.example.dto.response.TransactionResponse;
+import org.example.dto.response.*;
 import org.example.dto.response.enums.ListType;
 import org.example.entity.Account;
 import org.example.entity.Transactions;
@@ -16,6 +16,7 @@ import org.example.entity.enums.TransactionType;
 import org.example.exception.ErrorType;
 import org.example.exception.TransactionException;
 import org.example.external.ListManager;
+import org.example.external.ShippingManager;
 import org.example.external.UserManager;
 import org.example.mapper.CardMapper;
 import org.example.mapper.PaymentMapper;
@@ -28,6 +29,7 @@ import org.example.service.ITransactionService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -51,6 +53,7 @@ public class TransactionServiceImpl implements ITransactionService {
     private final AccountRepsoitory accountRepository;
     private final LibraryManager libraryManager;
     private final UserManager userManager;
+    private final ShippingManager shippingManager;
 
 
     @Override
@@ -158,11 +161,11 @@ public class TransactionServiceImpl implements ITransactionService {
 
                 transaction.setUpdatedDate(LocalDateTime.now());
                 transactionRepository.save(transaction);
-                TransactionMailReq transactionMailReq = new TransactionMailReq();
-                transactionMailReq.setStatus(String.valueOf(transaction.getStatus()));
-                transactionMailReq.setOffererId(transaction.getOffererId());
-                transactionMailReq.setOwnerId(transaction.getOwnerId());
-                transactionMailReq.setTrustFee(0.0);
+//                TransactionMailReq transactionMailReq = new TransactionMailReq();
+//                transactionMailReq.setStatus(String.valueOf(transaction.getStatus()));
+//                transactionMailReq.setOffererId(transaction.getOffererId());
+//                transactionMailReq.setOwnerId(transaction.getOwnerId());
+//                transactionMailReq.setTrustFee(0.0);
                 //sendComplatedMail(transactionMailReq);
             }
         } catch (Exception e) {
@@ -368,6 +371,37 @@ public class TransactionServiceImpl implements ITransactionService {
         return transactions.stream().map(transactionMapper::transactionToResponse).toList();
 
     }
-    public List<TransactionInfo>
+
+    @Override
+    public List<TransactionInfo> transactionAllInfos(String userId) {
+        List<TransactionInfo> transactionInfos = new ArrayList<>();
+        List<Transactions> transactions = transactionRepository.findAllByOwnerIdOrOffererId(userId,userId).orElseThrow(()->
+                new TransactionException(ErrorType.TRANSACTION_NOT_FOUND));
+        for(Transactions transaction : transactions){
+            TransactionInfo transactionInfo = new TransactionInfo();
+            ExchangeDetails books = listManager.getExchangeBooks(transaction.getListId()).getBody();
+            ExchangeInfos exchangeInfos = shippingManager.getExchangeInfos(userId,transaction.getListId()).getBody();
+            ListBookResponse listBookResponse = books.getListBook();
+            OfferBookResponse offerBookResponse = books.getAcceptedBook();
+            Map<String,UserContactInfos> users = userManager.getUserContactInfos(transaction.getOwnerId(),transaction.getOffererId()).getBody();
+            UserContactInfos owner = users.get("owner");
+            UserContactInfos offerer = users.get("offerer");
+            transactionInfo.setUserId(userId);
+            transactionInfo.setTransactionId(transaction.getTransactionId());
+            transactionInfo.setOwner(owner);
+            transactionInfo.setOfferer(offerer);
+            transactionInfo.setOffererDeposit(transaction.getOffererDeposit());
+            transactionInfo.setOwnerDeposit(transaction.getOwnerDeposit());
+            transactionInfo.setTrustFee(transaction.getTrustFee());
+            transactionInfo.setShippingSerialNumber(exchangeInfos.getShippingSerialNumber());
+            transactionInfo.setStatus(exchangeInfos.getStatus());
+            transactionInfo.setListBook(listBookResponse);
+            transactionInfo.setOfferBook(offerBookResponse);
+            transactionInfos.add(transactionInfo);
+        }
+
+        return transactionInfos;
+    }
+
 
 }

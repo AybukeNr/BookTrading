@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.example.dto.request.UpdateUserDto;
+import org.example.dto.response.UserContactInfos;
 import org.example.dto.response.UserResponseId;
 import org.example.entity.User;
 import org.example.dto.response.UserResponse;
@@ -116,6 +117,11 @@ public class UserController {
     public ResponseEntity<Void> reduceTrustPoint(@RequestParam String userId){
         userService.reduceUsertrustPoint(userId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(GET_USER_INFOS)
+    public ResponseEntity<Map<String,UserContactInfos>> getUserContactInfos(@RequestParam String userId,@RequestParam String offererId){
+        return ResponseEntity.ok(userService.getUserContactInfos(userId,offererId));
     }
 
 }

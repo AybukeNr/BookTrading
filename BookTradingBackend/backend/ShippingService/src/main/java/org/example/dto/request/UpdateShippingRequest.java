@@ -15,7 +15,7 @@ public class UpdateShippingRequest {
     private String shippingSerialNumber;
     @NotNull(message = "kargo takip no boş olamaz")
     @Schema(example = "1234567897")
-     @Pattern(regexp="(^[1-9][0-9]{10}$)",message="geçersiz takip no")
+    @Pattern(regexp="(^[1-9][0-9]{10}$)",message="geçersiz takip no")
     private String trackingNumber;
     private String userId;
 }

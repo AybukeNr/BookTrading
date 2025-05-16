@@ -208,9 +208,14 @@ public class ListsController {
     }
     @Operation(summary = "Takaslanan kitapları getirir", description = "servisler arası endpoint")
     @GetMapping(GET_EXCHANGE_BOOKS)
-    public ResponseEntity<Map<String,Object>> getExchangeBooks(@RequestParam String userId){
-        Map<String,Object> acceptedOfferBooks = listsService.getExchangeBooks(userId);
+    public ResponseEntity<ExchangeDetails> getExchangeBooks(@RequestParam String listId){
+        ExchangeDetails acceptedOfferBooks = listsService.getExchangeBooks(listId);
         return new ResponseEntity<>(acceptedOfferBooks, HttpStatus.OK);
+    }
+
+    @GetMapping(GET_LIST_TYPE)
+    public ResponseEntity<String> getListType(@RequestParam String listId) {
+        return new ResponseEntity<>(listsService.getListType(listId),HttpStatus.OK);
     }
 
 }

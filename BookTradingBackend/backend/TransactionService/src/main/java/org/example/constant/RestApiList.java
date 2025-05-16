@@ -23,6 +23,7 @@ public class RestApiList {
     public static final String SET_STATUS = "/setStatus";
     public static final String GET_USERS_EXCHANGES = "/getUsersExchanges";
     public static final String GET_USERS_SALES = "/getUsersSales";
+    public static final String GET_TRANSACTION_INFOS = "/getTransactionInfos";
 
     // Payment endpoints
     public static final String CREATE_PAYMENT = "/createPayment";
@@ -41,6 +42,8 @@ public class RestApiList {
     public static final String UPDATE_LIST_STATUS = "/updateListStat";
     public static final String GET_LIST_PRICE= "/getListPrice";
     public static final String GET_OFFER_BOOKS = "/getOfferBooks";
+    public static final String GET_EXCHANGE_BOOKS = "/getExchangeBooks";
+    public static final String GET_LIST_TYPE = "/getListType";
 
     public static final String CREATE_ACCOUNT = "/createAccount";
     public static final String PROCESS_SALES = "/processSale" ;
@@ -49,6 +52,11 @@ public class RestApiList {
 
     //user manager
     public static final String REDUCE_TRUST_POINT = "/reduceTrustPoint";
+    public static final String GET_USER_INFOS = "/getUserInfos";
+
+    //exchange manager
+    public static final String GET_EXCHANGE_INFOS = "/getExchangeInfos";
+
 
 
 }

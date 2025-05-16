@@ -12,4 +12,5 @@ public interface ExchangeRepository extends JpaRepository<Exchange,Long> {
     Optional<Exchange> findByListId(String listId);
     List<Exchange> findAllByStatus(ExchangeStatus status);
     List<Exchange> findAllByOwnerIdOrOffererId(String senderId,String recieverId);
+
 }

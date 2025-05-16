@@ -14,7 +14,6 @@ import java.util.List;
 public class CreatePaymentRequest {
 
     private List<String> listId;
-    private ListType listType;
     private String userId;
     private String fullName;
     private String cardNumber;

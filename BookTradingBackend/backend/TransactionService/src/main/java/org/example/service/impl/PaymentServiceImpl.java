@@ -74,7 +74,9 @@ public class PaymentServiceImpl implements IPaymentService {
             throw new TransactionException(ErrorType.INSUFFICIENT_BALANCE);
         }
 
-        if (createPaymentRequest.getListType().equals(ListType.SALE)) {
+
+        String listType = listManager.getListType(createPaymentRequest.getListId().get(0)).getBody();
+        if (listType.equals(String.valueOf(ListType.SALE))) {
             for (String listId : createPaymentRequest.getListId()) {
                 Double listPrice = listManager.getListPrice(listId).getBody();
 
