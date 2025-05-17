@@ -34,6 +34,7 @@ public class RestApiList {
     public static final String GET_LISTS_EXCLUDING_OWNER = "/getListsExcludingOwner";
     public static final String GET_EXCHANGE_BOOKS = "/getExchangeBooks";
     public static final String GET_LIST_TYPE = "/getListType";
+    public static final String GET_LISTS_OWNERID = "/getListsOwnerId";
 
 
     public static final String PROCESS_SALES = "/processSale" ;

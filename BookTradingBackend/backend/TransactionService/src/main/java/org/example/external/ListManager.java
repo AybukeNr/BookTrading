@@ -6,6 +6,7 @@ import org.example.dto.request.UpdateListReq;
 import org.example.dto.response.ExchangeDetails;
 import org.example.dto.response.ListResponsePayment;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,9 @@ public interface ListManager {
 
     @GetMapping(GET_LIST_TYPE)
     public ResponseEntity<String> getListType(@RequestParam String listId);
+
+    @GetMapping(GET_LISTS_OWNERID)
+    public ResponseEntity<String> getListOwnerId(@RequestParam String listId);
 
 
 }
