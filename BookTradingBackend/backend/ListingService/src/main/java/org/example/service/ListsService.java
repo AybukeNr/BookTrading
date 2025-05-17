@@ -27,10 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -403,32 +400,31 @@ public class ListsService {
                 .offererAddress(addresses.get("offererAddress")) // Offerer'ın adresi
                 .build();
         shippingManager.createShipping(shippingRequest);
-        TransactionMailReq transactionMailReq = new TransactionMailReq();
-        transactionMailReq.setListId(list.getId());
-        transactionMailReq.setOwnerId(list.getOwnerId());
-        transactionMailReq.setOffererId(targetOffer.getOffererId());
-        transactionMailReq.setStatus(String.valueOf(response.getStatus()));
-        transactionMailReq.setListBookImage(list.getBookInfo().getImage());
-        transactionMailReq.setListBookName(list.getBookInfo().getTitle());
-        transactionMailReq.setOfferedBookName(targetOffer.getOfferedBook().getTitle());
-        transactionMailReq.setOfferedBookImage(targetOffer.getOfferedBook().getImage());
-        transactionMailReq.setDeadline(LocalDateTime.now().plusMinutes(5));
-        mailManager.testTransactionCreated(transactionMailReq);
-        //todo -> trustfee set edilecek,transaction serviste responsa ekle,deadline da
-        log.info("Shipping created successfully for transaction: {}", response.getTransactionId());
-        ListMailRequest mailRequest = new ListMailRequest();
-        mailRequest.setListId(list.getId());
-        mailRequest.setListBookImage(list.getBookInfo().getImage());
-        mailRequest.setListBookName(list.getBookInfo().getTitle());
-        mailRequest.setOwnerId(list.getOwnerId());
-        mailRequest.setOffererId(targetOffer.getOffererId());
-        mailRequest.setOfferedBookImage(targetOffer.getOfferedBook().getImage());
-        mailRequest.setOfferedBookName(targetOffer.getOfferedBook().getTitle());
-        mailRequest.setShipmentdeadline(LocalDateTime.now().plusMinutes(5));
-        mailRequest.setPaymentdeadline(LocalDateTime.now().plusMinutes(5));
-        mailManager.testAcceptedOffer(mailRequest);
-        log.info("Accepted Offer Mail sent");
-
+//        TransactionMailReq transactionMailReq = new TransactionMailReq();
+//        transactionMailReq.setListId(list.getId());
+//        transactionMailReq.setOwnerId(list.getOwnerId());
+//        transactionMailReq.setOffererId(targetOffer.getOffererId());
+//        transactionMailReq.setStatus(String.valueOf(response.getStatus()));
+//        transactionMailReq.setListBookImage(list.getBookInfo().getImage());
+//        transactionMailReq.setListBookName(list.getBookInfo().getTitle());
+//        transactionMailReq.setOfferedBookName(targetOffer.getOfferedBook().getTitle());
+//        transactionMailReq.setOfferedBookImage(targetOffer.getOfferedBook().getImage());
+//        transactionMailReq.setDeadline(LocalDateTime.now().plusMinutes(5));
+//        mailManager.testTransactionCreated(transactionMailReq);
+//        //todo -> trustfee set edilecek,transaction serviste responsa ekle,deadline da
+//        log.info("Shipping created successfully for transaction: {}", response.getTransactionId());
+//        ListMailRequest mailRequest = new ListMailRequest();
+//        mailRequest.setListId(list.getId());
+//        mailRequest.setListBookImage(list.getBookInfo().getImage());
+//        mailRequest.setListBookName(list.getBookInfo().getTitle());
+//        mailRequest.setOwnerId(list.getOwnerId());
+//        mailRequest.setOffererId(targetOffer.getOffererId());
+//        mailRequest.setOfferedBookImage(targetOffer.getOfferedBook().getImage());
+//        mailRequest.setOfferedBookName(targetOffer.getOfferedBook().getTitle());
+//        mailRequest.setShipmentdeadline(LocalDateTime.now().plusMinutes(5));
+//        mailRequest.setPaymentdeadline(LocalDateTime.now().plusMinutes(5));
+//        mailManager.testAcceptedOffer(mailRequest);
+//        log.info("Accepted Offer Mail sent");
     }
 
 
@@ -484,5 +480,15 @@ public class ListsService {
                 .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
         return list.getOwnerId();
     }
+
+    public List<ListResponse> getCategoryRecs(Set<String> categories,String userId){
+        List<Lists> lists = listsRepository.findByCategory(categories,userId);
+        return lists.stream().map(listMapper::ListToListResponse).toList();
+    }
+
+
+//    public List<ListResponse> getAllRecommendations(RecRequest recRequest){
+//
+//    }
 
 }
