@@ -3,6 +3,7 @@ package org.example.service;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.external.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -31,9 +32,13 @@ public class RecommendationService {
 
     private final ResourceLoader resourceLoader;
 
-    public RecommendationService(ResourceLoader resourceLoader) {
+    private final UserManager usersManager;
+
+    public RecommendationService(ResourceLoader resourceLoader, UserManager usersManager) {
         this.resourceLoader = resourceLoader;
+        this.usersManager = usersManager;
     }
+
 
     @PostConstruct
     public void init() throws Exception {

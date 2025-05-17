@@ -3,6 +3,7 @@ package org.example;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import weka.associations.Apriori;
 import weka.core.Instances;
 
@@ -10,6 +11,7 @@ import weka.core.SerializationHelper;
 import weka.core.converters.ConverterUtils;
 
 @SpringBootApplication
+@EnableFeignClients
 public class RecommendationServiceApplication {
     public static void main(String[] args) throws Exception {
 

@@ -3,6 +3,7 @@ package org.example.repository;
 
 import org.example.entity.Transactions;
 import org.example.entity.enums.TransactionStatus;
+import org.example.entity.enums.TransactionType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -16,6 +17,6 @@ public interface TransactionRepository  extends JpaRepository<Transactions, Long
     Optional<Transactions> findByOwnerIdAndOffererIdAndTransactionId(String ownerId, String offererId, String transactionId);
     Optional<Transactions> findByListId(String listId);
     List<Transactions> findAllByStatus(TransactionStatus status);
-    Optional<List<Transactions>> findAllByOwnerIdOrOffererIdAndTransactionType(String ownerId,String offererId, String transactionType);
+    Optional<List<Transactions>> findAllByOwnerIdOrOffererIdAndTransactionType(String ownerId,String offererId, TransactionType transactionType);
 
 }

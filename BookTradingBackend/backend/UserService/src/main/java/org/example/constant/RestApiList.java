@@ -14,6 +14,7 @@ public class RestApiList {
     public static final String UPDATE_USER   = "/updateUser";
     public static final String GET_ADDRESSES = "/getAddresses";
     public static final String GET_USER_INFOS = "/getUserInfos";
+    public static final String GET_USERS_INTERESTS = "/getUsersInterests";
 
     //auth endpoints
     public static final String AUTH = API + VERSION + "/auth";

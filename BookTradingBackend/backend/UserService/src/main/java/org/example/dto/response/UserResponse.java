@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,5 +22,6 @@ public class UserResponse {
     private String password;
     private String iban;
     private Double trustPoint;
+    private List<String> userInterests;
 
 }

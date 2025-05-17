@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,6 +42,7 @@ public class UserRequest {
     @Schema(example = "Kılıçali Paşa Mh. Beyoğlu/İstanbul PK:34433")
     private String address;
     private Double trustPoint;
+    private List<String> userInterests;
 
 
 }
