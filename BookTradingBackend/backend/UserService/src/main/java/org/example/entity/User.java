@@ -25,6 +25,6 @@ public class User {
     private String address;
     private String iban;
     private Double trustPoint;//default = 5.0
-    private List<UserInterests> userInterests;
+    private List<String> userInterests;
     private UserRole role;
 }

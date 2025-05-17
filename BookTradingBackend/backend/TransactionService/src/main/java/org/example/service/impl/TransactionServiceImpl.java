@@ -303,17 +303,26 @@ public class TransactionServiceImpl implements ITransactionService {
 
     @Override
     public List<TransactionResponse> getUsersExchanges(String userId) {
-        List<Transactions> exchanges = transactionRepository.findAllByOwnerIdOrOffererIdAndTransactionType(userId,userId,String.valueOf(TransactionType.EXCHANGE))
-                .orElseThrow(()-> new TransactionException(ErrorType.LIST_NOT_FOUND));
-        return exchanges.stream().map(transactionMapper::transactionToResponse).toList();
+        List<Transactions> exchanges = transactionRepository.findAllByOwnerIdOrOffererId(userId, userId)
+                .orElseThrow(() -> new TransactionException(ErrorType.LIST_NOT_FOUND));
+
+        return exchanges.stream()
+                .filter(transaction -> transaction.getTransactionType() == TransactionType.EXCHANGE)
+                .map(transactionMapper::transactionToResponse)
+                .toList();
     }
 
     @Override
     public List<TransactionResponse> getUsersSales(String userId) {
-        List<Transactions> exchanges = transactionRepository.findAllByOwnerIdOrOffererIdAndTransactionType(userId,userId, String.valueOf(TransactionType.SALE))
-                .orElseThrow(()-> new TransactionException(ErrorType.LIST_NOT_FOUND));
-        return exchanges.stream().map(transactionMapper::transactionToResponse).toList();
+        List<Transactions> sales = transactionRepository.findAllByOwnerIdOrOffererId(userId, userId)
+                .orElseThrow(() -> new TransactionException(ErrorType.LIST_NOT_FOUND));
+
+        return sales.stream()
+                .filter(transaction -> transaction.getTransactionType() == TransactionType.SALE)
+                .map(transactionMapper::transactionToResponse)
+                .toList();
     }
+
 
     @Override
     @Transactional

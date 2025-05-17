@@ -124,4 +124,8 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserContactInfos(userId,offererId));
     }
 
+    @GetMapping(GET_USERS_INTERESTS)
+    public ResponseEntity<List<String>> getUsersInterests(@RequestParam String userId){
+        return ResponseEntity.ok(userService.getUsersInterests(userId));
+    }
 }

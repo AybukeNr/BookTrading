@@ -142,4 +142,8 @@ public class UserService {
         return userContactInfos;
 
     }
+
+    public List<String> getUsersInterests(String userId){
+        return userRepository.findById(userId).get().getUserInterests();
+    }
 }

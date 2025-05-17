@@ -26,6 +26,9 @@ public class TransactionMapper {
                 .status(transactions.getStatus())
                 .transactionType(transactions.getTransactionType())
                 .createdDate(transactions.getCreatedDate())
-                .updatedDate(transactions.getUpdatedDate()).build();
+                .updatedDate(transactions.getUpdatedDate())
+                .trustFee(transactions.getTrustFee())
+                .deadline(transactions.getDeadline()).build();
+
     }
 }

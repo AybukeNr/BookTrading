@@ -44,7 +44,8 @@ public class UserMapper {
                 .iban(request.getIban())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                .password(request.getPassword()).build();
+                .password(request.getPassword())
+                .userInterests(request.getUserInterests()).build();
     }
    public UserResponse UserMapToUserResponse(User user) {
         return UserResponse.builder()
@@ -57,7 +58,8 @@ public class UserMapper {
                 .iban(user.getIban())
                 .trustPoint(user.getTrustPoint())
                 .password(user.getPassword())
-                .address(user.getAddress()).build();
+                .address(user.getAddress())
+                .userInterests(user.getUserInterests()).build();
     }
 
 }
