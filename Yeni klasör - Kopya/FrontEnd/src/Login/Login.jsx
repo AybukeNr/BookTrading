@@ -48,7 +48,7 @@ function Login(props) {
             props.setIsAuthenticated(true);
             setEmail('');
             setPassword('');
-            setTimeout(() => navigate("/"), 0);
+            navigate('/');
         } catch (error) {
             if (error.response) {
                 setError(error.response.data.message || 'Giriş başarısız. Lütfen tekrar deneyin.');

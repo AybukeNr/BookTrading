@@ -29,6 +29,7 @@ import PrivateRoute from './PrivateRoute'
 function App() {
   const [, dispatch] = useStateValue();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = getAuthToken();
@@ -52,6 +53,7 @@ function App() {
       });
       setIsAuthenticated(false);
     }
+    setLoading(false);
   }, [])
 
 
@@ -60,57 +62,57 @@ function App() {
       <Header setIsAuthenticated={setIsAuthenticated} />
       <Routes>
         <Route path='/bookshelf' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <Bookshelf />
           </PrivateRoute>
         } />
         <Route path='/addBook' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <AddToBookshelf />
           </PrivateRoute>
         } />
         <Route path='/updateBook' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <UpdateInBookshelf />
           </PrivateRoute>
         } />
         <Route path='/myAccount' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <Account />
           </PrivateRoute>
         } />
         <Route path='/myAds' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <AdvertisedBooks />
           </PrivateRoute>
         } />
         <Route path='/myOffers' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <Offers />
           </PrivateRoute>
         } />
         <Route path='/myTrades' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <TradedBooks />
           </PrivateRoute>
         } />
         <Route path='/mySales' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <SoldBooks />
           </PrivateRoute>
         } />
         <Route path='/trade' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <Trade />
           </PrivateRoute>
         } />
         <Route path='/checkout' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <Checkout />
           </PrivateRoute>
         } />
         <Route path='/payment' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <Payment />
           </PrivateRoute>
         } />
@@ -138,12 +140,12 @@ function App() {
           </>
         } />
         <Route path='/userDetails' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <UserDetails />
           </PrivateRoute>
         } />
         <Route path='/admin' element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <Admin />
           </PrivateRoute>
         } />

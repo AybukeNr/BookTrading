@@ -1,53 +1,48 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../PaymentCard/PaymentCard.css'
-function PaymentCard() {
+function PaymentCard({ cardName, setCardName, cardNumber, setCardNumber, cvv, setCvv, expiryDate, setExpiryDate }) {
+
+    const [month, setMonth] = React.useState("01");
+    const [year, setYear] = React.useState("2025");
+
+    useEffect(() => {
+        setExpiryDate(`${ month } / ${ year }`);
+    }, [month, year, setExpiryDate]);
+
     return (
         <div className='card'>
 
             <h5>Kart Üzerindeki Ad:</h5>
-            <input type="text" className='card_input' />
+            <input type="text" className='card_input' value={cardName} onChange={(e) => setCardName(e.target.value)} />
 
             <h5>Kart No:</h5>
-            <input type="text" className='card_input' maxLength={16} size={16}/>
+            <input type="text" className='card_input' maxLength={16} size={16} value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} />
 
             <h5>CVC No:</h5>
             <div className='cvc'>
-                <input type="text" maxLength={3} size={3} />
+                <input type="text" maxLength={3} size={3} value={cvv} onChange={(e) => setCvv(e.target.value)} />
                 <p className='cvc_info'>Kartınızın arka yüzündeki 3 rakam</p>
             </div>
 
             <h5>Son Kullanım Tarihi:</h5>
-            <select id="month" className='date'>
-                <option value="1">01</option>
-                <option value="2">02</option>
-                <option value="3">03</option>
-                <option value="4">04</option>
-                <option value="5">05</option>
-                <option value="6">06</option>
-                <option value="7">07</option>
-                <option value="8">08</option>
-                <option value="9">09</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
+            <select id="month" className='date' value={month} onChange={(e) => setMonth(e.target.value)}>
+                {[...Array(12)].map((_, i) => {
+                    const m = (i + 1).toString().padStart(2, "0");
+                    return (
+                        <option key={m} value={m}>
+                            {m}
+                        </option>
+                    );
+                })}
             </select>
-            <select id="year" className='date'>
-                <option value="2025">2025</option>
-                <option value="2026">2026</option>
-                <option value="2027">2027</option>
-                <option value="2028">2028</option>
-                <option value="2029">2029</option>
-                <option value="2030">2030</option>
-                <option value="2031">2031</option>
-                <option value="2032">2032</option>
-                <option value="2033">2033</option>
-                <option value="2034">2034</option>
-                <option value="2035">2035</option>
+            <select id="year" className='date' value={year} onChange={(e) => setYear(e.target.value)}>
+                {Array.from({ length: 11 }, (_, i) => 2025 + i).map((y) => (
+                    <option key={y} value={y}>
+                        {y}
+                    </option>
+                ))}
             </select>
-            
         </div>
-        
-        
     )
 }
 

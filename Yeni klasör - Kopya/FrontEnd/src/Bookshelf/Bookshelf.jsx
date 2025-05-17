@@ -8,7 +8,8 @@ import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, B
 import { instanceLibrary } from '../axios';
 import { getAuthToken } from '../auth';
 
-const userId = localStorage.getItem('userId');
+// const userId = localStorage.getItem('userId');
+ const userId = localStorage.getItem("userId");
 function Bookshelf() {
     const [{ bookshelf, advertisedBook }, dispatch] = useStateValue();
     const navigate = useNavigate();
@@ -25,8 +26,8 @@ function Bookshelf() {
         const fetchBooks = async () => {
             setLoading(true);
             setError('');
-            const storedUserId = localStorage.getItem("userId");
-            const effectiveUserId = storedUserId && storedUserId !== "null" ? storedUserId : 0;
+           
+            const effectiveUserId = userId && userId !== "null" ? userId : 0;
 
             try {
                 const response = await instanceLibrary.get(`/getBookByOwnerId?ownerId=${effectiveUserId}`);
@@ -44,7 +45,7 @@ function Bookshelf() {
             }
         };
         fetchBooks();
-    }, [userId]);
+    }, []);
 
     const handleOpen = (id) => {
         setBookId(id);

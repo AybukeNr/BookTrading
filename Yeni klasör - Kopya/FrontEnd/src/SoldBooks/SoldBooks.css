@@ -1,114 +1,119 @@
- .soldBooks {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    background: aliceblue;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  }
-  
-  h3 {
-    text-align: center;
-    color: #213547;
-    margin-bottom: 20px;
-  }
-  
+.soldBooks {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: aliceblue;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+h3 {
+  text-align: center;
+  color: #213547;
+  margin-bottom: 20px;
+}
+
+.book_Info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid orange;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.book_Info h4 {
+  color: #213547;
+  margin-bottom: 10px;
+}
+
+.book_Detail p {
+  color: #213547;
+  margin: 5px 0;
+}
+
+img {
+  display: block;
+  margin: 10px 0;
+  border-radius: 8px;
+  object-fit: cover;
+  max-height: 200px;
+}
+
+.personInfo {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.sellerInfo,
+.buyerInfo {
+  flex: 1;
+  padding: 10px;
+  background: #e9ecef;
+  border-radius: 8px;
+  border: 1px solid orange;
+  margin: 5px;
+  min-width: 250px;
+}
+
+h4 {
+  color: #213547;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #213547;
+  margin: 5px 0;
+}
+
+@media (max-width: 768px) {
   .book_Info {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    padding: 15px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid orange;
-    margin-bottom: 15px;
+    flex-direction: column;
   }
-  
-  .book_Info h4 {
-    color: #213547;
-    margin-bottom: 10px;
-  }
-  
-  .book_Detail p {
-    color: #213547;
-    margin: 5px 0;
-  }
-  
-  img {
-    display: block;
-    max-width: 100%;
-    margin: 10px 0;
-    border-radius: 8px;
-    object-fit: cover;
-    max-height: 200px;
-  }
-  
+
   .personInfo {
+    flex-direction: column;
+  }
+
+  .sellerInfo,
+  .buyerInfo {
+    width: 92%;
+  }
+
+  img {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    max-width: 30%;
+    max-height: 10%;
+  }
+}
+
+@media (max-width: 480px) {
+  .soldBooks {
     padding: 15px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid orange;
-    margin-bottom: 15px;
   }
-  
-  .sellerInfo, .buyerInfo {
-    flex: 1;
-    padding: 10px;
-    background: #e9ecef;
-    border-radius: 8px;
-    border: 1px solid orange;
-    margin: 5px;
-    min-width: 250px;
+
+  h3 {
+    font-size: 20px;
   }
-  
-  h4 {
-    color: #213547;
-    margin-bottom: 10px;
+
+  .book_Info h4,
+  .book_Detail p,
+  .sellerInfo p,
+  .buyerInfo p {
+    font-size: 14px;
   }
-  
-  p {
-    color: #213547;
-    margin: 5px 0;
+
+  img {
+    max-width: 150px;
+    max-height: 150px;
   }
-  
-  @media (max-width: 768px) {
-    .book_Info {
-      flex-direction: column; 
-    }
-  
-    .personInfo {
-      flex-direction: column;
-    }
-  
-    .sellerInfo, .buyerInfo {
-      width: 92%;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .soldBooks {
-      padding: 15px;
-    }
-  
-    h3 {
-      font-size: 20px;
-    }
-  
-    .book_Info h4,
-    .book_Detail p,
-    .sellerInfo p,
-    .buyerInfo p {
-      font-size: 14px;
-    }
-  
-    img {
-      max-width: 150px;
-      max-height: 150px;  
-    }
-  }
-  
-  
+}

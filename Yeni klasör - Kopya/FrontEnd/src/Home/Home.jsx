@@ -6,6 +6,8 @@ import { useStateValue } from "../StateProvider";
 import { instanceListing } from "../axios";
 import { useNavigate } from "react-router-dom";
 
+// const ownerId = localStorage.getItem("userId");
+
 function Home() {
   const [{ bookList, selectedCategory }, dispatch] = useStateValue();
   const [loading, setLoading] = useState(true);
@@ -15,11 +17,12 @@ function Home() {
     const fetchBooks = async () => {
       setLoading(true);
       setError("");
-        const storedOwnerId = localStorage.getItem("userId");
-        const effectiveOwnerId = storedOwnerId && storedOwnerId !== "null" ? storedOwnerId : 1;
+      const storedOwnerId = localStorage.getItem("userId");
+      const ownerId = storedOwnerId && storedOwnerId !== "null" ? storedOwnerId : 1;
+
       try {
         const response = await instanceListing.get(
-          `/getListsExcludingOwner?ownerId=${effectiveOwnerId}`, 
+          `/getListsExcludingOwner?ownerId=${ownerId}`,
         );
 
         dispatch({
@@ -123,7 +126,7 @@ function Home() {
           <div className="home_row">
             {filteredBooks.length > 0 ? (
               filteredBooks.map((book, index) => (
-                  <Product key={index} book={book} />
+                <Product key={index} book={book} />
               ))
             ) : (
               <p>Sonuç bulunamadı.</p>

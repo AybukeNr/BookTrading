@@ -59,6 +59,18 @@ const reducer = (state, action) => {
                 basket: newBasket
             }
 
+        case 'EMPTY_BASKET':
+            return {
+                ...state,
+                basket: [],
+            };
+
+        case 'SET_BASKET':
+            return {
+                ...state,
+                basket: action.basket,
+            };
+
         case "SET_SEARCH_QUERY":
             return {
                 ...state,
@@ -173,7 +185,20 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 sentOffers: state.sentOffers.map((offer) =>
-                offer.id === action.id ? { ...offer, offerStatus: action.status } : offer),
+                    offer.id === action.id ? { ...offer, offerStatus: action.status } : offer),
+            };
+
+        case 'SET_TRADE_DATA':
+            return {
+                ...state,
+                tradeData: {
+                    ...state.tradeData,
+                    offerId: action.payload.offerId,
+                    offererId: action.payload.offererId,
+                    offeredListId: action.payload.offeredListId,
+                    bookId: action.payload.bookId,
+                    offerer: action.payload.offerer,
+                }
             };
 
         case 'SET_BOOK_DETAIL':
@@ -181,7 +206,7 @@ const reducer = (state, action) => {
                 ...state,
                 bookDetail: action.bookDetail,
             };
-        
+
         case 'SET_USER_DETAILS':
             return {
                 ...state,
