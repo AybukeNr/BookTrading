@@ -3,24 +3,26 @@ package org.example.enums;
 import java.util.Arrays;
 
 public enum BookCategory {
-    Fiction("Kurgu"),
-    Science ("Bilim"),
-    History("Tarih"),
     Biography("Biyografi"),
-    Social_Science("Toplum Bilimi"),
-    Comics("Çizgi Roman"),
     Business("İş"),
-    Sports("Spor"),
-    Religion("Din"),
-    Poetry("Şiir"),
-    Drama("Dram"),
-    Psychology("Psikoloji"),
-    Philosophy("Felsefe"),
-    Self_Help("Kişisel Gelişim"),
+    Comics("Çizgi Roman"),
     Computers("Bilgisayar Bilimi"),
     Cooking("Yemek"),
+    Drama("Dram"),
     Education("Eğitim"),
-    Juvenile_Fiction("Gençlik Romanları");
+    Family("Aile"),
+    Fiction("Kurgu"),
+    History("Tarih"),
+    Juvenile_Fiction("Gençlik Romanları"),
+    Philosophy("Felsefe"),
+    Poetry("Şiir"),
+    Political_Science("Siyaset Bilimi"),
+    Psychology("Psikoloji"),
+    Religion("Din"),
+    Science("Bilim"),
+    Self_Help("Kişisel Gelişim"),
+    Social_Science("Toplum Bilimi"),
+    Sports("Spor");
 
     private final String displayName;
 
@@ -28,10 +30,18 @@ public enum BookCategory {
         this.displayName = displayName;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
     public static BookCategory fromDisplayName(String value) {
         return Arrays.stream(BookCategory.values())
                 .filter(cat -> cat.displayName.equalsIgnoreCase(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Kategori bulunamadı: " + value));
+    }
+
+    public static String toAprioriName(String displayName) {
+        return fromDisplayName(displayName).name().replace("_", " ");
     }
 }

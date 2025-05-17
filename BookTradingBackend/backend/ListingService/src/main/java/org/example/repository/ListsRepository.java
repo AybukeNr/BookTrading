@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.repository.Query;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ListsRepository extends MongoRepository<Lists, String> {
 
@@ -19,4 +20,10 @@ public interface ListsRepository extends MongoRepository<Lists, String> {
     List<Lists> findByBookInfo_Id(Long Id);
 
     List<Lists> findByOwnerIdNot(String ownerId);
+
+    @Query("{ 'category': { $in: ?0 }, 'ownerId': { $ne: ?1 } }")
+    List<Lists> findByCategory(Set<String> categories, String ownerId);
+
+
+
 }

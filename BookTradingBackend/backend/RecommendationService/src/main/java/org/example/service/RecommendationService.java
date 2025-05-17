@@ -3,6 +3,7 @@ package org.example.service;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.enums.BookCategory;
 import org.example.external.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 public class RecommendationService {
 
 
+    private final UserManager userManager;
     @Value("${apriori.model.file.path}")
     private String modelFilePath; // application.yml "classpath:apriori.model"
 
@@ -34,9 +36,10 @@ public class RecommendationService {
 
     private final UserManager usersManager;
 
-    public RecommendationService(ResourceLoader resourceLoader, UserManager usersManager) {
+    public RecommendationService(ResourceLoader resourceLoader, UserManager usersManager, UserManager userManager) {
         this.resourceLoader = resourceLoader;
         this.usersManager = usersManager;
+        this.userManager = userManager;
     }
 
 
@@ -65,10 +68,11 @@ public class RecommendationService {
      * Servis, kural setinde antecedent kısmı bu öğelerle eşleşiyorsa,
      * consequence kısmında "1" değerine sahip fakat kullanıcının henüz ziyaret etmediği kategorileri önerir.
      *
-     * @param userInterests Kullanıcının ziyaret ettiği kategorileri içeren set (ör: "Biography=1")
+     * @param userId Kullanıcının id
      * @return Önerilen kategori isimlerinin seti (ör: "Fiction", "Self-Help", …)
      */
-    public Set<String> getRecommendations(List<String> userInterests) {
+    public Set<String> getRecommendations(String userId) {
+        List<String> userInterests = userManager.getUsersInterests(userId).getBody();
         Set<String> recommendations = new HashSet<>();
         Set<String> transactionItems = prepareCategories(userInterests);
 
@@ -104,14 +108,19 @@ public class RecommendationService {
 
     private Set<String> prepareCategories(List<String> categories){
         Set<String> transactionItems = new HashSet<>();
-        categories.stream().map(c -> c.concat("=1")).forEach(transactionItems::add);
+        categories.stream()
+                .map(c -> BookCategory.toAprioriName(c).concat("=1"))
+                .forEach(transactionItems::add);
         return transactionItems;
     }
 
-    public Set<String> getFilteredRecommendations(Set<String> transactionItems) {
+
+    public Set<String> getFilteredRecommendations(String userId) {
+        List<String> userInterests = userManager.getUsersInterests(userId).getBody();
         Map<String, Double> recMap = new HashMap<>();
         Map<String, List<Double>> ruleDetails = new HashMap<>(); // Önerinin hangi confidence değerlerine sahip olduğunu saklayacak.
 
+        Set<String> transactionItems = prepareCategories(userInterests);
         // Tüm association rule'lar üzerinde dönüyoruz.
         for (AssociationRule rule : associationRules.getRules()) {
             boolean matches = false;

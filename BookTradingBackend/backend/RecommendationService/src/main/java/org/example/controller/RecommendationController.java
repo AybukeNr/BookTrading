@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.service.RecommendationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
@@ -22,16 +19,16 @@ public class RecommendationController {
 
     private final RecommendationService recommendationService;
 
-    @PostMapping(GET_RECOMMENDATIONS)
-    public ResponseEntity<Set<String>> getRecommendations(@RequestBody List<String> userItems) {
-        Set<String> recs = recommendationService.getRecommendations(userItems);
+    @GetMapping(GET_RECOMMENDATIONS)
+    public ResponseEntity<Set<String>> getRecommendations(@RequestBody String userId) {
+        Set<String> recs = recommendationService.getRecommendations(userId);
         return new ResponseEntity<>(recs, HttpStatus.OK);
     }
 
 
-    @PostMapping(GET_FILTERED_RECOMMENDATIONS)
-    public ResponseEntity<Set<String>> getFilteredRecommendations(@RequestBody Set<String> userItems) {
-        Set<String> recs = recommendationService.getFilteredRecommendations(userItems);
+    @GetMapping(GET_FILTERED_RECOMMENDATIONS)
+    public ResponseEntity<Set<String>> getFilteredRecommendations(@RequestBody String userId) {
+        Set<String> recs = recommendationService.getFilteredRecommendations(userId);
         return new ResponseEntity<>(recs, HttpStatus.OK);
     }
 
