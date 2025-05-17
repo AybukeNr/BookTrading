@@ -44,6 +44,8 @@ public class RestApiList {
     public static final String GET_OFFER_BOOKS = "/getOfferBooks";
     public static final String GET_EXCHANGE_BOOKS = "/getExchangeBooks";
     public static final String GET_LIST_TYPE = "/getListType";
+    public static final String GET_LISTS_OWNERID = "/getListsOwnerId";
+
 
     public static final String CREATE_ACCOUNT = "/createAccount";
     public static final String PROCESS_SALES = "/processSale" ;

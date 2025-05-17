@@ -75,11 +75,15 @@ public class PaymentServiceImpl implements IPaymentService {
         }
 
 
-        String listType = listManager.getListType(createPaymentRequest.getListId().get(0)).getBody();
+        String listType = listManager.getListType(createPaymentRequest.getListId().getFirst()).getBody();
         if (listType.equals(String.valueOf(ListType.SALE))) {
             for (String listId : createPaymentRequest.getListId()) {
                 Double listPrice = listManager.getListPrice(listId).getBody();
-
+                SalesRequest salesRequest = SalesRequest.builder()
+                        .offererId(createPaymentRequest.getUserId())
+                        .listId(listId)
+                        .build();
+                listManager.processSales(salesRequest);
                 TakePaymentRequest takePaymentRequest = TakePaymentRequest.builder()
                         .amount(listPrice)
                         .listId(listId)
@@ -94,12 +98,6 @@ public class PaymentServiceImpl implements IPaymentService {
                 successfulPayment.setListId(listId);
                 successfulPayment.setUserId(createPaymentRequest.getUserId());
                 paymentRepository.save(successfulPayment);
-
-                SalesRequest salesRequest = SalesRequest.builder()
-                        .offererId(createPaymentRequest.getUserId())
-                        .listId(listId)
-                        .build();
-                listManager.processSales(salesRequest);
 
                 log.info("Sale processing requested {}", salesRequest);
 

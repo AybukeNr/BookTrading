@@ -366,14 +366,14 @@ public class ListsService {
                 .offererAddress(addresses.get("offererAddress")) // Offerer'ın adresi
                 .build();
         shippingManager.createShipping(shippingRequest);
-        ListMailRequest mailRequest = new ListMailRequest();
-        mailRequest.setListId(list.getId());
-        mailRequest.setListBookName(list.getBookInfo().getTitle());
-        mailRequest.setListBookImage(list.getBookInfo().getImage());
-        mailRequest.setOwnerId(list.getOwnerId());
-        mailRequest.setOffererId(salesRequest.getOffererId());
-        mailRequest.setShipmentdeadline(LocalDateTime.now().plusMinutes(5));
-        mailManager.testSaleMail(mailRequest);
+//        ListMailRequest mailRequest = new ListMailRequest();
+//        mailRequest.setListId(list.getId());
+//        mailRequest.setListBookName(list.getBookInfo().getTitle());
+//        mailRequest.setListBookImage(list.getBookInfo().getImage());
+//        mailRequest.setOwnerId(list.getOwnerId());
+//        mailRequest.setOffererId(salesRequest.getOffererId());
+//        mailRequest.setShipmentdeadline(LocalDateTime.now().plusMinutes(5));
+//        mailManager.testSaleMail(mailRequest);
         return true;
 
     }
@@ -464,6 +464,7 @@ public class ListsService {
     public Double getListPrice(String listId){
         Lists list = listsRepository.findById(listId)
                 .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        log.info("lists price: {}" ,list.getPrice());
         return list.getPrice() != null ? list.getPrice() : 0.0;
     }
 
@@ -477,6 +478,11 @@ public class ListsService {
         Lists list = listsRepository.findById(listId)
                 .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
         return String.valueOf(list.getType());
+    }
+    public String getListOwner(String listId){
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ListException(ErrorType.LIST_NOT_FOUND));
+        return list.getOwnerId();
     }
 
 }

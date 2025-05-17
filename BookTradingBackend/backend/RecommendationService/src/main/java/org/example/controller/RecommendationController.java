@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.example.constant.RestApiList.*;
@@ -22,7 +23,7 @@ public class RecommendationController {
     private final RecommendationService recommendationService;
 
     @PostMapping(GET_RECOMMENDATIONS)
-    public ResponseEntity<Set<String>> getRecommendations(@RequestBody Set<String> userItems) {
+    public ResponseEntity<Set<String>> getRecommendations(@RequestBody List<String> userItems) {
         Set<String> recs = recommendationService.getRecommendations(userItems);
         return new ResponseEntity<>(recs, HttpStatus.OK);
     }

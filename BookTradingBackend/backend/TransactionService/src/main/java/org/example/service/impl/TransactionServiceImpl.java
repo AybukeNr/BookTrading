@@ -327,8 +327,7 @@ public class TransactionServiceImpl implements ITransactionService {
     @Override
     @Transactional
     public void takePayment(TakePaymentRequest takePaymentRequest) {
-        Transactions transactions = transactionRepository.findByListId(takePaymentRequest.getListId())//.filter(t -> t.getStatus().equals(TransactionStatus.ONGOING))
-                .orElseThrow(()-> new TransactionException(ErrorType.LIST_NOT_FOUND));
+        Transactions transactions = transactionRepository.findByListId(takePaymentRequest.getListId()).orElseThrow(()-> new TransactionException(ErrorType.TRANSACTION_NOT_FOUND));
         if(Objects.equals(transactions.getOwnerId(), takePaymentRequest.getUserId())) {
             transactions.setOwnerDeposit(takePaymentRequest.getAmount());
         } else if (Objects.equals(transactions.getOffererId(), takePaymentRequest.getUserId())) {
@@ -360,6 +359,8 @@ public class TransactionServiceImpl implements ITransactionService {
             transactions.setTransactionType(TransactionType.SALE);
             Double price = listManager.getListPrice(transactionRequest.getListId()).getBody();
             transactions.setTrustFee(price);
+            transactions.setOwnerDeposit(0.0);
+            transactions.setOffererDeposit(price);
         }
         transactions.setStatus(TransactionStatus.ONGOING);
         transactions.setDeadline(LocalDateTime.now().plusMinutes(5));

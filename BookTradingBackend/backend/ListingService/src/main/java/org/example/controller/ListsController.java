@@ -218,4 +218,9 @@ public class ListsController {
         return new ResponseEntity<>(listsService.getListType(listId),HttpStatus.OK);
     }
 
+    @GetMapping(GET_LISTS_OWNERID)
+    public ResponseEntity<String> getListOwnerId(@RequestParam String listId) {
+        return new ResponseEntity<>(listsService.getListOwner(listId),HttpStatus.OK);
+    }
+
 }

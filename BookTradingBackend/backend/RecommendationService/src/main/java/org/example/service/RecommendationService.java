@@ -65,11 +65,12 @@ public class RecommendationService {
      * Servis, kural setinde antecedent kısmı bu öğelerle eşleşiyorsa,
      * consequence kısmında "1" değerine sahip fakat kullanıcının henüz ziyaret etmediği kategorileri önerir.
      *
-     * @param transactionItems Kullanıcının ziyaret ettiği kategorileri içeren set (ör: "Biography=1")
+     * @param userInterests Kullanıcının ziyaret ettiği kategorileri içeren set (ör: "Biography=1")
      * @return Önerilen kategori isimlerinin seti (ör: "Fiction", "Self-Help", …)
      */
-    public Set<String> getRecommendations(Set<String> transactionItems) {
+    public Set<String> getRecommendations(List<String> userInterests) {
         Set<String> recommendations = new HashSet<>();
+        Set<String> transactionItems = prepareCategories(userInterests);
 
         // Tüm association rule'lar üzerinde dönüyoruz.
         for (AssociationRule rule : associationRules.getRules()) {
@@ -99,6 +100,12 @@ public class RecommendationService {
         }
         log.info("Recommentations: {} {}",recommendations,recommendations.size());
         return recommendations;
+    }
+
+    private Set<String> prepareCategories(List<String> categories){
+        Set<String> transactionItems = new HashSet<>();
+        categories.stream().map(c -> c.concat("=1")).forEach(transactionItems::add);
+        return transactionItems;
     }
 
     public Set<String> getFilteredRecommendations(Set<String> transactionItems) {
