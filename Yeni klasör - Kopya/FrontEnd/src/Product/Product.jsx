@@ -7,7 +7,7 @@ import OfferPopUp from '../OfferPopUp/OfferPopUp';
 
 function Product({ book }) {
   if (!book || !book.book) {
-    return null; // render etme
+    return null; 
   }
 
   const navigate = useNavigate();

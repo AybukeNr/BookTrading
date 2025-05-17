@@ -4,10 +4,10 @@ import { useStateValue } from '../StateProvider';
 import { instanceListing } from '../axios';
 import { getAuthToken } from '../auth';
 
+ const ownerId = localStorage.getItem('userId');
+
 function AdvertisedBook() {
     const [{ advertisedBook, adUpdated }, dispatch] = useStateValue();
-
-    const ownerId = localStorage.getItem('userId');
 
     useEffect(() => {
         if (!ownerId) {
@@ -15,7 +15,6 @@ function AdvertisedBook() {
             return;
         }
         
-
         const fetchAdvertisedBooks = async () => {
             try {
                 const response = await instanceListing.get(`/getListsByOwnerId?ownerId=${ownerId}`, {

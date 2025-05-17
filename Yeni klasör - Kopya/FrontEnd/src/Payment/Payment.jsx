@@ -6,54 +6,83 @@ import { Link, useNavigate } from 'react-router-dom';
 import CurrencyFormat from 'react-currency-format';
 import { getBasketTotal } from '../reducer';
 import PaymentCard from '../PaymentCard/PaymentCard';
-// import axios from '../axios';
+import { instanceTransaction, instanceUser } from '../axios';
 
 function Payment() {
-    const [{ basket, user }, dispatch] = useStateValue();
+    const [{ basket }, dispatch] = useStateValue();
     const navigate = useNavigate();
-
-
-    const [succeeded, setSucceeded] = useState(false);
+    const [userInfo, setUserInfo] = useState(null);
+    const [cardName, setCardName] = useState("");
+    const [cardNumber, setCardNumber] = useState("");
+    const [expiryDate, setExpiryDate] = useState("");
+    const [cvv, setCvv] = useState("");
     const [processing, setProcessing] = useState("");
     const [error, setError] = useState(null);
-    const [disabled, setDisabled] = useState(true);
-    const [clientSecret, setclientSecret] = useState(true);
 
+    useEffect(() => {
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+                instanceUser.get(`/getUserById?id=${userId}`)
+                .then((res) => setUserInfo(res.data))
+                .catch((err) => console.error("Kullanıcı bilgisi alınamadı:", err));
+        }
+    }, []);
 
-    // useEffect(() => {
-    //     //müşteriden ödeme almaya yarayan özel stripe secret oluşturacak..
-    //     const getClientSecret = async () => {
-    //         const response = await axios({
-    //             method: 'post',
-    //             //Stripe, para birimlerinin alt birimlerindeki toplamı bekliyor
-    //             // url: `/payments/create?total=${getBasketTotal(basket)*100}`
-    //         })
-    //         setclientSecret(response.data.clientSecret);
-    //     }
-    //     getClientSecret();
-    // }, [basket])
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     setProcessing(true);
+        if (!cardName || !cardNumber || !cvv || !expiryDate) {
+            setError("Lütfen tüm kart bilgilerini doldurun.");
+            return;
+        }
 
-    //     const payload = await stripe.confirmCardPayment(clientSecret, {
-    //         payment_method: {
-    //             card: elements.getElement(CardElement)
-    //         }
-    //     }).then(({paymentIntent}) => {
-    //         setSucceeded(true);
-    //         setError(null);
-    //         setProcessing(false);
+        setProcessing(true);
+        setError("");
 
-    //         navigate.replace('/orders');
-    //     })
-    // }
+        const userId = localStorage.getItem("userId");
 
-    // const handleChange = event => {
-    //     setDisabled(event.empty);
-    //     setError(event.error ? event.error.message : "");
-    // }
+        if (!userId) {
+            setError("Kullanıcı kimliği bulunamadı. Lütfen tekrar giriş yapın.");
+            setProcessing(false);
+            return;
+        }
+
+        const listIds = basket.map((item) => item.listId);
+        const amount = getBasketTotal(basket);
+
+        const requestBody = {
+            listId: listIds,
+            listType: "SALE",
+            userId: userId,
+            fullName: cardName,
+            cardNumber,
+            cvv,
+            expiryDate,
+            amount,
+        };
+
+        try {
+            const response = await instanceTransaction.post("/payments/createPayment", requestBody,
+                { headers: { "Content-Type": "application/json" } }
+            );
+
+            if (response.status === 200 || response.status === 201) {
+                dispatch({
+                    type: "EMPTY_BASKET",
+                    basket: response.data
+                });
+                navigate("/");
+            } else {
+                setError("Ödeme sırasında beklenmedik bir hata oluştu.");
+            }
+        } catch (err) {
+            console.error("Ödeme hatası:", err);
+            setError("Ödeme başarısız. Lütfen bilgilerinizi kontrol edin.");
+        } finally {
+            setProcessing(false);
+        }
+    };
+
 
     return (
         <div className='payment'>
@@ -65,9 +94,9 @@ function Payment() {
                         <h3>Teslimat Adresi: </h3>
                     </div>
                     <div className="payment_address">
-                        <p><strong>Ad Soyad:</strong>{user?.firstName + " " + user?.lastName}</p>
-                        <p><strong>Email:</strong>{user?.email}</p>
-                        <p><strong>Adres:</strong>{user?.address}</p>
+                        <p><strong>Ad Soyad: </strong>{userInfo?.firstName + " " + userInfo?.lastName}</p>
+                        <p><strong>Email: </strong>{userInfo?.mailAddress}</p>
+                        <p><strong>Adres: </strong>{userInfo?.address}</p>
                     </div>
                 </div>
 
@@ -91,7 +120,6 @@ function Payment() {
                                 firstName={item.user.firstName}
                                 lastName={item.user.lastName}
                                 trustPoint={item.user.trustPoint}
-                                email={item.user.email}
                             />
                         ))}
                     </div>
@@ -102,12 +130,19 @@ function Payment() {
                         <h3>Ödeme Bilgileri</h3>
                     </div>
                     <div className="payment_details">
-                        <form>
-                            {/* form içine onSubmit={handleSubmit}  */}
+                        <form onSubmit={handleSubmit}>
                             <div className="payment_card">
-                                <PaymentCard />
+                                <PaymentCard
+                                    cardName={cardName}
+                                    setCardName={setCardName}
+                                    cardNumber={cardNumber}
+                                    setCardNumber={setCardNumber}
+                                    cvv={cvv}
+                                    setCvv={setCvv}
+                                    expiryDate={expiryDate}
+                                    setExpiryDate={setExpiryDate}
+                                />
                             </div>
-                            {/* <CardElement onChange={handleChange} /> */}
                             <div className="payment_priceContainer">
                                 <CurrencyFormat
                                     renderText={(value) => (
@@ -121,7 +156,7 @@ function Payment() {
                                     displayType={"text"}
                                     thousandSeparator={true}
                                 />
-                                <button disabled={processing || disabled || succeeded}>
+                                <button type="submit" disabled={processing}>
                                     <span>{processing ? <p>Yükleniyor</p> : "Onayla ve Satın al"}</span>
                                 </button>
                             </div>
@@ -135,5 +170,6 @@ function Payment() {
         </div>
     )
 }
+
 
 export default Payment

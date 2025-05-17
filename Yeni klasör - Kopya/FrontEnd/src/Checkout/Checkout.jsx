@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../Checkout/Checkout.css'
 import Subtotal from '../Subtotal/Subtotal'
 import CheckoutProduct from '../CheckoutProduct/CheckoutProduct'
 import { useStateValue } from '../StateProvider';
 
 function Checkout() {
-    const [{ basket, user }, dispatch] = useStateValue();
+    const [{ basket }, dispatch] = useStateValue();
+
+    useEffect(() => {
+        const storedBasket = JSON.parse(localStorage.getItem("basket"));
+        if (storedBasket) {
+            dispatch({
+                type: "SET_BASKET",
+                basket: storedBasket,
+            });
+        }
+    }, [])
 
     return (
         <div className='checkout'>
@@ -13,13 +23,11 @@ function Checkout() {
                 <img className='checkout_ad' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI5W1AjZSgok7PuSE5WdeAZD8f_Das4XX1Ng&s" alt="" />
                 <div>
                     <h1 className="checkout_title">Alışveriş Sepetim</h1>
-                    {/* <h3>{user?.firstName}</h3>
-                    <h3>{user?.lastName}</h3> */}
 
                     {basket?.length > 0 ? (
                         basket.map((item, index) => (
                             <CheckoutProduct
-                                key={index} 
+                                key={index}
                                 isbn={item.book.isbn}
                                 title={item.book.title}
                                 author={item.book.author}
@@ -33,7 +41,6 @@ function Checkout() {
                                 firstName={item.user.firstName}
                                 lastName={item.user.lastName}
                                 trustPoint={item.user.trustPoint}
-                                email={item.user.email}
                             />
                         ))
                     ) : (

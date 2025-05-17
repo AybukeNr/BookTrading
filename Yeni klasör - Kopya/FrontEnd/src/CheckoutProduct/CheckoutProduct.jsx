@@ -4,7 +4,6 @@ import { useStateValue } from '../StateProvider';
 import { Rating } from '@mui/material';
 
 function CheckoutProduct({ id, image, title, author, isbn, publisher, publishedDate, description, condition, category, price, firstName, lastName, trustPoint, email }) {
-
   const [{ basket }, dispatch] = useStateValue();
 
   const removeFromBasket = () => {

@@ -12,6 +12,7 @@ function Offers() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const ownerId = localStorage.getItem('userId');
 
@@ -44,7 +45,8 @@ function Offers() {
     }
   }, [ownerId]);
 
-  const acceptOffer = async (offerId, offererId, offeredListId, offeredBookId) => {
+  const acceptOffer = async (offerId, offererId, offeredListId, offeredBookId, offerer) => {
+    setLoading(true);
     try {
       await instanceOffer.put(`/updateOffer`, {
         offererId: offererId,
@@ -63,19 +65,12 @@ function Offers() {
       fetchOffers();
       navigate('/trade', {
         state: {
-          acceptedOffer: {
-            offerId,
-            offererId,
-            offeredListId,
+          tradeData: {
+            offerId: offerId,
+            offererId: offererId,
+            listingId: offeredListId,
             bookId: offeredBookId,
-            offerItem: {
-              sentOffer: {
-                ...sentOffers.find(offer => offer.offerId === offerId)
-              },
-              receivedOffer: {
-                ...receivedOffers.find(offer => offer.offerId === offerId)
-              }
-            }
+            offerer: offerer
           }
         }
       });
@@ -114,20 +109,20 @@ function Offers() {
     setOpen(true);
   };
 
-  const handleDetails = (item) => {
-    navigate("/bookDetails", {
-      state: {
-        listId: item.offerListId,
-        fromOffers: true,
-        bookDetail: {
-          book: item.offeredBook,
-          user: item.offerer,
-          price: item.offeredBook?.price || null,
-          fromOffers: true,
-        }
-      }
-    });
-  };
+  // const handleDetails = (item) => {
+  //   navigate("/bookDetails", {
+  //     state: {
+  //       listId: item.offerListId,
+  //       fromOffers: true,
+  //       bookDetail: {
+  //         book: item.offeredBook,
+  //         user: item.offerer,
+  //         price: item.offeredBook?.price || null,
+  //         fromOffers: true,
+  //       }
+  //     }
+  //   });
+  // };
 
   const handleCancelOffer = async (item) => {
     try {
@@ -168,14 +163,14 @@ function Offers() {
                 <HighlightOffOutlinedIcon onClick={() => handleCancelOffer(item)} className='offer_cancel_button' />
                 <div>
                   <h4>Teklif edilen</h4>
-                  <img src={yourBook?.image} alt={yourBook?.title || "Senin kitabın"} onClick={() => handleDetails(yourBook)} />
+                  <img src={yourBook?.image} alt={yourBook?.title || "Senin kitabın"} />
                   <p><strong>ISBN: </strong>{yourBook?.isbn}</p>
                   <p><strong>Kitap/Yazar: </strong>{yourBook?.title}/{yourBook?.author}</p>
                 </div>
 
                 <div>
                   <h4>Teklif verilen</h4>
-                  <img src={theirBook?.image} alt={theirBook?.title || "Karşı tarafın kitabı"} onClick={() => handleDetails(theirBook)} />
+                  <img src={theirBook?.image} alt={theirBook?.title || "Karşı tarafın kitabı"} />
                   <p><strong>ISBN/Kitap/Yazar: </strong>{theirBook?.isbn}/{theirBook?.title}/{theirBook?.author}</p>
                   <p><strong>Kullanıcı: </strong>{theirUser?.firstName} {theirUser?.lastName}</p>
                 </div>
@@ -218,8 +213,8 @@ function Offers() {
                   </div>
                   <div>
                     <h4>Alınan Teklif</h4>
-                    <img src={book?.image} alt={book?.title || "Teklif edilen kitap"} onClick={() => handleDetails(book)} />
-                    <div onClick={() => handleDetails(book)}>
+                    <img src={book?.image} alt={book?.title || "Teklif edilen kitap"} />
+                    <div>
                       <h4>{book.title}</h4>
                       <p><strong>Yazar: </strong>{book.author}</p>
                       <p><strong>ISBN: </strong>{book.isbn}</p>
@@ -242,7 +237,7 @@ function Offers() {
                     </div>
                   ) : (
                     <div className="receive_buttons">
-                      <button onClick={() => acceptOffer(item.offerId, item.offererId, item.offerListId, item.offeredBook?.id)}>Teklifi kabul et</button>
+                      <button onClick={() => acceptOffer(item.offerId, item.offererId, item.offerListId, item.offeredBook?.id, item.offerer)}>{loading ? "Teklif kabul ediliyor.." : "Teklifi kabul et"}</button>
                       <button onClick={() => handleRejectOffer(item)}>Teklifi reddet</button>
                     </div>
                   )}

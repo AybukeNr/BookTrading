@@ -4,7 +4,6 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { StateProvider } from './StateProvider.jsx'
 import reducer, { initialState } from './reducer.jsx'
-import Header from './Header/Header.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
