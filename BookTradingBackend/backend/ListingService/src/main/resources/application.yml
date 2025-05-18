@@ -9,3 +9,6 @@ spring:
       password: root
       database: ListDB
 
+  api:
+    url: "http://localhost:8000"
+

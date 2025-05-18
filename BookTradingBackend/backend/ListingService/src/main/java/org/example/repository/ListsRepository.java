@@ -24,6 +24,8 @@ public interface ListsRepository extends MongoRepository<Lists, String> {
     @Query("{ 'category': { $in: ?0 }, 'ownerId': { $ne: ?1 } }")
     List<Lists> findByCategory(Set<String> categories, String ownerId);
 
+    @Query("{ 'bookInfo._id': ?0 }")
+    Optional<Lists> findByBookInfoId(Long bookId);
 
 
 }
