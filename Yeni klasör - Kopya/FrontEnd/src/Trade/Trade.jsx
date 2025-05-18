@@ -4,15 +4,17 @@ import PaymentCard from '../PaymentCard/PaymentCard'
 import { useStateValue } from '../StateProvider';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { instanceTransaction, instanceUser } from '../axios';
+import { instanceShipping, instanceTransaction, instanceUser } from '../axios';
 function Trade() {
-  const [{ receiveOffer, sendOffer, tradeData }, dispatch] = useStateValue();
+  const [{ tradeData }, dispatch] = useStateValue();
   const navigate = useNavigate();
   const location = useLocation();
   const offererId = location.state?.tradeData?.offererId;
+  const ownerId = location.state?.tradeData?.offerList?.ownerId;
   const [openAdDialog, setOpenAdDialog] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [offerer, setOfferer] = useState(null);
+  const [owner, setOwner] = useState(null);
   const [trackingNumber, setTrackingNumber] = useState("");
   const [cardName, setCardName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
@@ -27,58 +29,14 @@ function Trade() {
       instanceUser.get(`/getUserById?id=${offererId}`)
         .then(res => setOfferer(res.data))
         .catch(err => console.error("Teklif veren bilgisi alınamadı:", err));
+    } else if (ownerId) {
+      instanceUser.get(`/getUserById?id=${ownerId}`)
+        .then(res => setOwner(res.data))
+        .catch(err => console.error("Teklif veren bilgisi alınamadı:", err));
     }
     console.log("Teklif veren ID:", offererId);
-    console.log("Trade verisi:", tradeData);
-  }, [offererId]);
-
-  // useEffect(() => {
-  //   if (tradeData) {
-  //     dispatch({
-  //       type: 'SET_TRADE_DATA',
-  //       payload: {
-  //         offerId: tradeData?.offerId,
-  //         offererId: tradeData?.offererId,
-  //         offeredListId: tradeData?.offeredListId,
-  //         bookId: tradeData?.offeredBookId,
-  //         offerer: tradeData?.offerer,
-  //       }
-  //     });
-  //   } else {
-  //     console.error("Trade verisi bulunamadı.");
-  //   }
-  //   console.log("Trade verisi:", tradeData);
-  //   console.log("Teklif veren ID:", tradeData?.offererId);
-  // }, [tradeData]);
-
-  // useEffect(() => {
-  //   const fetchOfferer = async () => {
-  //     try {
-  //       const response = await instanceUser.get(`/getUserById?id=${offererId}`);
-  //       setOfferer(response.data);
-  //       dispatch({
-  //         type: 'SET_TRADE_DATA',
-  //         payload:
-  //         {
-  //           offerId: tradeData?.offerId,
-  //           offererId: tradeData?.offererId,
-  //           offeredListId: tradeData?.offeredListId,
-  //           bookId: tradeData?.offeredBookId,
-  //           user: tradeData?.user,
-  //         }
-  //       });
-  //     } catch (error) {
-  //       console.error('Kullanıcı bilgileri alınamadı', error);
-  //     }
-  //   };
-  //   console.log("Trade verisi:", tradeData);
-  //   console.log("Teklif veren ID:", tradeData?.offererId);
-  //   console.log("Location state:", location.state);
-
-  //   if (offererId) {
-  //     fetchOfferer();
-  //   }
-  // }, [offererId]);
+    console.log("Teklif alan ID:", ownerId);
+  }, [offererId, ownerId]);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -140,17 +98,14 @@ function Trade() {
     }
   };
 
-  //kargo takip ile onaylama
+  //takas için kargo takip ile onaylama popup
   const confirmTrade = async () => {
     setLoading(true);
     try {
-      const response = await instanceOffer.put(`/trade`, {
-        offererId: tradeData?.offererId,
-        offerId: tradeData?.offerId,
-        listingId: tradeData?.offeredListId,
-        offerStatus: "KABUL",
-        bookId: tradeData?.bookId,
+      const response = await instanceShipping.patch("/updateShipping", {
+        shippingSerialNumber: shippingSerialNumber,
         trackingNumber: trackingNumber,
+        userId: userId
       });
       console.log("Takas işlemi gerçekleştirildi:", response.data);
       setOpenAdDialog(false);
@@ -189,6 +144,13 @@ function Trade() {
                 <p>{offerer?.firstName} {offerer?.lastName}</p>
                 <p>{offerer?.mailAddress}</p>
                 <p>{offerer?.address}</p>
+              </div>
+            ) : owner ? (
+               <div>
+                <h4>Diğer Kullanıcı Bilgileri:</h4>
+                <p>{owner?.firstName} {owner?.lastName}</p>
+                <p>{owner?.mailAddress}</p>
+                <p>{owner?.address}</p>
               </div>
             ) : (
               <p>Diğer kullanıcı bilgileri yükleniyor...</p>

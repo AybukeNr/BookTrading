@@ -188,18 +188,18 @@ const reducer = (state, action) => {
                     offer.id === action.id ? { ...offer, offerStatus: action.status } : offer),
             };
 
-        case 'SET_TRADE_DATA':
-            return {
-                ...state,
-                tradeData: {
-                    ...state.tradeData,
-                    offerId: action.payload.offerId,
-                    offererId: action.payload.offererId,
-                    offeredListId: action.payload.offeredListId,
-                    bookId: action.payload.bookId,
-                    offerer: action.payload.offerer,
-                }
-            };
+        // case 'SET_TRADE_DATA':
+        //     return {
+        //         ...state,
+        //         tradeData: {
+        //             ...state.tradeData,
+        //             offerId: action.payload.offerId,
+        //             offererId: action.payload.offererId,
+        //             offeredListId: action.payload.offeredListId,
+        //             bookId: action.payload.bookId,
+        //             offerer: action.payload.offerer,
+        //         }
+        //     };
 
         case 'SET_BOOK_DETAIL':
             return {
