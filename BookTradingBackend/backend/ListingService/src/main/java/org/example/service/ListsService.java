@@ -20,10 +20,13 @@ import org.example.exception.ListException;
 import org.example.external.*;
 import org.example.mapper.ListsMapper;
 import org.example.repository.ListsRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -44,6 +47,8 @@ public class ListsService {
     private final OfferManager offerManager;
     private final MailManager mailManager;
 
+    @Value("${recommendation.service.url}")
+    private String recommendationServiceUrl;
 
 
     public ListMailResponse listMailSummary(String listid){
@@ -485,10 +490,16 @@ public class ListsService {
         List<Lists> lists = listsRepository.findByCategory(categories,userId);
         return lists.stream().map(listMapper::ListToListResponse).toList();
     }
-
+    public List<Integer> getRecommendations(List<Integer> bookIds) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = recommendationServiceUrl + "/recommend";
+        Map<String, List<Integer>> request = Map.of("book_ids", bookIds);
+        ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
+        return (List<Integer>) response.getBody().get("recommended_books");
+    }
 
 //    public List<ListResponse> getAllRecommendations(RecRequest recRequest){
-//
+//        List<Lists> lists =
 //    }
 
 }

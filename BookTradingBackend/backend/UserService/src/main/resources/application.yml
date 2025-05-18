@@ -9,7 +9,7 @@ spring:
       password: root
       database: UserDB
   mail:
-    password: kifu aatc svou synr
+    password: duly luxi curg rkon
     host: smtp.gmail.com
     username: noreply4bookswap@gmail.com
     port: 587
