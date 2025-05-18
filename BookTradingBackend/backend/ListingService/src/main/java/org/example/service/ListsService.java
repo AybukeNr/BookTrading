@@ -47,8 +47,8 @@ public class ListsService {
     private final OfferManager offerManager;
     private final MailManager mailManager;
 
-    @Value("${recommendation.service.url}")
-    private String recommendationServiceUrl;
+//    @Value("${recommendation.service.url}")
+//    private String recommendationServiceUrl;
 
 
     public ListMailResponse listMailSummary(String listid){
@@ -320,12 +320,20 @@ public class ListsService {
         if (list.getOffers() == null) {
             throw new ListException(ErrorType.OFFER_NOT_FOUND); //
         }
-
         List<SentOffer> offers = list.getOffers();
         SentOffer targetOffer = offers.stream().filter(sentOffer -> sentOffer.getOfferId().equals(updateOfferRequest.getOfferId())).findFirst()
                 .orElseThrow(() -> new ListException(ErrorType.OFFER_NOT_FOUND));
 
         targetOffer.setOfferStatus(OfferStatus.valueOf(updateOfferRequest.getOfferStatus()));
+        if(OfferStatus.valueOf(updateOfferRequest.getOfferStatus()).equals(OfferStatus.KABUL)){
+            offers = list.getOffers().stream()
+                    .filter(sentOffer -> !sentOffer.getOfferId().equals(updateOfferRequest.getOfferId()))
+                    .map(o -> {
+                        o.setOfferStatus(OfferStatus.RET);
+                        return o;
+                    })
+                    .toList();
+        }
         targetOffer.setUpdatedDate(LocalDateTime.now());
         listsRepository.save(list);
 
@@ -490,13 +498,13 @@ public class ListsService {
         List<Lists> lists = listsRepository.findByCategory(categories,userId);
         return lists.stream().map(listMapper::ListToListResponse).toList();
     }
-    public List<Integer> getRecommendations(List<Integer> bookIds) {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = recommendationServiceUrl + "/recommend";
-        Map<String, List<Integer>> request = Map.of("book_ids", bookIds);
-        ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
-        return (List<Integer>) response.getBody().get("recommended_books");
-    }
+//    public List<Integer> getRecommendations(List<Integer> bookIds) {
+//        RestTemplate restTemplate = new RestTemplate();
+//        String url = recommendationServiceUrl + "/recommend";
+//        Map<String, List<Integer>> request = Map.of("book_ids", bookIds);
+//        ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
+//        return (List<Integer>) response.getBody().get("recommended_books");
+//    }
 
 //    public List<ListResponse> getAllRecommendations(RecRequest recRequest){
 //        List<Lists> lists =
