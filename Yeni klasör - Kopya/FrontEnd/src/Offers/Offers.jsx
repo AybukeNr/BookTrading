@@ -79,6 +79,21 @@ function Offers() {
     }
   };
 
+  const goToTrade = async (offerId, offererId, offeredListId, offeredBookId, offerList) => {
+   await fetchOffers();
+    navigate('/trade', {
+      state: {
+        tradeData: {
+          offerId: offerId,
+          offererId: offererId,
+          listingId: offeredListId,
+          bookId: offeredBookId,
+          ownerId: offerList.ownerId
+        }
+      }
+    });
+  }
+
   const confirmRejectOffer = async () => {
     if (selectedOffer) {
       try {
@@ -177,7 +192,10 @@ function Offers() {
 
                 <div className="accept_callback" style={{ fontSize: "14px" }}>
                   {item.offerStatus === "KABUL" ? (
-                    <p style={{ color: "green" }}>Teklif kabul edildi!</p>
+                    <>
+                      <p style={{ color: "green" }}>Teklif kabul edildi!</p>
+                      <button onClick={() => goToTrade(item.offerId, item.offererId, item.offerListId, item.offeredBook?.id, item.offerList.ownerId)}>{loading ? "Takasa gidiliyor..." : "Takasa git"}</button>
+                    </>
                   ) : item.offerStatus === "RET" ? (
                     <p style={{ color: "red" }}>Teklif reddedildi!</p>
                   ) : (
