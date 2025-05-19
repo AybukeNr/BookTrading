@@ -6,6 +6,7 @@ import { Rating } from '@mui/material';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { instanceListing, instanceOffer } from '../axios';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import { getAuthToken } from '../auth';
 
 function Offers() {
   const [{ sentOffers, receivedOffers }, dispatch] = useStateValue();
@@ -79,20 +80,36 @@ function Offers() {
     }
   };
 
-  const goToTrade = async (offerId, offererId, offeredListId, offeredBookId, offerList) => {
-   await fetchOffers();
-    navigate('/trade', {
-      state: {
-        tradeData: {
-          offerId: offerId,
-          offererId: offererId,
-          listingId: offeredListId,
-          bookId: offeredBookId,
-          ownerId: offerList.ownerId
-        }
-      }
-    });
-  }
+  // const goToTrade = async (offerId, offererId, offeredListId, offeredBookId, offerList) => {
+  //  await fetchOffers();
+  //   navigate('/trade', {
+  //     state: {
+  //       tradeData: {
+  //         offerId: offerId,
+  //         offererId: offererId,
+  //         listingId: offeredListId,
+  //         bookId: offeredBookId,
+  //         offerList: offerList.owner
+  //       }
+  //     }
+  //   });
+  //   console.log("giden veri: " , offerList);
+  // item.offerId, item.offererId, item.offerListId, item.offeredBook?.id, item.offerList?.owner
+  // }
+
+  const handleGoToTrade = (offer) => {
+    const currentUser = getAuthToken(); // giriş yapan kişi
+    const otherUser = offer.toUser; // teklif gönderdiğin kişi
+
+    console.log("currentUser:", currentUser);
+    console.log("otherUser:", otherUser);
+
+    navigate('/trade', { state: { currentUser, otherUser, offer } });
+    console.log("Teklif Gönderen:", offer.fromUser);
+    console.log("Teklif Alan:", offer.toUser);
+    console.log("Giriş yapan kullanıcı:", currentUser);
+
+  };
 
   const confirmRejectOffer = async () => {
     if (selectedOffer) {
@@ -194,7 +211,7 @@ function Offers() {
                   {item.offerStatus === "KABUL" ? (
                     <>
                       <p style={{ color: "green" }}>Teklif kabul edildi!</p>
-                      <button onClick={() => goToTrade(item.offerId, item.offererId, item.offerListId, item.offeredBook?.id, item.offerList.ownerId)}>{loading ? "Takasa gidiliyor..." : "Takasa git"}</button>
+                      <button onClick={() => handleGoToTrade(item.offerList)}>{loading ? "Takasa gidiliyor..." : "Takasa git"}</button>
                     </>
                   ) : item.offerStatus === "RET" ? (
                     <p style={{ color: "red" }}>Teklif reddedildi!</p>
