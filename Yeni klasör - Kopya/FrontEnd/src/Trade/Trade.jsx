@@ -9,11 +9,10 @@ function Trade() {
   const [{ tradeData }, dispatch] = useStateValue();
   const navigate = useNavigate();
   const location = useLocation();
-  // const tradeItem = Array.isArray(location.state?.tradeData) ? location.state.tradeData[i] 
-  // : location.state?.tradeData; 
-  // const offererId = tradeItem?.offererId;
-  // const ownerId = tradeItem?.offerList?.owner?.id;
-  const { currentUser, otherUser, offer } = location.state;
+  const tradeItem = Array.isArray(location.state?.tradeData) ? location.state.tradeData[i] 
+  : location.state?.tradeData; 
+  const offererId = tradeItem?.offererId;
+  const ownerId = tradeItem?.offerList?.owner?.id;
   const [openAdDialog, setOpenAdDialog] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [offerer, setOfferer] = useState(null);
@@ -27,30 +26,30 @@ function Trade() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   if (offererId) {
-  //     instanceUser.get(`/getUserById?id=${offererId}`)
-  //       .then(res => setOfferer(res.data))
-  //       .catch(err => console.error("Teklif veren bilgisi alınamadı:", err));
-  //   } else if (ownerId) {
-  //     instanceUser.get(`/getUserById?id=${ownerId}`)
-  //       .then(res => setOwner(res.data))
-  //       .catch(err => console.error("Teklif veren bilgisi alınamadı:", err));
-  //   }
-  //   console.log("Teklif veren ID:", offererId);
-  //   console.log("Teklif alan ID:", ownerId);
-  // }, [offererId, ownerId]);
+  useEffect(() => {
+    if (offererId) {
+      instanceUser.get(`/getUserById?id=${offererId}`)
+        .then(res => setOfferer(res.data))
+        .catch(err => console.error("Teklif veren bilgisi alınamadı:", err));
+    } else if (ownerId) {
+      instanceUser.get(`/getUserById?id=${ownerId}`)
+        .then(res => setOwner(res.data))
+        .catch(err => console.error("Teklif veren bilgisi alınamadı:", err));
+    }
+    console.log("Teklif veren ID:", offererId);
+    console.log("Teklif alan ID:", ownerId);
+  }, [offererId, ownerId]);
 
-  // useEffect(() => {
-  //   const userId = localStorage.getItem("userId");
-  //   if (userId) {
-  //     instanceUser.get(`/getUserById?id=${userId}`)
-  //       .then((res) => setUserInfo(res.data))
-  //       .catch((err) => console.error("Kullanıcı bilgisi alınamadı:", err));
-  //   }
-  // }, []);
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      instanceUser.get(`/getUserById?id=${userId}`)
+        .then((res) => setUserInfo(res.data))
+        .catch((err) => console.error("Kullanıcı bilgisi alınamadı:", err));
+    }
+  }, []);
 
-  
+
   //güvence bedeli ödeme
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -136,7 +135,7 @@ function Trade() {
             <h3>Teslimat Adresleri: </h3>
           </div>
           <div className="trade_address">
-            {/* <div>
+            <div>
               <h4>Kullanıcı Bilgileri</h4>
               <p>{userInfo?.firstName} {userInfo?.lastName}</p>
               <p>{userInfo?.mailAddress}</p>
@@ -158,19 +157,7 @@ function Trade() {
               </div>
             ) : (
               <p>Diğer kullanıcı bilgileri yükleniyor...</p>
-            )} */}
-            {offer &&
-            <div>
-              <h3>Senin Bilgilerin</h3>
-              <p>Ad: {offer?.currentUser?.firstName}</p>
-              <p>Email: {offer?.currentUser?.mailAddress}</p>
-
-              <h3>Karşı Taraf</h3>
-              <p>Ad: {offer?.otherUser?.firstName}</p>
-              <p>Email: {offer?.otherUser?.mailAddress}</p>
-              <p>Adres: {offer?.otherUser?.address}</p>
-            </div>
-}
+            )}
           </div>
         </div>
 
