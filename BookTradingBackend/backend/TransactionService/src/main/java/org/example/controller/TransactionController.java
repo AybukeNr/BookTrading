@@ -29,6 +29,7 @@ import static org.example.constant.RestApiList.*;
 @RequiredArgsConstructor
 @Tag(name = "Transaction Operations", description = "APIs for managing transaction operations.")
 @Slf4j
+@CrossOrigin("*")
 public class TransactionController {
 
     private final ITransactionService transactionService;
@@ -132,9 +133,16 @@ public class TransactionController {
     }
 
     @Operation(summary = "kullanıcının takaslarının tüm bilgilerini getirir",description = "takaslarla ilgili her halt gelir")
-    @GetMapping(GET_TRANSACTION_INFOS)
+    @GetMapping(GET_TRANSACTION_ALL_INFOS)
     public ResponseEntity<List<TransactionInfo>> transactionAllInfos(@RequestParam String userId){
         return new ResponseEntity<>(this.transactionService.transactionAllInfos(userId),HttpStatus.OK);
+    }
+
+    @Operation(summary = "kullanıcının takaslarının listId'ye göre bilgilerini getirir",description = "takaslarla ilgili her halt gelir")
+    @GetMapping(GET_TRANSACTION_INFOS)
+    public ResponseEntity<TransactionInfo> transactionInfos(@RequestParam String listId,@RequestParam String userId ){
+        log.info("transactions info fetching..");
+        return new ResponseEntity<>(this.transactionService.transactionInfosByListIdAndUserId(listId,userId),HttpStatus.OK);
     }
 
 

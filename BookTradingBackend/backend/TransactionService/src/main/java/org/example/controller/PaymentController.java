@@ -17,6 +17,7 @@ import static org.example.constant.RestApiList.*;
 @RestController
 @RequestMapping(PAYMENT)
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class PaymentController {
 
     private final IPaymentService paymentService;

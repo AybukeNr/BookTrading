@@ -23,6 +23,7 @@ import static org.example.constant.RestApiList.*;
 @RequiredArgsConstructor
 @RequestMapping(SHIPPINGS)
 @Tag(name = "Shipping Controller", description = "Operations related to shipping and exchanges")
+@CrossOrigin("*")
 public class ShippingController {
 
     private final ShippingService shippingService;

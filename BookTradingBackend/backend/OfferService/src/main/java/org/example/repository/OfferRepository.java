@@ -10,5 +10,6 @@ public interface OfferRepository extends MongoRepository<Offer, String> {
     Optional<Offer> findByOffererIdAndId(String ownerId, String id);
     Optional<List<Offer>> findAllByOffererId(String ownerId);
     Optional<List<Offer>> findAllByOffererIdAndOfferStatus(String ownerId,String status);
+    Optional<Offer> findAllByOffererIdAndOfferStatusAndOfferedListId(String ownerId,String status,String listId);
 
 }
