@@ -1,6 +1,8 @@
 export const initialState = {
     bookshelf: [],
     bookList: [],
+    recommendedCategories: [],
+    recommendedBooks: [],
     searchedBooks: [],
     searchQuery: '',
     selectedCategory: null,
@@ -17,11 +19,11 @@ export const initialState = {
     sentOffers: [],
     receivedOffers: [],
     basket: [],
-    notifications: [
-        'Yeni bir mesajınız var.',
-        'Kitap takası teklifi alındı.',
-        'Profiliniz güncellendi.',
-    ],
+    // notifications: [
+    //     'Yeni bir mesajınız var.',
+    //     'Kitap takası teklifi alındı.',
+    //     'Profiliniz güncellendi.',
+    // ],
     user: null,
     users: [
         { id: 1, firstname: 'Senem', lastname: 'Çayıroğlu', email: 'senem@gmail.com', telephone: '05456328152', iban: 'TR12 3456 7890 1234 5678 9012 34', address: 'İstanbul', password: '123456' },
@@ -69,6 +71,18 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 basket: action.basket,
+            };
+
+        case 'SET_RECOMMENDED_CATEGORIES':
+            return {
+                ...state,
+                recommendedCategories: action.categories,
+            };
+
+        case 'SET_RECOMMENDED_BOOKS':
+            return {
+                ...state,
+                recommendedBooks: action.books,
             };
 
         case "SET_SEARCH_QUERY":
