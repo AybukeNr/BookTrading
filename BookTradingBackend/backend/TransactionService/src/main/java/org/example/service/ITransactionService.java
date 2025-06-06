@@ -45,6 +45,8 @@ public interface ITransactionService {
 
     public List<TransactionInfo> transactionAllInfos(String userId);
 
+    public TransactionInfo transactionInfosByListIdAndUserId(String listId,String userId);
+
 
 
 }

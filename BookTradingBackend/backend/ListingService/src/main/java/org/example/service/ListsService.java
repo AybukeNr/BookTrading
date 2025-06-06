@@ -22,6 +22,9 @@ import org.example.mapper.ListsMapper;
 import org.example.repository.ListsRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +49,10 @@ public class ListsService {
     private final BookManager bookManager;
     private final OfferManager offerManager;
     private final MailManager mailManager;
+    private final RecommendationManager recommendationManager;
 
-//    @Value("${recommendation.service.url}")
-//    private String recommendationServiceUrl;
+    @Value("${recommendation.url}")
+    private String recommendationServiceUrl;
 
 
     public ListMailResponse listMailSummary(String listid){
@@ -494,20 +498,44 @@ public class ListsService {
         return list.getOwnerId();
     }
 
-    public List<ListResponse> getCategoryRecs(Set<String> categories,String userId){
+    public List<ListResponse> getCategoryRecs(String userId){
+        Set<String> categories = recommendationManager.getFilteredRecommendations(userId).getBody();
         List<Lists> lists = listsRepository.findByCategory(categories,userId);
         return lists.stream().map(listMapper::ListToListResponse).toList();
     }
-//    public List<Integer> getRecommendations(List<Integer> bookIds) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        String url = recommendationServiceUrl + "/recommend";
-//        Map<String, List<Integer>> request = Map.of("book_ids", bookIds);
-//        ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
-//        return (List<Integer>) response.getBody().get("recommended_books");
-//    }
+    public List<Long> getRecommendations(List<Long> bookIds) {
+        List<Integer> ids = bookIds.stream().mapToInt(Math::toIntExact).boxed().collect(Collectors.toList());
+        RestTemplate restTemplate = new RestTemplate();
+        String url = recommendationServiceUrl;
+        log.info("url : {}",url);
 
-//    public List<ListResponse> getAllRecommendations(RecRequest recRequest){
-//        List<Lists> lists =
-//    }
+        // Map.of yerine HashMap kullanımı
+        Map<String, List<Integer>> request = new HashMap<>();
+        request.put("visited_ids", ids);
+
+        // JSON gövdesini doğru serileştirme
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Map<String, List<Integer>>> entity = new HttpEntity<>(request, headers);
+
+        ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
+
+        List<Integer> intBooks = (List<Integer>) response.getBody().get("recommended_ids");
+        List<Long> longBooks = intBooks.stream().mapToLong(Integer::longValue).boxed().collect(Collectors.toList());
+        return longBooks;
+    }
+
+
+    public List<ListResponse> getAllRecommendations(RecRequest recRequest) {
+        // recommedation_service'den gelen öneriler
+        List<Long> bookIds = getRecommendations(recRequest.getBookIds());
+        List<Lists> allLists = listsRepository.findByBookInfo_idIn(bookIds);
+
+        // List objelerini ListResponse'a dönüştür
+        return allLists.stream()
+                .map(listMapper::ListToListResponse)
+                .toList();
+    }
+
 
 }

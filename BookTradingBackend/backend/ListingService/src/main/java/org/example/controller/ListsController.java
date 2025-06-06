@@ -223,4 +223,10 @@ public class ListsController {
         return new ResponseEntity<>(listsService.getListOwner(listId),HttpStatus.OK);
     }
 
+    @PostMapping(GET_ALL_RECS)
+    public ResponseEntity<List<ListResponse>> getAllRecommendations(@RequestBody RecRequest recRequest) {
+        log.info("Request: {}", recRequest);
+        return new ResponseEntity<>(listsService.getAllRecommendations(recRequest),HttpStatus.OK);
+    }
+
 }

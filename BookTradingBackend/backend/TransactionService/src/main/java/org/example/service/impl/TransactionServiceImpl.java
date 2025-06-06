@@ -29,13 +29,12 @@ import org.example.service.ITransactionService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
+
+
 
 
 @Service
@@ -391,26 +390,34 @@ public class TransactionServiceImpl implements ITransactionService {
             TransactionInfo transactionInfo = new TransactionInfo();
             ExchangeDetails books = listManager.getExchangeBooks(transaction.getListId()).getBody();
             ExchangeInfos exchangeInfos = shippingManager.getExchangeInfos(userId,transaction.getListId()).getBody();
-            ListBookResponse listBookResponse = books.getListBook();
-            OfferBookResponse offerBookResponse = books.getAcceptedBook();
-            Map<String,UserContactInfos> users = userManager.getUserContactInfos(transaction.getOwnerId(),transaction.getOffererId()).getBody();
-            UserContactInfos owner = users.get("owner");
-            UserContactInfos offerer = users.get("offerer");
             transactionInfo.setUserId(userId);
             transactionInfo.setTransactionId(transaction.getTransactionId());
-            transactionInfo.setOwner(owner);
-            transactionInfo.setOfferer(offerer);
             transactionInfo.setOffererDeposit(transaction.getOffererDeposit());
             transactionInfo.setOwnerDeposit(transaction.getOwnerDeposit());
             transactionInfo.setTrustFee(transaction.getTrustFee());
             transactionInfo.setShippingSerialNumber(exchangeInfos.getShippingSerialNumber());
             transactionInfo.setStatus(exchangeInfos.getStatus());
-            transactionInfo.setListBook(listBookResponse);
-            transactionInfo.setOfferBook(offerBookResponse);
             transactionInfos.add(transactionInfo);
         }
 
         return transactionInfos;
+    }
+
+    @Override
+    public TransactionInfo transactionInfosByListIdAndUserId(String listId,String userId) {
+        Transactions transactions = transactionRepository.findByListId(listId).orElseThrow(()->
+                new TransactionException(ErrorType.TRANSACTION_NOT_FOUND));
+        TransactionInfo transactionInfo = new TransactionInfo();
+        ExchangeDetails books = listManager.getExchangeBooks(transactions.getListId()).getBody();
+        ExchangeInfos exchangeInfos = shippingManager.getExchangeInfos(userId,transactions.getListId()).getBody();
+        transactionInfo.setUserId(userId);
+        transactionInfo.setTransactionId(transactions.getTransactionId());
+        transactionInfo.setOffererDeposit(transactions.getOffererDeposit());
+        transactionInfo.setOwnerDeposit(transactions.getOwnerDeposit());
+        transactionInfo.setTrustFee(transactions.getTrustFee());
+        transactionInfo.setShippingSerialNumber(exchangeInfos.getShippingSerialNumber());
+        transactionInfo.setStatus(exchangeInfos.getStatus());
+        return transactionInfo;
     }
 
 

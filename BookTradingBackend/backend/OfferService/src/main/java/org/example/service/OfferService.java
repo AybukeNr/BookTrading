@@ -17,6 +17,7 @@ import org.example.exception.OfferException;
 import org.example.external.BookManager;
 import org.example.external.ListManager;
 import org.example.external.UserManager;
+import org.example.mapper.OfferMapper;
 import org.example.repository.OfferRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ public class OfferService {
     private final ListManager listManager;
     private final BookManager bookManager;
     private final UserManager userManager;
+    private final OfferMapper offerMapper;
 
     @Transactional
     public Offer createOffer(CreateOfferRequest offer) {
@@ -83,7 +85,6 @@ public class OfferService {
                 .orElseThrow(() -> new OfferException(ErrorType.BOOK_NOT_FOUND));
     }
     //todo -> kaubl ve ret sadece ilan sahibi,iptal edildi ise sadece teklif sahibi tarafından gerçekleştirilmeli
-
     @Transactional
     public Boolean updateOffer(UpdateOfferRequest updateOfferRequest) {
         Offer offer = offerRepository.findByOffererIdAndId(updateOfferRequest.getOffererId(), updateOfferRequest.getOfferId())
@@ -133,6 +134,7 @@ public class OfferService {
     public Offer getOfferById(String id) {
         return offerRepository.findById(id).orElseThrow(() -> new OfferException(ErrorType.OFFER_NOT_FOUND));
     }
+
 
 
     }
