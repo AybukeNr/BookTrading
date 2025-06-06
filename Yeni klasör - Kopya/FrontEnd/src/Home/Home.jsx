@@ -6,12 +6,55 @@ import { useStateValue } from "../StateProvider";
 import { instanceListing } from "../axios";
 import { useNavigate } from "react-router-dom";
 
-// const ownerId = localStorage.getItem("userId");
-
 function Home() {
-  const [{ bookList, selectedCategory }, dispatch] = useStateValue();
+  const [{ bookList, selectedCategory, recommendedBooks }, dispatch] = useStateValue();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      const userId = localStorage.getItem("userId");
+
+      const bookIds = bookList.slice(0, 3).map((book) => book.book.id);
+
+      try {
+        const response = await instanceListing.post("/getAllRecs", {
+          userId,
+          bookIds,
+        });
+
+        const recommendedItems = response.data;
+        const recommendedCategories = recommendedItems.map(item => item.book.category);
+
+        // aynı kategori birden fazla olmasın istersek aşağıdaki kodu kullanabiliriz
+        // const recommendedCategories = [...new Set(recommendedItems.map(item => item.book.category))];
+
+        dispatch({
+          type: "SET_RECOMMENDED_CATEGORIES",
+          categories: recommendedCategories,
+        });
+
+        const filtered = bookList.filter((book) =>
+          recommendedCategories.includes(book.book.category)
+        );
+
+        dispatch({
+          type: "SET_RECOMMENDED_BOOKS",
+          books: filtered,
+        });
+
+        console.log("Gelen kategoriler:", categories);
+        console.log("bookList:", bookList.map(book => book.book.category));
+
+      } catch (err) {
+        console.error("Öneriler alınırken hata oluştu:", err);
+      }
+    };
+
+    if (bookList.length > 0) {
+      fetchRecommendations();
+    }
+  }, [bookList, dispatch]);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -112,6 +155,18 @@ function Home() {
           </div>
         )}
 
+        {!selectedCategory && recommendedBooks.length > 0 && (
+          <>
+            <h2 className="home_title">Önerilen İlanlar</h2>
+
+            <div className="home_row">
+              {recommendedBooks.map((book, index) => (
+                <Product key={index} book={book} />
+              ))}
+            </div>
+          </>
+        )}
+
         <h2 className="home_title">
           {selectedCategory
             ? selectedCategory + " Kategorisi İlanları"
@@ -132,16 +187,6 @@ function Home() {
               <p>Sonuç bulunamadı.</p>
             )}
           </div>
-        )}
-
-        {!selectedCategory && (
-          <>
-            <h2 className="home_title">Önerilen İlanlar</h2>
-
-            <div className="home_row">
-              {/* öneri sistemi ile gelecek kitaplar */}
-            </div>
-          </>
         )}
       </div>
     </div>

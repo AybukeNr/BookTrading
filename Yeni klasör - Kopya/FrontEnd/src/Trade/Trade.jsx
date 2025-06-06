@@ -9,10 +9,9 @@ function Trade() {
   const [{ tradeData }, dispatch] = useStateValue();
   const navigate = useNavigate();
   const location = useLocation();
-  const tradeItem = Array.isArray(location.state?.tradeData) ? location.state.tradeData[i] 
-  : location.state?.tradeData; 
+  const tradeItem = location.state?.tradeData;
   const offererId = tradeItem?.offererId;
-  const ownerId = tradeItem?.offerList?.owner?.id;
+  const ownerId = tradeItem?.offerList?.id;
   const [openAdDialog, setOpenAdDialog] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [offerer, setOfferer] = useState(null);
@@ -24,7 +23,7 @@ function Trade() {
   const [cvv, setCvv] = useState("");
   const [processing, setProcessing] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     if (offererId) {

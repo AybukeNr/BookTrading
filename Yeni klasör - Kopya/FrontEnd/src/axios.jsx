@@ -41,6 +41,7 @@ const instanceShipping = createInstance('http://localhost:8082/api/v1/shippings'
 const instanceOffer = createInstance('http://localhost:9091/api/v1/offers');
 const instanceLibrary = createInstance('http://localhost:9090/api/v1/books');
 const instanceListing = createInstance('http://localhost:8081/api/v1/lists');
+const instanceRecommendation = createInstance('http://localhost:8084/api/v1/recommendations');
 
-export { instanceAuth, instanceUser, instanceTransaction, instanceShipping, instanceOffer, instanceLibrary, instanceListing };
+export { instanceAuth, instanceUser, instanceTransaction, instanceShipping, instanceOffer, instanceLibrary, instanceListing, instanceRecommendation };
 
