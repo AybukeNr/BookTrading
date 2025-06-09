@@ -211,7 +211,7 @@ function Offers() {
                   {item.offerStatus === "KABUL" ? (
                     <>
                       <p style={{ color: "green" }}>Teklif kabul edildi!</p>
-                      <button onClick={() => goToTrade(item.offerId, item.offererId, item.offerListId, item.offeredBook?.id, item.offerList?.owner)}>{loading ? "Takasa gidiliyor..." : "Takasa git"}</button>
+                      <button className='goToTrade_button' onClick={() => goToTrade(item.offerId, item.offererId, item.offerListId, item.offeredBook?.id, item.offerList?.owner)}>{loading ? "Takasa gidiliyor..." : "Takasa git"}</button>
                     </>
                   ) : item.offerStatus === "RET" ? (
                     <p style={{ color: "red" }}>Teklif reddedildi!</p>

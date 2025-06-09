@@ -43,7 +43,7 @@ function Home() {
           books: filtered,
         });
 
-        console.log("Gelen kategoriler:", categories);
+        console.log("Gelen kategoriler:", recommendedCategories);
         console.log("bookList:", bookList.map(book => book.book.category));
 
       } catch (err) {
