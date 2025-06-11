@@ -4,52 +4,82 @@ import PaymentCard from '../PaymentCard/PaymentCard'
 import { useStateValue } from '../StateProvider';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { instanceShipping, instanceTransaction, instanceUser } from '../axios';
+import { instanceLibrary, instanceListing, instanceShipping, instanceTransaction, instanceUser } from '../axios';
 function Trade() {
   const [{ tradeData }, dispatch] = useStateValue();
   const navigate = useNavigate();
   const location = useLocation();
   const tradeItem = location.state?.tradeData;
-  const offererId = tradeItem?.offererId;
-  const ownerId = tradeItem?.offerList?.id;
   const [openAdDialog, setOpenAdDialog] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
-  const [offerer, setOfferer] = useState(null);
-  const [owner, setOwner] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [otherUser, setOtherUser] = useState(null);
   const [trackingNumber, setTrackingNumber] = useState("");
+  const [transactionInfo, setTransactionInfo] = useState(null);
   const [cardName, setCardName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
   const [processing, setProcessing] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null); 
+  const [error, setError] = useState(null);
+  const [sendBook, setSendBook] = useState(null);
+  const [receiveBook, setReceiveBook] = useState(null);
 
   useEffect(() => {
-    if (offererId) {
-      instanceUser.get(`/getUserById?id=${offererId}`)
-        .then(res => setOfferer(res.data))
-        .catch(err => console.error("Teklif veren bilgisi alınamadı:", err));
-    } else if (ownerId) {
-      instanceUser.get(`/getUserById?id=${ownerId}`)
-        .then(res => setOwner(res.data))
-        .catch(err => console.error("Teklif veren bilgisi alınamadı:", err));
+    if (tradeItem) {
+      console.log("Trade item:", tradeItem);
+
+      if (tradeItem.currentUserId) {
+        instanceUser.get(`/getUserById?id=${tradeItem.currentUserId}`)
+          .then(res => {
+            setCurrentUser(res.data);
+            console.log("Current user:", res.data);
+          })
+          .catch(err => console.error("Giriş yapan kullanıcı bilgisi alınamadı:", err));
+      }
+
+      instanceUser.get(`/getUserById?id=${tradeItem.otherUserId}`)
+        .then(res => {
+          setOtherUser(res.data);
+          console.log("Other user (from API):", res.data);
+        })
+        .catch(err => console.error("Karşı taraf kullanıcı bilgisi alınamadı:", err));
+
+      instanceTransaction.get(`/transactions/getTransactionInfos?userId=${tradeItem.currentUserId}&listId=${tradeItem.listingId}`)
+        .then(res => {
+          setTransactionInfo(res.data);
+          console.log("Transaction infos (from API):", res.data);
+        })
+        .catch(err => console.error("Takas bilgileri alınamadı:", err));
+
+      if (!tradeItem.listBook && tradeItem.listingId) {
+        instanceListing.get(`/getListsByListById?id=${tradeItem.listingId}`)
+          .then(res => {
+            console.log("Listelenen kitap (listBook):", res.data);
+            setReceiveBook(res.data);
+          })
+          .catch(err => console.error("Listelenen kitap bilgisi alınamadı:", err));
+      }
+
+      if (!tradeItem.offeredBook && tradeItem.bookId) {
+        instanceLibrary.get(`/getBookById?id=${tradeItem.bookId}`)
+          .then(res => {
+            console.log("Teklif edilen kitap (offeredBook):", res.data);
+            setSendBook(res.data);
+          })
+          .catch(err => console.error("Teklif edilen kitap bilgisi alınamadı:", err));
+      }
+
+      if (tradeItem.tradeType === 'sent') {
+        setSendBook(tradeItem.offeredBook);
+        setReceiveBook(tradeItem.listBook);
+      } else if (tradeItem.tradeType === 'received' || tradeItem.tradeType === 'accepted') {
+        setSendBook(tradeItem.listBook);
+        setReceiveBook(tradeItem.offeredBook);
+      }
     }
-    console.log("Teklif veren ID:", offererId);
-    console.log("Teklif alan ID:", ownerId);
-  }, [offererId, ownerId]);
+  }, [tradeItem]);
 
-  useEffect(() => {
-    const userId = localStorage.getItem("userId");
-    if (userId) {
-      instanceUser.get(`/getUserById?id=${userId}`)
-        .then((res) => setUserInfo(res.data))
-        .catch((err) => console.error("Kullanıcı bilgisi alınamadı:", err));
-    }
-  }, []);
-
-
-  //güvence bedeli ödeme
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -70,14 +100,14 @@ function Trade() {
     }
 
     const requestBody = {
-      listId: tradeItem?.offeredListId,
-      listType: "EXCHANGE",
+      listId: [tradeItem?.listingId],
+      listType: transactionInfo?.listType,
       userId: userId,
       fullName: cardName,
       cardNumber,
       cvv,
       expiryDate,
-      amount: 10, // Güvence bedeli tutarı
+      amount: transactionInfo?.trustFee,
       trackingNumber,
     };
 
@@ -100,20 +130,79 @@ function Trade() {
     }
   };
 
-  //takas için kargo takip ile onaylama popup
   const confirmTrade = async () => {
     setLoading(true);
+    setError("");
+
+    if (!cardName || !cardNumber || !cvv || !expiryDate) {
+      setError("Lütfen tüm kart bilgilerini doldurun.");
+      setLoading(false);
+      return;
+    }
+
+    if (!trackingNumber) {
+      setError("Lütfen kargo takip numarasını girin.");
+      setLoading(false);
+      return;
+    }
+
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      setError("Kullanıcı kimliği bulunamadı. Lütfen tekrar giriş yapın.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const response = await instanceShipping.patch("/updateShipping", {
-        shippingSerialNumber: shippingSerialNumber,
+      const paymentRequestBody = {
+        listId: [tradeItem?.listingId],
+        listType: transactionInfo?.listType,
+        userId: userId,
+        fullName: cardName,
+        cardNumber,
+        cvv,
+        expiryDate,
+        amount: transactionInfo?.trustFee,
+        trackingNumber,
+      };
+
+      console.log("Ödeme isteği gönderiliyor:", paymentRequestBody);
+
+      const paymentResponse = await instanceTransaction.post("/payments/createPayment", paymentRequestBody,
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      if (paymentResponse.status !== 200 && paymentResponse.status !== 201) {
+        setError("Ödeme sırasında beklenmedik bir hata oluştu.");
+        return;
+      }
+
+      console.log("Ödeme başarılı:", paymentResponse.data);
+
+      const shippingRequestData = {
+        shippingSerialNumber: transactionInfo?.shippingSerialNumber,
         trackingNumber: trackingNumber,
-        userId: userId
-      });
-      console.log("Takas işlemi gerçekleştirildi:", response.data);
+        userId: tradeItem?.currentUserId
+      };
+
+      console.log("Kargo takip güncelleme isteği:", shippingRequestData);
+
+      const shippingResponse = await instanceShipping.patch("/updateShipping", shippingRequestData);
+
+      console.log("Takas işlemi gerçekleştirildi:", shippingResponse.data);
+
       setOpenAdDialog(false);
+      navigate("/");
+
     } catch (error) {
-      console.error("Takas işlemi gerçekleştirilirken hata:", error);
-      setError("Takas işlemi gerçekleştirilemedi. Lütfen tekrar deneyin.");
+      console.error("İşlem hatası:", error);
+      if (error.response?.data?.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("İşlem gerçekleştirilemedi. Lütfen tekrar deneyin.");
+      }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -128,81 +217,86 @@ function Trade() {
   return (
     <div className='trade'>
       <div className="trade_container">
-        <h1> Ürünler </h1>
+        <h1> Takas Detayları </h1>
         <div className="trade_section">
           <div className="trade_title">
             <h3>Teslimat Adresleri: </h3>
           </div>
           <div className="trade_address">
             <div>
-              <h4>Kullanıcı Bilgileri</h4>
-              <p>{userInfo?.firstName} {userInfo?.lastName}</p>
-              <p>{userInfo?.mailAddress}</p>
-              <p>{userInfo?.address}</p>
+              <h4>Sizin Bilgileriniz</h4>
+              {currentUser ? (
+                <>
+                  <p>{currentUser.firstName} {currentUser.lastName}</p>
+                  <p>{currentUser.mailAddress}</p>
+                  <p>{currentUser.address}</p>
+                </>
+              ) : (
+                <p>Kullanıcı bilgileri yükleniyor...</p>
+              )}
             </div>
-            {offerer ? (
-              <div>
-                <h4>Diğer Kullanıcı Bilgileri:</h4>
-                <p>{offerer?.firstName} {offerer?.lastName}</p>
-                <p>{offerer?.mailAddress}</p>
-                <p>{offerer?.address}</p>
-              </div>
-            ) : owner ? (
-               <div>
-                <h4>Diğer Kullanıcı Bilgileri:</h4>
-                <p>{offerList?.owner?.firstName} {offerList?.owner?.lastName}</p>
-                <p>{offerList?.owner?.mailAddress}</p>
-                <p>{offerList?.owner?.address}</p>
-              </div>
-            ) : (
-              <p>Diğer kullanıcı bilgileri yükleniyor...</p>
-            )}
+            <div>
+              <h4>Diğer Kullanıcı Bilgileri</h4>
+              {otherUser ? (
+                <>
+                  <p>{otherUser.firstName} {otherUser.lastName}</p>
+                  <p>{otherUser.mailAddress}</p>
+                  <p>{otherUser.address}</p>
+                </>
+              ) : (
+                <p>Diğer kullanıcı bilgileri yükleniyor...</p>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* <div className="trade_section">
+        <div className="trade_section">
           <div className="trade_title">
             <h3>Takaslanacak Kitaplar</h3>
           </div>
           <div className="trade_items">
             <div className="sendBook">
               <h4>Gönderilecek Kitap</h4>
-              {sendBook.map(item => (
-                <div className="offer_info" key={item.index}>
-                  <img src={item.image} alt={item.title} />
+              {sendBook ? (
+                <div className="offer_info">
+                  <img src={sendBook.image} alt={sendBook.title} />
                   <div>
-                    <h4>{item.title}</h4>
-                    <p>Yazar: {item.author}</p>
-                    <p>Yayınevi: {item.publisher}</p>
-                    <p>Yayın Tarihi: {item.publishedDate}</p>
-                    <p>ISBN: {item.isbn}</p>
-                    <p>Kategori: {item.category}</p>
-                    <p>Açıklama: {item.description}</p>
-                    <p>Durum: {item.condition}</p>
+                    <h4>{sendBook.title}</h4>
+                    <p><strong>Yazar:</strong> {sendBook.author}</p>
+                    <p><strong>Yayınevi:</strong> {sendBook.publisher}</p>
+                    <p><strong>Yayın Tarihi:</strong> {sendBook.publishedDate}</p>
+                    <p><strong>ISBN:</strong> {sendBook.isbn}</p>
+                    <p><strong>Kategori:</strong> {sendBook.category}</p>
+                    <p><strong>Açıklama:</strong> {sendBook.description}</p>
+                    <p><strong>Durum:</strong> {sendBook.condition}</p>
                   </div>
                 </div>
-              ))}
+              ) : (
+                <p>Kitap bilgisi yükleniyor...</p>
+              )}
             </div>
             <div className="receiveBook">
               <h4>Alınacak Kitap</h4>
-              {receiveBook.map((item, index) => (
-                <div className="offer_info" key={index}>
-                  <img src={item.image} alt={item.title} />
+              {receiveBook ? (
+                <div className="offer_info">
+                  <img src={receiveBook.image} alt={receiveBook.title} />
                   <div>
-                    <h4>{item.title}</h4>
-                    <p>Yazar: {item.author}</p>
-                    <p>Yayınevi: {item.publisher}</p>
-                    <p>Yayın Tarihi: {item.publishedDate}</p>
-                    <p>ISBN: {item.isbn}</p>
-                    <p>Kategori: {item.category}</p>
-                    <p>Açıklama: {item.description}</p>
-                    <p>Durum: {item.condition}</p>
+                    <h4>{receiveBook.title}</h4>
+                    <p><strong>Yazar:</strong> {receiveBook.author}</p>
+                    <p><strong>Yayınevi:</strong> {receiveBook.publisher}</p>
+                    <p><strong>Yayın Tarihi:</strong> {receiveBook.publishedDate}</p>
+                    <p><strong>ISBN:</strong> {receiveBook.isbn}</p>
+                    <p><strong>Kategori:</strong> {receiveBook.category}</p>
+                    <p><strong>Açıklama:</strong> {receiveBook.description}</p>
+                    <p><strong>Durum:</strong> {receiveBook.condition}</p>
                   </div>
                 </div>
-              ))}
+              ) : (
+                <p>Kitap bilgisi yükleniyor...</p>
+              )}
             </div>
           </div>
-        </div> */}
+        </div>
 
         <div className="trade_section">
           <div className="trade_title">
@@ -221,6 +315,7 @@ function Trade() {
                   expiryDate={expiryDate}
                   setExpiryDate={setExpiryDate} />
               </div>
+              {error && <p style={{ color: "crimson", fontWeight: "500", marginTop: "10px" }}>{error}</p>}
               <div>
                 <button className="trade_button" type='button' onClick={handleOpenAdDialog}>
                   <span>Onayla ve Takası gerçekleştir</span>
@@ -243,12 +338,12 @@ function Trade() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseAdDialog} color="primary">İptal</Button>
-            <Button onClick={confirmTrade} color="error">{loading ? "Onaylanıyor..." : "Onayla"}</Button>
+            <Button onClick={confirmTrade} color="error" disabled={!trackingNumber || loading}>{loading ? "Onaylanıyor..." : "Onayla"}</Button>
           </DialogActions>
         </Dialog>
 
       </div>
-    </div>
+    </div >
   )
 }
 

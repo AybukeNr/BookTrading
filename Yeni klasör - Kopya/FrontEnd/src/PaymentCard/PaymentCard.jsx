@@ -3,10 +3,10 @@ import '../PaymentCard/PaymentCard.css'
 function PaymentCard({ cardName, setCardName, cardNumber, setCardNumber, cvv, setCvv, expiryDate, setExpiryDate }) {
 
     const [month, setMonth] = React.useState("01");
-    const [year, setYear] = React.useState("2025");
+    const [year, setYear] = React.useState("25");
 
     useEffect(() => {
-        setExpiryDate(`${ month } / ${ year }`);
+        setExpiryDate(`${ month }/${ year }`);
     }, [month, year, setExpiryDate]);
 
     return (
@@ -36,7 +36,7 @@ function PaymentCard({ cardName, setCardName, cardNumber, setCardNumber, cvv, se
                 })}
             </select>
             <select id="year" className='date' value={year} onChange={(e) => setYear(e.target.value)}>
-                {Array.from({ length: 11 }, (_, i) => 2025 + i).map((y) => (
+                {Array.from({ length: 11 }, (_, i) => 25 + i).map((y) => (
                     <option key={y} value={y}>
                         {y}
                     </option>

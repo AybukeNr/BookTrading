@@ -46,7 +46,7 @@ function Offers() {
     }
   }, [ownerId]);
 
-  const acceptOffer = async (offerId, offererId, offeredListId, offeredBookId, offerer) => {
+  const acceptOffer = async (offerId, offererId, offeredListId, offeredBookId, offeredBook, offerList, offerer) => {
     setLoading(true);
     try {
       await instanceOffer.put(`/updateOffer`, {
@@ -55,6 +55,8 @@ function Offers() {
         listingId: offeredListId,
         offerStatus: "KABUL",
         bookId: offeredBookId,
+        offeredBook: offeredBook,
+        listBook: offerList,
       });
 
       dispatch({
@@ -71,7 +73,11 @@ function Offers() {
             offererId: offererId,
             listingId: offeredListId,
             bookId: offeredBookId,
-            offerer: offerer
+            currentUserId: ownerId,
+            otherUserId: offererId,
+            offeredBook: offeredBook,
+            listBook: offerList,
+            tradeType: 'accepted'
           }
         }
       });
@@ -80,36 +86,31 @@ function Offers() {
     }
   };
 
-  const goToTrade = async (offerId, offererId, offeredListId, offeredBookId, offerList) => {
-   await fetchOffers();
+  const goToTrade = async (item) => {
+    await fetchOffers();
     navigate('/trade', {
       state: {
         tradeData: {
-          offerId: offerId,
-          offererId: offererId,
-          listingId: offeredListId,
-          bookId: offeredBookId,
-          offerList: offerList.owner
+          offerId: item.offerId,
+          offererId: item.offererId,
+          listingId: item.offeredListId,
+          bookId: item.offeredBook?.id,
+          currentUserId: ownerId,
+          otherUserId: item.offerList?.owner?.id,
+          offeredBook: item.offeredBook,
+          listBook: item.offerList?.book,
+          otherUser: item.offerList?.owner,
+          tradeType: 'sent'
         }
       }
     });
-    console.log("giden veri: " , offerList);
-
+    console.log("Gönderilen teklif verisi: ", {
+      currentUser: ownerId,
+      otherUser: item.offerList?.owner,
+      offeredBook: item.offeredBook,
+      listBook: item.offerList?.book
+    });
   }
-
-  // const handleGoToTrade = (offer) => {
-  //   const currentUser = getAuthToken(); // giriş yapan kişi
-  //   const otherUser = offer.toUser; // teklif gönderdiğin kişi
-
-  //   console.log("currentUser:", currentUser);
-  //   console.log("otherUser:", otherUser);
-
-  //   navigate('/trade', { state: { currentUser, otherUser, offer } });
-  //   console.log("Teklif Gönderen:", offer.fromUser);
-  //   console.log("Teklif Alan:", offer.toUser);
-  //   console.log("Giriş yapan kullanıcı:", currentUser);
-
-  // };
 
   const confirmRejectOffer = async () => {
     if (selectedOffer) {
@@ -140,21 +141,6 @@ function Offers() {
     setSelectedOffer(offer);
     setOpen(true);
   };
-
-  // const handleDetails = (item) => {
-  //   navigate("/bookDetails", {
-  //     state: {
-  //       listId: item.offerListId,
-  //       fromOffers: true,
-  //       bookDetail: {
-  //         book: item.offeredBook,
-  //         user: item.offerer,
-  //         price: item.offeredBook?.price || null,
-  //         fromOffers: true,
-  //       }
-  //     }
-  //   });
-  // };
 
   const handleCancelOffer = async (item) => {
     try {
@@ -211,7 +197,7 @@ function Offers() {
                   {item.offerStatus === "KABUL" ? (
                     <>
                       <p style={{ color: "green" }}>Teklif kabul edildi!</p>
-                      <button className='goToTrade_button' onClick={() => goToTrade(item.offerId, item.offererId, item.offerListId, item.offeredBook?.id, item.offerList?.owner)}>{loading ? "Takasa gidiliyor..." : "Takasa git"}</button>
+                      <button className='goToTrade_button' onClick={() => goToTrade(item)}>{loading ? "Takasa gidiliyor..." : "Takasa git"}</button>
                     </>
                   ) : item.offerStatus === "RET" ? (
                     <p style={{ color: "red" }}>Teklif reddedildi!</p>
@@ -265,6 +251,22 @@ function Offers() {
                   ) : item.offerStatus === "KABUL" ? (
                     <div className="accept_callback" style={{ fontSize: "16px" }}>
                       <p style={{ color: "green" }}>Teklifi kabul ettiniz!</p>
+                      {/* <button onClick={() => {
+                        navigate('/trade', {
+                          state: {
+                            tradeData: {
+                              offerId: item.offerId,
+                              offererId: item.offererId,
+                              listingId: item.offerListId,
+                              bookId: item.offeredBook?.id,
+                              currentUserId: ownerId,
+                              otherUserId: item.offererId,
+                              offeredBook: item.offeredBook,
+                              tradeType: 'received'
+                            }
+                          }
+                        });
+                      }}>Takasa git</button> */}
                     </div>
                   ) : item.offerStatus === "RET" ? (
                     <div className="accept_callback" style={{ fontSize: "16px" }}>
@@ -272,7 +274,7 @@ function Offers() {
                     </div>
                   ) : (
                     <div className="receive_buttons">
-                      <button onClick={() => acceptOffer(item.offerId, item.offererId, item.offerListId, item.offeredBook?.id, item.offerer)}>{loading ? "Teklif kabul ediliyor.." : "Teklifi kabul et"}</button>
+                      <button onClick={() => acceptOffer(item.offerId, item.offererId, item.offerListId, item.offeredBook?.id, item.offeredBook, item.offerList?.book)}>{loading ? "Teklif kabul ediliyor.." : "Teklifi kabul et"}</button>
                       <button onClick={() => handleRejectOffer(item)}>Teklifi reddet</button>
                     </div>
                   )}
@@ -283,11 +285,7 @@ function Offers() {
         ) : (
           <p>Alınan hiç teklif yok.</p>
         )}
-        <div>
-
-        </div>
       </div>
-
 
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Teklifi Reddet</DialogTitle>
@@ -307,4 +305,5 @@ function Offers() {
 }
 
 export default Offers
+
 

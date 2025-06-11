@@ -6,27 +6,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import CurrencyFormat from 'react-currency-format';
 import { getBasketTotal } from '../reducer';
 import PaymentCard from '../PaymentCard/PaymentCard';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { instanceShipping, instanceTransaction, instanceUser } from '../axios';
 
 const userId = localStorage.getItem("userId");
 function Payment() {
     const [{ basket }, dispatch] = useStateValue();
     const navigate = useNavigate();
-    const [openAdDialog, setOpenAdDialog] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
-    const [trackingNumber, setTrackingNumber] = useState("");
-    const [shippingSerialNumber, setShippingSerialNumber] = useState("");
     const [cardName, setCardName] = useState("");
     const [cardNumber, setCardNumber] = useState("");
     const [expiryDate, setExpiryDate] = useState("");
     const [cvv, setCvv] = useState("");
     const [processing, setProcessing] = useState("");
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        //const userId = localStorage.getItem("userId");
         if (userId) {
             instanceUser.get(`/getUserById?id=${userId}`)
                 .then((res) => setUserInfo(res.data))
@@ -45,7 +39,7 @@ function Payment() {
         setProcessing(true);
         setError("");
 
-        const userId = localStorage.getItem("userId");
+        // const userId = localStorage.getItem("userId");
 
         if (!userId) {
             setError("Kullanıcı kimliği bulunamadı. Lütfen tekrar giriş yapın.");
@@ -77,7 +71,7 @@ function Payment() {
                     type: "EMPTY_BASKET",
                     basket: response.data
                 });
-                navigate("/");
+                navigate("/tracking", { state: { listId: listIds[0] } });
             } else {
                 setError("Ödeme sırasında beklenmedik bir hata oluştu.");
             }
