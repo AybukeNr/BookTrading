@@ -8,8 +8,7 @@ import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, B
 import { instanceLibrary } from '../axios';
 import { getAuthToken } from '../auth';
 
-// const userId = localStorage.getItem('userId');
- const userId = localStorage.getItem("userId");
+// const userId = localStorage.getItem("userId");
 function Bookshelf() {
     const [{ bookshelf, advertisedBook }, dispatch] = useStateValue();
     const navigate = useNavigate();
@@ -26,11 +25,12 @@ function Bookshelf() {
         const fetchBooks = async () => {
             setLoading(true);
             setError('');
-           
-            const effectiveUserId = userId && userId !== "null" ? userId : 0;
+
+            // const effectiveUserId = userId && userId !== "null" ? userId : 0;
+            const userId = localStorage.getItem("userId");
 
             try {
-                const response = await instanceLibrary.get(`/getBookByOwnerId?ownerId=${effectiveUserId}`);
+                const response = await instanceLibrary.get(`/getBookByOwnerId?ownerId=${userId}`);
                 const data = response.data;
 
                 dispatch({
@@ -110,6 +110,8 @@ function Bookshelf() {
             return;
         }
 
+        const userId = localStorage.getItem("userId");
+
         const updatedBook = {
             ...bookToAdvertise,
             ownerId: userId,
@@ -167,15 +169,6 @@ function Bookshelf() {
                                     <HighlightOffOutlinedIcon onClick={() => handleOpen(book.id)} className='removeButton' />
                                     <p>{book.isbn}/{book.title}-{book.author}/{book.publisher}-{book.publishedDate}/{book.category}/{book.condition}</p>
                                     <p>{book.description}</p>
-
-                                    {/* {book.price ? (
-                                        <p className='book_price'>
-                                            <strong>{book.price}</strong>
-                                            <small>₺</small>
-                                        </p>
-                                    ) : (
-                                        <p className='book_trade'>Takasa açık</p>
-                                    )} */}
                                 </div>
 
                                 <img src={book.image} alt='' />
