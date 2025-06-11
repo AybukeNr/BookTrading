@@ -39,8 +39,6 @@ function Payment() {
         setProcessing(true);
         setError("");
 
-        // const userId = localStorage.getItem("userId");
-
         if (!userId) {
             setError("Kullanıcı kimliği bulunamadı. Lütfen tekrar giriş yapın.");
             setProcessing(false);
@@ -71,7 +69,7 @@ function Payment() {
                     type: "EMPTY_BASKET",
                     basket: response.data
                 });
-                navigate("/tracking", { state: { listId: listIds[0] } });
+                navigate("/mySales");
             } else {
                 setError("Ödeme sırasında beklenmedik bir hata oluştu.");
             }
@@ -155,8 +153,8 @@ function Payment() {
                                     displayType={"text"}
                                     thousandSeparator={true}
                                 />
-                                <button type="button">
-                                    <span>{processing ? <p>Yükleniyor</p> : "Onayla ve Satın al"}</span>
+                                <button type="submit">
+                                    <span>{processing ? "Onaylanıyor..." : "Onayla ve Satın al"}</span>
                                 </button>
                             </div>
                             {error && <div>{error}</div>}

@@ -55,31 +55,36 @@ function BookDetails() {
         }
     }, [listId]);
 
-    const acceptOffer = () => {
-        navigate('/trade');
-    }
+    // const acceptOffer = () => {
+    //     navigate('/trade');
+    // }
 
     const addToBasket = () => {
         if (bookDetail) {
             dispatch({
                 type: 'ADD_TO_BASKET',
                 item: {
-                    title: bookDetail.book.title,
-                    author: bookDetail.book.author,
-                    isbn: bookDetail.book.isbn,
-                    publisher: bookDetail.book.publisher,
-                    publishedDate: bookDetail.book.publishedDate,
-                    category: bookDetail.book.category,
-                    description: bookDetail.book.description,
-                    condition: bookDetail.book.condition,
-                    image: bookDetail.book.image,
-                    price: bookDetail.book.price,
-                    firstName: bookDetail.user.firstName,
-                    lastName: bookDetail.user.lastName,
-                    trustPoint: bookDetail.user.trustPoint
+                    book:
+                    {
+                        title: bookDetail.book.title,
+                        author: bookDetail.book.author,
+                        isbn: bookDetail.book.isbn,
+                        publisher: bookDetail.book.publisher,
+                        publishedDate: bookDetail.book.publishedDate,
+                        category: bookDetail.book.category,
+                        description: bookDetail.book.description,
+                        condition: bookDetail.book.condition,
+                        image: bookDetail.book.image,
+                        price: bookDetail.price,
+                    },
+                    user: {
+                        firstName: bookDetail.user.firstName,
+                        lastName: bookDetail.user.lastName,
+                        trustPoint: bookDetail.user.trustPoint
+                    }
                 }
             });
-            navigate('/checkout')
+            navigate('/')
         }
     }
 
@@ -143,12 +148,12 @@ function BookDetails() {
                 </>
             )}
 
-            {fromOffers && bookDetail && (
+            {/* {fromOffers && bookDetail && (
                 <>
                     <button onClick={acceptOffer}>Teklifi kabul et</button>
                     <button>Teklifi reddet</button>
                 </>
-            )}
+            )} */}
 
             {showPopUp && (
                 <div className="popUp">
