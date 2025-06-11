@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../SoldBooks/SoldBooks.css";
 import { instanceListing, instanceTransaction, instanceUser } from "../axios";
+import { useNavigate } from "react-router-dom";
 
 function SoldBooks() {
   const [sales, setSales] = useState([]);
+  const navigate = useNavigate();
+
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const fetchSales = async () => {
@@ -23,6 +27,7 @@ function SoldBooks() {
               seller: listRes.data.user,
               buyer: offererRes.data,
               price: listRes.data.price,
+              listId: tx.listId,
             };
           })
         );
@@ -34,7 +39,13 @@ function SoldBooks() {
     };
 
     fetchSales();
-  }, []);
+  }, [userId]);
+
+  const handleTracking = (listId) => {
+    navigate("/tracking", {
+      state: { listId: listId },
+    });
+  };
 
   return (
     <div className="soldBooks">
@@ -74,6 +85,15 @@ function SoldBooks() {
             </p>
           </div>
 
+          {sale.seller.id.toString() === userId && (
+            <button
+              className="continueBtn"
+              onClick={() => handleTracking(sale.listId)}
+            >
+              Kargo takip no girmek için devam et
+            </button>
+          )}
+
           <div className="personInfo">
             <div className="sellerInfo">
               <h4>Satıcı:</h4>
@@ -109,4 +129,4 @@ function SoldBooks() {
   );
 }
 
-export default SoldBooks;
+export default SoldBooks;

@@ -9,23 +9,6 @@ import { useStateValue } from '../StateProvider';
 import Badge from '@mui/material/Badge';
 import { removeAuthToken, removeDecodedUserId } from '../auth';
 
-// import { instance } from '../axios';
-
-// const instance = axios.create({
-//     baseURL: 'http://localhost:8080/api',
-// });
-
-// instance.interceptors.request.use(
-//     (config) => {
-//         const token = localStorage.getItem('authToken');
-//         if (token) {
-//             config.headers.Authorization = `Bearer ${token}`;
-//         }
-//         return config;
-//     },
-//     (error) => Promise.reject(error)
-// );
-
 function Header(props) {
     const [{ basket, user, notifications, searchQuery, bookList }, dispatch] = useStateValue();
     const navigate = useNavigate();
@@ -47,6 +30,9 @@ function Header(props) {
             dispatch({
                 type: 'SET_USER',
                 user: null
+            });
+            dispatch({
+                type: 'EMPTY_BASKET',
             });
             props.setIsAuthenticated(false);
             navigate('/login');
@@ -115,7 +101,7 @@ function Header(props) {
     return (
         <div className='header'>
 
-            <Link to='/' onClick={() => { dispatch({ type: 'SET_SELECTED_CATEGORY', category: '' });}}>
+            <Link to='/' onClick={() => { dispatch({ type: 'SET_SELECTED_CATEGORY', category: '' }); }}>
                 <img className='header_logo' src='https://i.hizliresim.com/obkwl66.png' />
             </Link>
 
