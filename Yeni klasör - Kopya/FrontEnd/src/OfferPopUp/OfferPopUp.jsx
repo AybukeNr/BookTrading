@@ -132,13 +132,13 @@ function OfferPopUp({ onClose }) {
               <p>
                 <strong>{item.book.title}</strong>
               </p>
-              <p>ISBN: {item.book.isbn}</p>
-              <p>Yazar: {item.book.author}</p>
-              <p>Yayınevi: {item.book.publisher}</p>
-              <p>Yayın Tarihi: {item.book.publishedDate}</p>
-              <p>Kategori: {item.book.category}</p>
-              <p>Açıklama: {item.book.description}</p>
-              <p>Durumu: {item.book.condition}</p>
+              <p><strong>ISBN: </strong>{item.book.isbn}</p>
+              <p><strong>Yazar: </strong>{item.book.author}</p>
+              <p><strong>Yayınevi: </strong>{item.book.publisher}</p>
+              <p><strong>Yayın Tarihi: </strong>{item.book.publishedDate}</p>
+              <p><strong>Kategori: </strong>{item.book.category}</p>
+              <p><strong>Açıklama: </strong>{item.book.description}</p>
+              <p><strong>Durumu: </strong>{item.book.condition}</p>
             </div>
           </div>
         ))

@@ -68,13 +68,17 @@ function Home() {
           `/getListsExcludingOwner?ownerId=${ownerId}`,
         );
 
+        const filteredData = response.data.filter(
+          (item) => item.status !== "SUSPENDED"
+        );
+
         dispatch({
           type: "SET_BOOK_LIST",
-          books: response.data,
+          books: filteredData,
         });
         dispatch({
           type: "SET_SEARCHED_BOOKS",
-          books: response.data,
+          books: filteredData,
         });
         dispatch({
           type: "SET_SELECTED_CATEGORY",

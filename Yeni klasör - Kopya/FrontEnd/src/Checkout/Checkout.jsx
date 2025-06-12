@@ -40,7 +40,7 @@ function Checkout() {
                                 price={item.book.price}
                                 firstName={item.user.firstName}
                                 lastName={item.user.lastName}
-                                trustPoint={item.user.trustPoint}
+                                // trustPoint={item.user.trustPoint}
                             />
                         ))
                     ) : (

@@ -4,17 +4,19 @@ import { useStateValue } from '../StateProvider';
 import { instanceListing } from '../axios';
 import { getAuthToken } from '../auth';
 
- const ownerId = localStorage.getItem('userId');
+//  const ownerId = localStorage.getItem('userId');
 
 function AdvertisedBook() {
     const [{ advertisedBook, adUpdated }, dispatch] = useStateValue();
 
+    const ownerId = localStorage.getItem('userId');
+    
     useEffect(() => {
         if (!ownerId) {
             console.error("Kullanıcı ID bulunamadı.");
             return;
         }
-        
+
         const fetchAdvertisedBooks = async () => {
             try {
                 const response = await instanceListing.get(`/getListsByOwnerId?ownerId=${ownerId}`, {
@@ -48,7 +50,7 @@ function AdvertisedBook() {
     useEffect(() => {
         console.log("Redux state güncellendi (takip):", advertisedBook);
     }, [advertisedBook]);
-    
+
 
     const removeFromAd = async (listId) => {
         try {
@@ -88,7 +90,7 @@ function AdvertisedBook() {
                                 <p>Durumu: {item.book.condition}</p>
                                 <p>Değeri: {item.type === 'SALE' && item.price ? `${item.price} ₺` : item.type === 'EXCHANGE' ? 'Takasa Açık' : 'Hatalı değer'}</p>
                             </div>
-                            <button onClick={() => { console.log("Butona tıklandı"); removeFromAd(item.listId)}} >İlandan Kaldır</button>
+                            <button onClick={() => { console.log("Butona tıklandı"); removeFromAd(item.listId) }} >İlandan Kaldır</button>
                         </div>
                     ) : null
                 ))

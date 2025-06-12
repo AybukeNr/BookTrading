@@ -28,6 +28,7 @@ function SoldBooks() {
               buyer: offererRes.data,
               price: listRes.data.price,
               listId: tx.listId,
+              status: listRes.data.status,
             };
           })
         );
@@ -53,7 +54,7 @@ function SoldBooks() {
 
       {sales.map((sale, index) => (
         <div key={index} className="book_Info">
-          <h4>Satılan Kitap:</h4>
+          <h4>Kitap:</h4>
           <img src={sale.book.image} alt={sale.book.title} />
           <div className="book_Detail">
             <p>
@@ -85,7 +86,7 @@ function SoldBooks() {
             </p>
           </div>
 
-          {sale.seller.id.toString() === userId && (
+          {sale.seller.id.toString() === userId && sale.status !== "SUSPENDED" && (
             <button
               className="continueBtn"
               onClick={() => handleTracking(sale.listId)}
