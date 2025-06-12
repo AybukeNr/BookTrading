@@ -31,9 +31,9 @@ function Header(props) {
                 type: 'SET_USER',
                 user: null
             });
-            dispatch({
-                type: 'EMPTY_BASKET',
-            });
+            // dispatch({ type: 'EMPTY_BASKET'});
+            // dispatch({ type: 'CLEAR_AD_BOOKS' });
+            dispatch({ type: 'RESET_STATE' });
             props.setIsAuthenticated(false);
             navigate('/login');
         }

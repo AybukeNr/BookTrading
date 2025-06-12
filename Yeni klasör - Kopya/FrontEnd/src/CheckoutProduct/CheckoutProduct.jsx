@@ -20,7 +20,9 @@ function CheckoutProduct({ id, image, title, author, isbn, publisher, publishedD
 
       <div className='checkoutProduct_info'>
         <p className='checkoutProduct_name'>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}/{condition}</p>
-        <p>{firstName + " " + lastName} - Güvence: {trustPoint}<Rating className='rating' /></p>
+        <p>{firstName + " " + lastName} 
+          {/* - Güvence: {trustPoint}<Rating className='rating' /> */}
+          </p>
         <p className='checkoutProduct_description'>{description}</p>
 
         <p className='checkoutProduct_price'>

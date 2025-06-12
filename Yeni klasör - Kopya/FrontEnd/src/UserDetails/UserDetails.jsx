@@ -56,7 +56,7 @@ function UserDetails() {
             <div className="userInfo">
                 <AccountCircleOutlinedIcon />
                 <p>{userDetail.firstName} {userDetail.lastName}</p>
-                <p>Kullanıcı Değerlendirmesi: {userDetail.trustPoint} <Rating className='rating' value={userDetail.trustPoint || 0} readOnly /></p>
+                {/* <p>Kullanıcı Değerlendirmesi: {userDetail.trustPoint} <Rating className='rating' value={userDetail.trustPoint || 0} readOnly /></p> */}
                 <p>{userDetail.mailAddress}</p>
                 <p>{userDetail.phoneNumber}</p>
             </div>
@@ -69,7 +69,7 @@ function UserDetails() {
                             <div className="bookInfo">
                                 <p>{adv.book.isbn}/{adv.book.title}-{adv.book.author}/{adv.book.publisher}-{adv.book.publishedDate}/{adv.book.category}/{adv.book.condition}</p>
                                 <p>{adv.book.description}</p>
-                                <p>{adv.type === 'SALE' && adv.price ? `${adv.price} ₺` : adv.type === 'EXCHANGE' ? 'Takasa açık' : 'Hatalı değer'}</p>
+                                <p><strong>{adv.type === 'SALE' && adv.price ? `${adv.price} ₺` : adv.type === 'EXCHANGE' ? 'Takasa açık' : 'Hatalı değer'}</strong></p>
                             </div>
                             <img src={adv.book.image} alt={adv.title} />
                         </div>

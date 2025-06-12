@@ -64,6 +64,7 @@ function BookDetails() {
             dispatch({
                 type: 'ADD_TO_BASKET',
                 item: {
+                    listId: bookDetail.listId,
                     book:
                     {
                         title: bookDetail.book.title,
@@ -121,7 +122,8 @@ function BookDetails() {
                     <div>
                         <h2>{bookDetail?.book?.title}</h2>
                         <p onClick={() => navigate("/userDetails")}>
-                            {bookDetail?.user?.firstName + " " + bookDetail?.user?.lastName} - Güvence: {bookDetail?.user?.trustPoint}<Rating className='rating' size='large' value={bookDetail?.user?.trustPoint || 0} readOnly />
+                            {bookDetail?.user?.firstName + " " + bookDetail?.user?.lastName} 
+                            {/* - Güvence: {bookDetail?.user?.trustPoint}<Rating className='rating' size='large' value={bookDetail?.user?.trustPoint || 0} readOnly /> */}
                         </p>
                         <p><strong>ISBN: </strong>{bookDetail?.book?.isbn}</p>
                         <p><strong>Yazar: </strong>{bookDetail?.book?.author}</p>

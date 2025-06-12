@@ -91,7 +91,9 @@ function Product({ book }) {
           <p onClick={handleNavigate}>{isbn}/{title}-{author}/{publisher}-{publishedDate}/{category}/{condition}</p>
           <p onClick={() => navigate("/userDetails", {
             state: { user: book.user.id }
-          })}>{firstName + " " + lastName} - Güvence: {trustPoint}<Rating className='rating' /></p>
+          })}><strong>{firstName + " " + lastName} 
+          {/* - Güvence: {trustPoint}<Rating className='rating' /> */}
+          </strong></p>
           <p onClick={handleNavigate}>{description}</p>
 
           {price ? (
@@ -100,7 +102,7 @@ function Product({ book }) {
               <small>₺</small>
             </p>
           ) : (
-            <p className='product_trade' onClick={handleNavigate}>Takasa açık</p>
+            <p className='product_trade' onClick={handleNavigate}><strong>Takasa açık</strong></p>
           )}
 
         </div>

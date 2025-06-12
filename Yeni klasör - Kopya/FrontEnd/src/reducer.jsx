@@ -40,6 +40,12 @@ const reducer = (state, action) => {
     console.log(action);
 
     switch (action.type) {
+        case 'RESET_STATE':
+            return {
+                ...initialState,
+                user: null 
+            };
+
         case 'ADD_TO_BASKET':
             return {
                 ...state,
@@ -138,6 +144,12 @@ const reducer = (state, action) => {
                 ...state,
                 advertisedBook: state.advertisedBook.filter(item => item.listId !== action.id),
             }
+
+        case 'CLEAR_AD_BOOKS':
+            return {
+                ...state,
+                advertisedBook: [],
+            };
 
         case 'UPDATE_ADVERTISEMENTS':
             return {

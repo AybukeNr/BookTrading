@@ -167,7 +167,7 @@ function Bookshelf() {
                             <div className="bookshelf_card" key={index}>
                                 <div className="book_info">
                                     <HighlightOffOutlinedIcon onClick={() => handleOpen(book.id)} className='removeButton' />
-                                    <p>{book.isbn}/{book.title}-{book.author}/{book.publisher}-{book.publishedDate}/{book.category}/{book.condition}</p>
+                                    <p><strong>{book.isbn}/{book.title}-{book.author}/{book.publisher}-{book.publishedDate}/{book.category}/{book.condition}</strong></p>
                                     <p>{book.description}</p>
                                 </div>
 
