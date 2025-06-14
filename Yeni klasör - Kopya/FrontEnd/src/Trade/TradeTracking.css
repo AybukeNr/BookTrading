@@ -1,0 +1,60 @@
+.tracking {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 2rem;
+    background-color: aliceblue;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+    transition: all 0.3s ease-in-out;
+}
+
+.tracking form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tracking input[type="text"] {
+    padding: 12px;
+    border: 1px solid rgb(57, 139, 217);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.2s ease-in-out;
+}
+
+.tracking input[type="text"]:focus {
+    outline: none;
+    border-color: orange;
+    box-shadow: 0 0 0 3px  aliceblue;
+}
+
+.tracking button {
+    padding: 12px;
+    background-color: rgb(57, 139, 217);
+    color: white;
+    border-color: orange;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.tracking button:hover {
+    background-color: orange;
+    border-color: rgb(57, 139, 217);
+}
+
+.tracking p {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+@media (max-width: 500px) {
+    .tracking {
+        margin: 20px 16px;
+        padding: 1.5rem;
+    }
+}

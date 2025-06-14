@@ -251,7 +251,7 @@ function Offers() {
                   ) : item.offerStatus === "KABUL" ? (
                     <div className="accept_callback" style={{ fontSize: "16px" }}>
                       <p style={{ color: "green" }}>Teklifi kabul ettiniz!</p>
-                      {/* <button onClick={() => {
+                      <button className='goToTrade_button' onClick={() => {
                         navigate('/trade', {
                           state: {
                             tradeData: {
@@ -262,11 +262,12 @@ function Offers() {
                               currentUserId: ownerId,
                               otherUserId: item.offererId,
                               offeredBook: item.offeredBook,
+                              listBook: item.offerList?.book,
                               tradeType: 'received'
                             }
                           }
                         });
-                      }}>Takasa git</button> */}
+                      }}>Takasa git</button>
                     </div>
                   ) : item.offerStatus === "RET" ? (
                     <div className="accept_callback" style={{ fontSize: "16px" }}>

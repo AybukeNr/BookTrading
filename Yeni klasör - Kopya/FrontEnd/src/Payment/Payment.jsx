@@ -8,7 +8,6 @@ import { getBasketTotal } from '../reducer';
 import PaymentCard from '../PaymentCard/PaymentCard';
 import { instanceShipping, instanceTransaction, instanceUser } from '../axios';
 
-const userId = localStorage.getItem("userId");
 function Payment() {
     const [{ basket }, dispatch] = useStateValue();
     const navigate = useNavigate();
@@ -21,6 +20,7 @@ function Payment() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        const userId = localStorage.getItem("userId");
         if (userId) {
             instanceUser.get(`/getUserById?id=${userId}`)
                 .then((res) => setUserInfo(res.data))
@@ -84,7 +84,7 @@ function Payment() {
     return (
         <div className='payment'>
             <div className="payment_container">
-                <h1> Ürünlerim (<Link to='/checkout'>{basket?.length} adet ürün</Link>) </h1>
+                <h1> Kitaplarım (<Link to='/checkout'>{basket?.length} adet kitap</Link>) </h1>
 
                 <div className="payment_section">
                     <div className="payment_title">
@@ -99,7 +99,7 @@ function Payment() {
 
                 <div className="payment_section">
                     <div className="payment_title">
-                        <h3>Sepetteki Ürünlerim</h3>
+                        <h3>Sepetteki Kitaplarım</h3>
                     </div>
                     <div className="payment_items">
                         {basket.map((item, index) => (

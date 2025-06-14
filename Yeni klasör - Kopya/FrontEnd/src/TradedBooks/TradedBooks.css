@@ -71,6 +71,23 @@
     margin: 5px;
     min-width: 250px;
   }
+
+  .continueButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  background-color: orange;
+  color: aliceblue;
+  border-color: rgb(57, 139, 217);
+  height: 45px;
+  margin-bottom: 5px;
+}
+
+.continueButton:hover {
+  background-color: rgb(57, 139, 217);
+  color: aliceblue;
+  border-color: orange;
+}
   
   h4 {
     color: #213547;

@@ -1,39 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../TradedBooks/TradedBooks.css'
-import { instanceListing, instanceOffer, instanceTransaction, instanceUser } from '../axios';
+import { instanceOffer, instanceShipping, instanceUser } from '../axios';
+import { useNavigate } from 'react-router-dom';
 
 function TradedBooks() {
+  const navigate = useNavigate();
   const [tradedBooks, setTradedBooks] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchTradedBooks = async () => {
-  //     try {
-  //       const userId = localStorage.getItem("userId");
-  //       const response = await instanceTransaction.get(`/transactions/getUsersExchanges?ownerId=${userId}`);
-
-  //       const transactions = response.data;
-
-  //       const detailedExchanges = await Promise.all(transactions.map(async (trx) => {
-  //         const listRes = await instanceListing.get(`/getListsById?listId=${trx.listId}`);
-  //         const offererRes = await instanceUser.get(`/getUserById?id=${trx.offererId}`);
-
-  //         return {
-  //           book: listRes.data.book,
-  //           sender: listRes.data.user,
-  //           receiver: offererRes.data,
-  //         };
-
-  //       }));
-
-  //       setTradedBooks(detailedExchanges);
-  //     } catch (error) {
-  //       console.error("Takas verileri alınırken hata oluştu:", error);
-  //     }
-  //   };
-
-  //   fetchTradedBooks();
-  // }, []);
-
 
   useEffect(() => {
     const fetchTradedBooks = async () => {
@@ -50,8 +22,9 @@ function TradedBooks() {
             sentBook: offer.offeredBook,
             receivedBook: offer.offerList.book,
             sender: senderRes.data,
-            receiver: receiverRes.data
-          };
+            receiver: receiverRes.data,
+            listId: offer.offerList.listid,
+          }
         }));
 
         setTradedBooks(detailedData);
@@ -63,7 +36,11 @@ function TradedBooks() {
     fetchTradedBooks();
   }, []);
 
-
+  const handleTracking = (listId) => {
+    navigate("/tradeTracking", {
+      state: { listId: listId },
+    });
+  };
 
   return (
     <div className='trades'>
@@ -89,13 +66,23 @@ function TradedBooks() {
               <p><strong>Başlık: </strong>{tradedBook.receivedBook.title}</p>
               <p><strong>Yazar: </strong>{tradedBook.receivedBook.author}</p>
               <p><strong>Yayınevi: </strong>{tradedBook.receivedBook.publisher}</p>
-              <p><strong>Yayın Tarihi: </strong>{tradedBook.receivedBook.publisedDate}</p>
+              <p><strong>Yayın Tarihi: </strong>{tradedBook.receivedBook.publishedDate}</p>
               <p><strong>ISBN: </strong>{tradedBook.receivedBook.isbn}</p>
               <p><strong>Kategori: </strong>{tradedBook.receivedBook.category}</p>
               <p><strong>Açıklama: </strong>{tradedBook.receivedBook.description}</p>
               <p><strong>Durum: </strong>{tradedBook.receivedBook.condition}</p>
             </div>
           </div>
+
+          {/* {tradedBook.status !== "KARGOLANDI" && ( */}
+            <button
+              className="continueButton"
+              onClick={() => handleTracking(tradedBook.listId)}
+            >
+              Kargo takip no girmek için devam et
+            </button>
+          {/* )} */}
+
           <div className="tradersInfos">
             <div className='sender'>
               <h4>Gönderen:</h4>

@@ -7,7 +7,7 @@ import { useStateValue } from '../StateProvider';
 import { instanceListing, instanceUser } from '../axios';
 
 function UserDetails() {
-    const [{ userDetail , userAds }, dispatch] = useStateValue();
+    const [{ userDetail, userAds }, dispatch] = useStateValue();
     const { state } = useLocation();
     const userId = state?.user;
 
@@ -35,11 +35,14 @@ function UserDetails() {
         const fetchUserAds = async () => {
             try {
                 const response = await instanceListing.get(`/getListsByOwnerId?ownerId=${userId}`);
-                const data = response.data;
+
+                const filteredData = response.data.filter(
+                    (item) => item.status !== "SUSPENDED"
+                );
 
                 dispatch({
                     type: 'SET_USER_ADS',
-                    payload: data
+                    payload: filteredData
                 });
             } catch (error) {
                 console.error("Kullanıcı detayları alınırken hata:", error);
