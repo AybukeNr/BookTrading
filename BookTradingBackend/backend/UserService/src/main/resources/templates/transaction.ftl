@@ -48,20 +48,27 @@
 <body>
 <div class="container">
     <p class="message">Merhaba, <strong>${listBookName}</strong> kitabı için takas oluşturuldu.</p>
-<#--    <img class="book-image" src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(listBookImage)}" alt="${listBookName}">-->
+    <img class="book-image" src="${listBookImage}" alt="${listBookName}">
     <p>Takaslanacak Kitap: ${offeredBookName}</p>
-<#--    <img class="book-image" src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(offeredBookImage)}" alt="${offeredBookImage}">-->
+    <img class="book-image" src="${offeredBookImage}" alt="${offeredBookImage}">
 
 
     <div class="buyer-info">
-        <p><strong>Alıcı Bilgileri:</strong></p>
+                <p><strong>Alıcı Bilgileri</strong></p>
         <p><strong>Ad Soyad:</strong> ${buyerName}</p>
-<#--        <p><strong>Güvence Bedeli:</strong> ${trustFee}</p>-->
+        <p><strong>Adres:</strong> ${receiverAddress}</p>
+        <p><strong>Güvence Bedeli:</strong> ${trustFee}</p>
         <p><strong style="color: red">Son Ödeme Tarihi: ${lastPaymentDate}</strong></p>
+        <p><strong style="color: red">Son Kargolama Tarihi: ${lastPaymentDate}</strong></p>
+
     </div>
 
-    <p class="message">Takas ve kargo bilgileri için aşağıdaki bağlantıya tıklayabilirsiniz:</p>
-<#--    <a class="offer-link" href="${exchangesLink}">Takas Bilgilerini Gör</a>-->
+    <p class="message">Takas ve kargo bilgileri için aşağıdaki butona tıklayabilirsiniz:</p>
+    <tr>
+        <td style="text-align: center;">
+            <a href="${tradesLink}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 5px;">Takaslara Gitmek İçin Tıklayın</a>
+        </td>
+    </tr>
 </div>
 </body>
 </html>

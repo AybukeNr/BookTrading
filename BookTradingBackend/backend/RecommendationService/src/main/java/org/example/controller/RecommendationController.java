@@ -15,6 +15,7 @@ import static org.example.constant.RestApiList.*;
 @RestController
 @RequestMapping(RECOMMENDATIONS)
 @RequiredArgsConstructor
+
 public class RecommendationController {
 
     private final RecommendationService recommendationService;

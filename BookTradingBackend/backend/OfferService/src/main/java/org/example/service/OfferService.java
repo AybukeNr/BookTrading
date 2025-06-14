@@ -123,7 +123,7 @@ public class OfferService {
     }
 
     public List<Offer> getAcceptedOffers(String userId){
-        List<Offer> acceptedOffers = offerRepository.findAllByOffererIdAndOfferStatus(userId,"KABUL").orElseThrow(() -> new OfferException(ErrorType.OFFER_NOT_FOUND));
+        List<Offer> acceptedOffers = offerRepository.findAcceptedOffersByUserId(userId);
         return acceptedOffers;
     }
 

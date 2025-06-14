@@ -153,13 +153,12 @@ public class ShippingService implements IShippingService {
             exchange.setStatus(ExchangeStatus.KARGO_BEKLENIYOR);
             exchangeRepository.save(exchange);
             log.info("Exchange : {}", exchange);
-//            ShippingMailReq mailReq = new ShippingMailReq();
-//            mailReq.setSenderId(shippings.getSenderId());
-//            mailReq.setRecipientId(shippings.getRecieverId());
-//            mailReq.setTrackingNumber(shippings.getTrackingNumber());
-//            mailReq.setAddress(shippings.getRecieverAddress());
-//            mailReq.setListId(exchange.getListId());
-//            mailManager.testShippingMail(mailReq);
+            ShippingMailReq mailReq = new ShippingMailReq();
+            mailReq.setSenderId(shippings.getSenderId());
+            mailReq.setRecipientId(shippings.getRecieverId());
+            mailReq.setTrackingNumber(shippings.getTrackingNumber());
+            mailReq.setListId(exchange.getListId());
+            mailManager.testShippingMail(mailReq);
         }
         return shippingMapper.ShippingToResponse(shippings);
     }

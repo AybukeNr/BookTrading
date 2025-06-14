@@ -19,4 +19,5 @@ public class TransactionInfo {
     private String shippingSerialNumber;
     private String userTracking;
     private String status;
+    private String listType;
 }

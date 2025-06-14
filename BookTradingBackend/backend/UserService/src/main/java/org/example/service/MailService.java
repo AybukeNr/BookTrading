@@ -97,8 +97,6 @@ public class MailService {
 
     public void sendRegisterMail(RegisterMailRequest mailRequest) {
         Map<String, Object> variables = new HashMap<>();
-        variables.put("username", mailRequest.getUsername());
-        variables.put("password", mailRequest.getPassword());
         sendAuthMail(mailRequest, variables, registerMailTemplateName, registerMailSubject);
     }
 
@@ -117,6 +115,10 @@ public class MailService {
         variables.put("listBookName", mail.getListBookName());
         variables.put("offeredBookName",mail.getOfferedBookName());
         variables.put("listId",mail.getListId());
+        variables.put("exchangeLink",createExchangeLink());
+        variables.put("listBookImage",mail.getListBookImage());
+        variables.put("offeredBookImage",mail.getOfferedBookImage());
+        variables.put("offersLink",createOffersLink());
         sendMail(mail, variables, updatelistexctemplate, updateListexcSubject);
     }
     public void sendSaleList(ListMailRequest mailRequest) {
@@ -130,10 +132,14 @@ public class MailService {
         mail.setOffererFullName(offerer.getFirstName()+ " " + offerer.getLastName());
         log.info("Sending email to: {}, Address: {}, Name: {}", mail.getSentToMailAddress(), mail.getOffereraddress(), mail.getOffererFullName());
         variables.put("listBookName", mail.getListBookName());
+        variables.put("listsLink",createSaleLink());
         variables.put("listId", mail.getListId());
         variables.put("buyerName",mail.getOffererFullName());
         variables.put("buyerAddress",mail.getOffereraddress());
         variables.put("lastShippingDate",mail.getDeadline());
+        variables.put("salesLink",createSaleLink());
+        variables.put("listBookImage",mail.getListBookImage());
+        variables.put("price",mailRequest.getTrustFee());
         sendMail(mail, variables, updateListSale, updateListSaleSubject);
     }
 
@@ -148,7 +154,7 @@ public class MailService {
         mail.setOwnerFullName(owner.getFirstName()+ " " + owner.getLastName());
         mail.setOffereraddress(offerer.getAddress());
         mail.setOffererFullName(offerer.getFirstName()+ " " + offerer.getLastName());
-//        mail.setOfferedBookImage(listMailResponse.getListBookImage());
+        mail.setOfferedBookImage(listMailResponse.getListBookImage());
         mail.setAuthor(listMailResponse.getAuthor());
         mail.setSentToMailAddress(offerer.getEmail());
         mail.setCategory(listMailResponse.getCategory());
@@ -160,10 +166,10 @@ public class MailService {
         variables.put("address",mail.getOffereraddress());
         variables.put("trackingNumber",mail.getTrackingNumber());
         variables.put("author",mail.getAuthor());
-      //  variables.put("bookImage",listMailResponse.getListBookImage());
         variables.put("category",mail.getCategory());
         variables.put("publisher",mail.getPublisher());
         variables.put("publishDate",mail.getPublishedDate());
+        variables.put("listBookImage",listMailResponse.getListBookImage());
         sendMail(mail, variables, shippingTemplate, shippingSubject);
     }
     public void sendTransaction(TransactionMailReq mailRequest) {
@@ -180,8 +186,10 @@ public class MailService {
         variables.put("offeredBookName", mail.getOfferedBookName());
         variables.put("offeredBookImage", mail.getOfferedBookImage());
         variables.put("buyerName",mail.getOffererFullName());
-       // variables.put("trustFee",mail.getTrustFee());
+        variables.put("trustFee",mail.getTrustFee());
         variables.put("lastPaymentDate",mail.getDeadline());
+        variables.put("tradesLink",createExchangeLink());
+        variables.put("receiverAddress",offerer.getAddress());
         sendMail(mail, variables, transactionCreatedTemplate, transactionCreatedSubject);
     }
     public void sendOffererTransaction(TransactionMailReq mailRequest) {
@@ -198,8 +206,10 @@ public class MailService {
         variables.put("offeredBookName", mail1.getOfferedBookName());
         variables.put("offeredBookImage", mail1.getOfferedBookImage());
         variables.put("buyerName",mail1.getOwnerFullName());
-       // variables.put("trustFee",mail.getTrustFee());
+        variables.put("trustFee",mail1.getTrustFee());
         variables.put("lastPaymentDate",mail1.getDeadline());
+        variables.put("tradesLink",createExchangeLink());
+        variables.put("receiverAddress",owner.getAddress());
         sendMail(mail1, variables, transactionCreatedTemplate, transactionCreatedSubject);
     }
     //todo -> burası bitecek
@@ -221,9 +231,10 @@ public class MailService {
         variables.put("listBookImage", mail.getListBookImage());
         variables.put("offeredBookName", mail.getOfferedBookName());
         variables.put("offeredBookImage", mail.getOfferedBookImage());
-      //  variables.put("trustFee",mail.getTrustFee());
+        variables.put("trustFee",mail.getTrustFee());
         variables.put("lastPaymentDate",mail.getDeadline());
         variables.put("lastShipmentDate",mail.getDeadline());
+        variables.put("offersLink",createOffersLink());
         mail.setSentToMailAddress(owner.getEmail());
         mail1.setSentToMailAddress(offerer.getEmail());
         sendMail(mail, variables, offerAcceptedTemplate, offerAcceptedSubject);
@@ -277,18 +288,18 @@ public class MailService {
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, variables);
     }
 
-    private String createVerificationLink(String verificationToken) {
-        return frontendAddress + "/verify?token=" + verificationToken;
+    private String createOffersLink() {
+        return frontendAddress + "/myOffers";
     }
 
-    private String createResetPasswordLink(String resetPasswordToken) {
-        return frontendAddress + "/reset_password?token=" + resetPasswordToken;
+    private String createTradeLink() {
+        return frontendAddress + "/trade";
     }
 
-//    private String createSaleLink(String link){
-//        return frontendAddress + "/my_sales?token=" + link;
-//    }
-//    private String createExchangeLink(String link){
-//        return frontendAddress + "/my_exchange?token=" + link;
-//    }
+    private String createSaleLink(){
+        return frontendAddress + "/mySales";
+    }
+    private String createExchangeLink(){
+        return frontendAddress + "/myTrades";
+    }
 }

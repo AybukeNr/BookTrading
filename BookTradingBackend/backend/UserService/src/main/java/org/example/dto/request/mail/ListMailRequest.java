@@ -16,7 +16,6 @@ public class ListMailRequest {
     private String listBookImage;
     private String offeredBookName;
     private String offeredBookImage;
-    private String token;
     private Double trustFee;
     private LocalDateTime paymentdeadline;
     private LocalDateTime shipmentdeadline;

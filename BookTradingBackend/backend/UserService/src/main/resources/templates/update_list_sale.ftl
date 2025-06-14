@@ -49,8 +49,8 @@
 <div class="container">
     <p class="message">Merhaba,<strong>${listBookName}</strong> kitabınız satıldı.</p>
     <p>İlan No: ${listId}</p>
-<#--    <img class="book-image" src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(listBookImage)}" alt="${listBookName}">-->
-
+    <p>Fiyat: ${price}</p>
+    <img class="book-image" src="${listBookImage}" alt="${listBookName}">
     <div class="buyer-info">
         <p><strong>Lütfen kitabınızı en kısa süre içerisinde kargolayın!</strong></p>
         <p><strong>Alıcı Bilgileri:</strong></p>
@@ -60,7 +60,11 @@
     </div>
 
     <p class="message">Satış ve kargo bilgileri için aşağıdaki butona tıklayabilirsiniz:</p>
-    <a class="offer-link" href="">Satış Bilgilerini Gör</a>
+    <tr>
+        <td style="text-align: center;">
+            <a href="${salesLink}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 5px;">Satışlara Gitmek İçin Tıklayın</a>
+        </td>
+    </tr>
 </div>
 </body>
 </html>

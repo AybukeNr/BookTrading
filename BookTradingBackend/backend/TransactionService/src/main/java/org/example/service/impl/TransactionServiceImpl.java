@@ -16,6 +16,7 @@ import org.example.entity.enums.TransactionType;
 import org.example.exception.ErrorType;
 import org.example.exception.TransactionException;
 import org.example.external.ListManager;
+import org.example.external.MailManager;
 import org.example.external.ShippingManager;
 import org.example.external.UserManager;
 import org.example.mapper.CardMapper;
@@ -53,6 +54,7 @@ public class TransactionServiceImpl implements ITransactionService {
     private final LibraryManager libraryManager;
     private final UserManager userManager;
     private final ShippingManager shippingManager;
+    private final MailManager mailManager;
 
 
     @Override
@@ -160,12 +162,6 @@ public class TransactionServiceImpl implements ITransactionService {
 
                 transaction.setUpdatedDate(LocalDateTime.now());
                 transactionRepository.save(transaction);
-//                TransactionMailReq transactionMailReq = new TransactionMailReq();
-//                transactionMailReq.setStatus(String.valueOf(transaction.getStatus()));
-//                transactionMailReq.setOffererId(transaction.getOffererId());
-//                transactionMailReq.setOwnerId(transaction.getOwnerId());
-//                transactionMailReq.setTrustFee(0.0);
-                //sendComplatedMail(transactionMailReq);
             }
         } catch (Exception e) {
             log.error("Error processing transaction {}: {}", transaction.getTransactionId(), e.getMessage());
@@ -217,6 +213,12 @@ public class TransactionServiceImpl implements ITransactionService {
         log.info("Update List Request: {}", updateListReq);
 
         log.info("Refund process completed for transaction: {}", transactions.getTransactionId());
+        TransactionMailReq transactionMailReq = new TransactionMailReq();
+        transactionMailReq.setStatus(String.valueOf(transactions.getStatus()));
+        transactionMailReq.setOffererId(transactions.getOffererId());
+        transactionMailReq.setOwnerId(transactions.getOwnerId());
+        transactionMailReq.setTrustFee(transactions.getTrustFee());
+        mailManager.testTransactionComplated(transactionMailReq);
         return transactionMapper.transactionToResponse(transactions);    }
 
 
@@ -417,6 +419,7 @@ public class TransactionServiceImpl implements ITransactionService {
         transactionInfo.setTrustFee(transactions.getTrustFee());
         transactionInfo.setShippingSerialNumber(exchangeInfos.getShippingSerialNumber());
         transactionInfo.setStatus(exchangeInfos.getStatus());
+        transactionInfo.setListType(String.valueOf(transactions.getTransactionType()));
         return transactionInfo;
     }
 
