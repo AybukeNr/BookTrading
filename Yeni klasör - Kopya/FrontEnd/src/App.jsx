@@ -19,6 +19,7 @@ import Trade from '../src/Trade/Trade'
 import Admin from '../src/Admin/Admin'
 import Search from '../src/Search/Search'
 import Tracking from './Payment/Tracking'
+import TradeTracking from './Trade/TradeTracking'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useStateValue } from './StateProvider'
 import { useEffect } from 'react'
@@ -117,9 +118,14 @@ function App() {
             <Payment />
           </PrivateRoute>
         } />
-        <Route path='/tracking' element={
+        <Route path='/paymentTracking' element={
           <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
             <Tracking />
+          </PrivateRoute>
+        } />
+        <Route path='/tradeTracking' element={
+          <PrivateRoute isAuthenticated={isAuthenticated} loading={loading}>
+            <TradeTracking />
           </PrivateRoute>
         } />
         <Route path='/' element={

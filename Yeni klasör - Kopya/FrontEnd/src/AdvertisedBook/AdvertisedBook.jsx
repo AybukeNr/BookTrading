@@ -25,11 +25,13 @@ function AdvertisedBook() {
                     },
                 });
 
-                console.log("Gelen ilan verileri:", response.data);
+                const filteredData = response.data.filter(
+                    (item) => item.status !== "SUSPENDED"
+                );
 
                 dispatch({
                     type: 'SET_AD_BOOKS',
-                    advertisedBook: response.data,
+                    advertisedBook: filteredData,
                 });
 
                 dispatch({

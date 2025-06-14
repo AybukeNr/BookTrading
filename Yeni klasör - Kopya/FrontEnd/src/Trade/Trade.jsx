@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import '../Trade/Trade.css'
 import PaymentCard from '../PaymentCard/PaymentCard'
-import { useStateValue } from '../StateProvider';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { instanceLibrary, instanceListing, instanceShipping, instanceTransaction, instanceUser } from '../axios';
+import { instanceLibrary, instanceListing, instanceTransaction, instanceUser } from '../axios';
 function Trade() {
-  const [{ tradeData }, dispatch] = useStateValue();
   const navigate = useNavigate();
   const location = useLocation();
   const tradeItem = location.state?.tradeData;
-  const [openAdDialog, setOpenAdDialog] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [otherUser, setOtherUser] = useState(null);
-  const [trackingNumber, setTrackingNumber] = useState("");
   const [transactionInfo, setTransactionInfo] = useState(null);
   const [cardName, setCardName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
@@ -108,7 +103,6 @@ function Trade() {
       cvv,
       expiryDate,
       amount: transactionInfo?.trustFee,
-      trackingNumber,
     };
 
     try {
@@ -140,12 +134,6 @@ function Trade() {
       return;
     }
 
-    if (!trackingNumber) {
-      setError("Lütfen kargo takip numarasını girin.");
-      setLoading(false);
-      return;
-    }
-
     const userId = localStorage.getItem("userId");
     if (!userId) {
       setError("Kullanıcı kimliği bulunamadı. Lütfen tekrar giriş yapın.");
@@ -163,7 +151,6 @@ function Trade() {
         cvv,
         expiryDate,
         amount: transactionInfo?.trustFee,
-        trackingNumber,
       };
 
       console.log("Ödeme isteği gönderiliyor:", paymentRequestBody);
@@ -178,21 +165,7 @@ function Trade() {
       }
 
       console.log("Ödeme başarılı:", paymentResponse.data);
-
-      const shippingRequestData = {
-        shippingSerialNumber: transactionInfo?.shippingSerialNumber,
-        trackingNumber: trackingNumber,
-        userId: tradeItem?.currentUserId
-      };
-
-      console.log("Kargo takip güncelleme isteği:", shippingRequestData);
-
-      const shippingResponse = await instanceShipping.patch("/updateShipping", shippingRequestData);
-
-      console.log("Takas işlemi gerçekleştirildi:", shippingResponse.data);
-
-      setOpenAdDialog(false);
-      navigate("/");
+      navigate("/myTrades");
 
     } catch (error) {
       console.error("İşlem hatası:", error);
@@ -205,14 +178,6 @@ function Trade() {
       setLoading(false);
     }
   }
-
-  const handleOpenAdDialog = () => {
-    setOpenAdDialog(true);
-  };
-
-  const handleCloseAdDialog = () => {
-    setOpenAdDialog(false);
-  };
 
   return (
     <div className='trade'>
@@ -317,7 +282,11 @@ function Trade() {
               </div>
               {error && <p style={{ color: "crimson", fontWeight: "500", marginTop: "10px" }}>{error}</p>}
               <div>
-                <button className="trade_button" type='button' onClick={handleOpenAdDialog}>
+                {}
+                <button className="trade_button" type='button' 
+                  onClick={confirmTrade} 
+                  disabled={loading || processing}
+                >
                   <span>Onayla ve Takası gerçekleştir</span>
                 </button>
               </div>
@@ -326,21 +295,6 @@ function Trade() {
             <p>"Takası gerçekleştir diyerek, <a href="#" target="_blank">Takas Sözleşmesi</a> ve  <a href="#" target="_blank">Ön Bilgilendirme Formu</a>'nu okuduğunuzu, anladığınızı ve kabul ettiğinizi beyan etmiş olursunuz."</p>
           </div>
         </div>
-
-        <Dialog open={openAdDialog} onClose={handleCloseAdDialog}>
-          <DialogTitle>Kargo takip numarası ile takası onayla</DialogTitle>
-          <DialogContent>
-            {error && <p style={{ color: "crimson", fontWeight: "500", marginTop: "10px" }}>{error}</p>}
-            Kargo takip numarası giriniz:
-            <DialogContentText>
-              <input type="text" style={{ borderRadius: "8px", border: "1px solid orange", outlineColor: "rgb(57, 139, 217)" }} value={trackingNumber} onChange={(e) => setTrackingNumber(e.target.value)} />
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseAdDialog} color="primary">İptal</Button>
-            <Button onClick={confirmTrade} color="error" disabled={!trackingNumber || loading}>{loading ? "Onaylanıyor..." : "Onayla"}</Button>
-          </DialogActions>
-        </Dialog>
 
       </div>
     </div >

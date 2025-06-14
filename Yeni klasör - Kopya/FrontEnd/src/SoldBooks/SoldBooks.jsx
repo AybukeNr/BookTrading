@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../SoldBooks/SoldBooks.css";
-import { instanceListing, instanceTransaction, instanceUser } from "../axios";
+import { instanceListing, instanceShipping, instanceTransaction, instanceUser } from "../axios";
 import { useNavigate } from "react-router-dom";
 
 function SoldBooks() {
@@ -28,7 +28,6 @@ function SoldBooks() {
               buyer: offererRes.data,
               price: listRes.data.price,
               listId: tx.listId,
-              status: listRes.data.status,
             };
           })
         );
@@ -43,7 +42,7 @@ function SoldBooks() {
   }, [userId]);
 
   const handleTracking = (listId) => {
-    navigate("/tracking", {
+    navigate("/paymentTracking", {
       state: { listId: listId },
     });
   };
@@ -86,14 +85,16 @@ function SoldBooks() {
             </p>
           </div>
 
-          {sale.seller.id.toString() === userId && sale.status !== "SUSPENDED" && (
-            <button
-              className="continueBtn"
-              onClick={() => handleTracking(sale.listId)}
-            >
-              Kargo takip no girmek için devam et
-            </button>
-          )}
+          {sale.seller.id.toString() === userId &&
+            // sale.status === "KARGO_BEKLENIYOR" && 
+            (
+              <button
+                className="continueBtn"
+                onClick={() => handleTracking(sale.listId)}
+              >
+                Kargo takip no girmek için devam et
+              </button>
+            )}
 
           <div className="personInfo">
             <div className="sellerInfo">
