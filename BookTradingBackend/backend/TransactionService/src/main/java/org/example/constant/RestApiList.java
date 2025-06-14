@@ -60,6 +60,10 @@ public class RestApiList {
     //exchange manager
     public static final String GET_EXCHANGE_INFOS = "/getExchangeInfos";
 
+    //mail manager
+    public static final String TEST_TRANSACTION_CREATED = "/test-transaction-created";
+    public static final String TEST_TRANSACTION_COMPLATED = "/test-transaction-complated";
+
 
 
 }

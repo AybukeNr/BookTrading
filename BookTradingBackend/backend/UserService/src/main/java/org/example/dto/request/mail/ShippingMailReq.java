@@ -11,6 +11,6 @@ public class ShippingMailReq {
     private String senderId;
     private String recipientId;
     private String trackingNumber;
-    private String address;
     private String listId;
+
 }

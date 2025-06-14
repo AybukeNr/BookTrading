@@ -22,7 +22,7 @@ public class TransactionResponse {
     private Double offererDeposit; // Alıcının yatırdığı güvence bedeli
     private TransactionType transactionType;
     private TransactionStatus status; // ONGOING, COMPLETED, CANCELLED
-
+    private Double trustFee;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
     private LocalDateTime deadline;

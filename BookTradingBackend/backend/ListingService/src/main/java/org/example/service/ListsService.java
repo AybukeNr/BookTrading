@@ -230,15 +230,16 @@ public class ListsService {
         lists.getOffers().add(offer);
         Lists updatedLists = listsRepository.save(lists);
         log.info("Take List after update: {}", updatedLists);
-//        ListMailRequest request = new ListMailRequest();
-//        request.setOwnerId(lists.getOwnerId());
-//        request.setOffererId(offer.getOffererId());
-//        request.setListId(offer.getOfferListId());
-//        request.setOfferedBookName(offer.getOfferedBook().getTitle());
-//        request.setOfferedBookImage(offer.getOfferedBook().getImage());
-//        request.setListBookName(lists.getBookInfo().getTitle());
-//        request.setListBookImage(lists.getBookInfo().getImage());
-//        mailManager.testExchangeListUpdated(request);
+        ListMailRequest request = new ListMailRequest();
+        request.setOwnerId(lists.getOwnerId());
+        request.setOffererId(offer.getOffererId());
+        request.setListId(offer.getOfferListId());
+        request.setOfferedBookName(offer.getOfferedBook().getTitle());
+        request.setOfferedBookImage(offer.getOfferedBook().getImage());
+        request.setListBookName(lists.getBookInfo().getTitle());
+        request.setListBookImage(lists.getBookInfo().getImage());
+        mailManager.testExchangeListUpdated(request);
+        log.info("Offer creation mail sent:{}", request);
         return listMapper.ListToListResponse(updatedLists);
     }
     private OfferBookResponse mapToOfferBookResponse(ListBookResponse book) {
@@ -343,6 +344,16 @@ public class ListsService {
 
         if (updateOfferRequest.getOfferStatus().equals(String.valueOf(OfferStatus.KABUL) )) {
             processAcceptedOffer(list, targetOffer);
+            ListMailRequest request = new ListMailRequest();
+            request.setOwnerId(list.getOwnerId());
+            request.setOffererId(targetOffer.getOffererId());
+            request.setListId(targetOffer.getOfferListId());
+            request.setOfferedBookName(targetOffer.getOfferedBook().getTitle());
+            request.setOfferedBookImage(targetOffer.getOfferedBook().getImage());
+            request.setListBookName(list.getBookInfo().getTitle());
+            request.setListBookImage(list.getBookInfo().getImage());
+            request.setPaymentdeadline(LocalDateTime.now().plusMinutes(5));
+            request.setShipmentdeadline(LocalDateTime.now().plusMinutes(5));
             log.info("Update list mail sent");
         }
         else if (updateOfferRequest.getOfferStatus().equals(String.valueOf(OfferStatus.RET)) && updateOfferRequest.getOfferStatus().equals(String.valueOf(OfferStatus.RET))) {
@@ -380,14 +391,14 @@ public class ListsService {
                 .offererAddress(addresses.get("offererAddress")) // Offerer'ın adresi
                 .build();
         shippingManager.createShipping(shippingRequest);
-//        ListMailRequest mailRequest = new ListMailRequest();
-//        mailRequest.setListId(list.getId());
-//        mailRequest.setListBookName(list.getBookInfo().getTitle());
-//        mailRequest.setListBookImage(list.getBookInfo().getImage());
-//        mailRequest.setOwnerId(list.getOwnerId());
-//        mailRequest.setOffererId(salesRequest.getOffererId());
-//        mailRequest.setShipmentdeadline(LocalDateTime.now().plusMinutes(5));
-//        mailManager.testSaleMail(mailRequest);
+        ListMailRequest mailRequest = new ListMailRequest();
+        mailRequest.setListId(list.getId());
+        mailRequest.setListBookName(list.getBookInfo().getTitle());
+        mailRequest.setListBookImage(list.getBookInfo().getImage());
+        mailRequest.setOwnerId(list.getOwnerId());
+        mailRequest.setOffererId(salesRequest.getOffererId());
+        mailRequest.setShipmentdeadline(LocalDateTime.now().plusMinutes(5));
+        mailManager.testSaleMail(mailRequest);
         return true;
 
     }
@@ -417,31 +428,32 @@ public class ListsService {
                 .offererAddress(addresses.get("offererAddress")) // Offerer'ın adresi
                 .build();
         shippingManager.createShipping(shippingRequest);
-//        TransactionMailReq transactionMailReq = new TransactionMailReq();
-//        transactionMailReq.setListId(list.getId());
-//        transactionMailReq.setOwnerId(list.getOwnerId());
-//        transactionMailReq.setOffererId(targetOffer.getOffererId());
-//        transactionMailReq.setStatus(String.valueOf(response.getStatus()));
-//        transactionMailReq.setListBookImage(list.getBookInfo().getImage());
-//        transactionMailReq.setListBookName(list.getBookInfo().getTitle());
-//        transactionMailReq.setOfferedBookName(targetOffer.getOfferedBook().getTitle());
-//        transactionMailReq.setOfferedBookImage(targetOffer.getOfferedBook().getImage());
-//        transactionMailReq.setDeadline(LocalDateTime.now().plusMinutes(5));
-//        mailManager.testTransactionCreated(transactionMailReq);
-//        //todo -> trustfee set edilecek,transaction serviste responsa ekle,deadline da
-//        log.info("Shipping created successfully for transaction: {}", response.getTransactionId());
-//        ListMailRequest mailRequest = new ListMailRequest();
-//        mailRequest.setListId(list.getId());
-//        mailRequest.setListBookImage(list.getBookInfo().getImage());
-//        mailRequest.setListBookName(list.getBookInfo().getTitle());
-//        mailRequest.setOwnerId(list.getOwnerId());
-//        mailRequest.setOffererId(targetOffer.getOffererId());
-//        mailRequest.setOfferedBookImage(targetOffer.getOfferedBook().getImage());
-//        mailRequest.setOfferedBookName(targetOffer.getOfferedBook().getTitle());
-//        mailRequest.setShipmentdeadline(LocalDateTime.now().plusMinutes(5));
-//        mailRequest.setPaymentdeadline(LocalDateTime.now().plusMinutes(5));
-//        mailManager.testAcceptedOffer(mailRequest);
-//        log.info("Accepted Offer Mail sent");
+        TransactionMailReq transactionMailReq = new TransactionMailReq();
+        transactionMailReq.setListId(list.getId());
+        transactionMailReq.setOwnerId(list.getOwnerId());
+        transactionMailReq.setTrustFee(response.getTrustFee());
+        transactionMailReq.setOffererId(targetOffer.getOffererId());
+        transactionMailReq.setStatus(String.valueOf(response.getStatus()));
+        transactionMailReq.setListBookImage(list.getBookInfo().getImage());
+        transactionMailReq.setListBookName(list.getBookInfo().getTitle());
+        transactionMailReq.setOfferedBookName(targetOffer.getOfferedBook().getTitle());
+        transactionMailReq.setOfferedBookImage(targetOffer.getOfferedBook().getImage());
+        transactionMailReq.setDeadline(LocalDateTime.now().plusMinutes(5));
+        mailManager.testTransactionCreated(transactionMailReq);
+        log.info("Shipping created successfully for transaction: {}", response.getTransactionId());
+        ListMailRequest mailRequest = new ListMailRequest();
+        mailRequest.setListId(list.getId());
+        mailRequest.setListBookImage(list.getBookInfo().getImage());
+        mailRequest.setListBookName(list.getBookInfo().getTitle());
+        mailRequest.setOwnerId(list.getOwnerId());
+        mailRequest.setOffererId(targetOffer.getOffererId());
+        mailRequest.setOfferedBookImage(targetOffer.getOfferedBook().getImage());
+        mailRequest.setOfferedBookName(targetOffer.getOfferedBook().getTitle());
+        mailRequest.setShipmentdeadline(LocalDateTime.now().plusMinutes(5));
+        mailRequest.setPaymentdeadline(LocalDateTime.now().plusMinutes(5));
+        mailRequest.setTrustFee(response.getTrustFee());
+        mailManager.testAcceptedOffer(mailRequest);
+        log.info("Accepted Offer Mail sent");
     }
 
 

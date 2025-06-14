@@ -42,10 +42,11 @@ public class PaymentServiceImpl implements IPaymentService {
     @Override
     public Boolean checkCardInfos(CreatePaymentRequest createPaymentRequest, Cards cards) {
         // Kart bilgisi kontrolü
+        String expiry = createPaymentRequest.getExpiryDate().replace(" ", "");
         boolean isCardNumberValid = createPaymentRequest.getCardNumber().equals(cards.getCardNumber());
         boolean isCvvValid = createPaymentRequest.getCvv().equals(cards.getCvv());
         boolean isFullnameValid = createPaymentRequest.getFullName().equals(cards.getFullName());
-        boolean isExpiryValid = createPaymentRequest.getExpiryDate().equals(cards.getExpiryDate());
+        boolean isExpiryValid = expiry.equals(cards.getExpiryDate());
 
         return isCardNumberValid && isCvvValid && isExpiryValid && isFullnameValid;
     }

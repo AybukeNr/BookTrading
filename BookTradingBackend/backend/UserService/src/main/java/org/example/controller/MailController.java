@@ -43,10 +43,10 @@ public class MailController {
         mailService.sendTransaction(transactionMailReq);
         mailService.sendOffererTransaction(transactionMailReq);
     }
-//    @PostMapping(TEST_TRANSACTION_COMPLATED)
-//    public void testTransactionComplated(@RequestBody TransactionMailReq transactionMailReq){
-//
-//    }
+    @PostMapping(TEST_TRANSACTION_COMPLATED)
+    public void testTransactionComplated(@RequestBody TransactionMailReq transactionMailReq){
+
+    }
     @PostMapping(TEST_EXCHANGE_LIST_UPDATE)
     public void testExchangeListUpdated(@RequestBody ListMailRequest listMailReq){
         mailService.sendExchangeList(listMailReq);

@@ -42,15 +42,15 @@
 <div class="container">
     <p class="message">Merhaba, <strong>${listBookName}</strong> kitabına yapılan takas teklifi kabul edildi.</p>
     <p>İlan no: ${listId}</p>
-    <#--    <img class="book-image" src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(listBookImage)}" alt="${listBookImage}">-->
+        <img class="book-image" src="${listBookImage}" >
     <p class="message">Teklif edilen kitap: <strong>${offeredBookName}</strong></p>
-    <#--    <img class="book-image" src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(offeredBookImage)}" alt="${offeredBookImage}">-->
-    <p><strong>Lütfen güvence bedeli yatırma ve kargolama işlemlerini belirtilen tarihlerden önce gerçekleştirin! Aksi takdirde güvenilirlik puanınız düşürülecektir.</strong></p>
-<#--    <p><strong style="color: red">Güvence Bedeli: ${trustFee}</strong></p>-->
+        <img class="book-image" src="${offeredBookImage}" >
+    <p><strong>Lütfen güvence bedeli yatırma ve kargolama işlemlerini belirtilen tarihlerden önce gerçekleştirin!</strong></p>
+    <p><strong style="color: red">Güvence Bedeli: ${trustFee}</strong></p>
     <p><strong style="color: red">Son Ödeme Tarihi: ${lastPaymentDate}</strong></p>
     <p><strong style="color: red">Son Kargolama Tarihi: ${lastShipmentDate}</strong></p>
     <p class="message">Takaslarınızı görmek için aşağıdaki bağlantıya tıklayabilirsiniz:</p>
-    <#--    <a class="offer-link" href="${offersLink}">Teklifi Gör</a>-->
+        <a class="offer-link" href="${offersLink}">Teklifi Gör</a>
 </div>
 </body>
 </html>
