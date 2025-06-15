@@ -76,7 +76,7 @@ function AdvertisedBook() {
         <div className='advertisedBook'>
             <h3>İlanlarım</h3>
             {advertisedBook && advertisedBook.length > 0 ? (
-                advertisedBook.map((item) => (
+                advertisedBook.filter((item) => item.status !== "AWAITING_SHIPMENT").map((item) => (
                     item.book ? (
                         <div className="BooksInfo" key={item.listId}>
                             <img src={item.book.image} alt={item.book.title || "Kitap görseli"}

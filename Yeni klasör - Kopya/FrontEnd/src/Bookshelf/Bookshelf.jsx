@@ -31,7 +31,7 @@ function Bookshelf() {
 
             try {
                 const response = await instanceLibrary.get(`/getBookByOwnerId?ownerId=${userId}`);
-                const data = response.data;
+                const data = response.data.filter((book) => book.status !== "REMOVED");;
 
                 dispatch({
                     type: 'SET_BOOKSHELF',

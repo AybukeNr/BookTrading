@@ -22,12 +22,20 @@ function SoldBooks() {
             const listRes = await instanceListing.get(`/getListsById?listId=${tx.listId}`);
             const offererRes = await instanceUser.get(`/getUserById?id=${tx.offererId}`);
 
+            // const shippingRes = await instanceShipping.get(`/getExchangeInfos`, {
+            //   params: {
+            //     userId,
+            //     listId: tx.listId
+            //   }
+            // });
+
             return {
               book: listRes.data.book,
               seller: listRes.data.user,
               buyer: offererRes.data,
               price: listRes.data.price,
               listId: tx.listId,
+              // trackingNumber: shippingRes.data.userTracking,
             };
           })
         );
@@ -86,7 +94,7 @@ function SoldBooks() {
           </div>
 
           {sale.seller.id.toString() === userId &&
-            // sale.status === "KARGO_BEKLENIYOR" && 
+            //sale.trackingNumber && 
             (
               <button
                 className="continueBtn"

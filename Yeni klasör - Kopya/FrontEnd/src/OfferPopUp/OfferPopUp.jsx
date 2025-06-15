@@ -13,7 +13,7 @@ function OfferPopUp({ onClose }) {
   const [exchangeBooks, setExchangeBooks] = useState([]);
   const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
     console.log("Seçilen ilan (karşı tarafın kitabı):", selectedAdvertisedBook);
   }, [selectedAdvertisedBook]);
 
@@ -47,7 +47,9 @@ function OfferPopUp({ onClose }) {
   useEffect(() => {
     if (advertisedBook && advertisedBook.length > 0) {
       const filtered = advertisedBook.filter(
-        (item) => item.type === "EXCHANGE"
+        (item) => item.type === "EXCHANGE" &&
+          item.status !== "AWAITING_SHIPMENT" &&
+          item.status !== "SUSPENDED"
       );
       setExchangeBooks(filtered);
     }
@@ -82,9 +84,9 @@ function OfferPopUp({ onClose }) {
           Authorization: `Bearer ${getAuthToken()}`,
         },
       });
-      
+
       console.log("Teklif başarıyla oluşturuldu:", response.data);
-      
+
       dispatch({
         type: "ADD_TO_OFFER_SENT",
         item: {
@@ -147,7 +149,7 @@ function OfferPopUp({ onClose }) {
       )}
       <div>
         <button onClick={offerSubmit} className="offerPopUp_button">
-          {loading ? 'Teklif Gönderiliyor...' : 'Teklif Gönder'} 
+          {loading ? 'Teklif Gönderiliyor...' : 'Teklif Gönder'}
         </button>
       </div>
     </div>

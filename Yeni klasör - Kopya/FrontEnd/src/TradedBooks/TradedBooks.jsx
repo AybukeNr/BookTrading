@@ -18,14 +18,24 @@ function TradedBooks() {
           const senderRes = await instanceUser.get(`/getUserById?id=${offer.offererId}`);
           const receiverRes = await instanceUser.get(`/getUserById?id=${offer.offerList.ownerId}`);
 
+        // const shippingRes = await instanceShipping.get(`/getExchangeInfos`, {
+        //   params: {
+        //     userId,
+        //     listId: offer.offerList.listid
+        //   }
+        // });
+
           return {
             sentBook: offer.offeredBook,
             receivedBook: offer.offerList.book,
             sender: senderRes.data,
             receiver: receiverRes.data,
             listId: offer.offerList.listid,
+            // trackingNumber: shippingRes.data.userTracking,
           }
         }));
+       
+        
 
         setTradedBooks(detailedData);
       } catch (error) {
@@ -74,13 +84,13 @@ function TradedBooks() {
             </div>
           </div>
 
-          {/* {tradedBook.status !== "KARGOLANDI" && ( */}
-            <button
-              className="continueButton"
-              onClick={() => handleTracking(tradedBook.listId)}
-            >
-              Kargo takip no girmek için devam et
-            </button>
+          {/* {tradedBook.trackingNumber === null && ( */}
+          <button
+            className="continueButton"
+            onClick={() => handleTracking(tradedBook.listId)}
+          >
+            Kargo takip no girmek için devam et
+          </button>
           {/* )} */}
 
           <div className="tradersInfos">

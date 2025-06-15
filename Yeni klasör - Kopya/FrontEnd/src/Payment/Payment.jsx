@@ -38,7 +38,8 @@ function Payment() {
 
         setProcessing(true);
         setError("");
-
+        
+         const userId = localStorage.getItem("userId");
         if (!userId) {
             setError("Kullanıcı kimliği bulunamadı. Lütfen tekrar giriş yapın.");
             setProcessing(false);

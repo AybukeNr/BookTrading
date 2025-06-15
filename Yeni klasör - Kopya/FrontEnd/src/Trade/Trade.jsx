@@ -282,9 +282,9 @@ function Trade() {
               </div>
               {error && <p style={{ color: "crimson", fontWeight: "500", marginTop: "10px" }}>{error}</p>}
               <div>
-                {}
-                <button className="trade_button" type='button' 
-                  onClick={confirmTrade} 
+                { }
+                <button className="trade_button" type='button'
+                  onClick={confirmTrade}
                   disabled={loading || processing}
                 >
                   <span>Onayla ve Takası gerçekleştir</span>
