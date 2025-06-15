@@ -124,6 +124,8 @@ public class UserService {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .trustPoint(user.getTrustPoint())
+                .address(user.getAddress())
+                .mailAddress(user.getEmail())
                 .build();
     }
 

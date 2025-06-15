@@ -1,7 +1,8 @@
 package org.example.entity.enums;
 public enum BookStatus {
     ENABLED(0),
-    DISABLED(1);
+    DISABLED(1),
+    REMOVED(2);
 
     private final int value;
 
