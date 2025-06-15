@@ -17,5 +17,7 @@ public class UserResponseId {
     private String lastName;
     private String userName;
     private Double trustPoint;//default = 5.0
+    private String mailAddress;
+    private String address;
 }
 

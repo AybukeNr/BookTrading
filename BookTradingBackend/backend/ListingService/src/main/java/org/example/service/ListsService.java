@@ -68,6 +68,9 @@ public class ListsService {
         List<Lists> lists = listsRepository.findByOwnerIdNot(ownerId);
 
         return lists.stream()
+                .filter(list ->
+                        list.getStatus() != ListsStatus.AWAITING_SHIPMENT &&
+                                list.getStatus() != ListsStatus.SUSPENDED)
                 .map(list -> {
                     // Kullanıcı bilgisi alınır
                     UserResponse userResponse = userManager.getUserResponseById(list.getOwnerId());
@@ -338,6 +341,10 @@ public class ListsService {
                         return o;
                     })
                     .toList();
+            bookManager.updateBookStat(UpdateBookStat.builder()
+                    .status("REMOVED")
+                    .bookId(list.getBookInfo().getId()).build());
+            list.setStatus(ListsStatus.AWAITING_SHIPMENT);
         }
         targetOffer.setUpdatedDate(LocalDateTime.now());
         listsRepository.save(list);
@@ -381,7 +388,9 @@ public class ListsService {
         TransactionResponse response = transactionManager.createTransaction(transactionRequest).getBody();
         log.info("Transaction created {}",response);
         Map<String, String> addresses =  userManager.getAddresses(list.getOwnerId(), salesRequest.getOffererId());
-        // Shipping oluştur
+        bookManager.updateBookStat(UpdateBookStat.builder()
+                .status("REMOVED").bookId(list.getBookInfo().getId()).build());
+        list.setStatus(ListsStatus.AWAITING_SHIPMENT);// Shipping oluştur
         CreateShippingRequest shippingRequest = CreateShippingRequest.builder()
                 .listId(list.getId())
                 .listType(list.getType())
@@ -416,6 +425,32 @@ public class ListsService {
                 .build();
         TransactionResponse response = transactionManager.createTransaction(transactionRequest).getBody();
         log.info("Transaction created {}",response);
+        bookManager.updateBookStat(UpdateBookStat.builder()
+                .bookId(list.getBookInfo().getId())
+                .status("REMOVED")
+                .build());
+        // ✅ Karşı teklif edilen kitabın durumunu da REMOVED yap
+        if (targetOffer.getOfferedBook() != null && targetOffer.getOfferedBook().getId() != null) {
+            bookManager.updateBookStat(UpdateBookStat.builder()
+                    .bookId(targetOffer.getOfferedBook().getId())
+                    .status("REMOVED")
+                    .build());
+            log.info("Offered book status updated to REMOVED for bookId: {}", targetOffer.getOfferedBook().getId());
+        }
+
+        // İlan durumunu güncelle
+        list.setStatus(ListsStatus.AWAITING_SHIPMENT);
+        listsRepository.save(list); // değişikliklerin kaydedilmesi için
+
+        List<Lists> offeredBookLists = listsRepository.findByBookInfo_Id(targetOffer.getOfferedBook().getId());
+        if (!offeredBookLists.isEmpty()) {
+            Lists offererList = offeredBookLists.get(0); // aynı kitabın birden fazla ilanı olabilir ama genelde 1 tane olur
+            offererList.setStatus(ListsStatus.AWAITING_SHIPMENT);
+            listsRepository.save(offererList);
+            log.info("Offerer's list (bookId: {}) status updated to AWAITING_SHIPMENT", targetOffer.getOfferedBook().getId());
+        } else {
+            log.warn("No list found for offeredBookId: {}", targetOffer.getOfferedBook().getId());
+        }
 
         // Shipping oluştur
         CreateShippingRequest shippingRequest = CreateShippingRequest.builder()

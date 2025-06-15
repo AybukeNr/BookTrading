@@ -4,5 +4,6 @@ public enum ListsStatus {
     OPEN,
     CLOSED,
     SUSPENDED,
-    WAITING
+    WAITING,
+    AWAITING_SHIPMENT
 }
