@@ -44,4 +44,15 @@ public enum BookCategory {
     public static String toAprioriName(String displayName) {
         return fromDisplayName(displayName).name().replace("_", " ");
     }
+
+    public static String displayNameFromString(String categoryName) {
+        // Enum sabit adı gibi çalışacak şekilde dönüştür: boşlukları "_" yap
+        String formatted = categoryName.replace(" ", "_");
+        return Arrays.stream(BookCategory.values())
+                .filter(cat -> cat.name().equalsIgnoreCase(formatted))
+                .findFirst()
+                .map(BookCategory::getDisplayName)
+                .orElseThrow(() -> new IllegalArgumentException("Kategori eşleşmedi: " + categoryName));
+    }
+
 }

@@ -136,7 +136,7 @@ public class MailService {
         variables.put("listId", mail.getListId());
         variables.put("buyerName",mail.getOffererFullName());
         variables.put("buyerAddress",mail.getOffereraddress());
-        variables.put("lastShippingDate",mail.getDeadline());
+        variables.put("lastShippingDate",mailRequest.getShipmentdeadline());
         variables.put("salesLink",createSaleLink());
         variables.put("listBookImage",mail.getListBookImage());
         variables.put("price",mailRequest.getTrustFee());
