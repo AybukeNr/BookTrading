@@ -21,6 +21,7 @@
         }
         .message {
             color: #666666;
+            text-align: center;
         }
         .book-image {
             max-width: 100px;
@@ -31,10 +32,10 @@
             display: inline-block;
             padding: 10px 20px;
             background-color: #28a745;
-            color: white;
+            color: #ffffff !important;
             text-decoration: none;
             border-radius: 5px;
-            margin-top: 20px;
+            font-weight: bold;
         }
         .buyer-info {
             text-align: left;
@@ -57,14 +58,13 @@
         <p><strong>Ad Soyad:</strong> ${buyerName}</p>
         <p><strong>Adres:</strong> ${buyerAddress}</p>
         <p><strong style="color: red">Son Kargolama Tarihi: ${lastShippingDate}</strong></p>
+               <p class="message">Satış ve kargo bilgileri için aşağıdaki butona tıklayabilirsiniz:</p>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="${salesLink}" class="offer-link">Satışlara Gitmek İçin Tıklayın</a>
+        </div>
+
     </div>
 
-    <p class="message">Satış ve kargo bilgileri için aşağıdaki butona tıklayabilirsiniz:</p>
-    <tr>
-        <td style="text-align: center;">
-            <a href="${salesLink}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 5px;">Satışlara Gitmek İçin Tıklayın</a>
-        </td>
-    </tr>
 </div>
 </body>
 </html>

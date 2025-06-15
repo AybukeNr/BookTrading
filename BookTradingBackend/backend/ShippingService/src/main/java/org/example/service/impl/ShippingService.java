@@ -443,7 +443,7 @@ public class ShippingService implements IShippingService {
                 orElseThrow(() -> new ShippingException(ErrorType.EXCHANGE_NOT_FOUND));
         Shippings shippings = shippingRepository.findBySenderIdAndListId(userId,listId).orElseThrow(() -> new ShippingException(ErrorType.SHIPPING_NOT_FOUND));
         return ExchangeInfos.builder().shippingSerialNumber(shippings.getShippingSerialNumber())
-                .userTracking(shippings.getTrackingNumber())
+                .userTracking(shippings.getTrackingNumber().equals(exchange.getOffererTrackingNumber()) ? exchange.getOffererTrackingNumber() : exchange.getOwnerTrackingNumber())
                 .status(String.valueOf(exchange.getStatus())).build();
     }
 

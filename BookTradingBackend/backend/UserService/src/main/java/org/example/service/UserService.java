@@ -48,7 +48,7 @@ public class UserService {
                 .fullName(String.join(" ", userRequest.getFirstName(), userRequest.getLastName())).build();
         transactionsManager.createAccount(accountRequest);
         cardsManager.createCard(CreateCardRequest.builder().cardNumber(CardNumberUtil.generateCardNumber()).cvv("123")
-                .expiryDate("12/2025").fullName(user.getFirstName()+""+user.getLastName()).userId(user.getId()).build());
+                .expiryDate("12/25").fullName(user.getFirstName()+" "+user.getLastName()).userId(user.getId()).build());
         log.info("Account created: {}", accountRequest);
         RegisterMailRequest request = new RegisterMailRequest();
         request.setPassword(userRequest.getPassword());
