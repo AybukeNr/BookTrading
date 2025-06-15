@@ -144,7 +144,7 @@ function Header(props) {
                                 <li onClick={() => handleCategory('Toplum Bilimi')}>Toplum Bilimi</li>
                                 <li onClick={() => handleCategory('Spor')}>Spor</li>
                                 <li onClick={() => handleCategory('Tarih')}>Tarih</li>
-                                <li onClick={() => handleCategory('Yemek')}>Yemek Pişirme</li>
+                                <li onClick={() => handleCategory('Yemek')}>Yemek</li>
                             </ul>
                         </div>
                     )}

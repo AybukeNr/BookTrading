@@ -19,7 +19,7 @@ export const categories = [
     "Toplum Bilimi",
     "Spor",
     "Tarih",
-    "Yemek Pişirme",
+    "Yemek"
 ];
 
 export const registerSchemas = yup.object().shape({
