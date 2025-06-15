@@ -180,7 +180,7 @@ function UpdateInBookshelf() {
                         <option value="Toplum Bilimi">Toplum Bilimi</option>
                         <option value="Spor">Spor</option>
                         <option value="Tarih">Tarih</option>
-                        <option value="Yemek">Yemek Pişirme</option>
+                        <option value="Yemek">Yemek</option>
                     </select>
                 </div>
 
