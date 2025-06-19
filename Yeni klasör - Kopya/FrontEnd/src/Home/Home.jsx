@@ -10,6 +10,7 @@ function Home() {
   const [{ bookList, selectedCategory, recommendedBooks }, dispatch] = useStateValue();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [bookType, setBookType] = useState("");
 
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -126,9 +127,23 @@ function Home() {
     ],
   };
 
-  const filteredBooks = selectedCategory
-    ? bookList.filter((book) => book.book.category === selectedCategory)
-    : bookList;
+  // const filteredBooks = selectedCategory ? bookList.filter((book) => book.book.category === selectedCategory) : bookList;
+
+  const filteredBooks = bookList.filter((book) => {
+    const matchesCategory = selectedCategory
+      ? book.book.category === selectedCategory
+      : true;
+
+    const matchesType = bookType === ""
+      ? true
+      : bookType === "openTrade"
+        ? book.book.tradeStatus === "OPEN"
+        : bookType === "openSale"
+          ? book.book.saleStatus === "OPEN"
+          : true;
+
+    return matchesCategory && matchesType;
+  });
 
 
   return (
@@ -158,6 +173,14 @@ function Home() {
             </Slider>
           </div>
         )}
+
+        <div className='home_status'>
+          <select id="bookType" value={bookType} onChange={(e) => setBookType(e.target.value)}>
+            <option value="">Kitap türü seçin</option>
+            <option value="openTrade">Takasa açık</option>
+            <option value="openSale">Satışa açık</option>
+          </select>
+        </div>
 
         {!selectedCategory && recommendedBooks.length > 0 && (
           <>
