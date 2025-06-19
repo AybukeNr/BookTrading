@@ -137,7 +137,7 @@ function UpdateInBookshelf() {
                 <input type="text" placeholder="Kitabın yazarını giriniz" value={author} onChange={(e) => setAuthor(e.target.value)} />
 
                 <h5>Kitap ISBN:</h5>
-                <input type="text" placeholder="Kitap ISBN giriniz" value={isbn} onChange={(e) => setIsbn(e.target.value)} />
+                <input type="text" placeholder="Kitap ISBN giriniz" value={isbn} onChange={(e) => setIsbn(e.target.value)} maxLength={13}/>
 
                 <h5>Kitap Yayınevi:</h5>
                 <input type="text" placeholder="Kitabın yayınevini giriniz" value={publisher} onChange={(e) => setPublisher(e.target.value)} />
@@ -146,7 +146,7 @@ function UpdateInBookshelf() {
                 <input type="text" placeholder="Kitabın yayın yılını giriniz" value={publishedDate} onChange={(e) => setPublishedDate(e.target.value)} />
 
                 <h5>Kitap Açıklaması:</h5>
-                <input type="text" placeholder="Kitabın açıklamasını giriniz" value={description} onChange={(e) => setDescription(e.target.value)} />
+                <input type="text" placeholder="Kitabın açıklamasını giriniz" value={description} onChange={(e) => setDescription(e.target.value)} maxLength={255}/>
 
                 <h5>Kitap Durumunu Seçiniz:</h5>
                 <div className='book_condition'>
