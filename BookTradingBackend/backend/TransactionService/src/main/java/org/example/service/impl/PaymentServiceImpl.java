@@ -45,7 +45,7 @@ public class PaymentServiceImpl implements IPaymentService {
         String expiry = createPaymentRequest.getExpiryDate().replace(" ", "");
         boolean isCardNumberValid = createPaymentRequest.getCardNumber().equals(cards.getCardNumber());
         boolean isCvvValid = createPaymentRequest.getCvv().equals(cards.getCvv());
-        boolean isFullnameValid = createPaymentRequest.getFullName().equals(cards.getFullName());
+        boolean isFullnameValid = createPaymentRequest.getFullName().trim().equals(cards.getFullName());
         boolean isExpiryValid = expiry.equals(cards.getExpiryDate());
 
         return isCardNumberValid && isCvvValid && isExpiryValid && isFullnameValid;

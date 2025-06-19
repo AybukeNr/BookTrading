@@ -402,6 +402,7 @@ public class ListsService {
         shippingManager.createShipping(shippingRequest);
         ListMailRequest mailRequest = new ListMailRequest();
         mailRequest.setListId(list.getId());
+        mailRequest.setTrustFee(list.getPrice());
         mailRequest.setListBookName(list.getBookInfo().getTitle());
         mailRequest.setListBookImage(list.getBookInfo().getImage());
         mailRequest.setOwnerId(list.getOwnerId());
@@ -577,7 +578,7 @@ public class ListsService {
         // recommedation_service'den gelen öneriler
         List<Long> bookIds = getRecommendations(recRequest.getBookIds());
         List<Lists> allLists = listsRepository.findByBookInfo_idIn(bookIds);
-
+        log.info("recommendations: {}",allLists);
         // List objelerini ListResponse'a dönüştür
         return allLists.stream()
                 .map(listMapper::ListToListResponse)
