@@ -24,6 +24,7 @@ import org.example.repository.ShippingRepository;
 import org.example.service.IShippingService;
 import org.example.util.TrackingNumberUtil;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -185,7 +186,7 @@ public class ShippingService implements IShippingService {
      *
      */
     @Override
-   // @Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "*/30 * * * * *")
     public void checkExchangeStatus() {
         log.info("Checking exchange status started");
         // Aktif takasları getir

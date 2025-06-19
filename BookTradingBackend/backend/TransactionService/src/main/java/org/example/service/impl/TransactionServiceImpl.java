@@ -74,7 +74,7 @@ public class TransactionServiceImpl implements ITransactionService {
      */
 
     @Override
-    //@Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "*/30 * * * * *")
     public void checkTransactionStatus() {
 
         List<Transactions> ongoingTransactions = transactionRepository.findAllByStatus(TransactionStatus.ONGOING);
@@ -278,7 +278,6 @@ public class TransactionServiceImpl implements ITransactionService {
                 .listingId(transactions.getListId()).build();
         listManager.updateListStatus(updateListReq);
         log.info("Update List Request: {}", updateListReq);
-        userManager.reduceTrustPoint(transferAllReq.getTransferUserId().equals(transactions.getOwnerId()) ? transactions.getOffererId() : transactions.getOwnerId());
         return transactionMapper.transactionToResponse(transactions);
     }
 

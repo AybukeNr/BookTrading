@@ -12,7 +12,7 @@
             <h2 style="color: #333333;">BookSwap'e Hoşgeldiniz!</h2>
             <p style="color: #666666;">Kaydolduğunuz için teşekkür ederiz.</p>
         </td>
-    </tr>
+
         <td style="text-align: center; padding: 10px 0; border-top: 1px solid #eeeeee;">
             <p style="color: #999999; font-size: 12px;">&copy; 2025 BookSwap. Tüm hakları saklıdır.</p>
         </td>
