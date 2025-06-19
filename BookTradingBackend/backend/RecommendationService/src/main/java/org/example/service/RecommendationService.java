@@ -168,14 +168,15 @@ public class RecommendationService {
             finalRecommendations.add(entry.getKey());
             count++;
         }
-
+        Set<String> kategoriler = new HashSet<>();
         // Konsola hangi önerilerin hangi kurallardan geldiğini yazdır.
         for (String recommendation : finalRecommendations) {
             log.info("Recommended Category: {} | Confidence Values: {}", recommendation, ruleDetails.get(recommendation));
+            kategoriler.add(BookCategory.displayNameFromString(recommendation));
         }
 
         log.info("Final Recommendations: {} | Count: {}", finalRecommendations, finalRecommendations.size());
-        return finalRecommendations;
+        return kategoriler;
     }
 
 }

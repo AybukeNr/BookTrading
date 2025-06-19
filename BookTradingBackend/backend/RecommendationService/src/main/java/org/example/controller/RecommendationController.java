@@ -15,7 +15,7 @@ import static org.example.constant.RestApiList.*;
 @RestController
 @RequestMapping(RECOMMENDATIONS)
 @RequiredArgsConstructor
-
+@CrossOrigin("*")
 public class RecommendationController {
 
     private final RecommendationService recommendationService;
@@ -27,7 +27,7 @@ public class RecommendationController {
     }
 
 
-    @GetMapping(GET_FILTERED_RECOMMENDATIONS)
+    @PostMapping(GET_FILTERED_RECOMMENDATIONS)
     public ResponseEntity<Set<String>> getFilteredRecommendations(@RequestBody String userId) {
         Set<String> recs = recommendationService.getFilteredRecommendations(userId);
         return new ResponseEntity<>(recs, HttpStatus.OK);

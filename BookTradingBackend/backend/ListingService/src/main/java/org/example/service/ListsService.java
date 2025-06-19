@@ -548,6 +548,7 @@ public class ListsService {
 
     public List<ListResponse> getCategoryRecs(String userId){
         Set<String> categories = recommendationManager.getFilteredRecommendations(userId).getBody();
+        log.info("kullanıcı tercihi kategoriler:{}",categories);
         List<Lists> lists = listsRepository.findByCategory(categories,userId);
         return lists.stream().map(listMapper::ListToListResponse).toList();
     }
@@ -579,6 +580,7 @@ public class ListsService {
         List<Long> bookIds = getRecommendations(recRequest.getBookIds());
         List<Lists> allLists = listsRepository.findByBookInfo_idIn(bookIds);
         log.info("recommendations: {}",allLists);
+        List<ListResponse> categoyRecs = getCategoryRecs(recRequest.getUserId());
         // List objelerini ListResponse'a dönüştür
         return allLists.stream()
                 .map(listMapper::ListToListResponse)

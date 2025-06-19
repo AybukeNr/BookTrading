@@ -46,7 +46,7 @@
     <p class="message">Teklif edilen kitap: <strong>${offeredBookName}</strong></p>
     <img class="book-image" src="${offeredBookImage}" >
     <p class="message">Teklifi görmek için aşağıdaki bağlantıya tıklayabilirsiniz:</p>
-    <a class="offer-link" href="${offersLink}">Teklifi Gör</a>
+         <a class="offer-link" href="${offersLink}">Teklifi Gör</a>
 </div>
 </body>
 </html>
